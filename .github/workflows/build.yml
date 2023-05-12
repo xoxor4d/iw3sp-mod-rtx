@@ -1,0 +1,47 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: Build binary
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        configuration:
+          - Debug
+          - Release
+    steps:
+      - name: Check out files
+        uses: actions/checkout@v3.5.2
+        with:
+          submodules: true
+          fetch-depth: 0
+          lfs: false
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.3.1
+
+      - name: Generate project files
+        run: tools/premake5 vs2022
+
+      - name: Set up problem matching
+        uses: ammaraskar/msvc-problem-matcher@master
+
+      - name: Build ${{matrix.configuration}} binaries
+        run: msbuild /m /v:minimal /p:Configuration=${{matrix.configuration}} /p:Platform=Win32 build/iw3sp_dev.sln
+
+      - name: Upload ${{matrix.configuration}} binaries
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{matrix.configuration}} binaries
+          path: |
+            build/bin/${{matrix.configuration}}/game.dll
+            build/bin/${{matrix.configuration}}/game.pdb

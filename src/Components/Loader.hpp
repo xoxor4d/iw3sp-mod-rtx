@@ -1,0 +1,63 @@
+#pragma once
+
+namespace Components
+{
+	class Component
+	{
+	public:
+		Component() = default;
+		virtual ~Component() = default;
+
+		virtual void preDestroy() {}
+		virtual bool unitTest() { return true; } // Unit testing entry
+	};
+
+	class Loader
+	{
+	public:
+		static void Initialize();
+		static void Uninitialize();
+		static void PreDestroy();
+		static void PreDestroyNoPostGame();
+		static void Register(Component* component);
+
+		static bool IsPregame();
+		static bool IsPostgame();
+		static bool IsUninitializing();
+
+		template <typename T>
+		static T* GetInstance()
+		{
+			for (auto& component : Loader::Components)
+			{
+				if (typeid(*component) == typeid(T))
+				{
+					return reinterpret_cast<T*>(component);
+				}
+			}
+
+			return nullptr;
+		}
+
+	private:
+		static bool Pregame;
+		static bool Postgame;
+		static bool Uninitializing;
+		static std::vector<Component*> Components;
+	};
+}
+
+#include "Modules/Flags.hpp"
+#include "Modules/Branding.hpp"
+#include "Modules/Scheduler.hpp"
+#include "Modules/Command.hpp"
+#include "Modules/CommonPatch.hpp"
+#include "Modules/Maps.hpp"
+#include "Modules/Renderer.hpp"
+#include "Modules/D3D9Ex.hpp"
+#include "Modules/GSC/GSC.hpp"
+#include "Modules/FastFiles.hpp"
+#include "Modules/Movement.hpp"
+#include "Modules/Weapons.hpp"
+#include "Modules/Discord.hpp"
+#include "Modules/UIScript.hpp"
