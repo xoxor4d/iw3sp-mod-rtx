@@ -61,3 +61,4 @@ namespace Components
 #include "Modules/Weapons.hpp"
 #include "Modules/Discord.hpp"
 #include "Modules/UIScript.hpp"
+#include "Modules/ServerCommand.hpp"

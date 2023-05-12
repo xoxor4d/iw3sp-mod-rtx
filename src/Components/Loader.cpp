@@ -42,7 +42,7 @@ namespace Components
 		Loader::Register(new Weapons());
 		Loader::Register(new Discord());
 		Loader::Register(new UIScript());
-
+		Loader::Register(new ServerCommand());
 
 		Loader::Pregame = false;
 		// Make sure preDestroy is called when the game shuts down

@@ -314,7 +314,7 @@ namespace Game
 			case 12: return language_char = "thai"; break;
 			case 13: return language_char = "leet"; break;
 			case 14: return language_char = "czech"; break;
-			default: break;
+			default: return "english"; break;
 		}
 	}
 
