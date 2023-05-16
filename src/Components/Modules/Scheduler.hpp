@@ -9,7 +9,9 @@ namespace Components
 		enum Pipeline : int
 		{
 			MAIN,
-			RENDERED,
+			RENDERER,
+			ASYNC,
+			QUIT,
 			COUNT,
 		};
 
@@ -21,18 +23,17 @@ namespace Components
 
 		Scheduler();
 
+		void preDestroy() override;
+
 		static void Schedule(const std::function<bool()>& callback, Pipeline type,
 			std::chrono::milliseconds delay = 0ms);
 		static void Loop(const std::function<void()>& callback, Pipeline type,
 			std::chrono::milliseconds delay = 0ms);
 		static void Once(const std::function<void()>& callback, Pipeline type,
 			std::chrono::milliseconds delay = 0ms);
-
-		//static void on_frame(const std::function<void()>& callback, thread thread = main);
-		//static void delay(const std::function<void()>& callback, std::chrono::milliseconds delay, thread thread = main);
-		//static void once(const std::function<void()>& callback, thread thread = main);
-		//static void until(const std::function<evaluation()>& callback, thread thread = main);
-		//static void loop(const std::function<void()>& callback, const std::chrono::milliseconds delay, const thread thread);
+		static void OnGameInitialized(const std::function<void()>& callback, Pipeline type,
+			std::chrono::milliseconds delay = 0ms);
+		static void OnGameShutdown(const std::function<void()>& callback);
 
 		static void error(const std::string& message, int level);
 
@@ -54,8 +55,8 @@ namespace Components
 			void execute();
 
 		private:
-			Utils::ConcurrentList<taskList> newCallbacks_;
-			Utils::ConcurrentList<taskList, std::recursive_mutex> callbacks_;
+			Utils::ConcurrentList::Container<taskList> newCallbacks_;
+			Utils::ConcurrentList::Container<taskList, std::recursive_mutex> callbacks_;
 
 			void mergeCallbacks();
 		};
@@ -72,11 +73,8 @@ namespace Components
 		//static Utils::ConcurrentList<std::pair<std::function<void()>, thread>> single_callbacks_;
 		//static Utils::ConcurrentList<std::pair<std::function<Scheduler::evaluation()>, thread>> condition_callbacks_;
 
-		static void main_frame_stub();
-
-		static void execute(Pipeline thread);
-		static void execute_safe(Pipeline thread);
-		static void execute_error(Pipeline thread);
-		static bool get_next_error(const char** error_message, int* error_level);
+		static void MainFrameStub();
+		static void RenderFrameStub(int index);
+		static void SysQuitStub(int index);
 	};
 }

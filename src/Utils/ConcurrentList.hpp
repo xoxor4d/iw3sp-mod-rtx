@@ -1,9 +1,9 @@
 #pragma once
 
-namespace Utils
+namespace Utils::ConcurrentList
 {
 	template <typename T, typename MutexType = std::mutex>
-	class ConcurrentList
+	class Container
 	{
 	public:
 		template <typename R = void, typename F>

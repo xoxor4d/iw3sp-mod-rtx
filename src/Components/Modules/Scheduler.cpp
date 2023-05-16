@@ -109,7 +109,7 @@ namespace Components
 		errors_.emplace(message, level);
 	}
 
-	__declspec(naked) void Scheduler::main_frame_stub()
+	__declspec(naked) void Scheduler::MainFrameStub()
 	{
 		static const int ExecutionPipeline = Pipeline::MAIN;
 		const static uint32_t retn_addr = 0x5356F0;
@@ -125,8 +125,68 @@ namespace Components
 		}
 	}
 
+	void Scheduler::RenderFrameStub(int index)
+	{
+		Utils::Hook::Call<void(int)>(0x447730)(index);
+		Execute(Pipeline::RENDERER);
+	}
+
+	void Scheduler::SysQuitStub(int block)
+	{
+		Execute(Pipeline::QUIT);
+
+		if (Updater::UpdateRestart == true)
+			Utils::Library::Terminate();
+		else
+			Utils::Hook::Call<void()>(0x5950C0)();
+	}
+
+	void Scheduler::OnGameInitialized(const std::function<void()>& callback, const Pipeline type, const std::chrono::milliseconds delay)
+	{
+		Schedule([=]
+		{
+			if (Game::Sys_IsDatabaseReady2())
+			{
+				Once(callback, type, delay);
+				return COND_END;
+			}
+
+			return COND_CONTINUE;
+		}, Pipeline::MAIN); // Once Com_Frame_Try_Block_Function is called we know the game is 'ready'
+	}
+
+	void Scheduler::OnGameShutdown(const std::function<void()>& callback)
+	{
+		Schedule([callback]
+		{
+			callback();
+			return COND_END;
+		}, Pipeline::QUIT, 0ms);
+	}
+
 	Scheduler::Scheduler()
 	{
-		Utils::Hook(0x535A78, main_frame_stub, HOOK_CALL).install()->quick();
+		Thread = Utils::Thread::CreateNamedThread("Async Scheduler", []
+		{
+			while (!Kill)
+			{
+				Execute(Pipeline::ASYNC);
+				std::this_thread::sleep_for(10ms);
+			}
+		});
+
+		Utils::Hook(0x535A78, MainFrameStub, HOOK_CALL).install()->quick();
+		Utils::Hook(0x447872, RenderFrameStub, HOOK_CALL).install()->quick();
+
+		Utils::Hook(0x595324, SysQuitStub, HOOK_CALL).install()->quick();
+	}
+
+	void Scheduler::preDestroy()
+	{
+		Kill = true;
+		if (Thread.joinable())
+		{
+			Thread.join();
+		}
 	}
 }
