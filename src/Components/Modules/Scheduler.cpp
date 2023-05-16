@@ -134,11 +134,13 @@ namespace Components
 	void Scheduler::SysQuitStub(int block)
 	{
 		Execute(Pipeline::QUIT);
-
+		Utils::Hook::Call<void()>(0x5950C0)();
+		/*
 		if (Updater::UpdateRestart == true)
 			Utils::Library::Terminate();
 		else
 			Utils::Hook::Call<void()>(0x5950C0)();
+		*/
 	}
 
 	void Scheduler::OnGameInitialized(const std::function<void()>& callback, const Pipeline type, const std::chrono::milliseconds delay)
