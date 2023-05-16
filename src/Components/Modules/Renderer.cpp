@@ -19,6 +19,16 @@ namespace Components
 		Renderer::EndRecoverDeviceSignal();
 	}
 
+	int Renderer::Width()
+	{
+		return reinterpret_cast<LPPOINT>(0x1621DB4)->x;
+	}
+
+	int Renderer::Height()
+	{
+		return reinterpret_cast<LPPOINT>(0x1621DB4)->y;
+	}
+
 	__declspec(naked) void Renderer::PostPreVidRestart()
 	{
 		__asm
@@ -48,7 +58,7 @@ namespace Components
 	bool GetPlayerADS() {return *reinterpret_cast <bool*>(0x720004);}
 	float GetCurrentWeaponAdsProgress(){return *reinterpret_cast<float*>(0x714BA8 + 208);}
 
-	//	Reversed function
+	// Reversed function
 	double CG_GetViewFov(int localClientNum)
 	{
 		float calc_fov;

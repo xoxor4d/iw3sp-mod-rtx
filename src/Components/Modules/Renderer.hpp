@@ -8,6 +8,9 @@ namespace Components
 		typedef void(BackendCallback)(IDirect3DDevice9*);
 		typedef void(Callback)();
 
+		static int Width();
+		static int Height();
+
 		Renderer();
 		~Renderer();
 	private:
