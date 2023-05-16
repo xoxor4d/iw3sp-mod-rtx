@@ -70,8 +70,19 @@ namespace Game
 		*cmd_ptr = data;
 	}
 
-	int Sys_MilliSeconds() {
-		return clock() * 1000 / CLOCKS_PER_SEC;
+	int	sys_timeBase;
+	int Sys_MilliSeconds(void)
+	{
+		int	sys_curtime;
+		static bool	initialized = false;
+
+		if (!initialized) {
+			sys_timeBase = timeGetTime();
+			initialized = true;
+	}
+		sys_curtime = timeGetTime() - sys_timeBase;
+
+		return sys_curtime;
 	}
 
 	bool CL_IsCgameInitialized()
@@ -367,6 +378,46 @@ namespace Game
 
 			call	R_AddCmdDrawText_func;
 			add		esp, 24h;
+		}
+	}
+
+	void R_AddCmdDrawStretchPic(Game::Material* material, float x, float y, float w, float h, float null1, float null2, float null3, float null4, float* color)
+	{
+		const static uint32_t R_AddCmdDrawStretchPic_func = 0x5DB2A0;
+		__asm
+		{
+			pushad;
+			push	color;
+			mov		eax, [material];
+			sub		esp, 20h;
+
+			fld		null4;
+			fstp[esp + 1Ch];
+
+			fld		null3;
+			fstp[esp + 18h];
+
+			fld		null2;
+			fstp[esp + 14h];
+
+			fld		null1;
+			fstp[esp + 10h];
+
+			fld		h;
+			fstp[esp + 0Ch];
+
+			fld		w;
+			fstp[esp + 8h];
+
+			fld		y;
+			fstp[esp + 4h];
+
+			fld		x;
+			fstp[esp];
+
+			call	R_AddCmdDrawStretchPic_func;
+			add		esp, 24h;
+			popad;
 		}
 	}
 

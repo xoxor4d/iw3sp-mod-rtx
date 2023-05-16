@@ -43,6 +43,7 @@ namespace Components
 		Loader::Register(new Discord());
 		Loader::Register(new UIScript());
 		Loader::Register(new ServerCommand());
+		Loader::Register(new Toast());
 		Loader::Register(new Achievements());
 
 		Loader::Pregame = false;

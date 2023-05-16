@@ -188,6 +188,7 @@ namespace Game
 	Game::ScreenPlacement* ScrPlace_GetFullPlacement();
 	Game::ScreenPlacement* ScrPlace_GetUnsafeFullPlacement();
 	void R_AddCmdDrawTextASM(const char* text, int max_chars, void* font, float x, float y, float x_scale, float y_scale, float rotation, const float* color, int style);
+	void R_AddCmdDrawStretchPic(Game::Material* material, float x, float y, float w, float h, float null1, float null2, float null3, float null4, float* color); // ASM
 	const char* UI_GetFontHandle(const ScreenPlacement* ScrPlace, float fontscale);
 	extern sharedUiInfo_t* sharedUiInfo;
 	extern int* uiInfo;
