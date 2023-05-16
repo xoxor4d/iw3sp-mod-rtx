@@ -48,8 +48,10 @@ namespace Game
 	static Utils::function<void()> R_BeginRemoteScreenUpdate = 0x5DC550;
 	static Utils::function<void()> R_EndRemoteScreenUpdate = 0x5DC5A0;
 
-	typedef void(__cdecl* Cbuf_AddText_t)(int localClientNum, const char* text);
-	extern Cbuf_AddText_t Cbuf_AddText;
+	//typedef void(__cdecl* Cbuf_AddText_t)(int localClientNum, const char* text);
+	//extern Cbuf_AddText_t Cbuf_AddText;
+
+	void Cbuf_AddText(int localClientNum /*eax*/, const char* text /*ecx*/);
 
 	//-------------------------------------------------
 
@@ -254,4 +256,6 @@ namespace Game
 
 	typedef int(__cdecl* BG_FindWeaponIndexForName_t)(const char* weaponName);
 	extern BG_FindWeaponIndexForName_t BG_FindWeaponIndexForName;
+
+	extern int Sys_IsDatabaseReady2(void);
 }

@@ -3,6 +3,7 @@
 namespace Game
 {
 	HANDLE DatabaseHandle = reinterpret_cast<HANDLE>(0xFC6308);
+	HANDLE databaseCompletedEvent2 = reinterpret_cast<HANDLE>(0xFC6348);
 
 	//d3d9
 	IDirect3D9** d3d9 = reinterpret_cast<IDirect3D9**>(0x1623F84);
@@ -15,7 +16,17 @@ namespace Game
 	Game::CmdArgs* cmd_args = reinterpret_cast<Game::CmdArgs*>(0xF789E8);
 	cmd_function_s** cmd_ptr = reinterpret_cast<cmd_function_s**>(0xF78A6C);
 
-	Cbuf_AddText_t Cbuf_AddText = Cbuf_AddText_t(0x530320);
+	//Cbuf_AddText_t Cbuf_AddText = Cbuf_AddText_t(0x530320); // in 1.0 this function works without __asm block
+	void Cbuf_AddText(int localClientNum/*ecx*/, const char* text /*eax*/)
+	{
+		const static uint32_t Cbuf_AddText_func = 0x530320;
+		__asm
+		{
+			mov		eax, text;
+			mov		ecx, localClientNum;
+			call	Cbuf_AddText_func;
+		}
+	}
 
 	//Print_Info
 	Com_Printf_t Com_Printf = Com_Printf_t(0x532DB0);
@@ -707,4 +718,10 @@ namespace Game
 	//58F8B0
 
 	BG_FindWeaponIndexForName_t BG_FindWeaponIndexForName = BG_FindWeaponIndexForName_t(0x5BEC90);
+
+
+	int Sys_IsDatabaseReady2(void)
+	{
+		return WaitForSingleObject(Game::databaseCompletedEvent2, 0) == 0;
+	}
 }

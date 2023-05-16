@@ -13,6 +13,7 @@
 #include <version.hpp>
 
 #include <windows.h>
+#include <WinSock2.h>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -32,6 +33,10 @@
 #include <string>
 #include <ctime>
 #include <cstdio>
+#include <utility>
+
+#include <gsl/gsl>
+#include <curl/curl.h>
 
 #pragma warning(push)
 #pragma warning(disable: 4091)
@@ -52,13 +57,19 @@ using namespace std::literals;
 #include <tlhelp32.h>
 #include <winternl.h>
 #include <shellapi.h>
-
+#include <wininet.h>
+#include <Shlwapi.h>
 #include <d3d9.h>
 #include <d3dx9tex.h>
+#include <dwmapi.h>
 
-
+#include <tomcrypt.h>
 #include <json.hpp>
 
+#pragma comment (lib, "dwmapi.lib")
+#pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "Wininet.lib")
+#pragma comment(lib, "shlwapi.lib")
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
 #pragma comment(lib, "Winmm.Lib")
@@ -92,6 +103,7 @@ using namespace std::literals;
 #include "Utils\Hooking.hpp"
 #include "Utils\Function.hpp"
 #include "Utils\String.hpp"
+#include "Utils\Thread.hpp"
 #include "Utils\Utils.hpp"
 #include "Utils\Library.hpp"
 
