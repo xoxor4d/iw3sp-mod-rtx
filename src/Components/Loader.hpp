@@ -62,3 +62,4 @@ namespace Components
 #include "Modules/Discord.hpp"
 #include "Modules/UIScript.hpp"
 #include "Modules/ServerCommand.hpp"
+#include "Modules/Achievements.hpp"
