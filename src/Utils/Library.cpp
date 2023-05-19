@@ -122,4 +122,9 @@ namespace Utils
 		if (process_info.hProcess && process_info.hProcess != INVALID_HANDLE_VALUE)
 			CloseHandle(process_info.hProcess);
 	}
+
+	void Library::Terminate(const uint32_t code)
+	{
+		TerminateProcess(GetCurrentProcess(), code);
+	}
 }

@@ -2,6 +2,10 @@
 
 namespace Game
 {
+	HWND__* hWnd = reinterpret_cast<HWND__*>(0x13E39A8);
+	HWND__* hWndParent = reinterpret_cast<HWND__*>(0x13E39B0);
+	HWND__* hwndBuffer = reinterpret_cast<HWND__*>(0x13E39B4);
+
 	HANDLE DatabaseHandle = reinterpret_cast<HANDLE>(0xFC6308);
 	HANDLE databaseCompletedEvent2 = reinterpret_cast<HANDLE>(0xFC6348);
 
@@ -47,6 +51,7 @@ namespace Game
 
 	DB_FindXAssetHeader_t DB_FindXAssetHeader = DB_FindXAssetHeader_t(0x45AD10);
 	DB_GetXAssetSizeHandler_t* DB_GetXAssetSizeHandlers = reinterpret_cast<DB_GetXAssetSizeHandler_t*>(0x6DF5F0);
+	DB_GetXAssetNameHandler_t* DB_GetXAssetNameHandlers = reinterpret_cast<DB_GetXAssetNameHandler_t*>(0x6DF4D8);
 
 	XAssetHeader DB_ReallocXAssetPool(XAssetType type, unsigned int new_size)
 	{
@@ -90,7 +95,7 @@ namespace Game
 		if (!initialized) {
 			sys_timeBase = timeGetTime();
 			initialized = true;
-	}
+		}
 		sys_curtime = timeGetTime() - sys_timeBase;
 
 		return sys_curtime;
@@ -257,12 +262,13 @@ namespace Game
 		return SL_ConvertToString(ConstString);
 	}
 
-	float Scr_GetFloat(unsigned int index /*eax*/)
+	float Scr_GetFloat/*st0*/(unsigned int index /*eax*/)
 	{
 		const static uint32_t Scr_GetFloat_func = 0x5583A0;
 		__asm
 		{
 			mov		eax, index;
+			xor		eax, eax;
 			call	Scr_GetFloat_func;
 		}
 	}
@@ -295,6 +301,9 @@ namespace Game
 	Game::gentity_s* g_entities = reinterpret_cast<Game::gentity_s*>(0xC81418);
 	Game::gclient_s* g_clients = reinterpret_cast<Game::gclient_s*>(0xE0DA00);
 	Game::pmove_t* pmove = reinterpret_cast<Game::pmove_t*>(0x7FDE88);
+	Game::clipMap_t* cm = reinterpret_cast<Game::clipMap_t*>(0xF788C8);
+
+	Game::localization_t* localization = reinterpret_cast<Game::localization_t*>(0x13E0700);
 
 	Scr_AddInt_t Scr_AddInt = Scr_AddInt_t(0x558B80);
 	Scr_AddFloat_t Scr_AddFloat = Scr_AddFloat_t(0x558BC0);
@@ -586,8 +595,6 @@ namespace Game
 	//sharedUiInfo_t* sharedUiInfo = reinterpret_cast<sharedUiInfo_t*>(0x129AD80);
 	int* uiInfo = reinterpret_cast<int*>(0x1290F50);
 
-
-	//R_TextWidth@<eax>(_BYTE *@<eax>, int@<ecx>, int, int)
 	int R_TextWidth/*eax*/(const char* text /*eax*/, signed int maxChars, Game::Font_s* font/*ecx*/)
 	{
 		int result = 0;
@@ -723,5 +730,28 @@ namespace Game
 	int Sys_IsDatabaseReady2(void)
 	{
 		return WaitForSingleObject(Game::databaseCompletedEvent2, 0) == 0;
+	}
+
+
+	void Sys_CreateConsole/*ax*/(HINSTANCE hInstance /*edi*/)
+	{
+		const static uint32_t Sys_CreateConsole_func = 0x5962B0;
+		__asm
+		{
+			mov		edi, hInstance;
+			call	Sys_CreateConsole_func;
+		}
+	}
+	
+
+	void Sys_ShowConsole()
+	{
+		if (!Game::hWnd)
+		{
+			HMODULE ModuleHandleA = GetModuleHandleA(0);
+			Game::Sys_CreateConsole(ModuleHandleA);
+		}
+		ShowWindow(Game::hWndParent, 1);
+		SendMessageA(Game::hwndBuffer, 182, 0, 65535);
 	}
 }

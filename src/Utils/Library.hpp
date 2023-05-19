@@ -68,6 +68,7 @@ namespace Utils
 		}
 
 		static void LaunchProcess(const std::string& process, const std::string& commandLine, const std::string& currentDir);
+		static __declspec(noreturn) void Terminate(uint32_t code = 0);
 
 	private:
 		HMODULE module_;

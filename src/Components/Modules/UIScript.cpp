@@ -79,7 +79,7 @@ namespace Components
 			push	edx;
 			call	RunMenuScript;
 			add		esp, 4;
-			test	eax, eax;
+			test	al, al;
 			je		STOCK_FUNC;				// jump if UI_uiScriptsAddons was false
 			popad;
 

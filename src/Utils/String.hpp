@@ -74,6 +74,27 @@ namespace Utils
 
 		const char* VA(const char* fmt, ...);
 
+		template <typename Arg> // This should display a nice "nullptr" instead of a number
+		static void SanitizeFormatArgs(Arg& arg)
+		{
+			if constexpr (std::is_same_v<Arg, char*> || std::is_same_v<Arg, const char*>)
+			{
+				if (arg == nullptr)
+				{
+					arg = const_cast<char*>("nullptr");
+				}
+			}
+		}
+
+		template <typename... Args>
+		[[nodiscard]] const char* Format(std::string_view fmt, Args&&... args)
+		{
+			static thread_local std::string vaBuffer;
+			(SanitizeFormatArgs(args), ...);
+			std::vformat(fmt, std::make_format_args(args...)).swap(vaBuffer);
+			return vaBuffer.data();
+		}
+
 		std::string ToLower(std::string text);
 		std::string ToUpper(std::string text);
 		bool Compare(const std::string& lhs, const std::string& rhs);

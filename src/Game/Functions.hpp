@@ -3,6 +3,10 @@
 
 namespace Game
 {
+	extern HWND__* hWnd;
+	extern HWND__* hWndParent;
+	extern HWND__* hwndBuffer;
+
 	extern IDirect3DDevice9** dx9_device_ptr;
 
 	typedef void(__cdecl* CommandCB_t)(void);
@@ -64,6 +68,9 @@ namespace Game
 
 	typedef int(__cdecl* DB_GetXAssetSizeHandler_t)();
 	extern DB_GetXAssetSizeHandler_t* DB_GetXAssetSizeHandlers;
+
+	typedef const char* (*DB_GetXAssetNameHandler_t)(Game::XAssetHeader* asset);
+	extern DB_GetXAssetNameHandler_t* DB_GetXAssetNameHandlers;
 
 	XAssetHeader DB_ReallocXAssetPool(XAssetType type, unsigned int new_size);
 
@@ -131,7 +138,7 @@ namespace Game
 
 	extern unsigned int Scr_GetConstString(unsigned int index /*eax*/);
 	extern const char* Scr_GetString(unsigned int index);
-	float Scr_GetFloat(unsigned int index /*eax*/); // asm
+	float Scr_GetFloat/*st0*/(unsigned int index /*eax*/); // asm
 	int Scr_GetInt/*eax*/(unsigned int index /*eax*/); // asm 
 	extern const char* SL_ConvertToString(unsigned int idx);
 
@@ -179,7 +186,6 @@ namespace Game
 	//29.10.22
 	typedef Game::gentity_s* (*GetPlayerEntity_t)(Game::scr_entref_t entref);
 	extern GetPlayerEntity_t GetPlayerEntity;
-
 
 	//	#define uiMem (*((uiMem_t*)(0x12909C8)))
 	//30.10.22
@@ -258,4 +264,9 @@ namespace Game
 	extern BG_FindWeaponIndexForName_t BG_FindWeaponIndexForName;
 
 	extern int Sys_IsDatabaseReady2(void);
+
+	extern Game::localization_t* localization;
+
+	void Sys_CreateConsole/*ax*/(HINSTANCE hInstance /*edi*/);
+	void Sys_ShowConsole();
 }

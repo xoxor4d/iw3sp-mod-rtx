@@ -28,23 +28,30 @@ namespace Components
 		Loader::Postgame = false;
 		Loader::Uninitializing = false;
 
+		Loader::Register(new Config());
 		Loader::Register(new Flags());
+		Loader::Register(new FastFiles());
 		Loader::Register(new Command());
+		Loader::Register(new AssetHandler());
 		Loader::Register(new Branding());
+		Loader::Register(new FileSystem());
+		Loader::Register(new Language());
 		Loader::Register(new CommonPatch());
 		Loader::Register(new Maps());
 		Loader::Register(new D3D9Ex());
 		Loader::Register(new Renderer());
 		Loader::Register(new Scheduler());
-		Loader::Register(new FastFiles());
 		Loader::Register(new GSC());
 		Loader::Register(new Movement());
 		Loader::Register(new Weapons());
 		Loader::Register(new Discord());
 		Loader::Register(new UIScript());
 		Loader::Register(new ServerCommand());
+		Loader::Register(new LocalizedStrings());
 		Loader::Register(new Toast());
 		Loader::Register(new Achievements());
+		Loader::Register(new Events());
+		Loader::Register(new Updater());
 
 		Loader::Pregame = false;
 		// Make sure preDestroy is called when the game shuts down

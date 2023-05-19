@@ -2,56 +2,13 @@
 
 namespace Components
 {
-	void GameLanguageRegister()
+	void sv_cheats_hook()
 	{
-		if (Dvars::Functions::Dvar_FindVar("language_first_setting") && Dvars::Functions::Dvar_FindVar("language_first_setting")->current.enabled)
-		{
-			const char* language = Game::SEH_GetLanguageName(Dvars::Functions::Dvar_FindVar("ui_language")->current.integer);
-			Utils::Hook::Set<const char*>(0x13E0700, language);
-
-			int langIndexDef = 0;
-			int langIndex = Game::SEH_GetLanguageIndexFromName(language, &langIndexDef);
-
-			Dvars::Functions::Dvar_FindVar("loc_language")->current.integer = langIndex;
-			Dvars::Functions::Dvar_FindVar("loc_language")->latched.integer = langIndex;
-
-			return;
-		}
-		else if (Dvars::Functions::Dvar_FindVar("language_first_setting") && !Dvars::Functions::Dvar_FindVar("language_first_setting")->current.enabled)
-		{
-			const char* language = reinterpret_cast<const char*>(0x13E0708);
-			int langIndexDef = 0;
-			int langIndex = Game::SEH_GetLanguageIndexFromName(language, &langIndexDef);
-
-			Dvars::Functions::Dvar_FindVar("loc_language")->current.integer = langIndex;
-			Dvars::Functions::Dvar_FindVar("loc_language")->latched.integer = langIndex;
-
-			Dvars::Functions::Dvar_FindVar("language_first_setting")->current.enabled = true;
-			Dvars::Functions::Dvar_FindVar("language_first_setting")->latched.enabled = true;
-
-			return;
-		}
-		else
-		{
-			const char* language = reinterpret_cast<const char*>(0x13E0708);
-			int langIndexDef = 0;
-			int langIndex = Game::SEH_GetLanguageIndexFromName(language, &langIndexDef);
-
-			Dvars::Functions::Dvar_FindVar("loc_language")->current.integer = langIndex;
-			Dvars::Functions::Dvar_FindVar("loc_language")->latched.integer = langIndex;
-
-			Dvars::Functions::Dvar_FindVar("ui_language")->current.integer = Dvars::Functions::Dvar_FindVar("loc_language")->current.integer;
-			Dvars::Functions::Dvar_FindVar("ui_language")->latched.integer = Dvars::Functions::Dvar_FindVar("loc_language")->latched.integer;
-
-			//Dvars::ui_language = Dvars::Register::Dvar_RegisterInt("ui_language", "Game Language", Dvars::Functions::Dvar_FindVar("loc_language")->current.integer, 0, 14, Game::saved);
-			return;
-		}
+		Dvars::Override::DvarBoolOverride("sv_cheats", true, Game::none);
 	}
 
 	void DB_LoadCommonFastFiles()
 	{
-		GameLanguageRegister();
-
 		int i = 0;
 		Game::XZoneInfo XZoneInfoStack[6];
 
@@ -61,15 +18,27 @@ namespace Components
 		++i;
 
 		const char* languageName = Game::SEH_GetLanguageName(Dvars::Functions::Dvar_FindVar("loc_language")->current.unsignedInt);
-		XZoneInfoStack[i].name = Utils::String::VA("%s_iw3sp_mod_patch", languageName);
-		XZoneInfoStack[i].allocFlags = Game::XZONE_FLAGS::XZONE_LOC_POST_GFX;
-		XZoneInfoStack[i].freeFlags = Game::XZONE_FLAGS::XZONE_LOC_POST_GFX_FREE;
-		++i;
+		if (FastFiles::Exists(Utils::String::VA("%s_iw3sp_mod_patch", languageName)))
+		{
+			XZoneInfoStack[i].name = Utils::String::VA("%s_iw3sp_mod_patch", languageName);
+			XZoneInfoStack[i].allocFlags = Game::XZONE_FLAGS::XZONE_LOC_POST_GFX;
+			XZoneInfoStack[i].freeFlags = Game::XZONE_FLAGS::XZONE_LOC_POST_GFX_FREE;
+			++i;
+			CommonPatch::iw3sp_mod_ff_exists = true;
+		}
+		else
+			CommonPatch::iw3sp_mod_ff_exists = false;
 
-		XZoneInfoStack[i].name = "iw3sp_mod";
-		XZoneInfoStack[i].allocFlags = Game::XZONE_FLAGS::XZONE_MOD;
-		XZoneInfoStack[i].freeFlags = Game::XZONE_FLAGS::XZONE_MOD_FREE;
-		++i;
+		if (FastFiles::Exists("iw3sp_mod"))
+		{
+			XZoneInfoStack[i].name = "iw3sp_mod";
+			XZoneInfoStack[i].allocFlags = Game::XZONE_FLAGS::XZONE_MOD;
+			XZoneInfoStack[i].freeFlags = Game::XZONE_FLAGS::XZONE_MOD_FREE;
+			++i;
+			CommonPatch::iw3sp_mod_loc_ff_exists = true;
+		}
+		else
+			CommonPatch::iw3sp_mod_loc_ff_exists = false;
 
 		auto mod_exists = Utils::Hook::Call<char()>(0x45CC00)(); //DB_ModFileExists 0x45C920 from 1.0
 		if (mod_exists)
@@ -111,14 +80,11 @@ namespace Components
 
 		Game::Com_Printf(0, "Game [^2Success^7]: main .ff files has been loaded.\n");
 
-		// String DVAR Test
-		Dvars::test_dvar_string = Dvars::Register::Dvar_RegisterString("test_dvar_string", "Test String Dvar.", "default", Game::saved);
-
 		Command::Add("test_cmd", [](Command::Params*)
 		{
 			Game::Com_Printf(0, "Test print message\n");
 		});
-
+		
 		Command::Add("test_url_cmd", [](Command::Params*)
 		{
 			Utils::OpenUrl("https://youtu.be/dQw4w9WgXcQ?t=85");
@@ -142,22 +108,34 @@ namespace Components
 			Game::Com_Printf(0, "Game [^3INFO^7]: missions and cheats has been resets on your game profile.\n");
 		});
 
-		Command::Add("test_sendservercmd", [](Command::Params*)
+		Command::Add("test_sendservercmd_1", [](Command::Params*)
 		{
-			Game::SV_GameSendServerCommand(-1, "gm \"testing message by jerry\"\0");
-		});	
+			Game::SV_GameSendServerCommand(-1, "server_test_cmd");
+		});
+
+		Command::Add("test_sendservercmd_2", [](Command::Params*)
+		{
+			Game::SV_GameSendServerCommand(-1, Utils::String::VA("print \"%s\"", "testing"));
+		});
+
+		ServerCommand::Add("server_test_cmd", []()
+		{
+			Game::Com_Printf(0, "^8MY FIRST TEST SERVER COMMAND\n");
+		});
+
+		//Command::Add("show_console", [](Command::Params*)
+		//{
+		//	Game::Sys_ShowConsole();
+		//});
 
 		Command::Add("test_loc_string_return_value", [](Command::Params*)
 		{
-			//Game::Com_Printf(0, "^1%s\n", Game::DB_FindXAssetHeader(Game::ASSET_TYPE_LOCALIZE_ENTRY, "IW3SP_MOD_LOC_MAINMENU").localize->value);
 			const auto value = Game::UI_SafeTranslateString("IW3SP_MOD_LOC_MAINMENU");
 			Game::Com_Printf(0, "^1%s\n", value);
-		});	
-
-		//	Unlocked the developer_script flag from "write only" to "none"
+		});
+		
 		// Unlocked the developer_script flag from "write only" to "none"
 		Dvars::Functions::Dvar_FindVar("developer_script")->flags = Game::none;
-
 
 		const float newDefault_con_inputBoxColor[4] = { 0.15f, 0.15f, 0.15f, 1.0f };
 		const float newDefault_con_inputHintBoxColor[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
@@ -178,89 +156,101 @@ namespace Components
 		Dvars::Override::DvarVec4OverrideDefaultValue("con_outputSliderColor", newDefault_con_outputSliderColor);
 		Dvars::Override::DvarVec4Override("con_outputSliderColor", Dvars::Functions::Dvar_FindVar("con_outputSliderColor")->current.vector);
 
-		//	Make check if game on english only.
-		if (!strcmp(languageName, "english"))
-			Game::DB_FindXAssetHeader(Game::ASSET_TYPE_LOCALIZE_ENTRY, "MENU_LAUNCH_WITHOUT_MODS").localize->value = "Launch without Mods";
+		// Disable cheat protection for dvars
+		// WTF, WHY DEVS USED 4 DVAR_REGISTERBOOL FOR SV_CHEATS....?!1!
+		if (Flags::HasFlag("allowcheat"))
+		{
+			Utils::Hook::Set<BYTE>(0x587872, 0xEB); // Read only.
+			Utils::Hook::Set<BYTE>(0x58788F, 0xEB); // Write protected.
+			Utils::Hook::Set<BYTE>(0x5878AD, 0xEB); // Cheat protected.
+
+			Utils::Hook(0x4B83CF, sv_cheats_hook, HOOK_CALL).install()->quick();
+			Utils::Hook::Nop(0x5899E8, 5);
+			Dvars::Override::DvarBoolOverride("sv_cheats", true, Game::none);
+		}
+
+		// Override existing localize entries.
+		LocalizedStrings::OverrideLocalizeStrings();
 
 		if (Flags::HasFlag("dump"))
 		{
-		Command::Add("dumpLocStrings", [](Command::Params* params)
-		{
-			if (params->size() < 2)
+			Command::Add("dumpLocStrings", [](Command::Params* params)
 			{
-				Game::Com_Printf(0, "dump_localize_strings <menu_name>\n");
-				return;
-			}
-
-			std::vector<Game::LocalizeEntry*> localize;
-			std::ofstream dumpFile;
-
-			FastFiles::Enum_Assets(Game::ASSET_TYPE_LOCALIZE_ENTRY, [&localize](Game::XAssetHeader header)
-			{
-				localize.push_back(header.localize);
-			}, false);
-
-			// sort localize strings
-			std::sort(localize.begin(), localize.end(), [](Game::LocalizeEntry* localize_start, Game::LocalizeEntry* localize_end)
-			{
-				return std::string_view(localize_start->name) < std::string_view(localize_end->name);
-			});
-
-			if (const auto& fs_basepath = Dvars::Functions::Dvar_FindVar("fs_basepath"); fs_basepath)
-			{
-				std::string base_path = fs_basepath->current.string;
-				const char* languageName = Game::SEH_GetLanguageName(Dvars::Functions::Dvar_FindVar("loc_language")->current.unsignedInt);
-				base_path += Utils::String::VA("\\dump\\%s\\localizedstrings\\", languageName);
-
-				if (std::filesystem::create_directories(base_path))
+				if (params->size() < 2)
 				{
-					Game::Com_Printf(0, "Created directory \"dump/%s/localizedstrings\"\n", languageName);
+					Game::Com_Printf(0, "dump_localize_strings <menu_name>\n");
+					return;
 				}
 
-				const std::string file_name = base_path + Utils::String::VA("%s.str", params->get(1));
-				dumpFile.open(file_name.c_str());
-				if (dumpFile.is_open())
+				std::vector<Game::LocalizeEntry*> localize;
+				std::ofstream dumpFile;
+
+				FastFiles::Enum_Assets(Game::ASSET_TYPE_LOCALIZE_ENTRY, [&localize](Game::XAssetHeader header)
 				{
-					dumpFile << "// dumped by IW3SP_MOD " << __TIMESTAMP__ << "\n";
-					dumpFile << "\n";
+					localize.push_back(header.localize);
+				}, false);
 
-					dumpFile << "// Note to translators:\n";
-					dumpFile << "// If a sentence is the same in your language then please change it to ""#same""\n";
-					dumpFile << "//\n";
-					dumpFile << "// eg:\n";
-					dumpFile << "// LANG_ENGLISH  \"HALT\"\n";
-					dumpFile << "// LANG_GERMAN  \"#same\"\n";
-					dumpFile << "//\n";
-					dumpFile << "// (This is so we can tell which strings have been signed-off as ok to be the same words for QA\n";
-					dumpFile << "//  and because we do not store duplicate strings, which will then get exported again next time\n";
-					dumpFile << "//  as being untranslated.)\n";
-					dumpFile << "//\n";
-					dumpFile << "VERSION             \"1\"\n";
-					dumpFile << "CONFIG				 \"C:\\trees\\cod3\\cod3\\bin\\StringEd.cfg\"\n";
-					dumpFile << "FILENOTES			 \"\"\n";
-					dumpFile << "\n";
+				// sort localize strings
+				std::sort(localize.begin(), localize.end(), [](Game::LocalizeEntry* localize_start, Game::LocalizeEntry* localize_end)
+				{
+					return std::string_view(localize_start->name) < std::string_view(localize_end->name);
+				});
 
-					for (std::size_t i = 0; i < localize.size(); i++)
+				if (const auto& fs_basepath = Dvars::Functions::Dvar_FindVar("fs_basepath"); fs_basepath)
+				{
+					std::string base_path = fs_basepath->current.string;
+					const char* languageName = Game::SEH_GetLanguageName(Dvars::Functions::Dvar_FindVar("loc_language")->current.unsignedInt);
+					base_path += Utils::String::VA("\\dump\\%s\\localizedstrings\\", languageName);
+
+					if (std::filesystem::create_directories(base_path))
 					{
-						if (Utils::String::StartsWith(localize[i]->name, Utils::String::ToUpper(params->get(1))))
-						{
-							//Utils::String::
-							std::string localize_name = Utils::String::VA("%s", localize[i]->name);
-							Utils::String::Replace(localize_name, Utils::String::ToUpper(params->get(1)) + "_", "");
-							dumpFile << "REFERENCE           " << localize_name.c_str() << std::endl;
-							dumpFile << "LANG_" << Utils::String::ToUpper(languageName) << "        " << Utils::String::VA("\"%s\"", localize[i]->value) << std::endl;
-							dumpFile << "\n";
-						}
+						Game::Com_Printf(0, "Created directory \"dump/%s/localizedstrings\"\n", languageName);
 					}
 
-					dumpFile << "ENDMARKER\n";
+					const std::string file_name = base_path + Utils::String::VA("%s.str", params->get(1));
+					dumpFile.open(file_name.c_str());
+					if (dumpFile.is_open())
+					{
+						dumpFile << "// dumped by IW3SP_MOD " << __TIMESTAMP__ << "\n";
+						dumpFile << "\n";
 
-					Game::Com_Printf(0, Utils::String::VA("Dumped localized strings to: %s", file_name.c_str()));
-					dumpFile.close();
-				}
+						dumpFile << "// Note to translators:\n";
+						dumpFile << "// If a sentence is the same in your language then please change it to ""#same""\n";
+						dumpFile << "//\n";
+						dumpFile << "// eg:\n";
+						dumpFile << "// LANG_ENGLISH  \"HALT\"\n";
+						dumpFile << "// LANG_GERMAN  \"#same\"\n";
+						dumpFile << "//\n";
+						dumpFile << "// (This is so we can tell which strings have been signed-off as ok to be the same words for QA\n";
+						dumpFile << "//  and because we do not store duplicate strings, which will then get exported again next time\n";
+						dumpFile << "//  as being untranslated.)\n";
+						dumpFile << "//\n";
+						dumpFile << "VERSION             \"1\"\n";
+						dumpFile << "CONFIG				 \"C:\\trees\\cod3\\cod3\\bin\\StringEd.cfg\"\n";
+						dumpFile << "FILENOTES			 \"\"\n";
+						dumpFile << "\n";
+
+						for (std::size_t i = 0; i < localize.size(); i++)
+						{
+							if (Utils::String::StartsWith(localize[i]->name, Utils::String::ToUpper(params->get(1))))
+							{
+								//Utils::String::
+								std::string localize_name = Utils::String::VA("%s", localize[i]->name);
+								Utils::String::Replace(localize_name, Utils::String::ToUpper(params->get(1)) + "_", "");
+								dumpFile << "REFERENCE           " << localize_name.c_str() << std::endl;
+								dumpFile << "LANG_" << Utils::String::ToUpper(languageName) << "        " << Utils::String::VA("\"%s\"", localize[i]->value) << std::endl;
+								dumpFile << "\n";
+							}
+						}
+
+						dumpFile << "ENDMARKER\n";
+
+						Game::Com_Printf(0, Utils::String::VA("Dumped localized strings to: %s", file_name.c_str()));
+						dumpFile.close();
+					}
 				}
 			});
-			}
+		}
 
 		UIScript::Add("testUIScript", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const int* info)
 		{
@@ -270,7 +260,7 @@ namespace Components
 		UIScript::Add("VisitYT", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const int* info)
 		{
 			Utils::OpenUrl("https://youtu.be/dQw4w9WgXcQ?t=85");
-		});	
+		});
 	}
 
 	void RunMod()
@@ -317,38 +307,81 @@ namespace Components
 			_snprintf_s(buffer, size, _TRUNCATE, "%s\\raw\\%s_video\\%s.%s", directory, languageName, fileName, videoFormat);
 	}
 
+	//void Com_Quit_f_stub()
+	//{
+		// This stub is necessary if we really want to close the game completely
+		// Auto-Update can stay in the process even you close the game via quit.
+		//if (Updater::UpdateRestart == true)
+		//{
+		//	Utils::Library::Terminate();
+		//}
+		//else
+		//{
+		//	Utils::Hook::Call<void()>(0x595324); //sys_exitCmdLine
+		//}
+	//}
+
+	void LanguageSetValueConfig(int langIndex)
+	{
+		Config::Set<std::string>("language", Game::SEH_GetLanguageName(langIndex));
+	}
+
+	void __declspec(naked) ui_language_stub()
+	{
+		const static uint32_t retn_addr = 0x5669B8;
+		__asm
+		{
+			push	eax; // value
+			call	Dvars::Functions::Dvar_SetIntByName;
+			call	LanguageSetValueConfig;
+			add		esp, 4;
+			jmp		retn_addr;
+		}
+	}
+
 	CommonPatch::CommonPatch()
 	{
-		//TESTING DVARS
-		// Bool dvar register test
-		Dvars::test_dvar_bool = Dvars::Register::Dvar_RegisterBool("test_dvar_bool", "Test Bool Dvar", false, Game::none);
-		// Int dvar register test
-		Dvars::test_dvar_int = Dvars::Register::Dvar_RegisterInt("test_dvar_int","Test Int Dvar", 0, 0, 3, Game::none);
+		Events::OnDvarInit([]
+		{
+			//TESTING DVARS
+			// Bool dvar register test
+			Dvars::test_dvar_bool = Dvars::Register::Dvar_RegisterBool("test_dvar_bool", "Test Bool Dvar", false, Game::none);
+			// Int dvar register test
+			Dvars::test_dvar_int = Dvars::Register::Dvar_RegisterInt("test_dvar_int", "Test Int Dvar", 0, 0, 3, Game::none);
 
-		// Enum dvar register test
-		static std::vector <const char*> r_enum_test_values = { "0", "1", "2", "3", };
-		Dvars::test_dvar_enum = Dvars::Register::Dvar_RegisterEnum( "test_dvar_enum", "Test Enum Dvar", 0, r_enum_test_values.size(), r_enum_test_values.data(), Game::none);
+			// Enum dvar register test
+			static std::vector <const char*> r_enum_test_values = { "0", "1", "2", "3", };
+			Dvars::test_dvar_enum = Dvars::Register::Dvar_RegisterEnum("test_dvar_enum", "Test Enum Dvar", 0, r_enum_test_values.size(), r_enum_test_values.data(), Game::none);
 
-		// Float dvar register test
-		Dvars::test_dvar_float = Dvars::Register::Dvar_RegisterFloat("test_dvar_float", "Test Float Dvar", 0.0f, 0.0f, 100.0f, Game::none);
+			// Float dvar register test
+			Dvars::test_dvar_float = Dvars::Register::Dvar_RegisterFloat("test_dvar_float", "Test Float Dvar", 0.0f, 0.0f, 100.0f, Game::none);
 
-		// Vectors dvars register test
-		Dvars::test_dvar_vec2 = Dvars::Register::Dvar_RegisterVec2("test_dvar_vec2", "Test Vector2 Dvar", 0.0f, 0.0f, 0.0f, 25.0f, Game::none);
-		Dvars::test_dvar_vec3 = Dvars::Register::Dvar_RegisterVec3("test_dvar_vec3", "Test Vector3 Dvar", 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, Game::none);
-		Dvars::test_dvar_vec4 = Dvars::Register::Dvar_RegisterVec4("test_dvar_vec4", "Test Vector4 Dvar", 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 100.0f, Game::none);
+			// Vectors dvars register test
+			Dvars::test_dvar_vec2 = Dvars::Register::Dvar_RegisterVec2("test_dvar_vec2", "Test Vector2 Dvar", 0.0f, 0.0f, 0.0f, 25.0f, Game::none);
+			Dvars::test_dvar_vec3 = Dvars::Register::Dvar_RegisterVec3("test_dvar_vec3", "Test Vector3 Dvar", 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, Game::none);
+			Dvars::test_dvar_vec4 = Dvars::Register::Dvar_RegisterVec4("test_dvar_vec4", "Test Vector4 Dvar", 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 100.0f, Game::none);
 
-		// Saved flag dvar register test (works on one map only)
-		Dvars::test_dvar_bool_savedflag = Dvars::Register::Dvar_RegisterBool("test_dvar_savedbool", "Test Saved Bool Dvar", false, Game::saved_flag);
+			// String DVAR Test
+			Dvars::test_dvar_string = Dvars::Register::Dvar_RegisterString("test_dvar_string", "Test String Dvar.", "default", Game::saved);
 
-		// New fov control dvars
-		Dvars::cg_fovScale = Dvars::Register::Dvar_RegisterFloat("cg_fovScale", "Scale applied to the field of view", 1.0f, 0.2f, 2.0f, Game::saved);
-		Dvars::cg_fovMin = Dvars::Register::Dvar_RegisterFloat("cg_fovMin", "The minimum possible field of view", 10.0f, 1.0f, 160.0f, Game::saved);
+			// Saved flag dvar register test (works on one map only)
+			Dvars::test_dvar_bool_savedflag = Dvars::Register::Dvar_RegisterBool("test_dvar_savedbool", "Test Saved Bool Dvar", false, Game::saved_flag);
 
-		Dvars::language_first_setting = Dvars::Register::Dvar_RegisterBool("language_first_setting", "First setting language - not modify", false, Game::saved);
-		Dvars::ui_language = Dvars::Register::Dvar_RegisterInt("ui_language", "Game Language", 0, 0, 14, Game::saved);
+			// New fov control dvars
+			Dvars::cg_fovScale = Dvars::Register::Dvar_RegisterFloat("cg_fovScale", "Scale applied to the field of view", 1.0f, 0.2f, 2.0f, Game::saved);
+			Dvars::cg_fovMin = Dvars::Register::Dvar_RegisterFloat("cg_fovMin", "The minimum possible field of view", 10.0f, 1.0f, 160.0f, Game::saved);
 
-		// Now "cg_fov" dvar can saved without resets, but in jeepride game anyways will be resets to 65 by script.
-		Dvars::cg_fov = Dvars::Register::Dvar_RegisterFloat("cg_fov", "The field of view angle in degrees", 65.0f, 1.0f, 160.0f, Game::saved);
+			Dvars::ui_language = Dvars::Register::Dvar_RegisterInt("ui_language", "Game Language", 0, 0, 14, Game::none);
+			Dvars::ui_debugMode = Dvars::Register::Dvar_RegisterBool("ui_debugMode", "Shows ui debug information on screen.", 0, 4u);
+
+			// Now "cg_fov" dvar can saved without resets, but in jeepride game anyways will be resets to 65 by script.
+			Dvars::cg_fov = Dvars::Register::Dvar_RegisterFloat("cg_fov", "The field of view angle in degrees", 65.0f, 1.0f, 160.0f, Game::saved);
+
+			//for 'main_lockout' menu
+			Game::dvar_s* ui_skipMainLockout = Dvars::Register::Dvar_RegisterBool("ui_skipMainLockout", "", false, Game::none);
+		});
+
+		Utils::Hook::Set<const char*>(0x445667, "iw3sp_mod.exe"); //-startSingleplayer
 		Utils::Hook::Set<BYTE>(0x41D652, Game::saved);
 		Utils::Hook::Set<BYTE>(0x41D653, 0x0);
 
@@ -390,13 +423,18 @@ namespace Components
 		Utils::Hook::Set<const char*>(0x567284, "vid_restart\n"); //for ClearMods
 
 		// Making the separate video folder
-		//Utils::Hook(0x5D70E5, R_Cinematic_BinkOpen_stub, HOOK_JUMP).install()->quick();
 		Utils::Hook(0x5D70DA, R_Cinematic_BinkOpen_stub01, HOOK_CALL).install()->quick();
 		Utils::Hook(0x5D70FC, R_Cinematic_BinkOpen_stub02, HOOK_CALL).install()->quick();
 
+
+		Utils::Hook(0x5669B3, ui_language_stub, HOOK_JUMP).install()->quick();
+
+		// Com_Quit_f_stub for auto-update.
+		//Utils::Hook(0x595324, Com_Quit_f_stub, HOOK_CALL).install()->quick();
+
 		// Increase fps cap to 250 for menus.
-		Utils::Hook::Set<BYTE>(0x535881, 4);
-		Utils::Hook::Set<BYTE>(0x535884, 4);
+		Utils::Hook::Set<BYTE>(0x535881, 0xEB);
+		Utils::Hook::Set<BYTE>(0x535884, 0xEB);
 
 		// Fix fps on windows 10 (stuck at 500) :: sleep(1) to sleep(0) (xoxor4d)
 		Utils::Hook::Set<BYTE>(0x53571F, 0x0);
@@ -421,8 +459,14 @@ namespace Components
 		Utils::Hook::Set<float*>(0x447661, BuildVersionColor);
 		Utils::Hook::Set<float*>(0x43A8D2, BuildVersionColor);
 
-		// Changing font in video cinematic from 'normalFont' to 'extraBigFont'.
+		// Changing the font in video cinematic from 'normalFont' to 'extraBigFont'.
 		Utils::Hook::Set<DWORD>(0x56502B, 0x6ABEC4);
+		Utils::Hook::Nop(0x4477A1, 4);
+
+		Utils::Hook::Nop(0x44045E, 5); // MAX_PACKET_USERCMDS\n
+
+		// ui_showList: changing the font.
+		Utils::Hook::Set<DWORD>(0x57164F, 0x129ADB8);
 
 		// Mouse fix
 		Utils::Hook::Nop(0x59611C, 8);
@@ -430,5 +474,13 @@ namespace Components
 		{
 			SetThreadExecutionState(ES_DISPLAY_REQUIRED);
 		}, Scheduler::Pipeline::MAIN);
+
+		Scheduler::Loop([]
+		{
+			if(Dvars::ui_debugMode->current.enabled)
+				Utils::Hook::Set<bool>(0x1E209D4, 1);
+			else
+				Utils::Hook::Set<bool>(0x1E209D4, 0);
+		}, Scheduler::Pipeline::MAIN, 50ms);
 	}
 }

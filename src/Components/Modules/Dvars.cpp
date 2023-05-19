@@ -24,6 +24,11 @@ namespace Dvars
 	Game::dvar_s* cg_fovMin = nullptr;
 	Game::dvar_s* cg_fov = nullptr;
 
+	Game::dvar_s* ui_debugMode = nullptr;
+
+	Game::dvar_s* UIDlTimeLeft = nullptr;
+	Game::dvar_s* UIDlProgress = nullptr;
+	Game::dvar_s* UIDlTransRate = nullptr;
 
 	namespace Functions
 	{
@@ -40,6 +45,18 @@ namespace Dvars
 				add     esp, 4;
 			}
 		}
+
+		void Dvar_SetIntByName(const char* dvarName, int value)
+		{
+			const static uint32_t Dvar_SetIntByName_func = 0x589630;
+			__asm
+			{
+				mov		eax, dvarName;
+				push	value;
+				call	Dvar_SetIntByName_func;
+				add     esp, 4;
+			}
+		}
 	}
 
 	namespace Register
@@ -49,6 +66,34 @@ namespace Dvars
 
 	namespace Override
 	{
+		void DvarBoolOverride(const char* dvarName, const bool value, Game::dvar_flags flags)
+		{
+			auto dvar = Dvars::Functions::Dvar_FindVar(dvarName);
+
+			if (!dvar)
+			{
+				return;
+			}
+
+			dvar->current.enabled = value;
+			dvar->latched.enabled = value;
+			dvar->flags = flags;
+			dvar->modified = false;
+		}
+
+		void DvarBoolOverride(const char* dvarName, Game::dvar_flags flags)
+		{
+			auto dvar = Dvars::Functions::Dvar_FindVar(dvarName);
+
+			if (!dvar)
+			{
+				return;
+			}
+
+			dvar->flags = flags;
+			dvar->modified = false;
+		}
+
 		void DvarVec4Override(const char* dvarName, const float* dvar_value)
 		{
 			auto dvar = Dvars::Functions::Dvar_FindVar(dvarName);

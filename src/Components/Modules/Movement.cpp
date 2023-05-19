@@ -353,20 +353,21 @@ namespace Components
 	Movement::Movement()
 	{
 		//	Int dvar register test
-		Game::dvar_s* fixed_pmove = Dvars::Register::Dvar_RegisterInt("fixed_pmove", "", 125, 0, 1000, Game::none);
-		Game::dvar_s* pmove_fixed = Dvars::Register::Dvar_RegisterBool("pmove_fixed", "Turn on/off pmove_fixed", true, Game::none);
+		//Game::dvar_s* fixed_pmove = Dvars::Register::Dvar_RegisterInt("fixed_pmove", "", 125, 0, 1000, Game::none);
+		//Game::dvar_s* pmove_fixed = Dvars::Register::Dvar_RegisterBool("pmove_fixed", "Turn on/off pmove_fixed", true, Game::none);
 
 		Utils::Hook(0x5BD012, PM_UFOMove, HOOK_CALL).install()->quick();
 		Utils::Hook(0x5BCFB1, PM_NoclipMove, HOOK_CALL).install()->quick();
  
-		Utils::Hook(0x427085, Pmove, HOOK_CALL).install()->quick();
-		Utils::Hook(0x4A3A14, Pmove, HOOK_CALL).install()->quick();
+		//Utils::Hook(0x427085, Pmove, HOOK_CALL).install()->quick();
+		//Utils::Hook(0x4A3A14, Pmove, HOOK_CALL).install()->quick();
 
 		Utils::Hook::Nop(0x5BD039, 5);  // nop the original function (ufo)
 		Utils::Hook::Nop(0x5BCFD8, 5);	//nop the original function (noclip)
 
-		Utils::Hook::Nop(0x5BD422, 5);
-		Utils::Hook(0x5BD422, Pmovesingle_stub, HOOK_JUMP).install()->quick();
+		//Add for cj mode only
+		//Utils::Hook::Nop(0x5BD422, 5);
+		//Utils::Hook(0x5BD422, Pmovesingle_stub, HOOK_JUMP).install()->quick();
 	}
 
 	Movement::~Movement()

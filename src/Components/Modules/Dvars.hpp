@@ -24,6 +24,11 @@ namespace Dvars
 	extern Game::dvar_s* cg_fovMin;
 	extern Game::dvar_s* cg_fov;
 
+	extern Game::dvar_s* ui_debugMode;
+
+	extern Game::dvar_s* UIDlTimeLeft;
+	extern Game::dvar_s* UIDlProgress;
+	extern Game::dvar_s* UIDlTransRate;
 
 	namespace Functions
 	{
@@ -31,6 +36,7 @@ namespace Dvars
 		extern Dvar_FindVar_t Dvar_FindVar;
 
 		void Dvar_SetStringByName(const char* dvarName, const char* value);
+		void Dvar_SetIntByName(const char* dvarName, int value);
 	}
 
 	namespace Register
@@ -107,6 +113,8 @@ namespace Dvars
 
 	namespace Override
 	{
+		void DvarBoolOverride(const char* dvarName, const bool value, Game::dvar_flags flags);
+		void DvarBoolOverride(const char* dvarName, Game::dvar_flags flags);
 		void DvarVec4Override(const char* dvarName, const float* dvar_value);
 		void DvarVec4OverrideDefaultValue(const char* dvarName, const float* dvar_value);
 	}

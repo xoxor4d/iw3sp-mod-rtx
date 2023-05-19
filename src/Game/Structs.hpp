@@ -734,24 +734,62 @@ namespace Game
 	};
 
 	// material stuff
+	enum MapType
+	{
+		MAPTYPE_NONE = 0x0,
+		MAPTYPE_INVALID1 = 0x1,
+		MAPTYPE_INVALID2 = 0x2,
+		MAPTYPE_2D = 0x3,
+		MAPTYPE_3D = 0x4,
+		MAPTYPE_CUBE = 0x5,
+		MAPTYPE_COUNT = 0x6,
+	};
+
+	struct Picmip
+	{
+		char platform[2];
+	};
+
+	struct CardMemory
+	{
+		int platform[2];
+	};
+
+	struct GfxImageLoadDef
+	{
+		char levelCount;
+		char flags;
+		__int16 dimensions[3];
+		int format;
+		int resourceSize;
+		char data[1];
+	};
+
+	union GfxTexture
+	{
+		IDirect3DBaseTexture9* basemap;
+		IDirect3DTexture9* map;
+		IDirect3DVolumeTexture9* volmap;
+		IDirect3DCubeTexture9* cubemap;
+		GfxImageLoadDef* loadDef;
+		const char* data;
+	};
+
 	struct GfxImage
 	{
-		char* texture;
-		char unknown2;
-		char a3;
-		char a2;
-		char unknown3;
-		char unknown4;
-		char unknown5;
-		char unknown6;
-		char a4;
-		int dataLength1;
-		int dataLength2;
-		short height;
-		short width;
-		short depth;
-		short unknown8;
-		char* name;
+		MapType mapType;
+		GfxTexture texture;
+		Picmip picmip;
+		bool noPicmip;
+		char semantic;
+		char track;
+		CardMemory cardMemory;
+		unsigned __int16 width;
+		unsigned __int16 height;
+		unsigned __int16 depth;
+		char category;
+		bool delayLoadPixels;
+		const char* name;
 	};
 
 	struct MaterialTextureDef
@@ -1016,59 +1054,6 @@ namespace Game
 		const char* name;
 	};
 
-	union XAssetHeader
-	{
-		void* data;
-		LocalizeEntry* localize;
-		Font_s* font;
-		snd_alias_list_t* sound;
-		WeaponDef_s* weapon;
-		RawFile* rawfile;
-		Material* material;
-		StringTable* stringTable;
-	};
-
-	struct XAsset
-	{
-		XAssetType type;
-		XAssetHeader header;
-	};
-
-	struct XAssetEntry
-	{
-		XAsset asset;		// 0
-		char zoneIndex;		// 8
-		bool inuse;			// 9
-		unsigned __int16 nextHash;	// 10
-		unsigned __int16 nextOverride;
-		unsigned __int16 usageFrame;
-	};
-
-	struct VariableStackBuffer
-	{
-		const char* pos;
-		uint16_t size;
-		uint16_t bufLen;
-		uint16_t localId;
-		char time;
-		char buf[1];
-	};
-
-	union VariableUnion
-	{
-		int intValue;
-		float floatValue;
-		unsigned int stringValue;
-		const float* vectorValue;
-		const char* codePosValue;
-		unsigned int pointerValue;
-		struct VariableStackBuffer* stackValue;
-		unsigned int entityOffset;
-	};
-
-
-
-
 	//New 05.10.2022
 	typedef enum ItemFontType_t {
 		UI_FONT_DEFAULT = 0, /* Auto-choose betwen big/reg/small */
@@ -1312,6 +1297,58 @@ namespace Game
 		statement_s rectWExp;
 		statement_s rectHExp;
 		statement_s forecolorAExp;
+	};
+
+	union XAssetHeader
+	{
+		void* data;
+		LocalizeEntry* localize;
+		Font_s* font;
+		snd_alias_list_t* sound;
+		WeaponDef_s* weapon;
+		RawFile* rawfile;
+		Material* material;
+		StringTable* stringTable;
+		GfxImage* image;
+		menuDef_t* menu;
+	};
+
+	struct XAsset
+	{
+		XAssetType type;
+		XAssetHeader header;
+	};
+
+	struct XAssetEntry
+	{
+		XAsset asset;		// 0
+		char zoneIndex;		// 8
+		bool inuse;			// 9
+		unsigned __int16 nextHash;	// 10
+		unsigned __int16 nextOverride;
+		unsigned __int16 usageFrame;
+	};
+
+	struct VariableStackBuffer
+	{
+		const char* pos;
+		uint16_t size;
+		uint16_t bufLen;
+		uint16_t localId;
+		char time;
+		char buf[1];
+	};
+
+	union VariableUnion
+	{
+		int intValue;
+		float floatValue;
+		unsigned int stringValue;
+		const float* vectorValue;
+		const char* codePosValue;
+		unsigned int pointerValue;
+		struct VariableStackBuffer* stackValue;
+		unsigned int entityOffset;
 	};
 
 	typedef struct
@@ -1614,6 +1651,8 @@ namespace Game
 
 	struct scr_vehicle_s;
 
+
+	/*
 	struct gentity_s {
 		entityState_s s;
 		entityShared_t r;
@@ -1625,6 +1664,21 @@ namespace Game
 		int maxHealth;
 		char _pad3[0x1C0];
 	};
+	*/
+
+	struct gentity_s
+	{
+		char gap0[0x76];
+		unsigned __int16 id;
+		char gap1[0x88];
+		gclient_s* client;
+		char gap2[0x20];
+		int entnum;
+		char gap3[0x1C];
+		int maxHealth;
+		int health;
+	};
+
 
 	enum TraceHitType
 	{
@@ -4063,4 +4117,12 @@ namespace Game
 		/*DynEntityColl*/ void* dynEntCollList[2];
 		unsigned int checksum;
 	};
+
+
+	struct localization_t
+	{
+		const char* language;
+		const char* strings;
+	};
+
 }
