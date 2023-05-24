@@ -87,7 +87,7 @@ namespace Components
 
 	void FastFiles::SetupZoneFolder(char* buffer, size_t size, const char* /*format*/, const char* directory, const char* language, const char* zoneName)
 	{
-		// Looks like as FastFiles::GetZoneLocation method, but need sprintf_s return
+		// Looks similar with FastFiles::GetZoneLocation method, but need sprintf_s return
 		std::vector<std::string> paths;
 		Utils::Merge(&paths, FastFiles::ZonePaths);
 

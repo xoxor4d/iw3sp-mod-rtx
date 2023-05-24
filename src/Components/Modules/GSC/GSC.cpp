@@ -25,6 +25,12 @@ namespace Components
 
 	void GSC::AddMethods()
 	{
+		GSC::AddMethod("SwitchToWeaponFast", [](Game::scr_entref_t entref)
+		{
+			int weaponIndex = Game::BG_FindWeaponIndexForName(Game::Scr_GetString(0));
+			Game::g_clients->ps.weapon = weaponIndex;
+			Game::SV_GameSendServerCommand(-1, Utils::String::VA("sw %d", weaponIndex));
+		}, false);
 	}
 
 	void GSC::AddFunctions()

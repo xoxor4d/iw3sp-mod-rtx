@@ -205,20 +205,28 @@ namespace Game
 		const char* name;
 	};
 
+	struct StreamFileNamePacked
+	{
+		unsigned int offset;
+		unsigned int length;
+	};
+
 	union StreamFileInfo
 	{
 		StreamFileNameRaw raw;
+		StreamFileNamePacked packed;
 	};
 
 	struct StreamFileName
 	{
+		//unsigned int fileIndex;
 		StreamFileInfo info;
 	};
 
 	struct StreamedSound
 	{
 		StreamFileName filename;
-		unsigned int totalMsec;
+		//unsigned int totalMsec; //doesn't exists in iw3sp :(
 	};
 
 	union SoundFileRef
@@ -227,14 +235,15 @@ namespace Game
 		StreamedSound streamSnd;
 	};
 
-	struct SoundFile_t
+	typedef struct SoundFile_s
 	{
 		byte type;
 		byte pad2[3];
-		SoundFileRef sound;
+		SoundFileRef u;
 		byte exists;
 		byte pad[3];
-	};
+	}SoundFile_t;
+
 
 	struct snd_alias_t
 	{
@@ -530,6 +539,14 @@ namespace Game
 		char offHandIndex;
 		char forwardmove; //buttonsVertical
 		char rightmove; //buttonsHorizontal
+		char upmove;
+		char pitchmove;
+		char yawmove;
+		float gunPitch;
+		float gunYaw;
+		float gunXOfs;
+		float gunYOfs;
+		float gunZOfs;
 		float meleeChargeYaw;
 		char meleeChargeDist;
 		char selectedLocation[2];
@@ -959,19 +976,13 @@ namespace Game
 		float scaleVirtualToReal[2];
 		float scaleVirtualToFull[2];
 		float scaleRealToVirtual[2];
-		float realViewportPosition[2];
-		float realViewportSize[2];
 		float virtualViewableMin[2];
 		float virtualViewableMax[2];
+		float realViewportSize[2];
 		float realViewableMin[2];
 		float realViewableMax[2];
-		float virtualAdjustableMin[2];
-		float virtualAdjustableMax[2];
-		float realAdjustableMin[2];
-		float realAdjustableMax[2];
 		float subScreenLeft;
 	};
-
 
 	enum EMemTrack
 	{
@@ -1353,9 +1364,233 @@ namespace Game
 
 	typedef struct
 	{
+		scr_string_t _;
+		scr_string_t active;
+		scr_string_t aim_bone;
+		scr_string_t aim_highest_bone;
+		scr_string_t aim_vis_bone;
+		scr_string_t all;
+		scr_string_t allies;
+		scr_string_t axis;
+		scr_string_t bad_path;
+		scr_string_t begin_firing;
+		scr_string_t cancel_location;
+		scr_string_t confirm_location;
+		scr_string_t crouch;
+		scr_string_t current;
+		scr_string_t damage;
+		scr_string_t dead;
+		scr_string_t death;
+		scr_string_t detonate;
+		scr_string_t direct;
+		scr_string_t dlight;
+		scr_string_t done;
+		scr_string_t empty;
+		scr_string_t end_firing;
+		scr_string_t entity;
+		scr_string_t explode;
+		scr_string_t failed;
+		scr_string_t free;
+		scr_string_t fraction;
+		scr_string_t goal;
+		scr_string_t goal_changed;
+		scr_string_t goal_yaw;
+		scr_string_t grenade;
+		scr_string_t grenadedanger;
+		scr_string_t grenade_fire;
+		scr_string_t grenade_pullback;
+		scr_string_t info_notnull;
+		scr_string_t invisible;
+		scr_string_t key1;
+		scr_string_t key2;
+		scr_string_t killanimscript;
+		scr_string_t left;
+		scr_string_t light;
+		scr_string_t movedone;
+		scr_string_t noclass;
+		scr_string_t none;
+		scr_string_t normal;
+		scr_string_t player;
+		scr_string_t position;
+		scr_string_t projectile_impact;
+		scr_string_t prone;
+		scr_string_t right;
+		scr_string_t reload;
+		scr_string_t reload_start;
+		scr_string_t rocket;
+		scr_string_t rotatedone;
+		scr_string_t script_brushmodel;
+		scr_string_t script_model;
+		scr_string_t script_origin;
+		scr_string_t snd_enveffectsprio_level;
+		scr_string_t snd_enveffectsprio_shellshock;
+		scr_string_t snd_channelvolprio_holdbreath;
+		scr_string_t snd_channelvolprio_pain;
+		scr_string_t snd_channelvolprio_shellshock;
+		scr_string_t stand;
+		scr_string_t suppression;
+		scr_string_t suppression_end;
+		scr_string_t surfacetype;
+		scr_string_t tag_aim;
+		scr_string_t tag_aim_animated;
+		scr_string_t tag_brass;
+		scr_string_t tag_butt;
 		scr_string_t tag_clip;
-		scr_string_t light_gear;
-		scr_string_t heavy_gear;
+		scr_string_t tag_flash;
+		scr_string_t tag_flash_11;
+		scr_string_t tag_flash_2;
+		scr_string_t tag_flash_22;
+		scr_string_t tag_flash_3;
+		scr_string_t tag_fx;
+		scr_string_t tag_inhand;
+		scr_string_t tag_knife_attach;
+		scr_string_t tag_knife_fx;
+		scr_string_t tag_laser;
+		scr_string_t tag_origin;
+		scr_string_t tag_weapon;
+		scr_string_t tag_player;
+		scr_string_t tag_camera;
+		scr_string_t tag_weapon_right;
+		scr_string_t tag_gasmask;
+		scr_string_t tag_gasmask2;
+		scr_string_t tag_sync;
+		scr_string_t target_script_trigger;
+		scr_string_t tempEntity;
+		scr_string_t top;
+		scr_string_t touch;
+		scr_string_t trigger;
+		scr_string_t trigger_use;
+		scr_string_t trigger_use_touch;
+		scr_string_t trigger_damage;
+		scr_string_t trigger_lookat;
+		scr_string_t truck_cam;
+		scr_string_t weapon_change;
+		scr_string_t weapon_fired;
+		scr_string_t worldspawn;
+		scr_string_t flashbang;
+		scr_string_t flash;
+		scr_string_t smoke;
+		scr_string_t night_vision_on;
+		scr_string_t night_vision_off;
+		scr_string_t mod_unknown;
+		scr_string_t mod_pistol_bullet;
+		scr_string_t mod_rifle_bullet;
+		scr_string_t mod_grenade;
+		scr_string_t mod_grenade_splash;
+		scr_string_t mod_projectile;
+		scr_string_t mod_projectile_splash;
+		scr_string_t mod_melee;
+		scr_string_t mod_head_shot;
+		scr_string_t mod_crush;
+		scr_string_t mod_telefrag;
+		scr_string_t mod_falling;
+		scr_string_t mod_suicide;
+		scr_string_t mod_trigger_hurt;
+		scr_string_t mod_explosive;
+		scr_string_t mod_impact;
+		scr_string_t script_vehicle;
+		scr_string_t script_vehicle_collision;
+		scr_string_t script_vehicle_collmap;
+		scr_string_t script_vehicle_corpse;
+		scr_string_t turret_fire;
+		scr_string_t turret_on_target;
+		scr_string_t turret_not_on_target;
+		scr_string_t turret_on_vistarget;
+		scr_string_t turret_no_vis;
+		scr_string_t turret_rotate_stopped;
+		scr_string_t turret_deactivate;
+		scr_string_t turretstatechange;
+		scr_string_t turretownerchange;
+		scr_string_t reached_end_node;
+		scr_string_t reached_wait_node;
+		scr_string_t reached_wait_speed;
+		scr_string_t near_goal;
+		scr_string_t veh_collision;
+		scr_string_t veh_predictedcollision;
+		scr_string_t _custom;
+		scr_string_t always;
+		scr_string_t auto_ai;
+		scr_string_t auto_nonai;
+		scr_string_t angle_deltas;
+		scr_string_t back_left;
+		scr_string_t back_right;
+		scr_string_t begin_custom_anim;
+		scr_string_t bullethit;
+		scr_string_t bulletwhizby;
+		scr_string_t count;
+		scr_string_t corner_approach;
+		scr_string_t damage_notdone;
+		scr_string_t deathplant;
+		scr_string_t enemy;
+		scr_string_t enemy_visible;
+		scr_string_t face_angle;
+		scr_string_t face_current;
+		scr_string_t face_default;
+		scr_string_t face_direction;
+		scr_string_t face_enemy;
+		scr_string_t face_enemy_or_motion;
+		scr_string_t face_goal;
+		scr_string_t face_motion;
+		scr_string_t face_point;
+		scr_string_t front_left;
+		scr_string_t front_right;
+		scr_string_t gravity;
+		scr_string_t grenade_return_hand_tag;
+		scr_string_t groundEntChanged;
+		scr_string_t gunshot;
+		scr_string_t high_priority;
+		scr_string_t info_player_deathmatch;
+		scr_string_t infinite_energy;
+		scr_string_t low_priority;
+		scr_string_t obstacle;
+		scr_string_t manual;
+		scr_string_t manual_ai;
+		scr_string_t max_time;
+		scr_string_t menuresponse;
+		scr_string_t middle_left;
+		scr_string_t middle_right;
+		scr_string_t min_energy;
+		scr_string_t min_time;
+		scr_string_t movemode;
+		scr_string_t neutral;
+		scr_string_t never;
+		scr_string_t noclip;
+		scr_string_t node_out_of_range;
+		scr_string_t node_relinquished;
+		scr_string_t node_taken;
+		scr_string_t node_not_safe;
+		scr_string_t nogravity;
+		scr_string_t nophysics;
+		scr_string_t pain;
+		scr_string_t pickup;
+		scr_string_t receiver;
+		scr_string_t run;
+		scr_string_t runto_arrived;
+		scr_string_t silenced_shot;
+		scr_string_t sound_blend;
+		scr_string_t spawned;
+		scr_string_t start_move;
+		scr_string_t stop;
+		scr_string_t stop_soon;
+		scr_string_t tag_eye;
+		scr_string_t tag_wheel_front_left;
+		scr_string_t tag_wheel_front_right;
+		scr_string_t tag_wheel_back_left;
+		scr_string_t tag_wheel_back_right;
+		scr_string_t tag_wheel_middle_left;
+		scr_string_t tag_wheel_middle_right;
+		scr_string_t tag_detach;
+		scr_string_t tag_popout;
+		scr_string_t tag_body;
+		scr_string_t tag_turret;
+		scr_string_t tag_turret_base;
+		scr_string_t tag_barrel;
+		scr_string_t tag_weapon_left;
+		scr_string_t walk;
+		scr_string_t world;
+		scr_string_t zonly_physics;
+		scr_string_t human;
+		scr_string_t dog;
 	}scr_const_t;
 
 	struct entityState_s {
@@ -1439,28 +1674,22 @@ namespace Game
 		ActionSlotParam_SpecifyWeapon_t specifyWeapon;
 	}ActionSlotParam_t;
 
-#define MAX_HUDELEMENTS 31
-
 	typedef enum
 	{
 		HE_TYPE_FREE = 0x0,
 		HE_TYPE_TEXT = 0x1,
 		HE_TYPE_VALUE = 0x2,
-		HE_TYPE_PLAYERNAME = 0x3,
-		HE_TYPE_MAPNAME = 0x4,
-		HE_TYPE_GAMETYPE = 0x5,
-		HE_TYPE_MATERIAL = 0x6,
-		HE_TYPE_TIMER_DOWN = 0x7,
-		HE_TYPE_TIMER_UP = 0x8,
-		HE_TYPE_TENTHS_TIMER_DOWN = 0x9,
-		HE_TYPE_TENTHS_TIMER_UP = 0xA,
-		HE_TYPE_CLOCK_DOWN = 0xB,
-		HE_TYPE_CLOCK_UP = 0xC,
-		HE_TYPE_WAYPOINT = 0xD,
-		HE_TYPE_COUNT = 0xE,
+		HE_TYPE_MATERIAL = 0x3,
+		HE_TYPE_TIMER_DOWN = 0x4,
+		HE_TYPE_TIMER_UP = 0x5,
+		HE_TYPE_TENTHS_TIMER_DOWN = 0x6,
+		HE_TYPE_TENTHS_TIMER_UP = 0x7,
+		HE_TYPE_CLOCK_DOWN = 0x8,
+		HE_TYPE_CLOCK_UP = 0x9,
+		HE_TYPE_WAYPOINT = 0xA,
+		HE_TYPE_COUNT = 0xB,
 	}he_type_t;
 
-	/* 6853 */
 	typedef struct
 	{
 		char r;
@@ -1484,18 +1713,21 @@ namespace Game
 		float z;
 		int targetEntNum;
 		float fontScale;
+		float fromFontScale;
+		int fontScaleStartTime;
+		int fontScaleTime;
 		int font;
 		int alignOrg;
 		int alignScreen;
 		hudelem_color_t color;
-		hudelem_color_t fromColor; //0x28
-		int fadeStartTime; //0x2c
+		hudelem_color_t fromColor;
+		int fadeStartTime;
 		int fadeTime;
 		int label;
 		int width;
-		int height; //0x3C
+		int height;
 		int materialIndex;
-		int offscreenMaterialIdx; //0x44
+		int offscreenMaterialIdx;
 		int fromWidth;
 		int fromHeight;
 		int scaleStartTime;
@@ -1511,7 +1743,7 @@ namespace Game
 		float value;
 		int text;
 		float sort;
-		hudelem_color_t glowColor; //0x84
+		hudelem_color_t glowColor;
 		int fxBirthTime;
 		int fxLetterTime;
 		int fxDecayStartTime;
@@ -1522,117 +1754,118 @@ namespace Game
 
 	typedef struct hudElemState_s
 	{
-		hudelem_t current[MAX_HUDELEMENTS];
-		hudelem_t archival[MAX_HUDELEMENTS];
+		hudelem_t elem[256];
 	}hudElemState_t;
 
 
-
+	//0xB2D8 - 45784 - 0x426593 (ida)
 	struct playerState_s {
-		int		commandTime;  // 0
-		int		pm_type;  // 4
-		int		bobCycle;  // 8
-		int		pm_flags;  // 12
-		int		weapFlags;  // 16
-		int		otherFlags;  // 20
-		int		pm_time;  // 24
-		vec3_t		origin;  // 28
-		vec3_t		velocity;  // 32
-		vec2_t		oldVelocity; //36
-		int		weaponTime;  // 40
-		int		weaponDelay;  // 44
-		int		grenadeTimeLeft;  // 48
-		int		throwBackGrenadeOwner;  // 52
-		int		throwBackGrenadeTimeLeft;  // 56
-		int		weaponRestrictKickTime;  // 60
-		int		foliageSoundTime;  // 64
-		int		gravity;  // 68
-		float	leanf;  // 72
-		int		speed;  // 76
-		vec3_t		delta_angles;  // 80
-		int		groundEntityNum;  // 84
-		vec3_t		vLadderVec;  // 88
-		int			jumpTime;  // 92
-		float		jumpOriginZ;  // 96
-		int		movementDir;  // 100
-		int		eFlags;  // 104
-		int		eventSequence;  // 108
-		int		events[4]; // 124
-		unsigned int eventParms[4]; //140
-		int		oldEventSequence; //144
-		int		clientNum;  // 148
-		int		offHandIndex;  // 152
-		OffhandSecondaryClass_t	offhandSecondary;  // 156
-		unsigned int weapon;  // 160
-		int		weaponstate;  // 164
-		unsigned int weaponShotCount;  // 168
-		float	fWeaponPosFrac;  // 172
-		int		adsDelayTime;  // 176
-		int		spreadOverride;  // 180
-		int		spreadOverrideState;  // 256
-		int		viewmodelIndex;  // 260
-		vec3_t		viewangles;  // 264
-		int		viewHeightTarget;  // 276
-		float	viewHeightCurrent;  // 280
-		int		viewHeightLerpTime;  // 284
-		int		viewHeightLerpTarget;  // 288
-		int		viewHeightLerpDown;  // 292
-		vec2_t		viewAngleClampBase;  // 296
-		vec2_t		viewAngleClampRange;  // 304
-		int		damageEvent;  // 312
-		int		damageYaw;  // 316
-		int		damagePitch;  // 320
-		int		damageCount;  // 324
-		int		stats[5]; // 328
-		int		ammo[128]; // 348
-		int		ammoclip[128]; // 860, 0x35C
-		unsigned int	weapons[4]; // 1372 0x55C
-		unsigned int	weaponold[4]; // 1388 0x56C
-		unsigned int	weaponrechamber[4]; // 1404 0x57C
-		float		proneDirection;  // 1420
-		float		proneDirectionPitch;  // 1424
-		//float		proneTorsoPitch;  // 1428
-		ViewLockTypes_t		viewlocked;  // 1432
-		int		viewlocked_entNum;  // 1436
-		int		cursorHint;  // 1440
-		int		cursorHintString;  // 1444
-		int		cursorHintEntIndex;  // 1448
-		int		iCompassPlayerInfo;  // 1452
-		int		radarEnabled;  // 1456
-		int		locationSelectionInfo;  // 1460
-		sprintState_t	sprintState;  // 1464
-		float		fTorsoPitch;  // 1484
-		float		fWaistPitch;  // 1488
-		float		holdBreathScale;  // 1492
-		int		holdBreathTimer;  // 1496
-		float		moveSpeedScaleMultiplier;  // 1500
-		mantleState_t	mantleState;  // 1504
-		float		meleeChargeYaw;  // 1520
-		int		meleeChargeDist;  // 1524
-		int		meleeChargeTime;  // 1528
-		int		perks;  // 1532
-		ActionSlotType_t	actionSlotType[4];  // 1536
-		ActionSlotParam_t		actionSlotParam[4];  // 1552
-		int		entityEventSequence; // 1568
-		int		weapAnim;  // 1572 0x624
-		float	aimSpreadScale;  // 1576
-		int		shellshockIndex;  // 1580
-		int		shellshockTime;  // 1584
-		int		shellshockDuration;  // 1588
-		float		dofNearStart;  // 1592
-		float		dofNearEnd;  // 1596
-		float		dofFarStart;  // 1600
-		float		dofFarEnd;  // 1604
-		float		dofNearBlur;  // 1608
-		float		dofFarBlur;  // 1612
-		float		dofViewmodelStart;  // 1616
-		float		dofViewmodelEnd;  // 1620
-		int			hudElemLastAssignedSoundID;  // 1624
-		objective_t objective[16];
-		char weaponmodels[128];
-		int		deltaTime;  // 2204
-		int		killCamEntity;  // 2208
-		hudElemState_t hud;// 2212
+		int commandTime;
+		int pm_type;
+		int bobCycle;
+		int pm_flags;
+		int weapFlags;
+		int otherFlags;
+		int pm_time;
+		vec3_t origin;
+		vec3_t velocity;
+		vec2_t oldVelocity;
+		int weaponTime;
+		int weaponDelay;
+		int grenadeTimeLeft;
+		int throwBackGrenadeOwner;
+		int throwBackGrenadeTimeLeft;
+		int weaponRestrictKickTime;
+		int foliageSoundTime;
+		int gravity;
+		float leanf;
+		int speed;
+		vec3_t delta_angles;
+		int groundEntityNum;
+		vec3_t vLadderVec;
+		int jumpTime;
+		float jumpOriginZ;
+		int movementDir;
+		int eFlags;
+		int eventSequence;
+		int events[4];
+		unsigned int eventParms[4];
+		int oldEventSequence;
+		int clientNum;
+		int offHandIndex;
+		OffhandSecondaryClass_t offhandSecondary;
+		unsigned int weapon;
+		int weaponstate;
+		unsigned int weaponShotCount;
+		float fWeaponPosFrac;
+		int adsDelayTime;
+		int spreadOverride;
+		int spreadOverrideState;
+		int viewmodelIndex;
+		vec3_t viewangles;
+		int viewHeightTarget;
+		float viewHeightCurrent;
+		int viewHeightLerpTime;
+		int viewHeightLerpTarget;
+		int viewHeightLerpDown;
+		vec2_t viewAngleClampBase;
+		vec2_t viewAngleClampRange;
+		int damageEvent;
+		int damageYaw;
+		int damagePitch;
+		int damageCount;
+		int stats[4];
+		int ammo[128];
+		int ammoclip[128];
+		unsigned int weapons[4];
+		unsigned int weaponold[4];
+		unsigned int weaponrechamber[4];
+		float proneDirection;
+		float proneDirectionPitch;
+		float proneTorsoPitch;
+		ViewLockTypes_t viewlocked;
+		int viewlocked_entNum;
+		int vehicleType;
+		vec3_t linkAngles;
+		vec3_t groundTiltAngles;
+		int cursorHint;
+		int cursorHintString;
+		int cursorHintEntIndex;
+		int locationSelectionInfo;
+		sprintState_t sprintState;
+		float fTorsoPitch;
+		float fWaistPitch;
+		float holdBreathScale;
+		int holdBreathTimer;
+		float moveSpeedScaleMultiplier;
+		mantleState_t mantleState;
+		float meleeChargeYaw;
+		int meleeChargeDist;
+		int meleeChargeTime;
+		int weapLockFlags;
+		int weapLockedEntnum;
+		unsigned int forcedViewAnimWeaponIdx;
+		int forcedViewAnimWeaponState;
+		unsigned int forcedViewAnimOriginalWeaponIdx;
+		ActionSlotType_t actionSlotType[4];
+		ActionSlotParam_t actionSlotParam[4];
+		int entityEventSequence;
+		int weapAnim;
+		float aimSpreadScale;
+		int shellshockIndex;
+		int shellshockTime;
+		int shellshockDuration;
+		float dofNearStart;
+		float dofNearEnd;
+		float dofFarStart;
+		float dofFarEnd;
+		float dofNearBlur;
+		float dofFarBlur;
+		float dofViewmodelStart;
+		float dofViewmodelEnd;
+		int hudElemLastAssignedSoundID;
+		unsigned __int8 weaponmodels[128];
+		char hud[0xAC00];
 	};
 
 	struct EntHandle
@@ -1641,12 +1874,27 @@ namespace Game
 		unsigned __int16 infoIndex;
 	};
 
-	struct gclient_s {
-		playerState_s predictedPlayerState;
-		unsigned char __pad0[0xB0];
-		int flags; // 0xAD54
-		unsigned char __pad1[0x27C];
-
+	struct gclient_s 
+	{
+		playerState_s ps;
+		char pad0[0x7C];
+		int noclip;
+		int ufo;
+		int bFrozen;
+		int buttons;
+		int oldbuttons;
+		int latched_buttons;
+		int buttonsSinceLastFrame;
+		float fGunPitch;
+		float fGunYaw;
+		float fGunXOfs;
+		float fGunYOfs;
+		float fGunZOfs;
+		int damage_blood;
+		vec3_t damage_from;
+		int damage_fromWorld;
+		int respawnTime;
+		float currentAimSpreadScale;
 	};
 
 	struct scr_vehicle_s;
@@ -1691,7 +1939,7 @@ namespace Game
 	struct __declspec(align(4)) trace_t
 	{
 		float fraction;
-		float normal[3];
+		vec3_t normal;
 		int surfaceFlags;
 		int contents;
 		const char* material;
@@ -1707,18 +1955,17 @@ namespace Game
 
 	struct pml_t
 	{
-		float forward[3];
-		float right[3];
-		float up[3];
+		vec3_t forward;
+		vec3_t right;
+		vec3_t up;
 		float frametime;
 		int msec;
 		int walking;
 		int groundPlane;
-		int almostGroundPlane;
 		trace_t groundTrace;
 		float impactSpeed;
-		float previous_origin[3];
-		float previous_velocity[3];
+		vec3_t previous_origin;
+		vec3_t previous_velocity;
 	};
 
 	struct pmove_t
@@ -1732,14 +1979,6 @@ namespace Game
 		float mins[3];
 		float maxs[3];
 		float xyspeed;
-		int proneChange;
-		float maxSprintTimeMultiplier;
-		bool mantleStarted;
-		bool test1;
-		bool test2;
-		bool test3;
-		float mantleEndPos[3];
-		int mantleDuration;
 		int viewChangeTime;
 		float viewChange;
 		char handler;
@@ -2073,6 +2312,16 @@ namespace Game
 	//30.10.22
 	struct CachedAssets_t
 	{
+		Material* scrollBarArrowUp;
+		Material* scrollBarArrowDown;
+		Material* scrollBarArrowLeft;
+		Material* scrollBarArrowRight;
+		Material* scrollBar;
+		Material* scrollBarThumb;
+		Material* sliderBar;
+		Material* sliderThumb;
+		Material* whiteMaterial;
+		Material* cursor;
 		Font_s* bigFont;
 		Font_s* smallFont;
 		Font_s* consoleFont;
@@ -2080,14 +2329,13 @@ namespace Game
 		Font_s* textFont;
 		Font_s* extraBigFont;
 		Font_s* objectiveFont;
-		Font_s* normalFont;
-		snd_alias_list_t* itemFocusSound;
 	};
 
 	struct sharedUiInfo_t
 	{
 		CachedAssets_t assets;
 	};
+
 	#define uiMem (*((sharedUiInfo_t*)(0x128F9C4)))
 
 #pragma pack(push, 1)
@@ -3042,6 +3290,44 @@ namespace Game
 		FxElemDef* elemDefs;
 	};
 
+	enum weapAnimFiles_t
+	{
+		WEAP_ANIM_ROOT = 0x0,
+		WEAP_ANIM_IDLE = 0x1,
+		WEAP_ANIM_EMPTY_IDLE = 0x2,
+		WEAP_ANIM_FIRE = 0x3,
+		WEAP_ANIM_HOLD_FIRE = 0x4,
+		WEAP_ANIM_LASTSHOT = 0x5,
+		WEAP_ANIM_RECHAMBER = 0x6,
+		WEAP_ANIM_MELEE = 0x7,
+		WEAP_ANIM_MELEE_CHARGE = 0x8,
+		WEAP_ANIM_RELOAD = 0x9,
+		WEAP_ANIM_RELOAD_EMPTY = 0xA,
+		WEAP_ANIM_RELOAD_START = 0xB,
+		WEAP_ANIM_RELOAD_END = 0xC,
+		WEAP_ANIM_RAISE = 0xD,
+		WEAP_ANIM_FIRST_RAISE = 0xE,
+		WEAP_ANIM_DROP = 0xF,
+		WEAP_ANIM_ALT_RAISE = 0x10,
+		WEAP_ANIM_ALT_DROP = 0x11,
+		WEAP_ANIM_QUICK_RAISE = 0x12,
+		WEAP_ANIM_QUICK_DROP = 0x13,
+		WEAP_ANIM_EMPTY_RAISE = 0x14,
+		WEAP_ANIM_EMPTY_DROP = 0x15,
+		WEAP_ANIM_SPRINT_IN = 0x16,
+		WEAP_ANIM_SPRINT_LOOP = 0x17,
+		WEAP_ANIM_SPRINT_OUT = 0x18,
+		WEAP_ANIM_DETONATE = 0x19,
+		WEAP_ANIM_NIGHTVISION_WEAR = 0x1A,
+		WEAP_ANIM_NIGHTVISION_REMOVE = 0x1B,
+		WEAP_ANIM_ADS_FIRE = 0x1C,
+		WEAP_ANIM_ADS_LASTSHOT = 0x1D,
+		WEAP_ANIM_ADS_RECHAMBER = 0x1E,
+		WEAP_ANIM_ADS_UP = 0x1F,
+		WEAP_ANIM_ADS_DOWN = 0x20,
+		NUM_WEAP_ANIMS = 0x21,
+	};
+
 	struct WeaponDef_s
 	{
 		const char* szInternalName;
@@ -3821,6 +4107,7 @@ namespace Game
 		Material* textDecodeCharactersGlow;
 	}cgMedia_t;
 
+	/*
 	struct cg_s
 	{
 		int clientNum;
@@ -3842,6 +4129,97 @@ namespace Game
 		int mapRestart;
 		//int renderingThirdPerson;
 		playerState_s predictedPlayerState;
+	};
+	*/
+
+	struct playerEntity_t
+	{
+		float fLastWeaponPosFrac;
+		int bPositionToADS;
+		float fOOPositionBlendTime;
+		float vPositionBlendOrg[3];
+		float vPositionBlendAng[3];
+		float vPositionLastOrg[3];
+		float vPositionLastAng[3];
+		float fLastIdleFactor;
+		float vLastMoveOrg[3];
+		float vLastMoveAng[3];
+	};
+
+	struct cg_s
+	{
+		int clientNum;
+		int localClientNum;
+		DemoType demoType;
+		CubemapShot cubemapShot;
+		int cubemapSize;
+		int serverCommandSequence;
+		int latestSnapshotNum;
+		int latestSnapshotTime;
+		int loaded;
+		snapshot_s* snap;
+		snapshot_s* nextSnap;
+		snapshot_s activeSnapshots[2];
+		int createdNextSnap;
+		float frameInterpolation;
+		int frametime;
+		int animFrametime;
+		int time;
+		int oldTime;
+		int physicsTime;
+		playerState_s predictedPlayerState;
+		char gap1[0x174];
+		playerEntity_t playerEntity;
+		int validPPS;
+		int predictedErrorTime;
+		vec3_t predictedError;
+		float landChange;
+		int landTime;
+		float heightToCeiling;
+		char gap2[16536];
+		vec3_t refdefViewAngles;
+		vec3_t lastVieworg;
+		vec3_t swayViewAngles;
+		vec3_t swayAngles;
+		vec3_t swayOffset;
+		float zoomSensitivity;
+		int vehicleInitView;
+		float prevVehicleInvAxis[3][3];
+		bool vehicleViewLocked;
+		vec3_t vehicleViewLockedAngles;
+		int showScores;
+		int scoreFadeTime;
+		int timeScaleTimeStart;
+		int timeScaleTimeEnd;
+		float timeScaleStart;
+		float timeScaleEnd;
+		int deadquoteStartTime;
+		int cursorHintIcon;
+		int cursorHintTime;
+		int cursorHintFade;
+		int cursorHintString;
+		int lastClipFlashTime;
+		int invalidCmdHintType;
+		int invalidCmdHintTime;
+		int lastHealthPulseTime;
+		int lastHealthLerpDelay;
+		int lastHealthClient;
+		float lastHealth;
+		float healthOverlayFromAlpha;
+		float healthOverlayToAlpha;
+		int healthOverlayPulseTime;
+		int healthOverlayPulseDuration;
+		int healthOverlayPulsePhase;
+		bool healthOverlayHurt;
+		int proneBlockedEndTime;
+		int lastStance;
+		int lastStanceChangeTime;
+		int lastStanceFlashTime;
+		int voiceTime;
+		unsigned int weaponSelect;
+		int weaponSelectTime;
+		unsigned int weaponLatestPrimaryIdx;
+		int prevViewmodelWeapon;
 	};
 
 	enum svscmd_type
@@ -4125,4 +4503,43 @@ namespace Game
 		const char* strings;
 	};
 
+	struct fileInIwd_s
+	{
+		unsigned int pos;
+		char* name;
+		fileInIwd_s* next;
+	};
+
+	struct iwd_t
+	{
+		char iwdFilename[256];
+		char iwdBasename[256];
+		char iwdGamename[256];
+		unsigned __int8* handle;
+		int checksum;
+		int pure_checksum;
+		volatile int hasOpenFile;
+		int numFiles;
+		unsigned __int8 referenced;
+		unsigned int hashSize;
+		fileInIwd_s** hashTable;
+		fileInIwd_s* buildBuffer;
+	};
+
+	struct directory_t
+	{
+		char path[256];
+		char gamedir[256];
+	};
+
+	struct searchpath_s
+	{
+		searchpath_s* next;
+		iwd_t* iwd;
+		directory_t* dir;
+		int bLocalized;
+		int ignore;
+		int ignorePureCheck;
+		int language;
+	};
 }

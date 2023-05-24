@@ -30,7 +30,7 @@ namespace Utils
 				(*helper->callback)(dlnow, dltotal, speed);
 			}
 
-			Game::Com_Printf(0, "^1Total file size: %d, ^2Current Download Progress: %d, ^3Current Progress: %d\n", dltotal, dlnow, speed);
+			//Game::Com_Printf(0, "^1Total file size: %d, ^2Current Download Progress: %d, ^3Current Progress: %d\n", dltotal, dlnow, speed);
 		}
 		catch (...)
 		{
@@ -86,17 +86,17 @@ namespace Utils
 
 		if (curl_easy_perform(curl) == CURLE_OK)
 		{
-			Game::Com_Printf(0, "HTTP: buffer return - good\n");
+			//Game::Com_Printf(0, "HTTP: buffer return - good\n");
 			return { std::move(buffer) };
 		}
 
 		if (helper.exception)
 		{
-			Game::Com_Printf(0, "HTTP: Error\n");
+			//Game::Com_Printf(0, "HTTP: Error\n");
 			std::rethrow_exception(helper.exception);
 		}
 
-		Game::Com_Printf(0, "HTTP: All good\n");
+		//Game::Com_Printf(0, "HTTP: All good\n");
 		return {};
 	}
 }

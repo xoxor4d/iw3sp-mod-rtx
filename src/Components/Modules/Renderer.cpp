@@ -55,8 +55,8 @@ namespace Components
 		}
 	}
 
-	bool GetPlayerADS() {return *reinterpret_cast <bool*>(0x720004);}
-	float GetCurrentWeaponAdsProgress(){return *reinterpret_cast<float*>(0x714BA8 + 208);}
+	//bool GetPlayerADS() {return *reinterpret_cast <bool*>(0x720004);}
+	//float GetCurrentWeaponAdsProgress(){return *reinterpret_cast<float*>(0x714BA8 + 208);}
 
 	// Reversed function
 	double CG_GetViewFov(int localClientNum)
@@ -64,18 +64,19 @@ namespace Components
 		float calc_fov;
 
 		calc_fov = Dvars::Functions::Dvar_FindVar("cg_fov")->current.value;
-		unsigned int offhand_index = Game::g_clients->predictedPlayerState.offHandIndex;
-		if ((Game::g_clients->predictedPlayerState.weapFlags & 2) == 0)
+		unsigned int offhand_index = Game::ps->offHandIndex;
+		if ((Game::ps->weapFlags & 2) == 0)
 		{
-			offhand_index = Game::g_clients->predictedPlayerState.weapon;
+			offhand_index = Game::ps->weapon;
 		}
+
 		const auto weapon = Game::BG_WeaponNames[offhand_index];
 
 		auto check_flags_and_fovmin = [&]() -> float
 		{
-			if ((Game::g_clients->predictedPlayerState.eFlags & 0x300) != 0)
+			if ((Game::ps->eFlags & 0x300) != 0)
 			{
-				if (Game::g_clients->predictedPlayerState.viewlocked)
+				if (Game::ps->viewlocked)
 				{
 					//	OMG! We have the function which get the current state of the turret.
 					auto func = Utils::Hook::Call<int()>(0x4356B0)();
@@ -98,39 +99,27 @@ namespace Components
 			return calc_fov;
 		};
 
-		if (Game::g_clients->predictedPlayerState.pm_type == 5)
+		if (Game::ps->pm_type == 5)
 		{
 			calc_fov = 90.0f;
 			return check_flags_and_fovmin();
 		}
 
-		float adsProgress = GetCurrentWeaponAdsProgress();
-
 		if (weapon->aimDownSight)
 		{
-			/*
-			if (Game::g_clients->predictedPlayerState.fWeaponPosFrac == 1.0f)
-			{
-				calc_fov = weapon->fAdsZoomFov;
-				return check_flags_and_fovmin();
-			}
-			*/
-
-			if (adsProgress == 1.0)
+			if (Game::ps->fWeaponPosFrac == 1.0f)
 			{
 				calc_fov = weapon->fAdsZoomFov;
 				return check_flags_and_fovmin();
 			}
 
-			if (0.0f != adsProgress)
+			if (0.0f != Game::ps->fWeaponPosFrac)
 			{
 				float ads_factor;
 
-				bool playerInAds = GetPlayerADS();
-
-				if (playerInAds)
+				if (Game::cgs->playerEntity.bPositionToADS)
 				{
-					const float w_pos_frac = adsProgress - (1.0f - weapon->fAdsZoomInFrac);
+					const float w_pos_frac = Game::ps->fWeaponPosFrac - (1.0f - weapon->fAdsZoomInFrac);
 					if (w_pos_frac <= 0.0f)
 					{
 						return check_flags_and_fovmin();
@@ -139,7 +128,7 @@ namespace Components
 				}
 				else
 				{
-					const float w_pos_frac = adsProgress - (1.0f - weapon->fAdsZoomOutFrac);
+					const float w_pos_frac = Game::ps->fWeaponPosFrac - (1.0f - weapon->fAdsZoomOutFrac);
 					if (w_pos_frac <= 0.0f)
 					{
 						return check_flags_and_fovmin();

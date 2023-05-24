@@ -193,7 +193,7 @@ namespace Components
 
 		Scheduler::Once([]
 		{
-			Game::menuDef_t* menu = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "mod_download_popmenu").menu;
+			Game::menuDef_t* menu = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "updater_download_menu").menu;
 
 			const auto required_files = update_data.access<std::vector<Updater::file_info>>([](Updater::update_data_t& data_)
 			{
@@ -209,7 +209,8 @@ namespace Components
 					data_.current_file = file.name;
 				});
 
-				menu->items[2]->text = file.name.c_str();
+				menu->items[4]->text = file.name.c_str();
+
 				Game::Com_Printf(0, "[Updater]: downloading file %s\n", file.name.data());
 
 				const auto data = Updater::DownloadFile(file.name);
@@ -252,7 +253,7 @@ namespace Components
 			Updater::SetUpdateDownloadStatus(true, true);
 
 			//Dvars::UIDlTimeLeft->current.string = "";
-			menu->items[2]->text = "";
+			menu->items[4]->text = "";
 			//Game::Com_Printf(0, "------------------------GAME UPDATE END--------------------\n");
 			
 			// Making the full restart of the game.
@@ -261,6 +262,8 @@ namespace Components
 
 			Updater::ResetData();
 			Updater::UpdateRestart = true;
+
+			Command::Execute("openmenu updater_restart", false);
 
 			//Command::Execute("startSingleplayer\n", false);
 			//Utils::Library::LaunchProcess("iw3sp.exe", "-dump -nocheat", workingDir);
@@ -328,7 +331,6 @@ namespace Components
 				const auto name = file[0].GetString();
 				const auto sha = file[2].GetString();
 
-				Game::Com_Printf(0, "Name file: %s, SHA %s\n", name, sha);
 				update_files.push_back(name);
 
 				if (!CheckFile(name, sha))
@@ -369,13 +371,14 @@ namespace Components
 
 			if (UpdateAvailable())
 			{
-				Command::Execute("openmenu mod_download_popmenu", false);
+				Command::Execute("openmenu updater_popmenu", false);
 			}
 		}, Scheduler::Pipeline::ASYNC);
 	}
 
 	void delete_old_file()
 	{
+		Utils::IO::RemoveFile("__iw3sp_mod");
 		Utils::IO::RemoveFile(GetDLLName() + ".old");
 	}
 
@@ -393,7 +396,7 @@ namespace Components
 			Dvars::UIDlTransRate = Dvars::Register::Dvar_RegisterString("ui_dl_transRate", "", "", Game::none);
 		});
 
-		// Dev Test
+		// Dev Test (remove from release)
 		Command::Add("check_updater", [](Command::Params*)
 		{
 			Updater::CL_GetAutoUpdate();
@@ -411,6 +414,11 @@ namespace Components
 		UIScript::Add("check_avaliable_updates", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const int* info)
 		{
 			Updater::CL_GetAutoUpdate();
+		});
+
+		UIScript::Add("update_start_download", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const int* info)
+		{
+			Updater::CL_StartUpdate();
 		});
 
 		//Debug

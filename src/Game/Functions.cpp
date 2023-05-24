@@ -116,6 +116,10 @@ namespace Game
 
 	DB_IsXAssetDefault_t DB_IsXAssetDefault = DB_IsXAssetDefault_t(0x45B040);
 
+
+	FS_AddIwdFilesForGameDirectory_t FS_AddIwdFilesForGameDirectory = FS_AddIwdFilesForGameDirectory_t(0x579FD0);
+
+
 	snd_alias_list_t* __cdecl Com_FindSoundAlias_FastFile(const char* name)
 	{
 		XAssetHeader header;
@@ -298,6 +302,8 @@ namespace Game
 	}
 
 	//	Game entities
+	Game::cg_s* cgs = reinterpret_cast<Game::cg_s*>(0x6FA590);
+	Game::playerState_s* ps = reinterpret_cast<Game::playerState_s*>(0x714BA8);
 	Game::gentity_s* g_entities = reinterpret_cast<Game::gentity_s*>(0xC81418);
 	Game::gclient_s* g_clients = reinterpret_cast<Game::gclient_s*>(0xE0DA00);
 	Game::pmove_t* pmove = reinterpret_cast<Game::pmove_t*>(0x7FDE88);
@@ -354,6 +360,8 @@ namespace Game
 	ScreenPlacement* scrPlace = reinterpret_cast<ScreenPlacement*>(0x8F8C68);
 	ScreenPlacement* scrPlaceFull = reinterpret_cast<ScreenPlacement*>(0x8F8C20);
 	ScreenPlacement* scrPlaceFullUnsafe = reinterpret_cast<ScreenPlacement*>(0x8F8CB0);
+
+	Game::searchpath_s** fs_searchpaths = reinterpret_cast<Game::searchpath_s**>(0x1E209E4);
 
 	ScreenPlacement* ScrPlace_GetFullPlacement()
 	{
@@ -753,5 +761,28 @@ namespace Game
 		}
 		ShowWindow(Game::hWndParent, 1);
 		SendMessageA(Game::hwndBuffer, 182, 0, 65535);
+	}
+
+
+	void FS_DisplayPath(int bLanguageCull)
+	{
+		const static uint32_t FS_DisplayPath_func = 0x579C80;
+		__asm
+		{
+			mov		eax, bLanguageCull;
+			call	FS_DisplayPath_func;
+		}
+	}
+
+	void FS_AddLocalizedGameDirectory(const char* dir/*edi*/, const char* path)
+	{
+		const static uint32_t FS_AddLocalizedGameDirectory_func = 0x57A6D0;
+		__asm
+		{
+			push	path;
+			mov		edi, dir;
+			call	FS_AddLocalizedGameDirectory_func;
+			add		esp, 4;
+		}
 	}
 }

@@ -67,9 +67,9 @@ namespace Components
 
 	void Sys_SnapVector()
 	{
-		Game::g_clients->predictedPlayerState.velocity[0] = rint(Game::g_clients->predictedPlayerState.velocity[0]);
-		Game::g_clients->predictedPlayerState.velocity[1] = rint(Game::g_clients->predictedPlayerState.velocity[1]);
-		Game::g_clients->predictedPlayerState.velocity[2] = rint(Game::g_clients->predictedPlayerState.velocity[2]);
+		Game::g_clients->ps.velocity[0] = rint(Game::g_clients->ps.velocity[0]);
+		Game::g_clients->ps.velocity[1] = rint(Game::g_clients->ps.velocity[1]);
+		Game::g_clients->ps.velocity[2] = rint(Game::g_clients->ps.velocity[2]);
 	}
 
 	Game::vec_t Vec3Normalize(Game::vec3_t v) {
@@ -120,7 +120,6 @@ namespace Components
 		else
 		{
 			v9 = ps->velocity[0] * wishdir[0] + ps->velocity[1] * wishdir[1] + ps->velocity[2] * wishdir[2];
-			//v9 = ps->velocity[0] * wishdir[0] + ps->velocity[1] * wishdir[1] + ps->velocity[2] * wishdir[2];
 			v10 = wishspeed - v9;
 			if (v10 > 0.0)
 			{

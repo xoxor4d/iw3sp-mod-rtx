@@ -152,6 +152,7 @@ namespace Game
 	extern unsigned int GScr_AllocString(const char* s);
 
 	//16.10.22
+	extern Game::playerState_s* ps;
 	extern Game::gentity_s* g_entities;
 	extern Game::gclient_s* g_clients;
 	extern Game::pmove_t* pmove;
@@ -269,4 +270,13 @@ namespace Game
 
 	void Sys_CreateConsole/*ax*/(HINSTANCE hInstance /*edi*/);
 	void Sys_ShowConsole();
+
+	void FS_DisplayPath(int bLanguageCull);
+
+	extern Game::searchpath_s** fs_searchpaths;
+
+	typedef void(__cdecl* FS_AddIwdFilesForGameDirectory_t)(const char* path, char* pszGameFolder);
+	extern FS_AddIwdFilesForGameDirectory_t FS_AddIwdFilesForGameDirectory;
+
+	void FS_AddLocalizedGameDirectory(const char* dir/*edi*/, const char* path);
 }

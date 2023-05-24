@@ -54,18 +54,15 @@ namespace Components
 	
 	void Language::IntroSubtitlesStub()
 	{
-		if (CommonPatch::iw3sp_mod_loc_ff_exists)
+		if (Language::GetCurrentLanguage() == "english")
 		{
-			if (Language::GetCurrentLanguage() == "english")
-			{
-				Utils::Hook::Set<const char*>(0x420F45, "video/vidsubtitles.csv");
-				Utils::Hook::Set<const char*>(0x567AA4, "video/vidsubtitles.csv");
-			}
-			else
-			{
-				Utils::Hook::Set<const char*>(0x420F45, "video/subtitles.csv");
-				Utils::Hook::Set<const char*>(0x567AA4, "video/subtitles.csv");
-			}
+			Utils::Hook::Set<const char*>(0x420F45, "video/vidsubtitles.csv");
+			Utils::Hook::Set<const char*>(0x567AA4, "video/vidsubtitles.csv");
+		}
+		else
+		{
+			Utils::Hook::Set<const char*>(0x420F45, "video/subtitles.csv");
+			Utils::Hook::Set<const char*>(0x567AA4, "video/subtitles.csv");
 		}
 	}
 
