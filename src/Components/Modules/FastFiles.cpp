@@ -88,20 +88,16 @@ namespace Components
 	void FastFiles::SetupZoneFolder(char* buffer, size_t size, const char* /*format*/, const char* directory, const char* language, const char* zoneName)
 	{
 		// Looks similar with FastFiles::GetZoneLocation method, but need sprintf_s return
-		std::vector<std::string> paths;
-		Utils::Merge(&paths, FastFiles::ZonePaths);
-
-		for (auto& path : paths)
+		for (auto& path : FastFiles::ZonePaths)
 		{
 			if (Utils::IO::FileExists(Utils::String::VA("%s\\%s\\%s.ff", directory, path.c_str(), zoneName)))
 			{
 				sprintf_s(buffer, size, "%s\\%s\\%s.ff", directory, path.data(), zoneName);
-			}
-			else
-			{
-				sprintf_s(buffer, size, "%s\\zone\\%s\\%s.ff", directory, language, zoneName);
+				return;
 			}
 		}
+
+		sprintf_s(buffer, size, "%s\\zone\\%s\\%s.ff", directory, language, zoneName);
 	}
 
 	void __declspec(naked) DB_TryLoadXFileInternal_stub()
@@ -119,10 +115,13 @@ namespace Components
 
 	FastFiles::FastFiles()
 	{
-		FastFiles::AddZonePath("zone\\iw3sp_mod\\");
-
 		// Custom zone folder
 		Utils::Hook(0x45BFE7, DB_TryLoadXFileInternal_stub, HOOK_JUMP).install()->quick();
+
+		FastFiles::AddZonePath("iw3sp_data\\zone\\");
+		FastFiles::AddZonePath("iw3sp_data\\zone\\english\\");
+		FastFiles::AddZonePath("iw3sp_data\\zone\\german\\");
+		FastFiles::AddZonePath("iw3sp_data\\zone\\russian\\");
 
 		Command::Add("loadzone", [](Command::Params* params)
 		{

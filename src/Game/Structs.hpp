@@ -23,7 +23,6 @@ namespace Game
 		scr_string_t classnum;
 	};
 
-
 	typedef void(*xfunction_t)();
 	typedef void (*xmethod_t)(scr_entref_t);
 
@@ -46,19 +45,15 @@ namespace Game
 	enum XFILE_BLOCK_TYPES
 	{
 		XFILE_BLOCK_TEMP = 0x0,
-		XFILE_BLOCK_PHYSICAL = 0x1,
-		XFILE_BLOCK_RUNTIME = 0x2,
-		XFILE_BLOCK_VIRTUAL = 0x3,
-		XFILE_BLOCK_LARGE = 0x4,
-
-		// Those are probably incorrect
-		XFILE_BLOCK_CALLBACK,
-		XFILE_BLOCK_VERTEX,
-		XFILE_BLOCK_INDEX,
-
-		MAX_XFILE_COUNT,
-
-		XFILE_BLOCK_INVALID = -1
+		XFILE_BLOCK_RUNTIME_BEGIN = 0x1,
+		XFILE_BLOCK_RUNTIME = 0x1,
+		XFILE_BLOCK_LARGE_RUNTIME = 0x2,
+		XFILE_BLOCK_PHYSICAL_RUNTIME = 0x3,
+		XFILE_BLOCK_RUNTIME_END = 0x4,
+		XFILE_BLOCK_VIRTUAL = 0x4,
+		XFILE_BLOCK_LARGE = 0x5,
+		XFILE_BLOCK_PHYSICAL = 0x6,
+		MAX_XFILE_COUNT = 0x7,
 	};
 
 	struct XBlock
@@ -92,7 +87,7 @@ namespace Game
 	{
 		unsigned int size;
 		unsigned int externalSize;
-		unsigned int blockSize[9];
+		unsigned int blockSize[MAX_XFILE_COUNT];
 	};
 
 	enum XAssetType
