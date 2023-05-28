@@ -15,6 +15,12 @@ namespace Components
 		return name;
 	}
 
+	std::string GetExeName()
+	{
+		static const auto name = "iw3sp_mod.exe";
+		return name;
+	}
+
 	//set_update_download_status
 	void Updater::SetUpdateDownloadStatus(bool done, bool success)
 	{
@@ -30,7 +36,7 @@ namespace Components
 	{
 		std::string data;
 
-		if (name == GetDLLName())
+		if (name == GetDLLName() || name == GetExeName())
 		{
 			if (!Utils::IO::ReadFile(name, &data))
 			{
@@ -61,6 +67,11 @@ namespace Components
 	bool Updater::WriteFile(const std::string& name, const std::string& data)
 	{
 		if (name == GetDLLName() && Utils::IO::FileExists(name) && !Utils::IO::moveFile(name, name + ".old"))
+		{
+			return false;
+		}
+
+		if (name == GetExeName() && Utils::IO::FileExists(name) && !Utils::IO::moveFile(name, name + ".old"))
 		{
 			return false;
 		}
@@ -337,7 +348,7 @@ namespace Components
 				{
 					std::string name_ = name;
 
-					if (name_.contains(GetDLLName()))
+					if (name_.contains(GetDLLName()) || name_.contains(GetExeName()))
 					{
 						update_data.access([](update_data_t& data_)
 						{
@@ -380,6 +391,7 @@ namespace Components
 	{
 		Utils::IO::RemoveFile("__iw3sp_mod");
 		Utils::IO::RemoveFile(GetDLLName() + ".old");
+		Utils::IO::RemoveFile(GetExeName() + ".old");
 	}
 
 	Updater::Updater()

@@ -55,7 +55,7 @@ namespace Components
 
 		Loader::Pregame = false;
 		// Make sure preDestroy is called when the game shuts down
-		//Scheduler::OnGameShutdown(Loader::PreDestroy);
+		Scheduler::OnGameShutdown(Loader::PreDestroy);
 	}
 
 	void Loader::Uninitialize()

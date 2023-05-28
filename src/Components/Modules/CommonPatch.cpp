@@ -408,15 +408,15 @@ namespace Components
 			Dvars::ui_debugMode = Dvars::Register::Dvar_RegisterBool("ui_debugMode", "Shows ui debug information on screen.", 0, 4u);
 
 			// Now "cg_fov" dvar can saved without resets, but in jeepride game anyways will be resets to 65 by script.
-			Dvars::cg_fov = Dvars::Register::Dvar_RegisterFloat("cg_fov", "The field of view angle in degrees", 65.0f, 1.0f, 160.0f, Game::saved);
+			//Dvars::cg_fov = Dvars::Register::Dvar_RegisterFloat("cg_fov", "The field of view angle in degrees", 65.0f, 1.0f, 160.0f, Game::saved);
 
 			//for 'main_lockout' menu
 			Game::dvar_s* ui_skipMainLockout = Dvars::Register::Dvar_RegisterBool("ui_skipMainLockout", "", false, Game::none);
 		});
 
 		Utils::Hook::Set<const char*>(0x445667, "iw3sp_mod.exe"); //-startSingleplayer
-		Utils::Hook::Set<BYTE>(0x41D652, Game::saved);
-		Utils::Hook::Set<BYTE>(0x41D653, 0x0);
+		//Utils::Hook::Set<BYTE>(0x41D652, Game::saved);
+		//Utils::Hook::Set<BYTE>(0x41D653, 0x0);
 
 		// Increase of the game assets limits.
 		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_IMAGE, 7168);
