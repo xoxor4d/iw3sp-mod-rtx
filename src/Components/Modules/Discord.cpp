@@ -57,15 +57,15 @@ namespace Components
 		{
 			const auto difficulty = Dvars::Functions::Dvar_FindVar("g_gameskill")->current.integer;
 			if (difficulty == 0)
-				return "IW3SP_MOD_LOC_DIFFICULTY_EASY";
+				return "IW3SP_MOD_LOC_DISCORD_DIFFICULTY_EASY";
 			else if (difficulty == 1)
-				return "IW3SP_MOD_LOC_DIFFICULTY_MEDIUM";
+				return "IW3SP_MOD_LOC_DISCORD_DIFFICULTY_MEDIUM";
 			else if (difficulty == 2)
-				return "IW3SP_MOD_LOC_DIFFICULTY_HARD";
+				return "IW3SP_MOD_LOC_DISCORD_DIFFICULTY_HARD";
 			else if (difficulty == 3)
-				return "IW3SP_MOD_LOC_DIFFICULTY_FU";
+				return "IW3SP_MOD_LOC_DISCORD_DIFFICULTY_FU";
 			else
-				return "IW3SP_MOD_LOC_DIFFICULTY_UNKNOWN";
+				return "IW3SP_MOD_LOC_DISCORD_DIFFICULTY_UNKNOWN";
 		}
 		else
 			return "";
@@ -78,16 +78,16 @@ namespace Components
 		{
 			if (!strcmp(map_name_info.data(), "ac130") && Dvars::Functions::Dvar_FindVar("credits_active")->current.integer == 1)
 			{
-				return "IW3SP_MOD_LOC_SIMPLECREDITS";
+				return "IW3SP_MOD_LOC_DISCORD_SIMPLECREDITS";
 			}
 
-			return Utils::String::VA("IW3SP_MOD_LOC_%s", map_name_info.data());
+			return Utils::String::VA("IW3SP_MOD_LOC_DISCORD_%s", map_name_info.data());
 		}
 		else
 		{
 			bool user_in_main_menu = InMainMenu(map_name_info);
-			if (user_in_main_menu) return "IW3SP_MOD_LOC_MAINMENU";
-			else return "IW3SP_MOD_LOC_MAPUNKNOWN";
+			if (user_in_main_menu) return "IW3SP_MOD_LOC_DISCORD_MAINMENU";
+			else return "IW3SP_MOD_LOC_DISCORD_MAPUNKNOWN";
 		}
 	}
 
@@ -156,7 +156,6 @@ namespace Components
 
 			Discord_Presence_Initialized = true;
 
-			//while(!FastFiles::DB_IsZoneLoaded("english_iw3sp_mod_patch")) std::this_thread::sleep_for(10ms);
 			Scheduler::Loop(Discord::DiscordUpdate, Scheduler::Pipeline::MAIN, 5s);
 		}
 	}

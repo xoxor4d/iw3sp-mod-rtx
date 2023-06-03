@@ -4,11 +4,6 @@ namespace Components
 {
 	std::unordered_map<std::string, UIScript::UIScriptHandler> UIScript::UIScripts;
 
-	void UIScript::Add(const std::string& name, const UIScriptHandler& callback)
-	{
-		UIScripts[name] = callback;
-	}
-
 	template<> int UIScript::Token::get() const
 	{
 		if (this->isValid())
@@ -47,16 +42,22 @@ namespace Components
 		}
 	}
 
-	int* UI_GetInfo()
+	Game::uiInfo_s* UIScript::UI_GetInfo()
 	{
 		return Game::uiInfo;
 	}
 
+	void UIScript::Add(const std::string& name, const UIScriptHandler& callback)
+	{
+		UIScripts[name] = callback;
+	}
+
 	bool UIScript::RunMenuScript(const char* name, const char** args)
 	{
+		// Token doesn't work in CoD4.
 		if (const auto itr = UIScripts.find(name); itr != UIScripts.end())
 		{
-			const auto* info = UI_GetInfo();
+			const auto* info = UIScript::UI_GetInfo();
 			itr->second(Token(args), info);
 			return true;
 		}
@@ -90,12 +91,38 @@ namespace Components
 			push	overwritten_str;		// the original push we hooked at
 			jmp		stock_scripts_addr;		// jump back and exec the original function
 		}
+
+
+		//const static uint32_t if_addon_return_addr = 0x5676CE; // jump to the valid return point if we had a valid match in addons
+		//__asm
+		//{
+		//	mov		eax, esp;
+		//	add		eax, 30h;
+		//	mov		edx, eax;
+		//	mov		eax, [ebp + 08h];
+
+		//	push	eax; //args?
+		//	push	edx; //int?
+		//	call	UIScript::RunMenuScript;
+		//	add		esp, 8h;
+
+		//	test	al, al;
+		//	je		continue;
+
+		//	// if returned
+		//	jmp if_addon_return_addr;
+
+		//continue:
+		//	mov		eax, 566DC6h;
+		//	jmp		eax;
+		//}
 	}
 
 	UIScript::UIScript()
 	{
 		// UI_RunMenuScript "clearError" hooking
 		Utils::Hook(0x566CC4, UI_RunMenuScript_stub, HOOK_JUMP).install()->quick();
+		//Utils::Hook::RedirectJump(0x566D1E, UI_RunMenuScript_stub);
 	}
 
 	UIScript::~UIScript()

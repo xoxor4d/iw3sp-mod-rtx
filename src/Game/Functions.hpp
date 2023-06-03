@@ -200,7 +200,7 @@ namespace Game
 	void R_AddCmdDrawStretchPic(Game::Material* material, float x, float y, float w, float h, float null1, float null2, float null3, float null4, float* color); // ASM
 	const char* UI_GetFontHandle(const ScreenPlacement* ScrPlace, float fontscale);
 	extern sharedUiInfo_t* sharedUiInfo;
-	extern int* uiInfo;
+	extern Game::uiInfo_s* uiInfo;
 	int R_TextHeight(Font_s* font);
 	long double R_NormalizedTextScale(Font_s* font, float scale);
 

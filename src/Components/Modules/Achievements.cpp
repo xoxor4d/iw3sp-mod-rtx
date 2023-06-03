@@ -70,13 +70,12 @@ namespace Components
 
 	std::filesystem::path AchievementPath()
 	{
-		std::filesystem::path game_folder = Dvars::Functions::Dvar_FindVar("fs_basepath")->current.string;
-
 		auto fileBuffer = Utils::IO::ReadFile("players/profiles/active.txt");
 		if (fileBuffer.empty())
 			return "";
 
-		return game_folder / Utils::String::VA("players\\profiles\\%s\\achievements.bin", fileBuffer.c_str());
+		std::filesystem::path game_folder = std::format("{}\\players\\profiles\\{}\\achievements.bin", Dvars::Functions::Dvar_FindVar("fs_basepath")->current.string, fileBuffer.c_str());
+		return game_folder;
 	}
 
 	std::optional<int> Achievements::GetAchievementID(const std::string& name)
@@ -178,8 +177,441 @@ namespace Components
 		//Toast::Show(material, Game::UI_SafeTranslateString(get_name(id).c_str()), Game::UI_SafeTranslateString(get_details(id).c_str()), 4000, true);
 	}
 
+	int Achievements::GetEarnedAchievementCount(achievement_file_t* file)
+	{
+		int count = 0;
+
+		for (bool achievement : file->achievements)
+		{
+			if (achievement)
+				++count;
+		}
+
+		return count;
+	}
+
+	int CalculateProgressBarWidth(int totalWidth, int playerAchievements, int totalAchievements) {
+		double progress = static_cast<double>(playerAchievements) / totalAchievements;
+		int progressBarWidth = static_cast<int>(progress * totalWidth + 0.5);
+		return progressBarWidth;
+	}
+
+	const char* VA_fake(const char* fmt, ...)
+	{
+		static char g_vaBuffer[64][65536];
+		static int g_vaNextBufferIndex = 0;
+
+		va_list ap;
+		va_start(ap, fmt);
+		char* dest = g_vaBuffer[g_vaNextBufferIndex];
+		vsnprintf(g_vaBuffer[g_vaNextBufferIndex], 65536, fmt, ap);
+		g_vaNextBufferIndex = (g_vaNextBufferIndex + 1) % 64;
+		va_end(ap);
+		return dest;
+	}
+
 	Achievements::Achievements()
 	{
+		Events::OnDvarInit([]
+		{
+			// I'm use the dvars because in current moment UIScript token doesn't work.
+			Dvars::Register::Dvar_RegisterInt("ui_achievement_status", "", 0, 0, 1, Game::none);
+			Dvars::Register::Dvar_RegisterInt("ui_achievement_select_idx", "", 0, 0, 37, Game::read_only);
+			Dvars::Register::Dvar_RegisterInt("ui_achievement_page", "", 0, 0, 2, Game::none);
+		});
+
+		Command::Add("get_menu_text", [](Command::Params*)
+		{
+			Game::menuDef_t* menu1 = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements").menu;
+			Game::menuDef_t* menu2 = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1").menu;
+			Game::menuDef_t* menu3 = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2").menu;
+
+			for (int i = 0; i < menu1->itemCount; i++)
+			{
+				Game::Com_Printf(0, "%d %s\n", i, menu1->items[i]->text);
+			}
+			Game::Com_Printf(0, "-------------------------------\n");
+			for (int i = 0; i < menu2->itemCount; i++)
+			{
+				Game::Com_Printf(0, "%d %s\n", i, menu2->items[i]->text);
+			}
+			Game::Com_Printf(0, "-------------------------------\n");
+			for (int i = 0; i < menu3->itemCount; i++)
+			{
+				Game::Com_Printf(0, "%d %s\n", i, menu3->items[i]->text);
+			}
+		});
+
+		Command::Add("get_menu_element", [](Command::Params*)
+		{
+			//Game::menuDef_t* menu1 = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2").menu;
+			//Achievements::achievement_file_t file{};
+			//GetAchievementsData(&file);
+
+			//Game::Com_Printf(0, Utils::String::VA("Received: %d | Total: %d \n",
+			//	Achievements::GetEarnedAchievementCount(&file), 
+			//	ACHIEVEMENT_TOTAL_COUNT));
+
+			//menu1->items[169]->window.rect.w = 0.000000;
+
+			//for (int i = 0; i < menu1->itemCount; i++)
+			//{
+			//	Game::Com_Printf(0, Utils::String::VA("^1%d %s %f %f %f %f\n",
+			//		i,
+			//		menu1->items[i]->window.name,
+			//		menu1->items[i]->window.rect.x,
+			//		menu1->items[i]->window.rect.y,
+			//		menu1->items[i]->window.rect.w,
+			//		menu1->items[i]->window.rect.h));
+			//}
+			//menu1->items[170]->window.rectClient.w = 250.000000;
+		});
+
+		Command::Add("get_menu_text_ingame", [](Command::Params*)
+			{
+				Game::menuDef_t* menu1 = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_ingame").menu;
+				Game::menuDef_t* menu2 = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1_ingame").menu;
+				Game::menuDef_t* menu3 = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2_ingame").menu;
+
+				for (int i = 0; i < menu1->itemCount; i++)
+				{
+					Game::Com_Printf(0, "%d %s\n", i, menu1->items[i]->text);
+				}
+				Game::Com_Printf(0, "-------------------------------\n");
+				for (int i = 0; i < menu2->itemCount; i++)
+				{
+					Game::Com_Printf(0, "%d %s\n", i, menu2->items[i]->text);
+				}
+				Game::Com_Printf(0, "-------------------------------\n");
+				for (int i = 0; i < menu3->itemCount; i++)
+				{
+					Game::Com_Printf(0, "%d %s\n", i, menu3->items[i]->text);
+				}
+			});
+
+		//Sadly, but in current moment, I can't get the args from token
+		UIScript::Add("achievement_get_info", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
+		{
+			Achievements::achievement_file_t file{};
+			GetAchievementsData(&file);
+
+
+			if (!Game::CL_IsCgameInitialized())
+			{
+				Game::menuDef_t* achievement_menu_1_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements").menu;
+				Game::menuDef_t* achievement_menu_2_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1").menu;
+				Game::menuDef_t* achievement_menu_3_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2").menu;
+
+				int achievement_index_select = Dvars::Functions::Dvar_FindVar("ui_achievement_select_idx")->current.integer;
+
+
+				if (HasAchievement(&file, Dvars::Functions::Dvar_FindVar("ui_achievement_select_idx")->current.integer))
+				{
+					Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer = 1;
+					Dvars::Functions::Dvar_FindVar("ui_achievement_status")->latched.integer = 1;
+				}
+				else
+				{
+					Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer = 0;
+					Dvars::Functions::Dvar_FindVar("ui_achievement_status")->latched.integer = 0;
+				}
+
+
+				//First achievement menu
+				if (Dvars::Functions::Dvar_FindVar("ui_achievement_page")->current.integer == 0)
+				{
+					//Check the achievement status. Changes the itemDefs if achievement has been received
+					if (Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer == 1)
+					{
+						std::string timeString = std::ctime(&file.timeStamp[achievement_index_select]);
+						timeString.pop_back();
+						achievement_menu_1_page->items[25]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[35]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[45]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[55]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[65]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[75]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[85]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[95]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[105]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[115]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[125]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[135]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[145]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[155]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[165]->text = Utils::String::VA("%s", timeString.c_str());
+					}
+					else
+					{
+						achievement_menu_1_page->items[25]->text = "--:--";
+						achievement_menu_1_page->items[35]->text = "--:--";
+						achievement_menu_1_page->items[45]->text = "--:--";
+						achievement_menu_1_page->items[55]->text = "--:--";
+						achievement_menu_1_page->items[65]->text = "--:--";
+						achievement_menu_1_page->items[75]->text = "--:--";
+						achievement_menu_1_page->items[85]->text = "--:--";
+						achievement_menu_1_page->items[95]->text = "--:--";
+						achievement_menu_1_page->items[105]->text = "--:--";
+						achievement_menu_1_page->items[115]->text = "--:--";
+						achievement_menu_1_page->items[125]->text = "--:--";
+						achievement_menu_1_page->items[135]->text = "--:--";
+						achievement_menu_1_page->items[145]->text = "--:--";
+						achievement_menu_1_page->items[155]->text = "--:--";
+						achievement_menu_1_page->items[165]->text = "--:--";
+					}
+				}
+				else if (Dvars::Functions::Dvar_FindVar("ui_achievement_page")->current.integer == 1)
+				{
+					//Check the achievement status. Changes the itemDefs if achievement has been received
+					if (Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer == 1)
+					{
+						std::string timeString = std::ctime(&file.timeStamp[achievement_index_select]);
+						timeString.pop_back();
+						achievement_menu_2_page->items[25]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[35]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[45]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[55]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[65]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[75]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[85]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[95]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[105]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[115]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[125]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[135]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[145]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[155]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[165]->text = Utils::String::VA("%s", timeString.c_str());
+					}
+					else
+					{
+						achievement_menu_2_page->items[25]->text = "--:--";
+						achievement_menu_2_page->items[35]->text = "--:--";
+						achievement_menu_2_page->items[45]->text = "--:--";
+						achievement_menu_2_page->items[55]->text = "--:--";
+						achievement_menu_2_page->items[65]->text = "--:--";
+						achievement_menu_2_page->items[75]->text = "--:--";
+						achievement_menu_2_page->items[85]->text = "--:--";
+						achievement_menu_2_page->items[95]->text = "--:--";
+						achievement_menu_2_page->items[105]->text = "--:--";
+						achievement_menu_2_page->items[115]->text = "--:--";
+						achievement_menu_2_page->items[125]->text = "--:--";
+						achievement_menu_2_page->items[135]->text = "--:--";
+						achievement_menu_2_page->items[145]->text = "--:--";
+						achievement_menu_2_page->items[155]->text = "--:--";
+						achievement_menu_2_page->items[165]->text = "--:--";
+					}
+				}
+				else
+				{
+					//Check the achievement status. Changes the itemDefs if achievement has been received
+					if (Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer == 1)
+					{
+						std::string timeString = std::ctime(&file.timeStamp[achievement_index_select]);
+						timeString.pop_back();
+						achievement_menu_3_page->items[25]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[35]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[45]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[55]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[65]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[75]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[85]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[95]->text = Utils::String::VA("%s", timeString.c_str());
+					}
+					else
+					{
+						achievement_menu_3_page->items[25]->text = "--:--";
+						achievement_menu_3_page->items[35]->text = "--:--";
+						achievement_menu_3_page->items[45]->text = "--:--";
+						achievement_menu_3_page->items[55]->text = "--:--";
+						achievement_menu_3_page->items[65]->text = "--:--";
+						achievement_menu_3_page->items[75]->text = "--:--";
+						achievement_menu_3_page->items[85]->text = "--:--";
+						achievement_menu_3_page->items[95]->text = "--:--";
+					}
+				}
+			}
+			else
+			{
+				Game::menuDef_t* achievement_menu_1_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_ingame").menu;
+				Game::menuDef_t* achievement_menu_2_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1_ingame").menu;
+				Game::menuDef_t* achievement_menu_3_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2_ingame").menu;
+
+				int achievement_index_select = Dvars::Functions::Dvar_FindVar("ui_achievement_select_idx")->current.integer;
+
+				if (HasAchievement(&file, Dvars::Functions::Dvar_FindVar("ui_achievement_select_idx")->current.integer))
+				{
+					Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer = 1;
+					Dvars::Functions::Dvar_FindVar("ui_achievement_status")->latched.integer = 1;
+				}
+				else
+				{
+					Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer = 0;
+					Dvars::Functions::Dvar_FindVar("ui_achievement_status")->latched.integer = 0;
+				}
+
+				if (Dvars::Functions::Dvar_FindVar("ui_achievement_page")->current.integer == 0)
+				{
+					//Check the achievement status. Changes the itemDefs if achievement has been received
+					if (Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer == 1)
+					{
+						std::string timeString = std::ctime(&file.timeStamp[achievement_index_select]);
+						timeString.pop_back();
+						achievement_menu_1_page->items[19]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[29]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[39]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[49]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[59]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[69]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[79]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[89]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[99]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[109]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[119]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[129]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[139]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[149]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_1_page->items[159]->text = Utils::String::VA("%s", timeString.c_str());
+					}
+					else
+					{
+						achievement_menu_1_page->items[19]->text = "--:--";
+						achievement_menu_1_page->items[29]->text = "--:--";
+						achievement_menu_1_page->items[39]->text = "--:--";
+						achievement_menu_1_page->items[49]->text = "--:--";
+						achievement_menu_1_page->items[59]->text = "--:--";
+						achievement_menu_1_page->items[69]->text = "--:--";
+						achievement_menu_1_page->items[79]->text = "--:--";
+						achievement_menu_1_page->items[89]->text = "--:--";
+						achievement_menu_1_page->items[99]->text = "--:--";
+						achievement_menu_1_page->items[109]->text = "--:--";
+						achievement_menu_1_page->items[119]->text = "--:--";
+						achievement_menu_1_page->items[129]->text = "--:--";
+						achievement_menu_1_page->items[139]->text = "--:--";
+						achievement_menu_1_page->items[149]->text = "--:--";
+						achievement_menu_1_page->items[159]->text = "--:--";
+					}
+				}
+				else if (Dvars::Functions::Dvar_FindVar("ui_achievement_page")->current.integer == 1)
+				{
+					//Check the achievement status. Changes the itemDefs if achievement has been received
+					if (Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer == 1)
+					{
+						std::string timeString = std::ctime(&file.timeStamp[achievement_index_select]);
+						timeString.pop_back();
+						achievement_menu_2_page->items[19]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[29]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[39]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[49]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[59]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[69]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[79]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[89]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[99]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[109]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[119]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[129]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[139]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[149]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_2_page->items[159]->text = Utils::String::VA("%s", timeString.c_str());
+					}
+					else
+					{
+						achievement_menu_2_page->items[19]->text = "--:--";
+						achievement_menu_2_page->items[29]->text = "--:--";
+						achievement_menu_2_page->items[39]->text = "--:--";
+						achievement_menu_2_page->items[49]->text = "--:--";
+						achievement_menu_2_page->items[59]->text = "--:--";
+						achievement_menu_2_page->items[69]->text = "--:--";
+						achievement_menu_2_page->items[79]->text = "--:--";
+						achievement_menu_2_page->items[89]->text = "--:--";
+						achievement_menu_2_page->items[99]->text = "--:--";
+						achievement_menu_2_page->items[109]->text = "--:--";
+						achievement_menu_2_page->items[119]->text = "--:--";
+						achievement_menu_2_page->items[129]->text = "--:--";
+						achievement_menu_2_page->items[139]->text = "--:--";
+						achievement_menu_2_page->items[149]->text = "--:--";
+						achievement_menu_2_page->items[159]->text = "--:--";
+					}
+				}
+				else
+				{
+					//Check the achievement status. Changes the itemDefs if achievement has been received
+					if (Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer == 1)
+					{
+						std::string timeString = std::ctime(&file.timeStamp[achievement_index_select]);
+						timeString.pop_back();
+						achievement_menu_3_page->items[19]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[29]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[39]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[49]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[59]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[69]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[79]->text = Utils::String::VA("%s", timeString.c_str());
+						achievement_menu_3_page->items[89]->text = Utils::String::VA("%s", timeString.c_str());
+					}
+					else
+					{
+						achievement_menu_3_page->items[19]->text = "--:--";
+						achievement_menu_3_page->items[29]->text = "--:--";
+						achievement_menu_3_page->items[39]->text = "--:--";
+						achievement_menu_3_page->items[49]->text = "--:--";
+						achievement_menu_3_page->items[59]->text = "--:--";
+						achievement_menu_3_page->items[69]->text = "--:--";
+						achievement_menu_3_page->items[79]->text = "--:--";
+						achievement_menu_3_page->items[89]->text = "--:--";
+					}
+				}
+			}
+
+			//int achievement_index = token.get<int>();
+			//Game::Com_Printf(0, "^2%d index\n", achievement_index);
+		});
+
+		UIScript::Add("achievement_progressbar", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
+		{
+			Achievements::achievement_file_t file{};
+			GetAchievementsData(&file);
+			if (!Game::CL_IsCgameInitialized())
+			{
+				Game::menuDef_t* achievement_menu_1_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements").menu;
+				Game::menuDef_t* achievement_menu_2_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1").menu;
+				Game::menuDef_t* achievement_menu_3_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2").menu;
+
+				int totalWidth = 493;
+				int progressBarWidth = CalculateProgressBarWidth(totalWidth, Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+				achievement_menu_1_page->items[170]->window.rectClient.w = progressBarWidth;
+				achievement_menu_2_page->items[170]->window.rectClient.w = progressBarWidth;
+				achievement_menu_3_page->items[100]->window.rectClient.w = progressBarWidth;
+
+				achievement_menu_1_page->items[171]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+				achievement_menu_2_page->items[171]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+				achievement_menu_3_page->items[101]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+			}
+			else
+			{
+				Game::menuDef_t* achievement_menu_1_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_ingame").menu;
+				Game::menuDef_t* achievement_menu_2_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1_ingame").menu;
+				Game::menuDef_t* achievement_menu_3_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2_ingame").menu;
+
+				int totalWidth = 493;
+				int progressBarWidth = CalculateProgressBarWidth(totalWidth, Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+				achievement_menu_1_page->items[164]->window.rectClient.w = progressBarWidth;
+				achievement_menu_2_page->items[164]->window.rectClient.w = progressBarWidth;
+				achievement_menu_3_page->items[94]->window.rectClient.w = progressBarWidth;
+
+				achievement_menu_1_page->items[165]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+				achievement_menu_2_page->items[165]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+				achievement_menu_3_page->items[95]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+			}
+		});
+
+		UIScript::Add("reset_achievements_progress", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
+		{
+			achievement_file_t file{};
+			WriteAchievement(&file);
+		});
+
 		// Original function it's just null function on PC :>
 		GSC::AddFunction("giveachievement", []
 		{

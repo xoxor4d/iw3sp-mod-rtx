@@ -73,14 +73,12 @@ namespace Game
 
 	struct XZone
 	{
-		int unk;
 		char name[64];
 		int flags;
 		int allocType;
 		XZoneMemory mem;
 		int fileSize;
 		char modZone;
-		int ff_dir;
 	};
 
 	struct XFile
@@ -129,7 +127,6 @@ namespace Game
 		ASSET_TYPE_STRING = 0x21,
 		ASSET_TYPE_ASSETLIST = 0x22,
 	};
-
 
 	//Sounds Structure
 	typedef enum
@@ -238,7 +235,6 @@ namespace Game
 		byte exists;
 		byte pad[3];
 	}SoundFile_t;
-
 
 	struct snd_alias_t
 	{
@@ -366,7 +362,6 @@ namespace Game
 		*/
 	};
 
-
 	typedef struct StringTable
 	{
 		const char* name;
@@ -382,6 +377,15 @@ namespace Game
 		int controllerIndex[8];
 		int argc[8];
 		const char** argv[8];
+	};
+
+	struct CmdArgsPrivate
+	{
+		char textPool[8192];
+		const char* argvPool[512];
+		int usedTextPool[8];
+		int totalUsedArgvPool;
+		int totalUsedTextPool;
 	};
 
 	union DvarLimits
@@ -421,7 +425,6 @@ namespace Game
 		const char* string;
 		char color[4];
 	};
-
 
 	enum DvarType
 	{
@@ -494,16 +497,6 @@ namespace Game
 		void(__cdecl* function)();
 	};
 
-	typedef struct
-	{
-		int version;
-		unsigned int hash;
-		int numEnums;
-		int numStructs;
-		int numIndexedArrays;
-		int numEnumArrays;
-	} structuredData_t;
-
 	enum usercmdButtonBits
 	{
 		CMD_BUTTON_ATTACK = 1 << 0,
@@ -547,146 +540,100 @@ namespace Game
 		char selectedLocation[2];
 	};
 
-	typedef enum BGEvent
+	enum entity_event_t
 	{
-		EV_NONE = 1 << 0,
-		EV_FOLIAGE_SOUND = 1 << 1,
-		EV_STOP_WEAPON_SOUND = 1 << 2,
-		EV_SOUND_ALIAS = 1 << 3,
-		EV_SOUND_ALIAS_AS_MASTER = 1 << 4,
-		EV_STOPSOUNDS = 1 << 5,
-		EV_STANCE_FORCE_STAND = 1 << 6,
-		EV_STANCE_FORCE_CROUCH = 1 << 7,
-		EV_STANCE_FORCE_PRONE = 1 << 8,
-		EV_ITEM_PICKUP = 1 << 9,
-		EV_AMMO_PICKUP = 1 << 10,
-		EV_NOAMMO = 1 << 11,
-		EV_EMPTYCLIP = 1 << 12,
-		EV_EMPTY_OFFHAND = 1 << 13,
-		EV_RESET_ADS = 1 << 14,
-		EV_RELOAD = 1 << 15,
-		EV_RELOAD_FROM_EMPTY = 1 << 16,
-		EV_RELOAD_START = 1 << 17,
-		EV_RELOAD_END = 1 << 18,
-		EV_RELOAD_START_NOTIFY = 1 << 19,
-		EV_RELOAD_ADDAMMO = 1 << 20,
-		EV_RAISE_WEAPON = 1 << 21,
-		EV_FIRST_RAISE_WEAPON = 1 << 22,
-		EV_PUTAWAY_WEAPON = 1 << 23,
-		EV_WEAPON_ALT = 1 << 24
-		/*
-		EV_PULLBACK_WEAPON,
-		EV_FIRE_WEAPON,
-		EV_FIRE_WEAPON_LASTSHOT,
-		EV_RECHAMBER_WEAPON,
-		EV_EJECT_BRASS,
-		EV_MELEE_SWIPE,
-		EV_FIRE_MELEE,
-		EV_PREP_OFFHAND,
-		EV_USE_OFFHAND,
-		EV_SWITCH_OFFHAND,
-		EV_MELEE_HIT,
-		EV_MELEE_MISS,
-		EV_MELEE_BLOOD,
-		EV_FIRE_WEAPON_MG42,
-		EV_FIRE_QUADBARREL_1,
-		EV_FIRE_QUADBARREL_2,
-		EV_BULLET_HIT,
-		EV_BULLET_HIT_CLIENT_SMALL,
-		EV_BULLET_HIT_CLIENT_LARGE,
-		EV_GRENADE_BOUNCE,
-		EV_GRENADE_EXPLODE,
-		EV_ROCKET_EXPLODE,
-		EV_ROCKET_EXPLODE_NOMARKS,
-		EV_FLASHBANG_EXPLODE,
-		EV_CUSTOM_EXPLODE,
-		EV_CUSTOM_EXPLODE_NOMARKS,
-		EV_CHANGE_TO_DUD,
-		EV_DUD_EXPLODE,
-		EV_DUD_IMPACT,
-		EV_BULLET,
-		EV_PLAY_FX,
-		EV_PLAY_FX_ON_TAG,
-		EV_PHYS_EXPLOSION_SPHERE,
-		EV_PHYS_EXPLOSION_CYLINDER,
-		EV_PHYS_EXPLOSION_JOLT,
-		EV_PHYS_JITTER,
-		EV_EARTHQUAKE,
-		EV_GRENADE_SUICIDE,
-		EV_DETONATE,
-		EV_NIGHTVISION_WEAR,
-		EV_NIGHTVISION_REMOVE,
-		EV_OBITUARY,
-		EV_NO_FRAG_GRENADE_HINT,
-		EV_NO_SPECIAL_GRENADE_HINT,
-		EV_TARGET_TOO_CLOSE_HINT,
-		EV_TARGET_NOT_ENOUGH_CLEARANCE,
-		EV_LOCKON_REQUIRED_HINT,
-		EV_FOOTSTEP_SPRINT,
-		EV_FOOTSTEP_RUN,
-		EV_FOOTSTEP_WALK,
-		EV_FOOTSTEP_PRONE,
-		EV_JUMP,
-		EV_LANDING_DEFAULT,
-		EV_LANDING_BARK,
-		EV_LANDING_BRICK,
-		EV_LANDING_CARPET,
-		EV_LANDING_CLOTH,
-		EV_LANDING_CONCRETE,
-		EV_LANDING_DIRT,
-		EV_LANDING_FLESH,
-		EV_LANDING_FOLIAGE,
-		EV_LANDING_GLASS,
-		EV_LANDING_GRASS,
-		EV_LANDING_GRAVEL,
-		EV_LANDING_ICE,
-		EV_LANDING_METAL,
-		EV_LANDING_MUD,
-		EV_LANDING_PAPER,
-		EV_LANDING_PLASTER,
-		EV_LANDING_ROCK,
-		EV_LANDING_SAND,
-		EV_LANDING_SNOW,
-		EV_LANDING_WATER,
-		EV_LANDING_WOOD,
-		EV_LANDING_ASPHALT,
-		EV_LANDING_CERAMIC,
-		EV_LANDING_PLASTIC,
-		EV_LANDING_RUBBER,
-		EV_LANDING_CUSHION,
-		EV_LANDING_FRUIT,
-		EV_LANDING_PAINTEDMETAL,
-		EV_LANDING_PAIN_DEFAULT,
-		EV_LANDING_PAIN_BARK,
-		EV_LANDING_PAIN_BRICK,
-		EV_LANDING_PAIN_CARPET,
-		EV_LANDING_PAIN_CLOTH,
-		EV_LANDING_PAIN_CONCRETE,
-		EV_LANDING_PAIN_DIRT,
-		EV_LANDING_PAIN_FLESH,
-		EV_LANDING_PAIN_FOLIAGE,
-		EV_LANDING_PAIN_GLASS,
-		EV_LANDING_PAIN_GRASS,
-		EV_LANDING_PAIN_GRAVEL,
-		EV_LANDING_PAIN_ICE,
-		EV_LANDING_PAIN_METAL,
-		EV_LANDING_PAIN_MUD,
-		EV_LANDING_PAIN_PAPER,
-		EV_LANDING_PAIN_PLASTER,
-		EV_LANDING_PAIN_ROCK,
-		EV_LANDING_PAIN_SAND,
-		EV_LANDING_PAIN_SNOW,
-		EV_LANDING_PAIN_WATER,
-		EV_LANDING_PAIN_WOOD,
-		EV_LANDING_PAIN_ASPHALT,
-		EV_LANDING_PAIN_CERAMIC,
-		EV_LANDING_PAIN_PLASTIC,
-		EV_LANDING_PAIN_RUBBER,
-		EV_LANDING_PAIN_CUSHION,
-		EV_LANDING_PAIN_FRUIT,
-		EV_LANDING_PAIN_PAINTEDMETAL
-		*/
-	}BGEvent;
+		EV_NONE = 0x0,
+		EV_FOLIAGE_SOUND = 0x1,
+		EV_STOP_WEAPON_SOUND = 0x2,
+		EV_SOUND_ALIAS = 0x3,
+		EV_SOUND_ALIAS_AS_MASTER = 0x4,
+		EV_STOPSOUNDS = 0x5,
+		EV_STANCE_FORCE_STAND = 0x6,
+		EV_STANCE_FORCE_CROUCH = 0x7,
+		EV_STANCE_FORCE_PRONE = 0x8,
+		EV_ITEM_PICKUP = 0x9,
+		EV_AMMO_PICKUP = 0xA,
+		EV_NOAMMO = 0xB,
+		EV_EMPTYCLIP = 0xC,
+		EV_EMPTY_OFFHAND = 0xD,
+		EV_RESET_ADS = 0xE,
+		EV_RELOAD = 0xF,
+		EV_RELOAD_FROM_EMPTY = 0x10,
+		EV_RELOAD_START = 0x11,
+		EV_RELOAD_END = 0x12,
+		EV_RELOAD_START_NOTIFY = 0x13,
+		EV_RELOAD_ADDAMMO = 0x14,
+		EV_RAISE_WEAPON = 0x15,
+		EV_FIRST_RAISE_WEAPON = 0x16,
+		EV_PUTAWAY_WEAPON = 0x17,
+		EV_WEAPON_ALT = 0x18,
+		EV_PULLBACK_WEAPON = 0x19,
+		EV_FIRE_WEAPON = 0x1A,
+		EV_FIRE_WEAPON_LASTSHOT = 0x1B,
+		EV_RECHAMBER_WEAPON = 0x1C,
+		EV_EJECT_BRASS = 0x1D,
+		EV_MELEE_SWIPE = 0x1E,
+		EV_FIRE_MELEE = 0x1F,
+		EV_PREP_OFFHAND = 0x20,
+		EV_USE_OFFHAND = 0x21,
+		EV_SWITCH_OFFHAND = 0x22,
+		EV_MELEE_HIT = 0x23,
+		EV_MELEE_MISS = 0x24,
+		EV_MELEE_BLOOD = 0x25,
+		EV_FIRE_WEAPON_MG42 = 0x26,
+		EV_FIRE_QUADBARREL_1 = 0x27,
+		EV_FIRE_QUADBARREL_2 = 0x28,
+		EV_BULLET_TRACER = 0x29,
+		EV_SOUND_ALIAS_NOTIFY = 0x2A,
+		EV_SOUND_ALIAS_NOTIFY_AS_MASTER = 0x2B,
+		EV_SOUND_ALIAS_ADD_NOTIFY = 0x2C,
+		EV_BULLET_HIT = 0x2D,
+		EV_BULLET_HIT_CLIENT_SMALL = 0x2E,
+		EV_BULLET_HIT_CLIENT_LARGE = 0x2F,
+		EV_GRENADE_BOUNCE = 0x30,
+		EV_GRENADE_EXPLODE = 0x31,
+		EV_ROCKET_EXPLODE = 0x32,
+		EV_ROCKET_EXPLODE_NOMARKS = 0x33,
+		EV_FLASHBANG_EXPLODE = 0x34,
+		EV_CUSTOM_EXPLODE = 0x35,
+		EV_CUSTOM_EXPLODE_NOMARKS = 0x36,
+		EV_CHANGE_TO_DUD = 0x37,
+		EV_DUD_EXPLODE = 0x38,
+		EV_DUD_IMPACT = 0x39,
+		EV_BULLET = 0x3A,
+		EV_PLAY_FX = 0x3B,
+		EV_PLAY_FX_ON_TAG = 0x3C,
+		EV_PHYS_EXPLOSION_SPHERE = 0x3D,
+		EV_PHYS_EXPLOSION_CYLINDER = 0x3E,
+		EV_PHYS_EXPLOSION_JOLT = 0x3F,
+		EV_PHYS_JITTER = 0x40,
+		EV_EARTHQUAKE = 0x41,
+		EV_GRENADE_SUICIDE = 0x42,
+		EV_DETONATE = 0x43,
+		EV_NIGHTVISION_WEAR = 0x44,
+		EV_NIGHTVISION_REMOVE = 0x45,
+		EV_PLAY_RUMBLE_ON_ENT = 0x46,
+		EV_PLAY_RUMBLE_ON_POS = 0x47,
+		EV_PLAY_RUMBLELOOP_ON_ENT = 0x48,
+		EV_PLAY_RUMBLELOOP_ON_POS = 0x49,
+		EV_STOP_RUMBLE = 0x4A,
+		EV_STOP_ALL_RUMBLES = 0x4B,
+		EV_NO_FRAG_GRENADE_HINT = 0x4C,
+		EV_NO_SPECIAL_GRENADE_HINT = 0x4D,
+		EV_TARGET_TOO_CLOSE_HINT = 0x4E,
+		EV_TARGET_NOT_ENOUGH_CLEARANCE = 0x4F,
+		EV_LOCKON_REQUIRED_HINT = 0x50,
+		EV_FOOTSTEP_SPRINT = 0x51,
+		EV_FOOTSTEP_RUN = 0x52,
+		EV_FOOTSTEP_WALK = 0x53,
+		EV_FOOTSTEP_PRONE = 0x54,
+		EV_JUMP = 0x55,
+		EV_LANDING_FIRST = 0x56,
+		EV_LANDING_LAST = 0x72,
+		EV_LANDING_PAIN_FIRST = 0x73,
+		EV_LANDING_PAIN_LAST = 0x8F,
+		EV_MAX_EVENTS = 0x90,
+	};
 
 	enum XZONE_FLAGS
 	{
@@ -2330,8 +2277,6 @@ namespace Game
 	{
 		CachedAssets_t assets;
 	};
-
-	#define uiMem (*((sharedUiInfo_t*)(0x128F9C4)))
 
 #pragma pack(push, 1)
 	typedef struct
@@ -4537,4 +4482,105 @@ namespace Game
 		int ignorePureCheck;
 		int language;
 	};
+
+	struct qtime_s
+	{
+		int tm_sec;
+		int tm_min;
+		int tm_hour;
+		int tm_mday;
+		int tm_mon;
+		int tm_year;
+		int tm_wday;
+		int tm_yday;
+		int tm_isdst;
+	};
+
+	struct SavegameInfo
+	{
+		const char* savegameFile;
+		const char* savegameName;
+		const char* imageName;
+		const char* mapName;
+		const char* savegameInfoText;
+		const char* time;
+		const char* date;
+		qtime_s tm;
+	};
+
+
+	struct CursorPos
+	{
+		float x;
+		float y;
+	};
+
+	enum UILocalVarType
+	{
+		UILOCALVAR_INT = 0x0,
+		UILOCALVAR_FLOAT = 0x1,
+		UILOCALVAR_STRING = 0x2,
+	};
+
+	union UILocalVarHandle
+	{
+		int integer;
+		float value;
+		const char* string;
+	};
+
+	struct UILocalVar
+	{
+		UILocalVarType type;
+		const char* name;
+		UILocalVarHandle u;
+	};
+
+	struct UILocalVarContext
+	{
+		UILocalVar table[256];
+	};
+
+	struct UiContext
+	{
+		int localClientNum;
+		float bias;
+		int realTime;
+		int frameTime;
+		CursorPos cursor;
+		int isCursorVisible;
+		int screenWidth;
+		int screenHeight;
+		float screenAspect;
+		float FPS;
+		float blurRadiusOut;
+		menuDef_t* Menus[64];
+		int menuCount;
+		menuDef_t* menuStack[16];
+		int openMenuCount;
+		UILocalVarContext localVars;
+	};
+
+	struct savegameStatus_s
+	{
+		int sortKey;
+		int sortDir;
+		int displaySavegames[256];
+	};
+
+	struct uiInfo_s
+	{
+		UiContext uiDC;
+		SavegameInfo savegameList[512];
+		int savegameCount;
+		savegameStatus_s savegameStatus;
+		int timeIndex;
+		int previousTimes[4];
+		bool allowScriptMenuResponse;
+		char savegameName[64];
+		char savegameInfo[256];
+		Material* sshotImage;
+		char sshotImageName[64];
+	};
+
 }

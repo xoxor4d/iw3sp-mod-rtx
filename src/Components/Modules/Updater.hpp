@@ -56,7 +56,7 @@ namespace Components
 		static bool UpdateCancelled();
 
 		static void CL_StartUpdate();
-		static void CL_GetAutoUpdate();
+		static void CL_GetAutoUpdate(bool needCheck);
 
 		static Utils::ConcurrentList::Container<update_data_t> update_data;
 	};

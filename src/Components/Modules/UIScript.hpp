@@ -24,8 +24,9 @@ namespace Components
 			void parse(const char** args);
 		};
 
-		using UIScriptHandler = std::function<void(const Token& token, const int* info)>;
+		using UIScriptHandler = std::function<void(const Token& token, const Game::uiInfo_s* info)>;
 
+		static Game::uiInfo_s* UI_GetInfo();
 		static void Add(const std::string& name, const UIScriptHandler& callback);
 		static bool RunMenuScript(const char* name, const char** args);
 		static void UI_RunMenuScript_stub();

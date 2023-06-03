@@ -601,7 +601,7 @@ namespace Game
 	//R_TextWidth_t R_TextWidth = R_TextWidth_t(0x5D5250);
 
 	//sharedUiInfo_t* sharedUiInfo = reinterpret_cast<sharedUiInfo_t*>(0x129AD80);
-	int* uiInfo = reinterpret_cast<int*>(0x1290F50);
+	Game::uiInfo_s* uiInfo = reinterpret_cast<Game::uiInfo_s*>(0x1290F50);
 
 	int R_TextWidth/*eax*/(const char* text /*eax*/, signed int maxChars, Game::Font_s* font/*ecx*/)
 	{
@@ -721,7 +721,7 @@ namespace Game
 	char* Com_Parse(const char** data_p)
 	{
 		const static uint32_t Com_Parse_func = 0x58F8B0;
-		char* result;
+		static char* result{};
 		__asm
 		{
 			mov		edi, data_p;

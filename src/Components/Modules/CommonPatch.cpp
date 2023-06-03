@@ -285,12 +285,12 @@ namespace Components
 			});
 		}
 
-		UIScript::Add("testUIScript", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const int* info)
+		UIScript::Add("testUIScript", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
 		{
 			Game::Com_Printf(0, "^2Game:: test uiscript\n");
 		});
 
-		UIScript::Add("VisitYT", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const int* info)
+		UIScript::Add("VisitYT", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
 		{
 			Utils::OpenUrl("https://youtu.be/dQw4w9WgXcQ?t=85");
 		});
@@ -319,25 +319,32 @@ namespace Components
 	void R_Cinematic_BinkOpen_stub01(char* buffer, size_t size, const char* /*format*/, const char* directory, const char* fileName, const char* videoFormat)
 	{
 		const char* languageName = Game::SEH_GetLanguageName(Dvars::Functions::Dvar_FindVar("loc_language")->current.unsignedInt);
-
-		// Check if original video folder is exists
-		std::string base_path = Dvars::Functions::Dvar_FindVar("fs_basepath")->current.string + "\\main\\video\\"s;
-		if (std::filesystem::exists(base_path))
+		if (Utils::IO::FileExists(Utils::String::VA("%s\\main\\video\\%s.%s", directory, fileName, videoFormat)))
+		{
 			_snprintf_s(buffer, size, _TRUNCATE, "%s\\main\\video\\%s.%s", directory, fileName, videoFormat);
+			return;
+		}
 		else
+		{
 			_snprintf_s(buffer, size, _TRUNCATE, "%s\\main\\%s_video\\%s.%s", directory, languageName, fileName, videoFormat);
+			return;
+		}
 	}
 
 	void R_Cinematic_BinkOpen_stub02(char* buffer, size_t size, const char* /*format*/, const char* directory, const char* fileName, const char* videoFormat)
 	{
 		const char* languageName = Game::SEH_GetLanguageName(Dvars::Functions::Dvar_FindVar("loc_language")->current.unsignedInt);
 
-		// Check if original video folder is exists
-		std::string base_path = Dvars::Functions::Dvar_FindVar("fs_basepath")->current.string + "\\raw\\video\\"s;
-		if (std::filesystem::exists(base_path))
+		if (Utils::IO::FileExists(Utils::String::VA("%s\\raw\\video\\%s.%s", directory, fileName, videoFormat)))
+		{
 			_snprintf_s(buffer, size, _TRUNCATE, "%s\\raw\\video\\%s.%s", directory, fileName, videoFormat);
+			return;
+		}
 		else
+		{
 			_snprintf_s(buffer, size, _TRUNCATE, "%s\\raw\\%s_video\\%s.%s", directory, languageName, fileName, videoFormat);
+			return;
+		}
 	}
 
 	//void Com_Quit_f_stub()

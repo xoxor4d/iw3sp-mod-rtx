@@ -283,11 +283,14 @@ namespace Components
 		}, Scheduler::Pipeline::ASYNC);
 	}
 
-	void Updater::CL_GetAutoUpdate()
+	void Updater::CL_GetAutoUpdate(bool needCheck)
 	{
-		// If used disable the auto-update then just exit from function.
-		if (!Dvars::Functions::Dvar_FindVar("iw3sp_auto_update") || !Dvars::Functions::Dvar_FindVar("iw3sp_auto_update")->current.enabled)
-			return;
+		if (needCheck)
+		{
+			// If used disable the auto-update then just exit from function.
+			if (!Dvars::Functions::Dvar_FindVar("iw3sp_auto_update") || !Dvars::Functions::Dvar_FindVar("iw3sp_auto_update")->current.enabled)
+				return;
+		}
 
 		CancelUpdate();
 		ResetData();
@@ -315,6 +318,10 @@ namespace Components
 			if (!files_data.has_value())
 			{
 				Game::Com_Printf(0, "[Updater]: ^1json file is empty or HTTP request can't be reach to the server. Abort The Update.\n");
+
+				Command::Execute("closemenu updater_checking_for_updates", false);
+				Command::Execute("closemenu updater_checking_for_updates_internal", false);
+				Command::Execute("openmenu updater_server_offline", false);
 				return;
 			}
 
@@ -382,7 +389,13 @@ namespace Components
 
 			if (UpdateAvailable())
 			{
+				Command::Execute("closemenu updater_checking_for_updates", false);
+				Command::Execute("closemenu updater_checking_for_updates_internal", false);
 				Command::Execute("openmenu updater_popmenu", false);
+			}
+			else
+			{
+				Command::Execute("openmenu updater_new_updates_no_found", false);
 			}
 		}, Scheduler::Pipeline::ASYNC);
 	}
@@ -411,24 +424,29 @@ namespace Components
 		// Dev Test (remove from release)
 		Command::Add("check_updater", [](Command::Params*)
 		{
-			Updater::CL_GetAutoUpdate();
+			Updater::CL_GetAutoUpdate(true);
 		});
 		Command::Add("start_update", [](Command::Params*)
 		{
 			Updater::CL_StartUpdate();
 		});
 
-		UIScript::Add("update_download_cancel", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const int* info)
+		UIScript::Add("update_download_cancel", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
 		{
 			Updater::CancelUpdate();
 		});
 
-		UIScript::Add("check_avaliable_updates", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const int* info)
+		UIScript::Add("check_avaliable_updates_internal", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
 		{
-			Updater::CL_GetAutoUpdate();
+			Updater::CL_GetAutoUpdate(false);
 		});
 
-		UIScript::Add("update_start_download", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const int* info)
+		UIScript::Add("check_avaliable_updates", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
+		{
+			Updater::CL_GetAutoUpdate(true);
+		});
+
+		UIScript::Add("update_start_download", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
 		{
 			Updater::CL_StartUpdate();
 		});

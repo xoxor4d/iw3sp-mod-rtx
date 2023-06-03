@@ -82,6 +82,7 @@ namespace Components
 		static void GetAchievementsData(achievement_file_t* file);
 		static void WriteAchievement(achievement_file_t* data);
 		static void GiveAchievement(const std::string& name);
+		static int GetEarnedAchievementCount(achievement_file_t* file);
 
 		static std::array<Achievements::achievement_t, Achievements::ACHIEVEMENT_TOTAL_COUNT> achievements;
 	};

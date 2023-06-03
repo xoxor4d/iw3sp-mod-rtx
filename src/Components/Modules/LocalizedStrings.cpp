@@ -28,6 +28,8 @@ namespace Components
 		else if (!strcmp(languageName, "german"))
 		{
 			LocalizedStrings::Set("MENU_RUSSIAN", "Russisch");
+			LocalizedStrings::Set("KILLHOUSE_ACCURACY_BONUS", "Präzisionsbonus: -");
+			LocalizedStrings::Set("KILLHOUSE_ACCURACY_BONUS_ZERO", "Präzisionsbonus: -0.0");
 			return;
 		}
 		else if (!strcmp(languageName, "russian"))
