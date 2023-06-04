@@ -570,40 +570,68 @@ namespace Components
 
 		UIScript::Add("achievement_progressbar", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
 		{
-			Achievements::achievement_file_t file{};
-			GetAchievementsData(&file);
-			if (!Game::CL_IsCgameInitialized())
+			Scheduler::Once([]
 			{
-				Game::menuDef_t* achievement_menu_1_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements").menu;
-				Game::menuDef_t* achievement_menu_2_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1").menu;
-				Game::menuDef_t* achievement_menu_3_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2").menu;
+				Achievements::achievement_file_t file{};
+				GetAchievementsData(&file);
 
+				static double startWidth = 0.000000;
+				static int slideTime = 450;
 				int totalWidth = 493;
-				int progressBarWidth = CalculateProgressBarWidth(totalWidth, Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
-				achievement_menu_1_page->items[170]->window.rectClient.w = progressBarWidth;
-				achievement_menu_2_page->items[170]->window.rectClient.w = progressBarWidth;
-				achievement_menu_3_page->items[100]->window.rectClient.w = progressBarWidth;
 
-				achievement_menu_1_page->items[171]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
-				achievement_menu_2_page->items[171]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
-				achievement_menu_3_page->items[101]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
-			}
-			else
-			{
-				Game::menuDef_t* achievement_menu_1_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_ingame").menu;
-				Game::menuDef_t* achievement_menu_2_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1_ingame").menu;
-				Game::menuDef_t* achievement_menu_3_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2_ingame").menu;
+				if (!Game::CL_IsCgameInitialized())
+				{
+					Game::menuDef_t* achievement_menu_1_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements").menu;
+					Game::menuDef_t* achievement_menu_2_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1").menu;
+					Game::menuDef_t* achievement_menu_3_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2").menu;
 
-				int totalWidth = 493;
-				int progressBarWidth = CalculateProgressBarWidth(totalWidth, Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
-				achievement_menu_1_page->items[164]->window.rectClient.w = progressBarWidth;
-				achievement_menu_2_page->items[164]->window.rectClient.w = progressBarWidth;
-				achievement_menu_3_page->items[94]->window.rectClient.w = progressBarWidth;
+					achievement_menu_1_page->items[170]->window.rectClient.w = startWidth;
+					achievement_menu_2_page->items[170]->window.rectClient.w = startWidth;
+					achievement_menu_3_page->items[100]->window.rectClient.w = startWidth;
 
-				achievement_menu_1_page->items[165]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
-				achievement_menu_2_page->items[165]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
-				achievement_menu_3_page->items[95]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
-			}
+					achievement_menu_1_page->items[171]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+					achievement_menu_2_page->items[171]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+					achievement_menu_3_page->items[101]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+
+					int startTime = Game::Sys_MilliSeconds();
+
+					while (Game::Sys_MilliSeconds() - startTime < slideTime)
+					{
+						double progress = static_cast<double>(Game::Sys_MilliSeconds() - startTime) / slideTime;
+						int progressBarWidth = static_cast<int>(progress * CalculateProgressBarWidth(totalWidth, Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT));
+
+						achievement_menu_1_page->items[170]->window.rectClient.w = progressBarWidth;
+						achievement_menu_2_page->items[170]->window.rectClient.w = progressBarWidth;
+						achievement_menu_3_page->items[100]->window.rectClient.w = progressBarWidth;
+					}
+				}
+				else
+				{
+					Game::menuDef_t* achievement_menu_1_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_ingame").menu;
+					Game::menuDef_t* achievement_menu_2_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1_ingame").menu;
+					Game::menuDef_t* achievement_menu_3_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2_ingame").menu;
+
+					achievement_menu_1_page->items[164]->window.rectClient.w = startWidth;
+					achievement_menu_2_page->items[164]->window.rectClient.w = startWidth;
+					achievement_menu_3_page->items[94]->window.rectClient.w = startWidth;
+
+					achievement_menu_1_page->items[165]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+					achievement_menu_2_page->items[165]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+					achievement_menu_3_page->items[95]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+
+					int startTime = Game::Sys_MilliSeconds();
+
+					while (Game::Sys_MilliSeconds() - startTime < slideTime)
+					{
+						double progress = static_cast<double>(Game::Sys_MilliSeconds() - startTime) / slideTime;
+						int progressBarWidth = static_cast<int>(progress * CalculateProgressBarWidth(totalWidth, Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT));
+
+						achievement_menu_1_page->items[164]->window.rectClient.w = progressBarWidth;
+						achievement_menu_2_page->items[164]->window.rectClient.w = progressBarWidth;
+						achievement_menu_3_page->items[94]->window.rectClient.w = progressBarWidth;
+					}
+				}
+			}, Scheduler::Pipeline::ASYNC);
 		});
 
 		UIScript::Add("reset_achievements_progress", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
@@ -615,7 +643,11 @@ namespace Components
 		// Original function it's just null function on PC :>
 		GSC::AddFunction("giveachievement", []
 		{
-			GiveAchievement(Game::Scr_GetString(0));
+			// Achievements allowed if game doesn't have the loaded mods.
+			if (strlen(Dvars::Functions::Dvar_FindVar("fs_game")->current.string) == 0)
+			{
+				GiveAchievement(Game::Scr_GetString(0));
+			}
 		}, false);
 	}
 
