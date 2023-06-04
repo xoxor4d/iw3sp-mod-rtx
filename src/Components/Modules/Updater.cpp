@@ -322,9 +322,13 @@ namespace Components
 			{
 				Game::Com_Printf(0, "[Updater]: ^1json file is empty or HTTP request can't be reach to the server. Abort The Update.\n");
 
-				Command::Execute("closemenu updater_checking_for_updates", false);
-				Command::Execute("closemenu updater_checking_for_updates_internal", false);
-				Command::Execute("openmenu updater_server_offline", false);
+				if (!Updater::AutomaticUpdate)
+				{
+					Command::Execute("closemenu updater_checking_for_updates", false);
+					Command::Execute("closemenu updater_checking_for_updates_internal", false);
+					Command::Execute("openmenu updater_server_offline", false);
+				}
+
 				return;
 			}
 
