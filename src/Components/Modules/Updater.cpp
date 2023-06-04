@@ -5,6 +5,7 @@
 namespace Components
 {
 	bool Updater::UpdateRestart;
+	bool Updater::AutomaticUpdate;
 
 	Utils::ConcurrentList::Container<Updater::update_data_t> Updater::update_data;
 
@@ -287,10 +288,12 @@ namespace Components
 	{
 		if (needCheck)
 		{
+			Updater::AutomaticUpdate = true;
 			// If used disable the auto-update then just exit from function.
 			if (!Dvars::Functions::Dvar_FindVar("iw3sp_auto_update") || !Dvars::Functions::Dvar_FindVar("iw3sp_auto_update")->current.enabled)
 				return;
 		}
+		else Updater::AutomaticUpdate = false;
 
 		CancelUpdate();
 		ResetData();
@@ -395,12 +398,17 @@ namespace Components
 			}
 			else
 			{
-				Command::Execute("openmenu updater_new_updates_no_found", false);
+				if (!Updater::AutomaticUpdate)
+				{
+					Command::Execute("closemenu updater_checking_for_updates", false);
+					Command::Execute("closemenu updater_checking_for_updates_internal", false);
+					Command::Execute("openmenu updater_new_updates_no_found", false);
+				}
 			}
 		}, Scheduler::Pipeline::ASYNC);
 	}
 
-	void delete_old_file()
+	void Updater::DeleteOldFiles()
 	{
 		Utils::IO::RemoveFile("__iw3sp_mod");
 		Utils::IO::RemoveFile(GetDLLName() + ".old");
@@ -409,26 +417,18 @@ namespace Components
 
 	Updater::Updater()
 	{
-		// Deleting our .dll after when game has been re-launched :>
-		delete_old_file();
-
-		Game::dvar_s* cl_auto_update = Dvars::Register::Dvar_RegisterBool("iw3sp_auto_update", "Automatically check for updates on launch", true, Game::saved);
+		Scheduler::Once([]
+		{
+			// Deleting our .dll after when game has been re-launched :>
+			Updater::DeleteOldFiles();
+		}, Scheduler::Pipeline::MAIN);
 
 		Events::OnDvarInit([]
 		{
+			Game::dvar_s* cl_auto_update = Dvars::Register::Dvar_RegisterBool("iw3sp_auto_update", "Enable automatic update checks on launch.", true, Game::saved);
 			Dvars::UIDlTimeLeft = Dvars::Register::Dvar_RegisterString("ui_dl_timeLeft", "", "", Game::none);
 			Dvars::UIDlProgress = Dvars::Register::Dvar_RegisterString("ui_dl_progress", "", "", Game::none);
 			Dvars::UIDlTransRate = Dvars::Register::Dvar_RegisterString("ui_dl_transRate", "", "", Game::none);
-		});
-
-		// Dev Test (remove from release)
-		Command::Add("check_updater", [](Command::Params*)
-		{
-			Updater::CL_GetAutoUpdate(true);
-		});
-		Command::Add("start_update", [](Command::Params*)
-		{
-			Updater::CL_StartUpdate();
 		});
 
 		UIScript::Add("update_download_cancel", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
@@ -449,14 +449,6 @@ namespace Components
 		UIScript::Add("update_start_download", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
 		{
 			Updater::CL_StartUpdate();
-		});
-
-		//Debug
-		Command::Add("UpdateRestartCheck", [](Command::Params*)
-		{
-			delete_old_file();
-			Game::Com_Printf(0, "-----------TEST----------\n");
-			Game::Com_Printf(0, "UpdateRestart Value: %d \n", Updater::UpdateRestart);
 		});
 	}
 

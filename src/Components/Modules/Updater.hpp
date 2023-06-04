@@ -9,6 +9,7 @@ namespace Components
 	{
 	public:
 		static bool UpdateRestart;
+		static bool AutomaticUpdate;
 
 		struct file_data
 		{
@@ -57,6 +58,7 @@ namespace Components
 
 		static void CL_StartUpdate();
 		static void CL_GetAutoUpdate(bool needCheck);
+		static void DeleteOldFiles();
 
 		static Utils::ConcurrentList::Container<update_data_t> update_data;
 	};
