@@ -1,0 +1,156 @@
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+
+#define CHOICE_X_START			0
+#define CHOICE_Y_START			150
+
+#define CHOICE_GROUP			"updater"
+
+#include "ui_mp/menustyle.inc"
+#include "ui/choices_setup_common.menu"
+
+#include "ui_mp/popupstyle.inc"	
+#include "ui/choices_setup_popmenu.menu"
+	
+#undef CHOICE_SIZE_X
+#define CHOICE_SIZE_X			320
+	
+#undef CHOICE_HORIZONTAL_ALIGN
+#define CHOICE_HORIZONTAL_ALIGN	HORIZONTAL_ALIGN_CENTER
+#undef CHOICE_VERTICAL_ALIGN
+#define CHOICE_VERTICAL_ALIGN	VERTICAL_ALIGN_CENTER
+
+#undef CHOICE_POPMENU_SUBTITLE_VIS
+#define CHOICE_POPMENU_SUBTITLE_VIS( textArg, visArg ) \
+		itemDef \
+		{ \
+			type			ITEM_TYPE_BUTTON \
+			rect			CHOICE_POPUP_BORDER_X (CHOICE_POPUP_BORDER_Y + CHOICE_POPUP_TITLE_HEIGHT) (CHOICE_POPUP_WIDTH - (CHOICE_POPUP_BORDER_Y*2)) CHOICE_POPUP_SUBTITLE_HEIGHT CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
+			exp				text(textArg); \
+			textfont		UI_FONT_NORMAL \
+			textscale		CHOICE_POPUP_SUBTITLE_TEXTSIZE \
+			textAlign		ITEM_ALIGN_TOP_CENTER \
+			textstyle		CHOICE_TEXTSTYLE \
+			forecolor		CHOICE_TEXTCOLOR \
+			visible			visArg \
+			decoration \
+			autowrapped \
+		}
+
+#define START_UPDATE \
+	close self; open updater_download_menu; uiScript "update_start_download";
+
+#define CANCEL_UPDATE \
+	uiScript "update_download_cancel"; close self;
+
+#define RESTART_GAME \
+	exec "startSingleplayer";
+
+{
+	//Update Available
+	menuDef
+	{
+		CENTER_POPUP_SETUP( updater_popmenu, 5, ;, 1 )
+		CHOICE_POPMENU_SUBTITLE( "@IW3SP_MOD_LOC_MENU_UPDATE_NEW_UPDATE" )
+		CHOICE_BUTTON( 4, "@MENU_YES", START_UPDATE )
+		CHOICE_BUTTON( 5, "@MENU_NO", close self )
+	}
+
+	//Game Restart
+	menuDef
+	{
+		CENTER_POPUP_SETUP( updater_restart, 3, RESTART_GAME, 1 )
+		CHOICE_POPMENU_SUBTITLE( "@IW3SP_MOD_LOC_MENU_UPDATE_REQUIRES_RESTART" )
+		CHOICE_BUTTON( 3, "@IW3SP_MOD_LOC_MENU_UPDATE_RESTART", RESTART_GAME )
+	}
+
+#undef CHOICE_POPMENU_SUBTITLE_VIS
+#define CHOICE_POPMENU_SUBTITLE_VIS( textArg, visArg ) \
+		itemDef \
+		{ \
+			type			ITEM_TYPE_BUTTON \
+			rect			CHOICE_POPUP_BORDER_X (CHOICE_POPUP_BORDER_Y + CHOICE_POPUP_TITLE_HEIGHT) (CHOICE_POPUP_WIDTH - (CHOICE_POPUP_BORDER_Y*2)) CHOICE_POPUP_SUBTITLE_HEIGHT CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
+			text 			textArg; \
+			textfont		UI_FONT_NORMAL \
+			textscale		CHOICE_POPUP_SUBTITLE_TEXTSIZE \
+			textAlign		ITEM_ALIGN_TOP_CENTER \
+			textstyle		CHOICE_TEXTSTYLE \
+			forecolor		CHOICE_TEXTCOLOR \
+			visible			visArg \
+			decoration \
+			autowrapped \
+		}
+
+
+	
+	//Update Download Progress.
+	menuDef
+	{
+		CENTER_POPUP_SETUP( updater_download_menu, 3, CANCEL_UPDATE, 1 )
+		CHOICE_POPMENU_SUBTITLE( "-" )
+		CHOICE_BUTTON( 3, "@MENU_CANCEL", CANCEL_UPDATE )
+	}
+
+
+	menuDef
+	{
+		//CENTER_POPUP_SETUP( updater_checking_for_updates, 3, ;, 1 )
+
+		//#define CENTER_POPUP_SETUP_ONOPEN( nameArg, itemCount, onEscArg, onOpenArg, shadow_visArg )
+		CENTER_POPUP_SETUP_ONOPEN(updater_checking_for_updates, 3, ;, uiScript check_avaliable_updates;, 1)
+//original
+#undef CHOICE_POPMENU_SUBTITLE_VIS
+#define CHOICE_POPMENU_SUBTITLE_VIS( textArg, visArg ) \
+		itemDef \
+		{ \
+			type			ITEM_TYPE_BUTTON \
+			rect			CHOICE_POPUP_BORDER_X (CHOICE_POPUP_BORDER_Y + CHOICE_POPUP_TITLE_HEIGHT) (CHOICE_POPUP_WIDTH - (CHOICE_POPUP_BORDER_Y*2)) CHOICE_POPUP_SUBTITLE_HEIGHT CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
+			exp				text(textArg); \
+			textfont		UI_FONT_NORMAL \
+			textscale		CHOICE_POPUP_SUBTITLE_TEXTSIZE \
+			textAlign		ITEM_ALIGN_TOP_CENTER \
+			textstyle		CHOICE_TEXTSTYLE \
+			forecolor		CHOICE_TEXTCOLOR \
+			visible			visArg \
+			decoration \
+			autowrapped \
+		}
+
+		#define LOCAL_DL_ANIMATION (sin(milliseconds()*0.005)+1)*0.5
+
+		CHOICE_POPMENU_SUBTITLE_VIS( "", when( 1 ); )
+		CHOICE_POPMENU_SUBTITLE_VIS( locstring("@IW3SP_MOD_LOC_MENU_CHECKING_UPDATE"), when( LOCAL_DL_ANIMATION <= 0.25 ); )
+		CHOICE_POPMENU_SUBTITLE_VIS( locstring("@IW3SP_MOD_LOC_MENU_CHECKING_UPDATE") + ".", when( LOCAL_DL_ANIMATION > 0.25 && LOCAL_DL_ANIMATION <= 0.5 ); )
+		CHOICE_POPMENU_SUBTITLE_VIS( locstring("@IW3SP_MOD_LOC_MENU_CHECKING_UPDATE") + "..", when( LOCAL_DL_ANIMATION > 0.5 && LOCAL_DL_ANIMATION <= 0.75 ); )
+		CHOICE_POPMENU_SUBTITLE_VIS( locstring("@IW3SP_MOD_LOC_MENU_CHECKING_UPDATE") + "...", when( LOCAL_DL_ANIMATION > 0.75 ); )
+	}
+
+	menuDef
+	{
+		//CENTER_POPUP_SETUP( updater_checking_for_updates, 3, ;, 1 )
+
+		//#define CENTER_POPUP_SETUP_ONOPEN( nameArg, itemCount, onEscArg, onOpenArg, shadow_visArg )
+		CENTER_POPUP_SETUP_ONOPEN(updater_checking_for_updates_internal, 3, ;, uiScript check_avaliable_updates_internal;, 1)
+
+		CHOICE_POPMENU_SUBTITLE_VIS( "", when( 1 ); )
+		CHOICE_POPMENU_SUBTITLE_VIS( locstring("@IW3SP_MOD_LOC_MENU_CHECKING_UPDATE"), when( LOCAL_DL_ANIMATION <= 0.25 ); )
+		CHOICE_POPMENU_SUBTITLE_VIS( locstring("@IW3SP_MOD_LOC_MENU_CHECKING_UPDATE") + ".", when( LOCAL_DL_ANIMATION > 0.25 && LOCAL_DL_ANIMATION <= 0.5 ); )
+		CHOICE_POPMENU_SUBTITLE_VIS( locstring("@IW3SP_MOD_LOC_MENU_CHECKING_UPDATE") + "..", when( LOCAL_DL_ANIMATION > 0.5 && LOCAL_DL_ANIMATION <= 0.75 ); )
+		CHOICE_POPMENU_SUBTITLE_VIS( locstring("@IW3SP_MOD_LOC_MENU_CHECKING_UPDATE") + "...", when( LOCAL_DL_ANIMATION > 0.75 ); )
+	}
+
+
+	menuDef
+	{
+		CENTER_POPUP_SETUP( updater_new_updates_no_found, 3, ;, 1 )
+		CHOICE_POPMENU_SUBTITLE( "@IW3SP_MOD_LOC_MENU_NO_UPDATES_AVAILABLE" )
+		CHOICE_BUTTON( 3, "@MENU_BACK", close self; )
+	}
+
+	menuDef
+	{
+		CENTER_POPUP_SETUP( updater_server_offline, 3, ;, 1 )
+		CHOICE_POPMENU_SUBTITLE( "@IW3SP_MOD_LOC_MENU_SERVER_OFFLINE" )
+		CHOICE_BUTTON( 3, "@MENU_BACK", close self; )
+	}
+}

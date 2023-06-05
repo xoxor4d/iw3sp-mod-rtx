@@ -1,0 +1,416 @@
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+
+#define CHOICE_X_START			0
+#define CHOICE_Y_START			34
+
+#define CHOICE_SEP_OFFSET_Y		-2
+
+#define CHOICE_GROUP			"achievements"
+
+#include "ui_mp/menustyle.inc"
+#include "ui/choices_setup_common.menu"
+
+#undef CHOICE_SIZE_X
+#undef CHOICE_SIZE_Y
+#define CHOICE_SIZE_X			258
+#define CHOICE_SIZE_Y			22
+
+//---- orient ----
+#define GAMEINFO_WIDTH			250
+#define GAMEINFO_WIDTH2			255
+#define GAMEINFO_HEIGHT			258
+#define GAMEINFO_HEIGHT2		0
+#ifdef PC
+	#define GAMEINFO_ORIGIN			4 -190
+	#define PC_OFFSET_Y				40
+#else
+	#define GAMEINFO_ORIGIN			4 -170
+	#define PC_OFFSET_Y				0
+#endif
+
+#define ACHIEVEMENT_PREVIEW( achievementMaterial, visArg ) \
+		itemDef \
+		{ \
+			rect -225 150 64 64 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP \
+			style WINDOW_STYLE_SHADER \
+			forecolor 1 1 1 1 \
+			textscale 0.55 \
+			border 1 \
+			bordersize 1 \
+			bordercolor .5 .5 .5 1 \
+			exp material(achievementMaterial) \
+			visible visArg \
+			decoration \
+		}
+
+#define ACHIEVEMENT_BACKGROUND \
+		itemDef \
+		{ \
+			rect -320 100 260 225 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP \
+			style WINDOW_STYLE_SHADER \
+			border 1 \
+			bordersize 1 \
+			bordercolor .5 .5 .5 1 \
+			forecolor 0 0 0 0.5 \
+			textscale 0.55 \
+			background "white" \
+			visible 1 \
+			decoration \
+		} \
+		itemDef \
+		{ \
+			rect -320 100 260 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP \
+			style WINDOW_STYLE_SHADER \
+			border 1 \
+			bordersize 1 \
+			bordercolor .5 .5 .5 1 \
+			forecolor .5 .5 .5 0.5 \
+			textscale 0.55 \
+			background "white" \
+			visible 1 \
+			decoration \
+		} \
+		itemDef \
+		{ \
+			rect -320 250 260 75 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP \
+			style WINDOW_STYLE_SHADER \
+			border 1 \
+			bordersize 1 \
+			bordercolor .5 .5 .5 1 \
+			forecolor .5 .5 .5 0.5 \
+			textscale 0.55 \
+			background "white" \
+			visible 1 \
+			decoration \
+		} \
+		itemDef \
+		{ \
+			rect -320 305 260 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP \
+			style WINDOW_STYLE_SHADER \
+			border 1 \
+			bordersize 1 \
+			bordercolor .5 .5 .5 1 \
+			forecolor .1 .1 .1 0.5 \
+			textscale 0.55 \
+			background "white" \
+			visible 1 \
+			decoration \
+		}
+
+#define ACHIEVEMENT_BACKGROUND_TITLE_INFO(achievementName, visArg) \
+		itemDef \
+		{ \
+			type ITEM_TYPE_TEXT\
+			rect -315 100 255 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP \
+			forecolor 1 1 1 1 \
+			textscale 0.3 \
+			textstyle ITEM_TEXTSTYLE_SHADOWED \
+			textaligny 16.5 \
+			textfont UI_FONT_OBJECTIVE \
+			exp text(achievementName) \
+			visible visArg \
+			autowrapped \
+			decoration \
+		}
+
+#define ACHIEVEMENT_BACKGROUND_DESCRIPTION_INFO(achievementDesc, visArg) \
+		itemDef \
+		{ \
+			type ITEM_TYPE_TEXT\
+			rect -315 250 255 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP \
+			forecolor 1 1 1 1 \
+			textscale 0.3 \
+			textstyle ITEM_TEXTSTYLE_SHADOWED \
+			textaligny 16.5 \
+			textfont UI_FONT_NORMAL \
+			exp text(achievementDesc) \
+			visible visArg \
+			autowrapped \
+			decoration \
+		}
+
+#define ACHIEVEMENT_BACKGROUND_DATE_UNLOCKED(visArg) \
+		itemDef \
+		{ \
+			name 			date_achievement_received\
+			type 			ITEM_TYPE_TEXT\
+			rect 			-315 305 255 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP \
+			forecolor 		1 1 1 1 \
+			textscale 		0.3 \
+			textstyle 		ITEM_TEXTSTYLE_SHADOWED \
+			textalign 		ITEM_ALIGN_RIGHT \
+			textalignx 		-10 \
+			textaligny 		16.5 \
+			textfont 		UI_FONT_NORMAL \
+			text 			"test_text_for_dll"\
+			visible 		visArg \
+			autowrapped \
+			decoration \
+		}
+
+#define ACHIEVEMENT_BACKGROUND_DATE_UNLOCKED_TITLE\
+		itemDef \
+		{ \
+			name 			date_achievement_received\
+			type 			ITEM_TYPE_TEXT\
+			rect			-315 305 255 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP \
+			forecolor 		1 1 1 1 \
+			textscale 		0.3 \
+			textstyle 		ITEM_TEXTSTYLE_SHADOWED \
+			textaligny 		16.5 \
+			textfont 		UI_FONT_NORMAL \
+			text 			"@IW3SP_MOD_LOC_MENU_ACHIEVEMENTS_DATE_RECEIVED"\
+			visible 		1 \
+			decoration \
+		}
+
+
+#define ACHIEVEMENTS_RESET\
+	itemDef {\
+		text			"@IW3SP_MOD_LOC_MENU_RESET_ACHIEVEMENTS"\
+		type			1\
+		style			WINDOW_STYLE_FILLED\
+		textstyle		ITEM_TEXTSTYLE_SHADOWED\
+		rect			50 -26 200 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM\
+		textfont		UI_FONT_NORMAL\
+		textalign		ITEM_ALIGN_CENTER\
+		textscale		0.35 \
+		textaligny		18\
+		visible			1\
+		mouseEnter		{ play "mouse_over"; }\
+		action 	{\
+			play "mouse_click";\
+			open achievements_reset_progress_popmenu;\
+		}	\
+	}
+		
+#define ACHIEVEMENT_SELECT(achievement_index) \
+		setdvar ui_achievement_select_idx achievement_index; \
+		uiScript "achievement_get_info";
+
+#define ACHIEVEMENT_BUTTON(itemIndex, achievementName, achievementDesc, achievementIndex, achievementPage)\
+		CHOICE_BUTTON_FOCUS_VIS( itemIndex, achievementName, ;, ACHIEVEMENT_SELECT(achievementIndex), ;, when( dvarInt (ui_achievement_page) == achievementPage)) \
+		ACHIEVEMENT_BACKGROUND_TITLE_INFO(achievementName, when( localVarInt( ui_highlight ) == itemIndex && localVarString( ui_choicegroup ) == CHOICE_GROUP )) \
+		ACHIEVEMENT_BACKGROUND_DATE_UNLOCKED(when( localVarInt( ui_highlight ) == itemIndex && localVarString( ui_choicegroup ) == CHOICE_GROUP)) \
+		ACHIEVEMENT_BACKGROUND_DESCRIPTION_INFO(achievementDesc, when( localVarInt( ui_highlight ) == itemIndex && localVarString( ui_choicegroup ) == CHOICE_GROUP)) \
+		/*unlocked*/ACHIEVEMENT_PREVIEW("trophy_" + dvarInt(ui_achievement_select_idx), when( localVarInt( ui_highlight ) == itemIndex && localVarString( ui_choicegroup ) == CHOICE_GROUP && dvarInt(ui_achievement_status) == 1))\
+		/*locked*/ACHIEVEMENT_PREVIEW("trophy_locked", when( localVarInt( ui_highlight ) == itemIndex && localVarString( ui_choicegroup ) == CHOICE_GROUP && dvarInt(ui_achievement_status) == 0))
+
+#define ACHIEVEMENT_BUTTON_PAGE_LEFT(achievementPage, dvarValue, menuName) \
+		itemDef { \
+			name			page_left \
+			type			ITEM_TYPE_BUTTON \
+			style 			WINDOW_STYLE_SHADER \
+			rect			-16 -26 16 16 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM\
+			visible			when( dvarInt (ui_achievement_page) == achievementPage) \
+			background		"ui_arrow_left"\
+			mouseEnter		{ play "mouse_over"; } \
+			action 	{ \
+				close self; \
+				setdvar ui_achievement_page dvarValue; \
+				play "mouse_click"; \
+				open menuName; \
+			} \
+		}
+#define ACHIEVEMENT_DBUTTON_PAGE_LEFT(achievementPage) \
+		itemDef { \
+			style 			WINDOW_STYLE_SHADER \
+			rect			-16 -26 16 16 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM\
+			visible			when( dvarInt (ui_achievement_page) == achievementPage) \
+			background		"ui_arrow_left"\
+			forecolor       0.2 0.2 0.2 1 \
+		}
+
+#define ACHIEVEMENT_BUTTON_PAGE_RIGHT(achievementPage, dvarValue, menuName) \
+		itemDef { \
+			name			page_right \
+			type			ITEM_TYPE_BUTTON \
+			style 			WINDOW_STYLE_SHADER \
+			rect			16 -26 16 16 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM\
+			visible			when( dvarInt (ui_achievement_page) == achievementPage) \
+			background		"ui_arrow_right" \
+			mouseEnter		{ play "mouse_over"; } \
+			action 	{ \
+				close self; \
+				setdvar ui_achievement_page dvarValue; \
+				play "mouse_click"; \
+				open menuName; \
+			} \
+		}
+#define ACHIEVEMENT_DBUTTON_PAGE_RIGHT(achievementPage) \
+		itemDef { \
+			style 			WINDOW_STYLE_SHADER \
+			rect			16 -26 16 16 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM\
+			visible			when( dvarInt (ui_achievement_page) == achievementPage) \
+			background		"ui_arrow_right"\
+			forecolor       0.2 0.2 0.2 1 \
+		}
+
+#define ACHIEVEMENT_PAGE_SHOWCASE(achievementPageText, achievementPage) \
+		itemDef { \
+			type 			ITEM_TYPE_TEXT \
+			rect			0 -26 16 16 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM\
+			visible			when( dvarInt (ui_achievement_page) == achievementPage) \
+			text			achievementPageText \
+			textscale 		0.45 \
+			textstyle 		ITEM_TEXTSTYLE_SHADOWED \
+			textaligny 		16.5 \
+			textAlign       ITEM_ALIGN_CENTER \
+			textfont		UI_FONT_NORMAL \
+			forecolor       1 1 1 1 \
+			decoration \
+		}
+		
+#define ACHIEVEMENT_PROGRESSBAR\
+		itemDef { \
+			style 			WINDOW_STYLE_SHADER \
+			rect			-250 -60 500 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM\
+			visible			1 \
+			background		"progress_bar_bg"\
+			forecolor       0.2 0.2 0.2 0.5 \
+		} \
+		itemDef { \
+			name			"achievement_progress_bar" \
+			style 			WINDOW_STYLE_SHADER \
+			rect			-247 -57 0 15 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM\
+			visible			1 \
+			background		"progress_bar_fill"\
+			forecolor       0 .8 0 1 \
+		} \
+		itemDef { \
+			type 			ITEM_TYPE_TEXT \
+			rect			0 -60 16 16 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM\
+			visible			1 \
+			text			"achievement_printinfo" \
+			textscale 		0.3 \
+			textstyle 		ITEM_TEXTSTYLE_SHADOWED \
+			textaligny 		16 \
+			textAlign       ITEM_ALIGN_CENTER \
+			textfont		UI_FONT_NORMAL \
+			forecolor       1 1 1 1 \
+			decoration \
+		}
+{
+	menuDef
+	{
+		name			achievements
+		fullscreen		1
+		rect			0 0 640 480
+		focuscolor		COLOR_FOCUSED
+		style			WINDOW_STYLE_FILLED
+		border			0
+		soundloop 		"music_mainmenu_mp"
+		onOpen {}
+		onEsc {	close achievements;	}
+		onClose	{open main; setdvar ui_achievement_page 0; setdvar ui_achievement_select_idx 0;}
+		#include "ui/blurredbg.inc"
+		#include "ui_mp/navcontrols.inc"
+		
+		CHOICE_MENU_TITLE( "@IW3SP_MOD_LOC_MENU_ACHIEVEMENTS_TITLE" )
+
+		ACHIEVEMENT_BACKGROUND
+
+		ACHIEVEMENT_BUTTON(1 , "@ACHIEVEMENT_NAME_0", "@ACHIEVEMENT_DETAIL_0", 0, 0)
+		ACHIEVEMENT_BUTTON(2, "@ACHIEVEMENT_NAME_1", "@ACHIEVEMENT_DETAIL_1", 1, 0)
+		ACHIEVEMENT_BUTTON(3, "@ACHIEVEMENT_NAME_2", "@ACHIEVEMENT_DETAIL_2", 2, 0)
+		ACHIEVEMENT_BUTTON(4, "@ACHIEVEMENT_NAME_3", "@ACHIEVEMENT_DETAIL_3", 3, 0)
+		ACHIEVEMENT_BUTTON(5, "@ACHIEVEMENT_NAME_4", "@ACHIEVEMENT_DETAIL_4", 4, 0)
+		ACHIEVEMENT_BUTTON(6, "@ACHIEVEMENT_NAME_5", "@ACHIEVEMENT_DETAIL_5", 5, 0)
+		ACHIEVEMENT_BUTTON(7, "@ACHIEVEMENT_NAME_6", "@ACHIEVEMENT_DETAIL_6", 6, 0)
+		ACHIEVEMENT_BUTTON(8, "@ACHIEVEMENT_NAME_7", "@ACHIEVEMENT_DETAIL_7", 7, 0)
+		ACHIEVEMENT_BUTTON(9, "@ACHIEVEMENT_NAME_8", "@ACHIEVEMENT_DETAIL_8", 8, 0)
+		ACHIEVEMENT_BUTTON(10, "@ACHIEVEMENT_NAME_9", "@ACHIEVEMENT_DETAIL_9", 9, 0)
+		ACHIEVEMENT_BUTTON(11, "@ACHIEVEMENT_NAME_10", "@ACHIEVEMENT_DETAIL_10", 10, 0)
+		ACHIEVEMENT_BUTTON(12, "@ACHIEVEMENT_NAME_11", "@ACHIEVEMENT_DETAIL_11", 11, 0)
+		ACHIEVEMENT_BUTTON(13, "@ACHIEVEMENT_NAME_12", "@ACHIEVEMENT_DETAIL_12", 12, 0)
+		ACHIEVEMENT_BUTTON(14, "@ACHIEVEMENT_NAME_13", "@ACHIEVEMENT_DETAIL_13", 13, 0)
+		ACHIEVEMENT_BUTTON(15, "@ACHIEVEMENT_NAME_14", "@ACHIEVEMENT_DETAIL_14", 14, 0)
+
+		ACHIEVEMENT_PROGRESSBAR
+		ACHIEVEMENT_BACKGROUND_DATE_UNLOCKED_TITLE
+		ACHIEVEMENT_PAGE_SHOWCASE(1, 0)
+		ACHIEVEMENT_DBUTTON_PAGE_LEFT(0)
+		ACHIEVEMENT_BUTTON_PAGE_RIGHT(0, 1, "achievements_page_1")
+		ACHIEVEMENTS_RESET
+	}
+
+	menuDef
+	{
+		name			achievements_page_1
+		fullscreen		1
+		rect			0 0 640 480
+		focuscolor		COLOR_FOCUSED
+		style			WINDOW_STYLE_FILLED
+		border			0
+		soundloop 		"music_mainmenu_mp"
+		onOpen {}
+		onEsc {	close achievements_page_1;	}
+		onClose	{ open main; setdvar ui_achievement_page 0; setdvar ui_achievement_select_idx 0;}
+		#include "ui/blurredbg.inc"
+		#include "ui_mp/navcontrols.inc"
+		
+		CHOICE_MENU_TITLE( "@IW3SP_MOD_LOC_MENU_ACHIEVEMENTS_TITLE" )
+
+		ACHIEVEMENT_BACKGROUND
+
+		ACHIEVEMENT_BUTTON(1, "@ACHIEVEMENT_NAME_15", "@ACHIEVEMENT_DETAIL_15", 15, 1 )
+		ACHIEVEMENT_BUTTON(2, "@ACHIEVEMENT_NAME_16", "@ACHIEVEMENT_DETAIL_16", 16, 1 )
+		ACHIEVEMENT_BUTTON(3, "@ACHIEVEMENT_NAME_17", "@ACHIEVEMENT_DETAIL_17", 17, 1 )
+		ACHIEVEMENT_BUTTON(4, "@ACHIEVEMENT_NAME_18", "@ACHIEVEMENT_DETAIL_18", 18, 1 )
+		ACHIEVEMENT_BUTTON(5, "@ACHIEVEMENT_NAME_19", "@ACHIEVEMENT_DETAIL_19", 19, 1 )
+		ACHIEVEMENT_BUTTON(6, "@ACHIEVEMENT_NAME_20", "@ACHIEVEMENT_DETAIL_20", 20, 1 )
+		ACHIEVEMENT_BUTTON(7, "@ACHIEVEMENT_NAME_21", "@ACHIEVEMENT_DETAIL_21", 21, 1 )
+		ACHIEVEMENT_BUTTON(8, "@ACHIEVEMENT_NAME_22", "@ACHIEVEMENT_DETAIL_22", 22, 1 )
+		ACHIEVEMENT_BUTTON(9, "@ACHIEVEMENT_NAME_23", "@ACHIEVEMENT_DETAIL_23", 23, 1 )
+		ACHIEVEMENT_BUTTON(10, "@ACHIEVEMENT_NAME_24", "@ACHIEVEMENT_DETAIL_24", 24, 1 )
+		ACHIEVEMENT_BUTTON(11, "@ACHIEVEMENT_NAME_25", "@ACHIEVEMENT_DETAIL_25", 25, 1 )
+		ACHIEVEMENT_BUTTON(12, "@ACHIEVEMENT_NAME_26", "@ACHIEVEMENT_DETAIL_26", 26, 1 )
+		ACHIEVEMENT_BUTTON(13, "@ACHIEVEMENT_NAME_27", "@ACHIEVEMENT_DETAIL_27", 27, 1 )
+		ACHIEVEMENT_BUTTON(14, "@ACHIEVEMENT_NAME_28", "@ACHIEVEMENT_DETAIL_28", 28, 1 )
+		ACHIEVEMENT_BUTTON(15, "@ACHIEVEMENT_NAME_29", "@ACHIEVEMENT_DETAIL_29", 29, 1 )
+
+		ACHIEVEMENT_PROGRESSBAR
+		ACHIEVEMENT_BACKGROUND_DATE_UNLOCKED_TITLE
+		ACHIEVEMENT_PAGE_SHOWCASE(2, 1)
+		ACHIEVEMENT_BUTTON_PAGE_LEFT(1, 0, "achievements")
+		ACHIEVEMENT_BUTTON_PAGE_RIGHT(1, 2, "achievements_page_2")
+		ACHIEVEMENTS_RESET
+	}
+
+	menuDef
+	{
+		name			achievements_page_2
+		fullscreen		1
+		rect			0 0 640 480
+		focuscolor		COLOR_FOCUSED
+		style			WINDOW_STYLE_FILLED
+		border			0
+		soundloop 		"music_mainmenu_mp"
+		onOpen {}
+		onEsc {	close achievements_page_2;	}
+		onClose	{open main; setdvar ui_achievement_page 0; setdvar ui_achievement_select_idx 0;}
+		#include "ui/blurredbg.inc"
+		#include "ui_mp/navcontrols.inc"
+		
+		CHOICE_MENU_TITLE( "@IW3SP_MOD_LOC_MENU_ACHIEVEMENTS_TITLE" )
+
+		ACHIEVEMENT_BACKGROUND
+
+		ACHIEVEMENT_BUTTON(1, "@ACHIEVEMENT_NAME_30", "@ACHIEVEMENT_DETAIL_30", 30, 2)
+		ACHIEVEMENT_BUTTON(2, "@ACHIEVEMENT_NAME_31", "@ACHIEVEMENT_DETAIL_31", 31, 2)
+		ACHIEVEMENT_BUTTON(3, "@ACHIEVEMENT_NAME_32", "@ACHIEVEMENT_DETAIL_32", 32, 2)
+		ACHIEVEMENT_BUTTON(4, "@ACHIEVEMENT_NAME_33", "@ACHIEVEMENT_DETAIL_33", 33, 2)
+		ACHIEVEMENT_BUTTON(5, "@ACHIEVEMENT_NAME_34", "@ACHIEVEMENT_DETAIL_34", 34, 2) //error, wtf?!
+		ACHIEVEMENT_BUTTON(6, "@ACHIEVEMENT_NAME_35", "@ACHIEVEMENT_DETAIL_35", 35, 2)
+		ACHIEVEMENT_BUTTON(7, "@ACHIEVEMENT_NAME_36", "@ACHIEVEMENT_DETAIL_36", 36, 2)
+		ACHIEVEMENT_BUTTON(8, "@ACHIEVEMENT_NAME_37", "@ACHIEVEMENT_DETAIL_37", 37, 2)
+
+		ACHIEVEMENT_PROGRESSBAR
+		ACHIEVEMENT_BACKGROUND_DATE_UNLOCKED_TITLE
+		ACHIEVEMENT_PAGE_SHOWCASE(3, 2)
+		ACHIEVEMENT_BUTTON_PAGE_LEFT(2, 1, "achievements_page_1")
+		ACHIEVEMENT_DBUTTON_PAGE_RIGHT(2)
+		ACHIEVEMENTS_RESET
+	}
+}

@@ -1,0 +1,103 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           KILLHOUSE
+LANG_GERMAN         "'Der Neue'"
+
+REFERENCE           CARGOSHIP
+LANG_GERMAN         "'Besatzung entbehrlich'"
+
+REFERENCE           COUP
+LANG_GERMAN         "'Der Staatsstreich'"
+
+REFERENCE           BLACKOUT
+LANG_GERMAN         "'Blackout'"
+
+REFERENCE           ARMADA
+LANG_GERMAN         "'Charlie surft nicht!'"
+
+REFERENCE           BOG_A
+LANG_GERMAN         "'Der Sumpf'"
+
+REFERENCE           HUNTED
+LANG_GERMAN         "'Auf der Flucht'"
+
+REFERENCE           AC130
+LANG_GERMAN         "'Der Tod kommt von oben'"
+
+REFERENCE           BOG_B
+LANG_GERMAN         "'Rufzeichen 'War Pig''"
+
+REFERENCE           AIRLIFT
+LANG_GERMAN         "'Demoralisierung'"
+
+REFERENCE           AFTERMATH
+LANG_GERMAN         "'Spätfolgen'"
+
+REFERENCE           VILLAGE_ASSAULT
+LANG_GERMAN         "'Versteck'"
+
+REFERENCE           SCOUTSNIPER
+LANG_GERMAN         "'Gut getarnt'"
+
+REFERENCE           SNIPERESCAPE
+LANG_GERMAN         "'Tödliche Präzision'"
+
+REFERENCE           VILLAGE_DEFEND
+LANG_GERMAN         "'Die Hitze des Gefechts'"
+
+REFERENCE           AMBUSH
+LANG_GERMAN         "'Die Sünden unserer Väter'"
+
+REFERENCE           ICBM
+LANG_GERMAN         "'Das Ultimatum'"
+
+REFERENCE           LAUNCHFACILITY_A
+LANG_GERMAN         "'All-In'"
+
+REFERENCE           LAUNCHFACILITY_B
+LANG_GERMAN         "'Kriegsspiele'"
+
+REFERENCE           JEEPRIDE
+LANG_GERMAN         "'Sackgasse'"
+
+REFERENCE           AIRPLANE
+LANG_GERMAN         "'Über den Wolken'"
+
+REFERENCE           SIMPLECREDITS
+LANG_GERMAN         "Das ansehen Spiel Credits"
+
+REFERENCE           MAINMENU
+LANG_GERMAN         "Im Hauptmenü"
+
+REFERENCE           MAPUNKNOWN
+LANG_GERMAN         "Map: Unbekannt"
+
+REFERENCE           DIFFICULTY_EASY
+LANG_GERMAN         "Schwierigkeit: Rekrut"
+
+REFERENCE           DIFFICULTY_MEDIUM
+LANG_GERMAN         "Schwierigkeit: Soldat"
+
+REFERENCE           DIFFICULTY_HARD
+LANG_GERMAN         "Schwierigkeit: Söldner"
+
+REFERENCE           DIFFICULTY_FU
+LANG_GERMAN         "Schwierigkeit: Veteran"
+
+REFERENCE           DIFFICULTY_UNKNOWN
+LANG_GERMAN         "Schwierigkeit: Unbekannt"
+
+ENDMARKER

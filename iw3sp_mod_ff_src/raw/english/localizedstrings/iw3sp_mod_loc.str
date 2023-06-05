@@ -1,0 +1,124 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           MENU_UNLOCK_ALL
+LANG_ENGLISH        "Unlock All Missions & Cheats"
+
+REFERENCE           MENU_RESET_ALL
+LANG_ENGLISH        "Reset Missions Progress & Cheats"
+
+REFERENCE           MENU_ARE_YOU_SURE_UNLOCK
+LANG_ENGLISH        "Unlock all missions and cheats?"
+
+REFERENCE           MENU_ARE_YOU_SURE_RESET
+LANG_ENGLISH        "Are you sure you want to reset your mission progress and cheats?"
+
+REFERENCE           MENU_QUIT_TO_DESKTOP
+LANG_ENGLISH        "Quit to Desktop"
+
+REFERENCE           MENU_LASTCHECKPOINT
+LANG_ENGLISH        "Last Checkpoint"
+
+REFERENCE           MENU_LASTCHECKPOINT_DESC
+LANG_ENGLISH        "Restart to the last checkpoint?"
+
+REFERENCE           MENU_STATSHASBEENRESET
+LANG_ENGLISH        "Your profile progress, including missions and cheats, has been reset."
+
+REFERENCE           MENU_UPDATE_NEW_UPDATE
+LANG_ENGLISH        "New client update available.\n Do you want to download the new update?"
+
+REFERENCE           MENU_UPDATE_REQUIRES_RESTART
+LANG_ENGLISH        "Update requires restart."
+
+REFERENCE           MENU_UPDATE_RESTART
+LANG_ENGLISH        "Restart the game"
+
+REFERENCE           MENU_ENABLE_AUTOUPDATE
+LANG_ENGLISH        "Automatic Update"
+
+REFERENCE           MENU_CHECK_FOR_UPDATE
+LANG_ENGLISH        "Check For Update"
+
+REFERENCE           MENU_CHECKING_UPDATE
+LANG_ENGLISH        "Checking for updates"
+
+REFERENCE           MENU_NO_UPDATES_AVAILABLE
+LANG_ENGLISH        "No updates available"
+
+REFERENCE           MENU_SERVER_OFFLINE
+LANG_ENGLISH        "Update download unavailable. Server offline."
+
+REFERENCE           MENU_ACHIEVEMENTS
+LANG_ENGLISH        "Achievements"
+
+REFERENCE           MENU_ACHIEVEMENTS_TITLE
+LANG_ENGLISH        "ACHIEVEMENTS"
+
+REFERENCE           MENU_ACHIEVEMENTS_DATE_RECEIVED
+LANG_ENGLISH        "Date Received:"
+
+REFERENCE           MENU_IW3SP_MOD_OPTIONS
+LANG_ENGLISH        "IW3SP-MOD"
+
+REFERENCE           MENU_RESET_ACHIEVEMENTS
+LANG_ENGLISH        "Reset Achievements"
+
+REFERENCE           MENU_RESET_ACHIEVEMENTS_SURE
+LANG_ENGLISH        "Are you want to reset the progress of achievements?"
+
+REFERENCE           MENU_RESET_ACHIEVEMENTS_COMPELETED
+LANG_ENGLISH        "The progress of achievements has been reset"
+
+REFERENCE           ATTRACT_LOOP_VIDEO1
+LANG_ENGLISH        "50 thousand people used to live here... now its a ghost town."
+
+REFERENCE           ATTRACT_LOOP_VIDEO2
+LANG_ENGLISH        "Our so-called leaders prostituted us to the west...Destroyed our culture...Our economies...Our honor."
+
+REFERENCE           ATTRACT_LOOP_VIDEO3
+LANG_ENGLISH        "US Marines stationed on high alert were given the order to invade a small but oil..."
+
+REFERENCE           ATTRACT_LOOP_VIDEO4
+LANG_ENGLISH        "Nikolai, the coup is just a distraction."
+
+REFERENCE           ATTRACT_LOOP_VIDEO5
+LANG_ENGLISH        "Just as they lay waste of our country - we shall lay waste to theirs."
+
+REFERENCE           ATTRACT_LOOP_VIDEO6
+LANG_ENGLISH        "You think this will stop the bloodshed?"
+
+REFERENCE           ATTRACT_LOOP_VIDEO7
+LANG_ENGLISH        "We gotta man down!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO8
+LANG_ENGLISH        "We need take him alive!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO9
+LANG_ENGLISH        "Contact!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO10
+LANG_ENGLISH        "Reloading!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO11
+LANG_ENGLISH        "Flares away, flares away!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO12
+LANG_ENGLISH        "Give me some coveving fire!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO13
+LANG_ENGLISH        "Stay close! Let's go!"
+
+ENDMARKER

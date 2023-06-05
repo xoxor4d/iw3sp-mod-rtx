@@ -1,0 +1,103 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           KILLHOUSE
+LANG_ENGLISH        "'F.N.G.'"
+
+REFERENCE           CARGOSHIP
+LANG_ENGLISH        "'Crew Expendable'"
+
+REFERENCE           COUP
+LANG_ENGLISH        "'The Coup'"
+
+REFERENCE           BLACKOUT
+LANG_ENGLISH        "'Blackout'"
+
+REFERENCE           ARMADA
+LANG_ENGLISH        "'Charlie Don't Surf'"
+
+REFERENCE           BOG_A
+LANG_ENGLISH        "'The Bog'"
+
+REFERENCE           HUNTED
+LANG_ENGLISH        "'Hunted'"
+
+REFERENCE           AC130
+LANG_ENGLISH        "'Death from Above'"
+
+REFERENCE           BOG_B
+LANG_ENGLISH        "'War Pig'"
+
+REFERENCE           AIRLIFT
+LANG_ENGLISH        "'Shock and Awe'"
+
+REFERENCE           AFTERMATH
+LANG_ENGLISH        "'Aftermath'"
+
+REFERENCE           VILLAGE_ASSAULT
+LANG_ENGLISH        "'Safehouse'"
+
+REFERENCE           SCOUTSNIPER
+LANG_ENGLISH        "'All Ghillied Up'"
+
+REFERENCE           SNIPERESCAPE
+LANG_ENGLISH        "'One Shot, One Kill'"
+
+REFERENCE           VILLAGE_DEFEND
+LANG_ENGLISH        "'Heat'"
+
+REFERENCE           AMBUSH
+LANG_ENGLISH        "'The Sins of the Father'"
+
+REFERENCE           ICBM
+LANG_ENGLISH        "'Ultimatum'"
+
+REFERENCE           LAUNCHFACILITY_A
+LANG_ENGLISH        "'All In'"
+
+REFERENCE           LAUNCHFACILITY_B
+LANG_ENGLISH        "'No Fighting in the War Room'"
+
+REFERENCE           JEEPRIDE
+LANG_ENGLISH        "'Game Over'"
+
+REFERENCE           AIRPLANE
+LANG_ENGLISH        "'Mile High Club'"
+
+REFERENCE           SIMPLECREDITS
+LANG_ENGLISH        "Watching the Game Credits"
+
+REFERENCE           MAINMENU
+LANG_ENGLISH        "In Main Menu"
+
+REFERENCE           MAPUNKNOWN
+LANG_ENGLISH        "Map: Unknown"
+
+REFERENCE           DIFFICULTY_EASY
+LANG_ENGLISH        "Difficulty: Recruit"
+
+REFERENCE           DIFFICULTY_MEDIUM
+LANG_ENGLISH        "Difficulty: Regular"
+
+REFERENCE           DIFFICULTY_HARD
+LANG_ENGLISH        "Difficulty: Hardened"
+
+REFERENCE           DIFFICULTY_FU
+LANG_ENGLISH        "Difficulty: Veteran"
+
+REFERENCE           DIFFICULTY_UNKNOWN
+LANG_ENGLISH        "Difficulty: Unknown"
+
+ENDMARKER

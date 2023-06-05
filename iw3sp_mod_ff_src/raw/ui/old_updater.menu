@@ -1,0 +1,163 @@
+{
+	menuDef
+	{
+		name "updater"
+		rect -150 -84 300 116 2 2
+		popup
+		style 1
+		forecolor 1 1 1 1
+		backcolor 1 1 1 1
+		background "black"
+		focuscolor 1 1 1 1
+		onOpen
+		{
+			setLocalVarBool	ui_centerPopup 1;
+		}
+		onClose
+		{
+			setLocalVarBool	ui_centerPopup 0;
+			uiScript "update_download_cancel";
+		}
+		onEsc
+		{
+			close self;
+		}
+		itemDef
+		{
+			rect -1004 -564 1708 992 2 2
+			decoration
+			visible 1
+			style 1
+			forecolor 1 1 1 1
+			backcolor 0 0 0 0.35
+			background "white"
+			textscale 0.55
+		}
+		//Menu Title Name
+		itemDef
+		{
+			rect 0 0 300 40 2 2
+			decoration
+			visible 1
+			forecolor 1 1 1 1
+			type 1
+			textfont 9
+			textalign 5
+			textscale 0.375
+			text "@EXE_DOWNLOADING"
+		}
+		/*
+		itemDef
+		{
+			rect 0 45 300 20 2 2
+			decoration
+			visible 1
+			forecolor 1 1 1 1
+			type 1
+			textalign 0
+			textalignX 10
+			textscale 0.4
+			text "@EXE_EST_TIME_LEFT"
+		}
+		*/
+		//File Name Info
+		itemDef
+		{
+			name "filename_info"
+			rect 0 45 300 20 2 2
+			decoration
+			forecolor 1 1 1 1
+			type 1
+			textalign 1 //2
+			textalignX -10
+			textscale 0.3
+			text ""
+			visible 1
+		}
+		/*
+		itemDef
+		{
+			rect 0 65 300 20 2 2
+			decoration
+			visible 1
+			forecolor 1 1 1 1
+			type 1
+			textalign 0
+			textalignX 10
+			textscale 0.4
+			text "@EXE_TRANS_RATE"
+		}
+		*/
+		itemDef
+		{
+			name "download_progress"
+			rect 0 65 300 20 2 2
+			decoration
+			forecolor 1 1 1 1
+			type 1
+			textalign 2
+			textalignX -10
+			textscale 0.4
+			text ""
+			visible 1
+		}
+		/*
+		itemDef
+		{
+			rect 0 85 300 20 2 2
+			decoration
+			visible 1
+			forecolor 1 1 1 1
+			type 1
+			textalign 0
+			textalignX 10
+			textscale 0.4
+			text "@EXE_PROGRESS"
+		}
+		itemDef
+		{
+			name "progress"
+			rect 0 85 300 20 2 2
+			decoration
+			forecolor 1 1 1 1
+			type 1
+			textalign 2
+			textalignX -10
+			textscale 0.4
+			autowrapped
+			exp text (dvarString("ui_dl_progress"))
+			visible 1
+		}
+		*/
+		itemDef
+		{
+			name cancel
+			rect 6 96 292 20 2 2
+			visible 1
+			group "mw2_popup_button"
+			style 1
+			forecolor 1 1 1 1
+			background "white"
+			type 1
+			textalign 6
+			textalignx -24
+			textscale 0.375
+			text "@MENU_CANCEL"
+			visible when ( 1 )
+			action
+			{
+				play "mouse_click";
+				close self;
+			}
+			onFocus
+			{
+			 	play "mouse_over";
+			 	setItemColor cancel backcolor 0 0 0 1;
+			}
+			leaveFocus
+			{
+				setItemColor cancel backcolor 1 1 1 0;
+			}
+		}
+	}
+}

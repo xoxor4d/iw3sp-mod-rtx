@@ -1,0 +1,80 @@
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+
+#define CHOICE_X_START			0
+#define CHOICE_Y_START			150
+
+#define CHOICE_GROUP			"achievements_reset"
+
+#include "ui_mp/menustyle.inc"
+#include "ui/choices_setup_common.menu"
+
+#include "ui_mp/popupstyle.inc"	
+#include "ui/choices_setup_popmenu.menu"
+	
+#undef CHOICE_SIZE_X
+#define CHOICE_SIZE_X			340
+	
+#undef CHOICE_HORIZONTAL_ALIGN
+#define CHOICE_HORIZONTAL_ALIGN	HORIZONTAL_ALIGN_CENTER
+#undef CHOICE_VERTICAL_ALIGN
+#define CHOICE_VERTICAL_ALIGN	VERTICAL_ALIGN_CENTER
+
+
+#define RESET_ACHIEVEMENETS_SCRIPTS \
+	close self; uiScript reset_achievements_progress; uiScript achievement_progressbar; open achievements_progress_reset_completed;
+
+// Reseting the original button on own without changes in original file.
+#undef CHOICE_SCRIPTS_ALL
+#define CHOICE_SCRIPTS_ALL( itemIndex, actionArg, onFocusArg, leaveFocusArg ) \
+			onFocus \
+			{ \
+				play CHOICE_FOCUS_SOUND; \
+				setLocalVarInt ui_highlight itemIndex; \
+				setLocalVarString ui_choicegroup CHOICE_GROUP; \
+				onFocusArg \
+			} \
+			leaveFocus \
+			{ \
+				setLocalVarInt ui_highlight 0; \
+				leaveFocusArg \
+			} \
+			action \
+			{ \
+				play "mouse_click"; \
+				actionArg; \
+			}
+
+#undef CHOICE_POPMENU_SUBTITLE_VIS
+#define CHOICE_POPMENU_SUBTITLE_VIS( textArg, visArg ) \
+		itemDef \
+		{ \
+			type			ITEM_TYPE_BUTTON \
+			rect			CHOICE_POPUP_BORDER_X (CHOICE_POPUP_BORDER_Y + CHOICE_POPUP_TITLE_HEIGHT) (CHOICE_POPUP_WIDTH - (CHOICE_POPUP_BORDER_Y*2)) CHOICE_POPUP_SUBTITLE_HEIGHT CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
+			exp				text(textArg); \
+			textfont		UI_FONT_NORMAL \
+			textscale		CHOICE_POPUP_SUBTITLE_TEXTSIZE \
+			textAlign		ITEM_ALIGN_TOP_CENTER \
+			textstyle		CHOICE_TEXTSTYLE \
+			forecolor		CHOICE_TEXTCOLOR \
+			visible			visArg \
+			decoration \
+			autowrapped \
+		}
+
+{
+	menuDef
+	{		
+		CENTER_POPUP_SETUP( achievements_reset_progress_popmenu, 5, ;, 1 )
+		CHOICE_POPMENU_SUBTITLE( "@IW3SP_MOD_LOC_MENU_RESET_ACHIEVEMENTS_SURE" )
+		CHOICE_BUTTON( 4, "@MENU_YES", RESET_ACHIEVEMENETS_SCRIPTS; play "mission_reset_cheat"; )
+		CHOICE_BUTTON( 5, "@MENU_NO", close self; )
+	}
+
+	menuDef
+	{		
+		CENTER_POPUP_SETUP( achievements_progress_reset_completed, 5, ;, 1 )
+		CHOICE_POPMENU_SUBTITLE( "@IW3SP_MOD_LOC_MENU_RESET_ACHIEVEMENTS_COMPELETED" )
+		CHOICE_BUTTON( 5, "@MENU_OK", close self )
+	}
+}

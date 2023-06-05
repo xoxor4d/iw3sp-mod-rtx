@@ -1,0 +1,326 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           EARNED
+LANG_ENGLISH        "Achievement Unlocked!"
+
+REFERENCE           NAME_0
+LANG_ENGLISH        "Just another day at the office"
+
+REFERENCE           DETAIL_0
+LANG_ENGLISH        "Earn all available trophies for Call of Duty 4: Modern Warfare."
+//LANG_ENGLISH        "Earn all available trophies for Call of Duty 4®: Modern Warfare®."
+
+REFERENCE           NAME_1
+LANG_ENGLISH        "Earn a Winged Dagger"
+
+REFERENCE           DETAIL_1
+LANG_ENGLISH        "Complete 'F.N.G.'."
+
+REFERENCE           NAME_2
+LANG_ENGLISH        "Make the Jump"
+
+REFERENCE           DETAIL_2
+LANG_ENGLISH        "Infiltrate a cargo ship."
+
+REFERENCE           NAME_3
+LANG_ENGLISH        "Dancing in the Dark"
+
+REFERENCE           DETAIL_3
+LANG_ENGLISH        "Kill the power."
+
+REFERENCE           NAME_4
+LANG_ENGLISH        "Save the Bacon"
+
+REFERENCE           DETAIL_4
+LANG_ENGLISH        "Protect 'War Pig', the Abrams tank."
+
+REFERENCE           NAME_5
+LANG_ENGLISH        "Death From Above"
+
+REFERENCE           DETAIL_5
+LANG_ENGLISH        "Operate an AC-130 gun ship."
+
+REFERENCE           NAME_6
+LANG_ENGLISH        "Wrong Number"
+
+REFERENCE           DETAIL_6
+LANG_ENGLISH        "Wrong Number"
+
+REFERENCE           NAME_7
+LANG_ENGLISH        "Piggyback Ride"
+
+REFERENCE           DETAIL_7
+LANG_ENGLISH        "Carry Cpt. MacMillan to safety."
+
+REFERENCE           NAME_8
+LANG_ENGLISH        "Desperate Measures"
+
+REFERENCE           DETAIL_8
+LANG_ENGLISH        "Corner Zakhaev's Son."
+
+REFERENCE           NAME_9
+LANG_ENGLISH        "Win the War"
+
+REFERENCE           DETAIL_9
+LANG_ENGLISH        "Complete the game on any difficulty."
+
+REFERENCE           NAME_10
+LANG_ENGLISH        "Look Sharp"
+
+REFERENCE           DETAIL_10
+LANG_ENGLISH        "Find 15 enemy intel items."
+
+REFERENCE           NAME_11
+LANG_ENGLISH        "Eyes and Ears"
+
+REFERENCE           DETAIL_11
+LANG_ENGLISH        "Find 30 enemy intel items."
+
+REFERENCE           NAME_12
+LANG_ENGLISH        "Down Boy Down"
+
+REFERENCE           DETAIL_12
+LANG_ENGLISH        "Survive a dog attack."
+
+REFERENCE           NAME_13
+LANG_ENGLISH        "New Squadron Record"
+
+REFERENCE           DETAIL_13
+LANG_ENGLISH        "Complete the cargo ship mockup in less than 19 seconds."
+
+REFERENCE           NAME_14
+LANG_ENGLISH        "Rescue Roycewicz"
+
+REFERENCE           DETAIL_14
+LANG_ENGLISH        "Save Pvt. Roycewicz on the stairs."
+
+REFERENCE           NAME_15
+LANG_ENGLISH        "Your Show Sucks"
+
+REFERENCE           DETAIL_15
+LANG_ENGLISH        "Destroy all the TVs showing Al-Asad's speech"
+
+REFERENCE           NAME_16
+LANG_ENGLISH        "Man of the People"
+
+REFERENCE           DETAIL_16
+LANG_ENGLISH        "Save the farmer."
+
+REFERENCE           NAME_17
+LANG_ENGLISH        "Straight Flush"
+
+REFERENCE           DETAIL_17
+LANG_ENGLISH        "Kill 5 enemies with one shot while in the AC-130 gunship."
+
+REFERENCE           NAME_18
+LANG_ENGLISH        "Ghillies In The Mist"
+
+REFERENCE           DETAIL_18
+LANG_ENGLISH        "Complete 'All Ghillied Up' without alerting any enemies."
+
+REFERENCE           NAME_19
+LANG_ENGLISH        "Mile High Club"
+
+REFERENCE           DETAIL_19
+LANG_ENGLISH        "Sky dive to safety on Veteran difficulty."
+
+REFERENCE           NAME_20
+LANG_ENGLISH        "No Rest for the Weary"
+
+REFERENCE           DETAIL_20
+LANG_ENGLISH        "Stab an injured crawling enemy."
+
+REFERENCE           NAME_21
+LANG_ENGLISH        "Deep and Hard"
+
+REFERENCE           DETAIL_21
+LANG_ENGLISH        "Complete the game on Hardened or Veteran difficulty."
+
+REFERENCE           NAME_22
+LANG_ENGLISH        "The Package"
+
+REFERENCE           DETAIL_22
+LANG_ENGLISH        "Complete 'Crew Expendable' on Veteran difficulty."
+
+REFERENCE           NAME_23
+LANG_ENGLISH        "The Rescue"
+
+REFERENCE           DETAIL_23
+LANG_ENGLISH        "Complete 'Blackout' on Veteran difficulty."
+
+REFERENCE           NAME_24
+LANG_ENGLISH        "The Search"
+
+REFERENCE           DETAIL_24
+LANG_ENGLISH        "Complete 'Charlie Don't Surf' on Veteran difficulty."
+
+REFERENCE           NAME_25
+LANG_ENGLISH        "The Bog"
+
+REFERENCE           DETAIL_25
+LANG_ENGLISH        "Complete 'The Bog' and 'War Pig' on Veteran difficulty."
+
+REFERENCE           NAME_26
+LANG_ENGLISH        "The Escape"
+
+REFERENCE           DETAIL_26
+LANG_ENGLISH        "Complete 'Hunted' and 'Death From Above' on Veteran difficulty."
+
+REFERENCE           NAME_27
+LANG_ENGLISH        "The First Horseman"
+
+REFERENCE           DETAIL_27
+LANG_ENGLISH        "Complete 'Shock and Awe' on Veteran difficulty."
+
+REFERENCE           NAME_28
+LANG_ENGLISH        "The Second Horseman"
+
+REFERENCE           DETAIL_28
+LANG_ENGLISH        "Complete 'Safehouse' on Veteran difficulty."
+
+REFERENCE           NAME_29
+LANG_ENGLISH        "The Shot"
+
+REFERENCE           DETAIL_29
+LANG_ENGLISH        "Complete 'All Ghillied Up' and 'One Shot, One Kill' on Veteran difficulty."
+
+REFERENCE           NAME_30
+LANG_ENGLISH        "The Third Horseman"
+
+REFERENCE           DETAIL_30
+LANG_ENGLISH        "Complete 'Heat' and 'The Sins of the Father' on Veteran difficulty."
+
+REFERENCE           NAME_31
+LANG_ENGLISH        "The Ultimatum"
+
+REFERENCE           DETAIL_31
+LANG_ENGLISH        "Complete 'Ultimatum', 'All In', and 'No Fighting in the War Room' on Veteran difficulty."
+
+REFERENCE           NAME_32
+LANG_ENGLISH        "The Fourth Horseman"
+
+REFERENCE           DETAIL_32
+LANG_ENGLISH        "Complete 'Game Over' on Veteran difficulty."
+
+REFERENCE           NAME_33
+LANG_ENGLISH        "Daredevil"
+
+REFERENCE           DETAIL_33
+LANG_ENGLISH        "Kill an enemy while blinded by a flashbang in the single player campaign."
+
+REFERENCE           NAME_34
+LANG_ENGLISH        "Roadkill"
+
+REFERENCE           DETAIL_34
+LANG_ENGLISH        "Kill 2 enemies by blowing up a car in the single player campaign."
+
+REFERENCE           NAME_35
+LANG_ENGLISH        "Bird on the Ground"
+
+REFERENCE           DETAIL_35
+LANG_ENGLISH        "Shoot down an enemy helicopter with an RPG in the single player campaign."
+
+REFERENCE           NAME_36
+LANG_ENGLISH        "Four of a Kind"
+
+REFERENCE           DETAIL_36
+LANG_ENGLISH        "Kill 4 enemies in a row with headshots in the single player campaign."
+
+REFERENCE           NAME_37
+LANG_ENGLISH        "Three of a Kind"
+
+REFERENCE           DETAIL_37
+LANG_ENGLISH        "Kill 3 enemies in a row with your knife in the single player campaign."
+
+REFERENCE           NAME_38
+LANG_ENGLISH        "Time Paradox"
+
+REFERENCE           DETAIL_38
+LANG_ENGLISH        "Kill Makarov and complete your mission."
+
+REFERENCE           NAME_39
+LANG_ENGLISH        "Weapon Master"
+
+REFERENCE           DETAIL_39
+LANG_ENGLISH        "Get a kill with each type of handheld gun, explosive and launcher in the single player campaign."
+
+REFERENCE           NAME_40
+LANG_ENGLISH        "Flyswatter"
+
+REFERENCE           DETAIL_40
+LANG_ENGLISH        "Destroy 8 enemy helicopters in 'Heat'."
+
+REFERENCE           NAME_41
+LANG_ENGLISH        "Desert Storm"
+
+REFERENCE           DETAIL_41
+LANG_ENGLISH        "Find the Desert Eagle in 'Crew Expendable' and kill 5 enemies with it."
+
+REFERENCE           NAME_42
+LANG_ENGLISH        "Master Ninja"
+
+REFERENCE           DETAIL_42
+LANG_ENGLISH        "Complete any level using only the knife to kill enemies."
+
+REFERENCE           NAME_43
+LANG_ENGLISH        "Dogs. I Hate Dogs."
+
+REFERENCE           DETAIL_43
+LANG_ENGLISH        "Kill 20 attack dogs with a knife."
+
+REFERENCE           NAME_44
+LANG_ENGLISH        "The Man in the High Tower"
+
+REFERENCE           DETAIL_44
+LANG_ENGLISH        "Find and use the hidden cache in 'Heat'."
+
+REFERENCE           NAME_45
+LANG_ENGLISH        "Feel the Heat"
+
+REFERENCE           DETAIL_45
+LANG_ENGLISH        "Kill all 4 tanks on the overpass with the Javelin missile in 'The Bog'."
+
+REFERENCE           NAME_46
+LANG_ENGLISH        "Retro Shooter"
+
+REFERENCE           DETAIL_46
+LANG_ENGLISH        "Complete any level without reloading your weapon (excluding 'The Coup' and 'Aftermath')."
+
+REFERENCE           NAME_47
+LANG_ENGLISH        "Best of the Best"
+
+REFERENCE           DETAIL_47
+LANG_ENGLISH        "Beat IW best time on the Ship Training course in 'F.N.G.' (15.1 sec)."
+
+REFERENCE           NAME_48
+LANG_ENGLISH        "Man versus Machine"
+
+REFERENCE           DETAIL_48
+LANG_ENGLISH        "Alert the enemy helicopter in 'All Ghillied Up' and take it down."
+
+REFERENCE           NAME_49
+LANG_ENGLISH        "Reinforcement Denied"
+
+REFERENCE           DETAIL_49
+LANG_ENGLISH        "Kill at least 3 rappelling enemies in a single rope."
+
+REFERENCE           NAME_50
+LANG_ENGLISH        "Explosion Man"
+
+REFERENCE           DETAIL_50
+LANG_ENGLISH        "Kill 20 enemies with explosives in a single level."
+
+ENDMARKER

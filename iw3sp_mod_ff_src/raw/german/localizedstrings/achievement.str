@@ -1,0 +1,247 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_GERMAN  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           EARNED
+LANG_GERMAN         "Errungenschaft verdient!"
+
+REFERENCE           NAME_0
+LANG_GERMAN         "Ein ganz normaler Tag im Büro"
+
+REFERENCE           DETAIL_0
+LANG_GERMAN         "Erlangt alle Errungenschaft von for Call of Duty 4: Modern Warfare."
+
+REFERENCE           NAME_1
+LANG_GERMAN         "Bekommen Sie das SAS-Abzeichen"
+
+REFERENCE           DETAIL_1
+LANG_GERMAN         "Beendet die Mission 'Der Neue'."
+
+REFERENCE           NAME_2
+LANG_GERMAN         "Schaffen Sie den Sprung"
+
+REFERENCE           DETAIL_2
+LANG_GERMAN         "Infiltriert das Frachtschiff."
+
+REFERENCE           NAME_3
+LANG_GERMAN         "Verdammt dunkel"
+
+REFERENCE           DETAIL_3
+LANG_GERMAN         "Schaltet den Strom ab."
+
+REFERENCE           NAME_4
+LANG_GERMAN         "Schweinerei"
+
+REFERENCE           DETAIL_4
+LANG_GERMAN         "Schützt 'War Pig', den Abrams-Panzer."
+
+REFERENCE           NAME_5
+LANG_GERMAN         "Der Tod kommt von oben"
+
+REFERENCE           DETAIL_5
+LANG_GERMAN         "Bedient ein AC-130 Kampfflugzeug."
+
+REFERENCE           NAME_6
+LANG_GERMAN         "Falsche Adresse"
+
+REFERENCE           DETAIL_6
+LANG_GERMAN         "Findet Al-Asads Versteck."
+
+REFERENCE           NAME_7
+LANG_GERMAN         "Huckepacktouristen"
+
+REFERENCE           DETAIL_7
+LANG_GERMAN         "Tragt Cpt. MacMillan in Sicherheit."
+
+REFERENCE           NAME_8
+LANG_GERMAN         "In die Enge getrieben"
+
+REFERENCE           DETAIL_8
+LANG_GERMAN         "Drängt Zakhaevs Sohn in die Enge."
+
+REFERENCE           NAME_9
+LANG_GERMAN         "Gewinnen Sie den Krieg"
+
+REFERENCE           DETAIL_9
+LANG_GERMAN         "Beendet das Spiel auf beliebiger Schwierigkeitsstufe."
+
+REFERENCE           NAME_10
+LANG_GERMAN         "Augen auf"
+
+REFERENCE           DETAIL_10
+LANG_GERMAN         "Findet 15 feindliche Aufklärungsdaten."
+
+REFERENCE           NAME_11
+LANG_GERMAN         "Augen und Ohren"
+
+REFERENCE           DETAIL_11
+LANG_GERMAN         "Findet 30 feindliche Aufklärungsdaten."
+
+REFERENCE           NAME_12
+LANG_GERMAN         "Runter!"
+
+REFERENCE           DETAIL_12
+LANG_GERMAN         "Überlebt einen Hundeangriff."
+
+REFERENCE           NAME_13
+LANG_GERMAN         "Neuer Trupprekord"
+
+REFERENCE           DETAIL_13
+LANG_GERMAN         "Beendet die Frachtschiffsimulation in weniger als 19 Sekunden."
+
+REFERENCE           NAME_14
+LANG_GERMAN         "Retten Sie Roycewicz"
+
+REFERENCE           DETAIL_14
+LANG_GERMAN         "Rettet Pvt. Roycewicz auf der Treppe."
+
+REFERENCE           NAME_15
+LANG_GERMAN         "Langweiliges Fernsehprogramm"
+
+REFERENCE           DETAIL_15
+LANG_GERMAN         "Zerstört alle Fernseher mit Al-Asads Rede."
+
+REFERENCE           NAME_16
+LANG_GERMAN         "Mann des Volkes"
+
+REFERENCE           DETAIL_16
+LANG_GERMAN         "Rettet den Bauern."
+
+REFERENCE           NAME_17
+LANG_GERMAN         "Fünf auf einen Streich"
+
+REFERENCE           DETAIL_17
+LANG_GERMAN         "Schaltet fünf Feinde mit einem Schuss aus dem AC-130 Kampfflugzeug aus."
+
+REFERENCE           NAME_18
+LANG_GERMAN         "Gut getarnt"
+
+REFERENCE           DETAIL_18
+LANG_GERMAN         "Beendet die Mission 'Gut getarnt', ohne die Feinde zu alarmieren."
+
+REFERENCE           NAME_19
+LANG_GERMAN         "Über den Wolken"
+
+REFERENCE           DETAIL_19
+LANG_GERMAN         "Springt auf der Schwierigkeitsstufe Veteran aus dem Flieger ab und in Sicherheit."
+
+REFERENCE           NAME_20
+LANG_GERMAN         "Keine Ruhe"
+
+REFERENCE           DETAIL_20
+LANG_GERMAN         "Stecht einen verletzten und am Boden liegenden Feind ab."
+
+REFERENCE           NAME_21
+LANG_GERMAN         "Das volle Programm	"
+
+REFERENCE           DETAIL_21
+LANG_GERMAN         "Beendet das Spiel auf den Schwierigkeitsstufen Söldner oder Veteran."
+
+REFERENCE           NAME_22
+LANG_GERMAN         "Das Paket"
+
+REFERENCE           DETAIL_22
+LANG_GERMAN         "Beendet die Mission 'Besatzung entbehrlich' auf der Schwierigkeitsstufe Veteran."
+
+REFERENCE           NAME_23
+LANG_GERMAN         "Die Rettung"
+
+REFERENCE           DETAIL_23
+LANG_GERMAN         "Beendet die Mission 'Blackout' auf der Schwierigkeitsstufe Veteran."
+
+REFERENCE           NAME_24
+LANG_GERMAN         "Die Suche"
+
+REFERENCE           DETAIL_24
+LANG_GERMAN         "Beendet die Mission 'Charlie surft nicht!' auf der Schwierigkeitsstufe Veteran."
+
+REFERENCE           NAME_25
+LANG_GERMAN         "Der Sumpf"
+
+REFERENCE           DETAIL_25
+LANG_GERMAN         "Beendet die Missionen 'Der Sumpf' und 'Rufzeichen 'War Pig'' auf der Stufe Veteran."
+
+REFERENCE           NAME_26
+LANG_GERMAN         "Die Flucht"
+
+REFERENCE           DETAIL_26
+LANG_GERMAN         "Beendet die Missionen 'Auf der Flucht' und 'Der Tod kommt von oben' auf der Stufe Veteran."
+
+REFERENCE           NAME_27
+LANG_GERMAN         "Der erste Reiter"
+
+REFERENCE           DETAIL_27
+LANG_GERMAN         "Beendet die Mission 'Demoralisierung' auf der Schwierigkeitsstufe Veteran."
+
+REFERENCE           NAME_28
+LANG_GERMAN         "Der zweite Reiter"
+
+REFERENCE           DETAIL_28
+LANG_GERMAN         "Beendet die Mission 'Versteck' auf der Schwierigkeitsstufe Veteran."
+
+REFERENCE           NAME_29
+LANG_GERMAN         "Der Schuss"
+
+REFERENCE           DETAIL_29
+LANG_GERMAN         "Beendet die Missionen 'Gut getarnt' und 'Tödliche Präzision' auf der Stufe Veteran."
+
+REFERENCE           NAME_30
+LANG_GERMAN         "Der dritte Reiter"
+
+REFERENCE           DETAIL_30
+LANG_GERMAN         "Beendet 'Die Hitze des Gefechts' und 'Die Sünden unserer Väter' auf der Stufe Veteran."
+
+REFERENCE           NAME_31
+LANG_GERMAN         "Das Ultimatum"
+
+REFERENCE           DETAIL_31
+LANG_GERMAN         "Beendet die Missionen 'Das Ultimatum', 'All-In' und 'Kriegsspiele' auf der Stufe Veteran."
+
+REFERENCE           NAME_32
+LANG_GERMAN         "Der vierte Reiter"
+
+REFERENCE           DETAIL_32
+LANG_GERMAN         "Beendet die Mission 'Sackgasse' auf der Schwierigkeitsstufe Veteran."
+
+REFERENCE           NAME_33
+LANG_GERMAN         "Teufelskerl"
+
+REFERENCE           DETAIL_33
+LANG_GERMAN         "Schaltet im Einzelspieler einen Gegner aus, wenn ihr durch eine Blendgranate nichts sehen könnt."
+
+REFERENCE           NAME_34
+LANG_GERMAN         "Fahrerflucht"
+
+REFERENCE           DETAIL_34
+LANG_GERMAN         "Schaltet zwei Gegner aus, indem ihr einen Wagen im Einzelspieler-Modus in die Luft jagt."
+
+REFERENCE           NAME_35
+LANG_GERMAN         "Gestutzte Flügel"
+
+REFERENCE           DETAIL_35
+LANG_GERMAN         "Schießt einen feindlichen Helikopter im Einzelspieler-Modus mit einem Raketenwerfer ab."
+
+REFERENCE           NAME_36
+LANG_GERMAN         "Vierling"
+
+REFERENCE           DETAIL_36
+LANG_GERMAN         "Schaltet vier Feinde hintereinander im Einzelspieler-Modus durch Schüsse in den Kopf aus."
+
+REFERENCE           NAME_37
+LANG_GERMAN         "Drilling"
+
+REFERENCE           DETAIL_37
+LANG_GERMAN         "Schaltet drei Feinde hintereinander im Einzelspieler-Modus mit dem Messer aus."
+
+ENDMARKER

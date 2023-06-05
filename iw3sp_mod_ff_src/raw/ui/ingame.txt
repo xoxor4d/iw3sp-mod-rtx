@@ -1,0 +1,45 @@
+{	
+	loadMenu { "ui/error.menu" }
+
+	loadMenu { "ui/objective_info.menu" }
+	loadMenu { "ui_mp/options.menu" }
+	loadMenu { "ui/options_ingame.menu" }
+	loadMenu { "ui/options_look_pc.menu" }
+	loadMenu { "ui/options_move_pc.menu" }
+	loadMenu { "ui/options_shoot_pc.menu" }
+	loadMenu { "ui/options_misc_pc.menu" }
+	loadMenu { "ui/options_graphics_pc.menu" }
+	loadMenu { "ui/options_game_pc.menu" }
+	loadMenu { "ui/options_sound_pc.menu" }
+	loadMenu { "ui/options_control_defaults.menu" }
+	loadMenu { "ui/options_graphics_defaults.menu" }
+
+	loadMenu { "ui/pregame.menu" }
+
+	loadMenu { "ui/savegame_loading.menu"}
+	loadMenu { "ui/savegame_info.menu" }
+	loadMenu { "ui/savegame_warning.menu" }
+	loadMenu { "ui/savegame_warning_noprofile.menu" }
+
+	loadMenu { "ui/restart_warning.menu" }
+	loadMenu { "ui/scriptmenus/special_features.menu" }
+	loadMenu { "ui/scriptmenus/invert_axis_pc.menu" }
+	loadMenu { "ui/scriptmenus/select_difficulty.menu" }
+
+	loadMenu { "ui/vid_restart_pc.menu" }
+	loadMenu { "ui/snd_restart.menu" }
+
+	// Removed 08.04.2023 (9:14 PM)
+	//loadMenu { "ui/difficulty.menu" }
+
+	// Added 08.04.2023 (8:25 PM)
+	loadMenu { "ui/quit.menu" } 
+	loadMenu { "ui/last_checkpoint.menu" } 
+	loadMenu { "ui/ingame_difficulty.menu" } 
+	
+	//Added 02.06.2023 (8:31 PM)
+	loadMenu { "ui/achievements_ingame.menu" }
+	loadMenu { "ui/achievements_reset_popmenu.menu" }
+	//Added 02.06.2023 (11:38 PM)
+	loadMenu { "ui/options_iw3sp_mod.menu" }
+}
