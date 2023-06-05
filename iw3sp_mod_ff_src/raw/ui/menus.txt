@@ -5,8 +5,6 @@
 	loadMenu { "ui/error.menu" }
 	loadMenu { "ui/levels.menu" }
 	loadMenu { "ui/levels_game.menu" }
-	loadMenu { "ui/levels_test.menu" }
-	loadMenu { "ui/levels_dev.menu" }
 	loadMenu { "ui/difficulty.menu" }
 
 	//08.04.2023
@@ -40,6 +38,4 @@
 	loadMenu { "ui/vid_restart_pc.menu" }
 	loadMenu { "ui/language_restart.menu" }
 	loadMenu { "ui/snd_restart.menu" }
-
-~	loadMenu { "ui/save_load.menu" }
 }
