@@ -19,7 +19,10 @@ namespace Components
 		if (!strcmp(languageName, "english"))
 		{
 			LocalizedStrings::Set("MENU_LAUNCH_WITHOUT_MODS", "Launch without Mods");
+			LocalizedStrings::Set("SUBTITLE_AMBUSH_GAZ_DROPGUN82", "^2Gaz: ^7Drop the bloody gun! Now, drop it!");
+			LocalizedStrings::Set("SUBTITLE_BLACKOUT_PRI_SMELLTHATGAZ231", "^2Captain Price: ^7Gaz, you smell that?");
 			LocalizedStrings::Set("SUBTITLE_BLACKOUT_PRI_CUTPOWER61", "^2Captain Price: ^7Gaz, go around the back and cut the power. Soap, get ready!");
+			LocalizedStrings::Set("SUBTITLE_BLACKOUT_PRI_LETSGO81", "^2Captain Price: ^7Let's go!");
 			LocalizedStrings::Set("SUBTITLE_KILLHOUSE_GAZ_RIFLEDOWNRANGE32", "^2Gaz: ^7Now aim your rifle down range.");
 			LocalizedStrings::Set("KILLHOUSE_ACCURACY_BONUS", "Accuracy bonus: -");
 			LocalizedStrings::Set("KILLHOUSE_ACCURACY_BONUS_ZERO", "Accuracy bonus: -0.0");
