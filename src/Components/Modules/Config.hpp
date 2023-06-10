@@ -62,5 +62,6 @@ namespace Components
 		static nlohmann::json ReadConfig();
 		static nlohmann::json GetRaw(const std::string& key);
 		static nlohmann::json ValidateTheConfigField(const std::string& key, const nlohmann::json& value);
+		static void ReplaceConfig(char* __str, signed __int32 __size, const char* __format, ...);
 	};
 }

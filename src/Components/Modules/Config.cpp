@@ -105,15 +105,51 @@ namespace Components
 		return {};
 	}
 
-	//struct IW3SP_Config_Settings
-	//{
-	//	std::string language;
-	//	int value;
-	//};
+	void Config::ReplaceConfig(char* __str, signed __int32 __size, const char* __format, ...)
+	{
+		//original function
+		Utils::Hook::Call<int(char*, int, const char*)>(0x532A40)(__str, __size, __format); //Com_SetPlayerProfile
+
+		const std::string& profileName = Utils::IO::ReadFile("players/profiles/active.txt");
+		const std::string& profilePath = Utils::String::VA("players/profiles/%s/", profileName.c_str());
+
+		if (Utils::IO::FileExists(profilePath.c_str() + "config.cfg"s))
+		{
+			auto data = Utils::IO::ReadFile(profilePath.c_str() + "config.cfg"s);
+			Utils::IO::WriteFile(profilePath.c_str() + "config_backup.cfg"s, data);
+			Utils::IO::RemoveFile(profilePath.c_str() + "config.cfg"s);
+			Utils::IO::RemoveFile(profilePath.c_str() + "iw3sp_mod_config.cfg"s);
+			Utils::IO::WriteFile(profilePath.c_str() + "iw3sp_mod_config.cfg"s, data);
+		}
+	}
+
+	void __declspec(naked) Com_SetPlayerProfile_stub()
+	{
+		const static uint32_t retn_addr = 0x532788;
+		__asm
+		{
+			call		Config::ReplaceConfig;
+			jmp			retn_addr
+		}
+	}
+
+	void __declspec(naked) Com_SetPlayerProfile_stub2()
+	{
+		const static uint32_t retn_addr = 0x53545A;
+		__asm
+		{
+			call		Config::ReplaceConfig;
+			jmp			retn_addr
+		}
+	}
 
 	Config::Config()
 	{
-		// Check one time.
+		//Com_SetPlayerProfile
+		Utils::Hook(0x532783, Com_SetPlayerProfile_stub, HOOK_JUMP).install()->quick();
+		Utils::Hook(0x535455, Com_SetPlayerProfile_stub2, HOOK_JUMP).install()->quick();
+
+		// Check once time.
 		Scheduler::Once([]
 		{
 			if(!Utils::IO::FileExists("iw3sp_data/settings.json"))
