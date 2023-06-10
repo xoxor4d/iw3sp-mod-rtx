@@ -94,8 +94,8 @@ namespace Components
 		{
 			Command::Execute("seta mis_01 50");
 			//Command::Execute("seta mis_difficulty 4444444444444444444440000000000000000000");
-			Command::Execute("seta cheat_points 30");
-			Command::Execute("seta cheat_items_set1 1073741823");
+			//Command::Execute("seta cheat_points 30");
+			//Command::Execute("seta cheat_items_set1 1073741823");
 			Game::Com_Printf(0, "Game [^3INFO^7]: missions and cheats has been unlocked on your game profile.\n");
 		});
 
@@ -419,6 +419,7 @@ namespace Components
 
 			//for 'main_lockout' menu
 			Game::dvar_s* ui_skipMainLockout = Dvars::Register::Dvar_RegisterBool("ui_skipMainLockout", "", false, Game::none);
+			Game::dvar_s* profile_unlock_all = Dvars::Register::Dvar_RegisterBool("profile_unlock_all", "", false, Game::saved);
 		});
 
 		Utils::Hook::Set<const char*>(0x445667, "iw3sp_mod.exe"); //-startSingleplayer
