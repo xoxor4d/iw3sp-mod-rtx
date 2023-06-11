@@ -83,6 +83,8 @@ namespace Components
 		static void WriteAchievement(achievement_file_t* data);
 		static void GiveAchievement(const std::string& name);
 		static int GetEarnedAchievementCount(achievement_file_t* file);
+		static int CalculateProgressBarWidth(int totalWidth, int playerAchievements, int totalAchievements);
+		static bool isStockMap();
 
 		static std::array<Achievements::achievement_t, Achievements::ACHIEVEMENT_TOTAL_COUNT> achievements;
 	};
