@@ -61,6 +61,9 @@ LANG_GERMAN        	"Keine Updates verfugbar"
 REFERENCE          	MENU_SERVER_OFFLINE
 LANG_GERMAN        	"Update-Download nicht verfügbar. Server offline."
 
+REFERENCE           MENU_UPDATER_CUR_DOWNLOAD_SPEED
+LANG_GERMAN         "Aktuelle Download-Geschwindigkeit: "
+
 REFERENCE           MENU_ACHIEVEMENTS
 LANG_GERMAN         "Errungenschaften"
 

@@ -187,7 +187,7 @@ namespace Utils
 			return Utils::String::VA("%02d:%02d:%02d", hoursTotal, minutes, seconds);
 		}
 
-		std::string FormatBandwidth(size_t bytes, int milliseconds)
+		std::string FormatBandwidth(curl_off_t bytes, int milliseconds)
 		{
 			static const char* sizes[] =
 			{
@@ -198,17 +198,45 @@ namespace Utils
 				"TB"
 			};
 
-			if (!milliseconds) return "0.00 B/s";
+			if (milliseconds == 0)
+				return "0.00 B/s";
 
 			double bytesPerSecond = (1000.0 / milliseconds) * bytes;
 
 			int i;
-			for (i = 0; bytesPerSecond > 1000 && i < ARRAYSIZE(sizes); ++i) // 1024 or 1000?
+			for (i = 0; bytesPerSecond > 1000 && i < ARRAYSIZE(sizes); ++i)
 			{
 				bytesPerSecond /= 1000;
 			}
 
 			return Utils::String::VA("%.2f %s/s", static_cast<float>(bytesPerSecond), sizes[i]);
+		}
+
+		std::string FormatSize(curl_off_t size)
+		{
+			const char* sizes[] =
+			{
+				"bytes",
+				"KB",
+				"MB",
+				"GB",
+				"TB"
+			};
+
+			const double KB = 1024.0;
+			const double MB = KB * 1024.0;
+			const double GB = MB * 1024.0;
+
+			int i;
+			double formattedSize = static_cast<double>(size);
+			for (i = 0; formattedSize >= KB && i < sizeof(sizes) / sizeof(sizes[0]) - 1; ++i)
+			{
+				formattedSize /= KB;
+			}
+
+			std::ostringstream formatted;
+			formatted << std::fixed << std::setprecision(2) << formattedSize << ' ' << sizes[i];
+			return formatted.str();
 		}
 
 #ifdef ENABLE_BASE64

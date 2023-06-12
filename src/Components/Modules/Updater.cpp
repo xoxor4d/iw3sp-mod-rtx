@@ -9,7 +9,6 @@ namespace Components
 
 	Utils::ConcurrentList::Container<Updater::update_data_t> Updater::update_data;
 
-
 	std::string GetDLLName()
 	{
 		static const auto name = "game.dll";
@@ -22,7 +21,6 @@ namespace Components
 		return name;
 	}
 
-	//set_update_download_status
 	void Updater::SetUpdateDownloadStatus(bool done, bool success)
 	{
 		update_data.access([done, success](Updater::update_data_t& data_)
@@ -32,7 +30,6 @@ namespace Components
 		});
 	}
 
-	//check_file
 	bool Updater::CheckFile(const std::string& name, const std::string& sha)
 	{
 		std::string data;
@@ -64,7 +61,6 @@ namespace Components
 		return true;
 	}
 
-	//write_file
 	bool Updater::WriteFile(const std::string& name, const std::string& data)
 	{
 		if (name == GetDLLName() && Utils::IO::FileExists(name) && !Utils::IO::moveFile(name, name + ".old"))
@@ -87,13 +83,11 @@ namespace Components
 		return Utils::String::VA("%i", uint32_t(time(nullptr)));
 	}
 
-	//download_file
 	std::optional<std::string> Updater::DownloadFile(const std::string& name)
 	{
-		return Utils::HTTP::GetData(MASTER + name + "?" + Updater::get_time_str());
+		return Utils::HTTP::GetData(MASTER + name + "?" + Updater::get_time_str(), {}, {}, true);
 	}
 
-	//find_garbage_files
 	std::vector<std::string> Updater::FindGarbageFiles(const std::vector<std::string>& update_files)
 	{
 		std::vector<std::string> garbage_files{};
@@ -140,7 +134,6 @@ namespace Components
 		return garbage_files;
 	}
 
-	//reset_data
 	void Updater::ResetData()
 	{
 		update_data.access([](Updater::update_data_t& data_)
@@ -149,7 +142,6 @@ namespace Components
 		});
 	}
 
-	//cancel_update
 	void Updater::CancelUpdate()
 	{
 		Game::Com_Printf(0, "[Updater]: Cancelling update\n");
@@ -160,8 +152,6 @@ namespace Components
 		});
 	}
 
-	//Need re-made this function :<
-	//is_update_available
 	bool Updater::UpdateAvailable()
 	{
 		return update_data.access<bool>([](Updater::update_data_t& data_)
@@ -170,7 +160,6 @@ namespace Components
 		});
 	}
 
-	//is_update_cancelled
 	bool Updater::UpdateCancelled()
 	{
 		return update_data.access<bool>([](Updater::update_data_t& data_)
@@ -199,7 +188,7 @@ namespace Components
 			}
 			catch (...)
 			{
-				Game::Com_Printf(0, "Failed to delete %s\n", file.c_str());
+				Game::Com_Printf(0, "[Updater]: ^1Failed to delete %s\n", file.c_str());
 			}
 		}
 
@@ -223,7 +212,7 @@ namespace Components
 
 				menu->items[4]->text = file.name.c_str();
 
-				Game::Com_Printf(0, "[Updater]: downloading file %s\n", file.name.data());
+				Game::Com_Printf(0, "[Updater]: Downloading file %s\n", file.name.data());
 
 				const auto data = Updater::DownloadFile(file.name);
 
@@ -264,23 +253,13 @@ namespace Components
 
 			Updater::SetUpdateDownloadStatus(true, true);
 
-			//Dvars::UIDlTimeLeft->current.string = "";
 			menu->items[4]->text = "";
-			//Game::Com_Printf(0, "------------------------GAME UPDATE END--------------------\n");
 			
-			// Making the full restart of the game.
-			//Command::Execute("startSingleplayer", false);
-			auto workingDir = std::filesystem::current_path().string();
-
 			Updater::ResetData();
 			Updater::UpdateRestart = true;
 
+			Command::Execute("closemenu updater_download_menu", false);
 			Command::Execute("openmenu updater_restart", false);
-
-			//Command::Execute("startSingleplayer\n", false);
-			//Utils::Library::LaunchProcess("iw3sp.exe", "-dump -nocheat", workingDir);
-			//Command::Execute("startSingleplayer", false);
-			//Utils::Library::Terminate();
 		}, Scheduler::Pipeline::ASYNC);
 	}
 
@@ -302,14 +281,7 @@ namespace Components
 		{
 			const auto host = "https://master.iw3spmod.site/files.json";
 
-			//const auto timeLeft = Utils::String::FormatTimeSpan(0);
-			//Dvars::UIDlTimeLeft->current.string = timeLeft.c_str();
-			//Dvars::UIDlProgress->current.string = "(0/0) %";
-			//Dvars::UIDlTransRate->current.string = "0.0 MB/s";
-
-			//const auto files_data = Utils::HTTP::GetData(MASTER + FILES_PATH + "?" + Updater::get_time_str());
-			const auto files_data = Utils::HTTP::GetData(host);
-			//Game::Com_Printf(0, "------------------------GAME UPDATE------------------------\n");
+			const auto files_data = Utils::HTTP::GetData(host, {}, {}, false);
 			
 			if (UpdateCancelled())
 			{
@@ -430,9 +402,6 @@ namespace Components
 		Events::OnDvarInit([]
 		{
 			Game::dvar_s* cl_auto_update = Dvars::Register::Dvar_RegisterBool("iw3sp_auto_update", "Enable automatic update checks on launch.", true, Game::saved);
-			Dvars::UIDlTimeLeft = Dvars::Register::Dvar_RegisterString("ui_dl_timeLeft", "", "", Game::none);
-			Dvars::UIDlProgress = Dvars::Register::Dvar_RegisterString("ui_dl_progress", "", "", Game::none);
-			Dvars::UIDlTransRate = Dvars::Register::Dvar_RegisterString("ui_dl_transRate", "", "", Game::none);
 		});
 
 		UIScript::Add("update_download_cancel", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)

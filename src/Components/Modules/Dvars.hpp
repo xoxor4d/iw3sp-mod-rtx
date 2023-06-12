@@ -26,10 +26,6 @@ namespace Dvars
 
 	extern Game::dvar_s* ui_debugMode;
 
-	extern Game::dvar_s* UIDlTimeLeft;
-	extern Game::dvar_s* UIDlProgress;
-	extern Game::dvar_s* UIDlTransRate;
-
 	namespace Functions
 	{
 		typedef Game::dvar_s* (__cdecl* Dvar_FindVar_t)(const char* dvarName);

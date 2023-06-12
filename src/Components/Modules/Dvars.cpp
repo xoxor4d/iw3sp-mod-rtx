@@ -26,10 +26,6 @@ namespace Dvars
 
 	Game::dvar_s* ui_debugMode = nullptr;
 
-	Game::dvar_s* UIDlTimeLeft = nullptr;
-	Game::dvar_s* UIDlProgress = nullptr;
-	Game::dvar_s* UIDlTransRate = nullptr;
-
 	namespace Functions
 	{
 		Dvar_FindVar_t Dvar_FindVar = (Dvar_FindVar_t)0x587B00;

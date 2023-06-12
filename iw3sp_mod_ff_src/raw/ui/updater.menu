@@ -45,6 +45,45 @@
 
 #define RESTART_GAME \
 	exec "startSingleplayer";
+	
+#define UPDATER_PROGRESSBAR\
+		itemDef { \
+			style 			WINDOW_STYLE_SHADER \
+			rect			3 55 320 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			visible			1 \
+			background		"progress_bar_bg"\
+			forecolor       0 0 0 0.5 \
+		} \
+		itemDef { \
+			name			"updater_progress_bar" \
+			style 			WINDOW_STYLE_SHADER \
+			rect			6 58 0 15 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			visible			1 \
+			background		"progress_bar_fill"\
+			forecolor       0 .8 0 1 \
+		} \
+		itemDef { \
+			type 			ITEM_TYPE_TEXT \
+			rect			0 58 320 15 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			text			"" \
+			textscale 		0.3 \
+			textstyle 		ITEM_TEXTSTYLE_SHADOWED \
+			textalign		ITEM_ALIGN_TOP_CENTER \
+			forecolor       1 1 1 1 \
+			visible			1 \
+			decoration \
+		}
+		// itemDef { \
+		// 	type 			ITEM_TYPE_TEXT \
+		// 	rect			0 55 100 15 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM \
+		// 	text			"achievement_printinfo" \
+		// 	textscale 		0.3 \
+		// 	textstyle 		ITEM_TEXTSTYLE_SHADOWED \
+		// 	textAlign       ITEM_ALIGN_TOP_CENTER \
+		// 	textfont		UI_FONT_NORMAL \
+		// 	forecolor       1 1 1 1 \
+		// 	visible			1 \
+		// }
 
 {
 	//Update Available
@@ -59,9 +98,9 @@
 	//Game Restart
 	menuDef
 	{
-		CENTER_POPUP_SETUP( updater_restart, 3, RESTART_GAME, 1 )
+		CENTER_POPUP_SETUP( updater_restart, 6, RESTART_GAME, 1 )
 		CHOICE_POPMENU_SUBTITLE( "@IW3SP_MOD_LOC_MENU_UPDATE_REQUIRES_RESTART" )
-		CHOICE_BUTTON( 3, "@IW3SP_MOD_LOC_MENU_UPDATE_RESTART", RESTART_GAME )
+		CHOICE_BUTTON( 6, "@IW3SP_MOD_LOC_MENU_UPDATE_RESTART", RESTART_GAME )
 	}
 
 #undef CHOICE_POPMENU_SUBTITLE_VIS
@@ -81,22 +120,37 @@
 			autowrapped \
 		}
 
-
+#define UPDATER_DOWNLOADING_INFO( xArg, yArg, textArg, textAlignArg, textSizeArg ) \
+		itemDef \
+		{ \
+			type			ITEM_TYPE_TEXT \
+			rect			(xArg) (yArg) (CHOICE_POPUP_WIDTH - (CHOICE_POPUP_BORDER_Y*2)) CHOICE_POPUP_SUBTITLE_HEIGHT HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER \
+			text 			textArg; \
+			textfont		UI_FONT_NORMAL \
+			textscale		textSizeArg \
+			textAlign		textAlignArg \
+			textstyle		CHOICE_TEXTSTYLE \
+			forecolor		CHOICE_TEXTCOLOR \
+			visible			1 \
+			decoration \
+			autowrapped \
+		}
 	
 	//Update Download Progress.
 	menuDef
 	{
-		CENTER_POPUP_SETUP( updater_download_menu, 3, CANCEL_UPDATE, 1 )
-		CHOICE_POPMENU_SUBTITLE( "-" )
-		CHOICE_BUTTON( 3, "@MENU_CANCEL", CANCEL_UPDATE )
+		CENTER_POPUP_SETUP( updater_download_menu, 6, CANCEL_UPDATE, 1 )
+		CHOICE_POPMENU_SUBTITLE( "" )
+		UPDATER_DOWNLOADING_INFO(0, 20, "", ITEM_ALIGN_TOP_CENTER, 0.3)
+		UPDATER_DOWNLOADING_INFO(2, 35, "@IW3SP_MOD_LOC_MENU_UPDATER_CUR_DOWNLOAD_SPEED", ITEM_ALIGN_TOP_LEFT, 0.3)
+		UPDATER_DOWNLOADING_INFO(0, 35, "", ITEM_ALIGN_TOP_RIGHT, 0.3)
+		UPDATER_PROGRESSBAR //progress text: %[0-100]
+		CHOICE_BUTTON( 6, "@MENU_CANCEL", CANCEL_UPDATE )
 	}
 
 
 	menuDef
 	{
-		//CENTER_POPUP_SETUP( updater_checking_for_updates, 3, ;, 1 )
-
-		//#define CENTER_POPUP_SETUP_ONOPEN( nameArg, itemCount, onEscArg, onOpenArg, shadow_visArg )
 		CENTER_POPUP_SETUP_ONOPEN(updater_checking_for_updates, 3, ;, uiScript check_avaliable_updates;, 1)
 //original
 #undef CHOICE_POPMENU_SUBTITLE_VIS
@@ -127,9 +181,6 @@
 
 	menuDef
 	{
-		//CENTER_POPUP_SETUP( updater_checking_for_updates, 3, ;, 1 )
-
-		//#define CENTER_POPUP_SETUP_ONOPEN( nameArg, itemCount, onEscArg, onOpenArg, shadow_visArg )
 		CENTER_POPUP_SETUP_ONOPEN(updater_checking_for_updates_internal, 3, ;, uiScript check_avaliable_updates_internal;, 1)
 
 		CHOICE_POPMENU_SUBTITLE_VIS( "", when( 1 ); )

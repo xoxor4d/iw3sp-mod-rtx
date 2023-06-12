@@ -41,6 +41,8 @@ namespace Components
 			std::vector<std::string> garbage_files{};
 		};
 
+		static bool UpdateCancelled();
+
 		Updater();
 		~Updater();
 	private:
@@ -54,7 +56,6 @@ namespace Components
 		static void ResetData();
 		static void CancelUpdate();
 		static bool UpdateAvailable();
-		static bool UpdateCancelled();
 
 		static void CL_StartUpdate();
 		static void CL_GetAutoUpdate(bool needCheck);

@@ -112,7 +112,8 @@ namespace Utils
 		std::wstring Convert(const std::string& str);
 
 		std::string FormatTimeSpan(int milliseconds);
-		std::string FormatBandwidth(size_t bytes, int milliseconds);
+		std::string FormatBandwidth(curl_off_t bytes, int milliseconds);
+		std::string FormatSize(curl_off_t size);
 
 		std::string DumpHex(const std::string& data, const std::string& separator = " ");
 

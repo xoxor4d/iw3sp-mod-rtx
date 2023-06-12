@@ -61,6 +61,9 @@ LANG_ENGLISH        "No updates available"
 REFERENCE           MENU_SERVER_OFFLINE
 LANG_ENGLISH        "Update download unavailable. Server offline."
 
+REFERENCE           MENU_UPDATER_CUR_DOWNLOAD_SPEED
+LANG_ENGLISH        "Current Download Speed: "
+
 REFERENCE           MENU_ACHIEVEMENTS
 LANG_ENGLISH        "Achievements"
 
