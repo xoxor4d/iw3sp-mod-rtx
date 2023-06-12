@@ -83,7 +83,7 @@ REFERENCE           MAINMENU
 LANG_ENGLISH        "In Main Menu"
 
 REFERENCE           MAPUNKNOWN
-LANG_ENGLISH        "Map: Unknown"
+LANG_ENGLISH        "Map: &&1"
 
 REFERENCE           DIFFICULTY_EASY
 LANG_ENGLISH        "Difficulty: Recruit"

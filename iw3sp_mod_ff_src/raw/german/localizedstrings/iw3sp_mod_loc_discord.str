@@ -83,7 +83,7 @@ REFERENCE           MAINMENU
 LANG_GERMAN         "Im Hauptmenü"
 
 REFERENCE           MAPUNKNOWN
-LANG_GERMAN         "Map: Unbekannt"
+LANG_GERMAN         "Map: &&1"
 
 REFERENCE           DIFFICULTY_EASY
 LANG_GERMAN         "Schwierigkeit: Rekrut"
