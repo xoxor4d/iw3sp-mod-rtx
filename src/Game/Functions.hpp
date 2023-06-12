@@ -248,6 +248,9 @@ namespace Game
 	const char* SEH_GetLanguageName(unsigned int iLanguage);
 	const char* UI_SafeTranslateString/*eax*/(const char* reference /*eax*/);
 
+	typedef const char*(__cdecl* UI_ReplaceConversionString_t)(const char* reference, const char* value);
+	extern UI_ReplaceConversionString_t UI_ReplaceConversionString;
+
 	//	New g_languages array.
 	static const char* g_languages_new[] = { "english", "french", "german", "italian",
 				  "spanish", "british", "russian", "polish",

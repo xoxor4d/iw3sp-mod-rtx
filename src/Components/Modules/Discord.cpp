@@ -87,7 +87,7 @@ namespace Components
 		{
 			bool user_in_main_menu = InMainMenu(map_name_info);
 			if (user_in_main_menu) return "IW3SP_MOD_LOC_DISCORD_MAINMENU";
-			else return "IW3SP_MOD_LOC_DISCORD_MAPUNKNOWN";
+			else return "custom_map";
 		}
 	}
 
@@ -95,14 +95,15 @@ namespace Components
 	{
 		Discord_RunCallbacks();
 
-		//discord_presence.startTimestamp = 0;
-		//discord_presence.startTimestamp = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-
 		std::string map_name_offset = reinterpret_cast<const char*>(0x1290DD8);
 		std::string mapname = GetMapName(map_name_offset.data());
 		std::string difficulty = GetDifficultyForState(map_name_offset.data());
 
-		discord_presence.details = Game::UI_SafeTranslateString(mapname.data());
+		if (strcmp(mapname.c_str(), "custom_map") == 0)
+			discord_presence.details = Game::UI_ReplaceConversionString(Game::UI_SafeTranslateString("IW3SP_MOD_LOC_DISCORD_MAPUNKNOWN"), map_name_offset.c_str());
+		else
+			discord_presence.details = Game::UI_SafeTranslateString(mapname.data());
+
 		if(difficulty.data()) discord_presence.state = Game::UI_SafeTranslateString(difficulty.data());
 		else discord_presence.state = nullptr;
 

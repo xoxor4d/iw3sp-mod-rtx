@@ -690,6 +690,8 @@ namespace Game
 		return result;
 	}
 
+	UI_ReplaceConversionString_t UI_ReplaceConversionString = UI_ReplaceConversionString_t(0x5681D0);
+
 	int SEH_GetLanguageIndexFromName(const char* language, int* langindex)
 	{
 		for (int i = 0; i < 15; i++)
