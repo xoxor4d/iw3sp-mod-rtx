@@ -81,7 +81,7 @@ namespace Components
 				return "IW3SP_MOD_LOC_DISCORD_SIMPLECREDITS";
 			}
 
-			return Utils::String::VA("IW3SP_MOD_LOC_DISCORD_%s", map_name_info.data());
+			return std::string("IW3SP_MOD_LOC_DISCORD_") + map_name_info.data();
 		}
 		else
 		{
@@ -113,7 +113,11 @@ namespace Components
 		else
 		{
 			bool vanilla_map = VanillaMap(map_name_offset.data());
-			if (vanilla_map) discord_presence.largeImageKey = Utils::String::VA("preview_%s", map_name_offset.data());
+			if (vanilla_map)
+			{
+				std::string imageKey = std::string("preview_") + map_name_offset.data();
+				discord_presence.largeImageKey = imageKey.c_str();
+			}
 			else discord_presence.largeImageKey = nullptr;
 		}
 
