@@ -399,7 +399,7 @@
 			textfont		UI_FONT_DEFAULT
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			textalign		ITEM_ALIGN_TOP_LEFT
-			visible			when( dvarInt( g_gameskill ) > 0 && dvarstring( "credits_active" ) != "1" && dvarInt( loc_language ) == 0 );
+			visible			when( dvarInt( g_gameskill ) > 0 && dvarstring( "credits_active" ) != "1" && !dvarBool( arcademode ) && dvarInt( loc_language ) == 0 );
 			onFocus
 			{
 				play "mouse_over";
@@ -425,7 +425,7 @@
 			textfont		UI_FONT_DEFAULT
 			textstyle		ITEM_TEXTSTYLE_SHADOWED
 			textalign		ITEM_ALIGN_TOP_RIGHT
-			visible			when( dvarInt( g_gameskill ) > 0 && dvarstring( "credits_active" ) != "1" && dvarInt( loc_language ) != 0 );
+			visible			when( dvarInt( g_gameskill ) > 0 && dvarstring( "credits_active" ) != "1" && !dvarBool( arcademode ) && dvarInt( loc_language ) != 0 );
 			onFocus
 			{
 				play "mouse_over";
