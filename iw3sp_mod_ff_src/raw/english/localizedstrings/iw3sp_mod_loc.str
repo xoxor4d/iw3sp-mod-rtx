@@ -85,6 +85,9 @@ LANG_ENGLISH        "Are you want to reset the progress of achievements?"
 REFERENCE           MENU_RESET_ACHIEVEMENTS_COMPELETED
 LANG_ENGLISH        "The progress of achievements has been reset"
 
+REFERENCE           MENU_ENEMY_INTEL_TITLE
+LANG_ENGLISH        "Enemy Intelligence"
+
 REFERENCE           ATTRACT_LOOP_VIDEO1
 LANG_ENGLISH        "50 thousand people used to live here... now its a ghost town."
 

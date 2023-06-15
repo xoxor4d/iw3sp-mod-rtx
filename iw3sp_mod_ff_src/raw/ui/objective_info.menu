@@ -988,6 +988,35 @@
 			ownerdraw		CG_MISSION_OBJECTIVE_LIST
 			decoration
 		}
+
+		// Intel Info
+		itemDef
+		{
+			name "intel_items_title"
+			rect 20 -60 400 32 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			decoration
+			visible 1
+			forecolor COLOR_TITLE
+			textfont 2
+			textalign 4
+			textscale 0.4
+			visible	when ( dvarInt( credits_active ) != 1 && LOCAL_VIS_OBJECTIVE_DISPLAY );
+			exp text ( "@IW3SP_MOD_LOC_MENU_ENEMY_INTEL_TITLE" ) //Enemy Intelligence
+		}
+		itemDef
+		{
+			name "intel_items"
+			rect 20 -60 400 32 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+			decoration
+			visible 1
+			textfont 2
+			forecolor 1 1 1 1
+			textalign 4
+			textaligny 17.5
+			textscale 0.3
+			visible	when ( dvarInt( credits_active ) != 1 && LOCAL_VIS_OBJECTIVE_DISPLAY );
+			exp	text( locString( "@MENU_CHEAT_POINTS_LEVEL", dvarInt( ui_level_player_cheatpoints ), dvarInt( ui_level_cheatpoints ) ) )
+		}
 		
 		// map --------------------
 		itemDef
