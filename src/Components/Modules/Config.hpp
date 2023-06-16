@@ -5,6 +5,8 @@ namespace Components
 	class Config : public Component
 	{
 	public:
+		inline static bool GameWithMod;
+
 		template <typename T>
 		static std::optional<T> Get(const std::string& key)
 		{
@@ -34,6 +36,8 @@ namespace Components
 
 		Config();
 		~Config();
+
+		static void CallExecFromCFG(bool useModConfig);
 	private:
 		typedef nlohmann::json::value_t field_type;
 		typedef nlohmann::json field_value;

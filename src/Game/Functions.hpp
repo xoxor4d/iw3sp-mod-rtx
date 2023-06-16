@@ -282,4 +282,6 @@ namespace Game
 	extern FS_AddIwdFilesForGameDirectory_t FS_AddIwdFilesForGameDirectory;
 
 	void FS_AddLocalizedGameDirectory(const char* dir/*edi*/, const char* path);
+	int FS_FOpenFileWriteToDir(const char* a1/*eax*/, const char* a2/*esi*/, int a3);
+	void Com_ExecStartupConfigs(int localClientNum, char const* configFile);
 }

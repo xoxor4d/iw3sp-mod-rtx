@@ -296,7 +296,7 @@ namespace Components
 		});
 	}
 
-	void RunMod()
+	void RunModStub()
 	{
 		char modName[260];
 
@@ -313,7 +313,16 @@ namespace Components
 			}
 
 			Dvars::Functions::Dvar_SetStringByName("fs_game", modName);
+			Config::GameWithMod = true;
+			Config::CallExecFromCFG(true);
 		}
+		}
+
+	void ClearModStub()
+	{
+		Dvars::Functions::Dvar_Reset(0, Dvars::Functions::Dvar_FindVar("fs_game"));
+		Config::GameWithMod = false;
+		Config::CallExecFromCFG(false);
 	}
 
 	void R_Cinematic_BinkOpen_stub01(char* buffer, size_t size, const char* /*format*/, const char* directory, const char* fileName, const char* videoFormat)
@@ -458,10 +467,12 @@ namespace Components
 		// RunMod fix
 		Utils::Hook::Nop(0x567238, 5);
 		Utils::Hook::Nop(0x566E87, 5);
-		Utils::Hook(0x567238, RunMod, HOOK_CALL).install()->quick();
+		Utils::Hook(0x567238, RunModStub, HOOK_CALL).install()->quick();
+		Utils::Hook(0x56727E, ClearModStub, HOOK_CALL).install()->quick();
+
 		Utils::Hook::Set<BYTE>(0x57AB0C, Game::none);
-		Utils::Hook::Set<const char*>(0x567241, "vid_restart\n");
-		Utils::Hook::Set<const char*>(0x567284, "vid_restart\n"); //for ClearMods
+		Utils::Hook::Set<const char*>(0x567241, "\n");
+		Utils::Hook::Set<const char*>(0x567284, "\n"); //for ClearMods
 
 		// Making the separate video folder
 		Utils::Hook(0x5D70DA, R_Cinematic_BinkOpen_stub01, HOOK_CALL).install()->quick();
