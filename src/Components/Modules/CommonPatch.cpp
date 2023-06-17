@@ -471,8 +471,8 @@ namespace Components
 		Utils::Hook(0x56727E, ClearModStub, HOOK_CALL).install()->quick();
 
 		Utils::Hook::Set<BYTE>(0x57AB0C, Game::none);
-		Utils::Hook::Set<const char*>(0x567241, "\n");
-		Utils::Hook::Set<const char*>(0x567284, "\n"); //for ClearMods
+		Utils::Hook::Set<const char*>(0x567241, "vid_restart\n");
+		Utils::Hook::Set<const char*>(0x567284, "vid_restart\n"); //for ClearMods
 
 		// Making the separate video folder
 		Utils::Hook(0x5D70DA, R_Cinematic_BinkOpen_stub01, HOOK_CALL).install()->quick();
