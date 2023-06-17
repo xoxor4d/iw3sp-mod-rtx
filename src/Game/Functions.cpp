@@ -787,4 +787,32 @@ namespace Game
 			add		esp, 4;
 		}
 	}
+
+	int FS_FOpenFileWriteToDir(const char* a1/*eax*/, const char* a2/*esi*/, int a3)
+	{
+		const static uint32_t FS_FOpenFileWriteToDir_func = 0x577E30;
+		int result;
+		__asm
+		{
+			push	a3;
+			mov		eax, a1;
+			mov		esi, a2;
+			call	FS_FOpenFileWriteToDir_func;
+			add		esp, 4;
+			mov		result, eax;
+		}
+		return result;
+	}
+
+	//int a1@<ecx>, const char *a2@<edi>, int a3@<esi>
+	void Com_ExecStartupConfigs(int localClientNum, char const* configFile)
+	{
+		const static uint32_t Com_ExecStartupConfigs_func = 0x534A30;
+		__asm
+		{
+			mov		esi, localClientNum;
+			mov		edi, configFile;
+			call	Com_ExecStartupConfigs_func;
+		}
+	}
 }

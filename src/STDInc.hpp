@@ -8,6 +8,7 @@
 #define NOMINMAX
 
 #define CLIENT_CONFIG "iw3sp_mod_config.cfg"
+#define MOD_CONFIG "mods_config.cfg"
 
 // Version number
 #include <version.hpp>

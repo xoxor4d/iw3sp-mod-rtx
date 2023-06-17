@@ -53,6 +53,17 @@ namespace Dvars
 				add     esp, 4;
 			}
 		}
+
+		void Dvar_Reset(int value/*eax*/, Game::dvar_s* dvar/*ecx*/)
+		{
+			const static uint32_t Dvar_Reset_func = 0x5898E0;
+			__asm
+			{
+				mov		eax, value;
+				mov		ecx, dvar;
+				call	Dvar_Reset_func;
+			}
+		}
 	}
 
 	namespace Register

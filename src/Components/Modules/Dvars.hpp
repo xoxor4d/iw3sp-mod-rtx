@@ -33,6 +33,7 @@ namespace Dvars
 
 		void Dvar_SetStringByName(const char* dvarName, const char* value);
 		void Dvar_SetIntByName(const char* dvarName, int value);
+		void Dvar_Reset(int value/*eax*/, Game::dvar_s* dvar/*ecx*/);
 	}
 
 	namespace Register
