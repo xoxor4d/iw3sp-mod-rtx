@@ -24,6 +24,7 @@ namespace Components
 		static bool IsPregame();
 		static bool IsPostgame();
 		static bool IsUninitializing();
+		static bool BinaryCheck();
 
 		template <typename T>
 		static T* GetInstance()

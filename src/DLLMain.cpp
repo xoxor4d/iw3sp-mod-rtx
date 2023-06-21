@@ -33,12 +33,17 @@ BOOL APIENTRY DllMain(HMODULE /*hModule*/, DWORD  ul_reason_for_call, LPVOID /*l
 
     if (ul_reason_for_call == DLL_PROCESS_ATTACH)
     {
-        DWORD oldProtect;
-        VirtualProtect(_module + 0x1000, 0x0FB7000, PAGE_EXECUTE_READWRITE, &oldProtect);
+        if (Components::Loader::BinaryCheck())
+        {
+            DWORD oldProtect;
+            VirtualProtect(_module + 0x1000, 0x0FB7000, PAGE_EXECUTE_READWRITE, &oldProtect);
 
-        Main::EntryPointHook_.initialize(0x643AFB, start_entry_point)->install();
+            Main::EntryPointHook_.initialize(0x643AFB, start_entry_point)->install();
 
-        Utils::Hook(0x643AFB, start_entry_point, HOOK_JUMP).install()->quick();
+            Utils::Hook(0x643AFB, start_entry_point, HOOK_JUMP).install()->quick();
+        }
+        else
+            return FALSE;
     }
     else if (ul_reason_for_call == DLL_PROCESS_DETACH)
     {

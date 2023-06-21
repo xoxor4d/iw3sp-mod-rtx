@@ -70,7 +70,7 @@ namespace Components
 		}
 
 		Loader::Components.clear();
-		//Utils::Memory::GetAllocator()->clear();
+		Utils::Memory::GetAllocator()->clear();
 		Loader::Uninitializing = false;
 	}
 
@@ -112,5 +112,26 @@ namespace Components
 		{
 			Loader::Components.push_back(component);
 		}
+	}
+
+	bool Loader::BinaryCheck()
+	{
+		std::string data;
+		if (!Utils::IO::ReadFile("iw3sp.exe", &data))
+		{
+			MessageBoxA(nullptr, "Failed to read game binary - iw3sp.exe", nullptr, MB_ICONERROR);
+			Utils::Library::Terminate();
+			return false;
+		}
+
+		const auto hash = Utils::Cryptography::SHA1::Compute(data, true);
+		if ((hash != "5F06ACF8FA84D20E902BBBF423466C6752D920BF"))
+		{
+			MessageBoxA(nullptr, "Your iw3sp.exe is incompatible with this client.", nullptr, MB_ICONERROR);
+			Utils::Library::Terminate();
+			return false;
+		}
+
+		return true;
 	}
 }
