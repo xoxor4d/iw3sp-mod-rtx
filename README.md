@@ -24,6 +24,8 @@ ___
 This software has been created purely for the purposes of academic research. Project maintainers are not responsible or liable for misuse of the software. Use responsibly.
 
 # Features
+[Mod compatibility list](https://github.com/JerryALT/iw3sp_mod/wiki/Mod-compatibility-list)
+
 - Increased asset limits for IW3
   - FX: 1200
   - Image: 7168
@@ -39,7 +41,7 @@ This software has been created purely for the purposes of academic research. Pro
 - Added map entities editing for the stock maps and more...
 
 # How to install modification? (For regular users)
-**NOTE**: You must legally own Call of Duty® 4: Modern Warfare® (2007) to run this mod. Cracked/Pirated versions of the game are **NOT** supported.
+**NOTE**: You must legally own Steam version Call of Duty® 4: Modern Warfare® (2007) to run this mod. Cracked/Pirated/CDs versions of the game are **NOT** supported.
 1. Download the latest [release](https://github.com/JerryALT/iw3sp_mod/releases/latest)
 2. Place the .zip contents into your cod4 root folder
 3. Start the **iw3sp_mod.exe**
