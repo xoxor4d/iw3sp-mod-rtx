@@ -31,6 +31,22 @@ namespace Components
 			Game::g_clients->ps.weapon = weaponIndex;
 			Game::SV_GameSendServerCommand(-1, Utils::String::VA("sw %d", weaponIndex));
 		}, false);
+
+		GSC::AddMethod("allowFire", [](Game::scr_entref_t entref)
+		{
+			const auto* ent = Game::GetPlayerEntity(entref);
+
+			if (Game::Scr_GetInt(0))
+			{
+				Dvars::p_allowFire->current.enabled = true;
+				Dvars::p_allowFire->latched.enabled = true;
+			}
+			else
+			{
+				Dvars::p_allowFire->current.enabled = false;
+				Dvars::p_allowFire->latched.enabled = false;
+			}
+		}, false);
 	}
 
 	void GSC::AddFunctions()

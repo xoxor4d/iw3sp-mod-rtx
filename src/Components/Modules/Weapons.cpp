@@ -2,8 +2,39 @@
 
 namespace Components
 {
+	void __declspec(naked) FireWeaponStub()
+	{
+		const static uint32_t offset_return = 0x5C2C96;
+
+		__asm
+		{
+			push	eax;
+			mov		eax, Dvars::p_allowFire;
+			cmp		byte ptr[eax + 12], 1;
+			pop		eax;
+
+			// disableFire is false
+			jne		DISABLE;
+
+			// disableFire is true
+			jmp		STOCK;
+		DISABLE:
+			jmp		offset_return;
+		STOCK:
+			push	eax;
+			call	Game::PM_Weapon_FireWeapon;
+			add		esp, 4;
+			jmp		offset_return;
+		}
+	}
+
 	Weapons::Weapons()
 	{
+		Events::OnDvarInit([]
+		{
+			Dvars::p_allowFire = Dvars::Register::Dvar_RegisterBool("p_allowFire", "Enables/Disables player fire", true, Game::saved_flag);
+		});
+
 		GSC::AddFunction("getweapondamage", []
 		{
 			if (Game::Scr_GetNumParam() != 1)
@@ -32,6 +63,7 @@ namespace Components
 			weapon->damage = damage_value;
 		}, false);
 		
+		Utils::Hook(0x5C2C91, FireWeaponStub, HOOK_JUMP).install()->quick();
 	}
 
 	Weapons::~Weapons()

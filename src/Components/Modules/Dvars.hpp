@@ -2,7 +2,7 @@
 
 namespace Dvars
 {
-	//	Test
+	// Test
 	extern Game::dvar_s* test_dvar_int;
 	extern Game::dvar_s* test_dvar_bool;
 	extern Game::dvar_s* test_dvar_string;
@@ -16,15 +16,18 @@ namespace Dvars
 	extern Game::dvar_s* ui_language;
 	extern Game::dvar_s* language_first_setting;
 
-	//	d3d9
+	// d3d9
 	extern Game::dvar_s* r_d3d9ex;
 
-	//	Field of view dvars
+	// Field of view dvars
 	extern Game::dvar_s* cg_fovScale;
 	extern Game::dvar_s* cg_fovMin;
 	extern Game::dvar_s* cg_fov;
 
 	extern Game::dvar_s* ui_debugMode;
+
+	// Player settings dvars
+	extern Game::dvar_s* p_allowFire;
 
 	namespace Functions
 	{

@@ -815,4 +815,16 @@ namespace Game
 			call	Com_ExecStartupConfigs_func;
 		}
 	}
+
+	void PM_Weapon_FireWeapon(Game::playerState_s* playerState, int delayedAction)
+	{
+		const static uint32_t PM_Weapon_FireWeapon_func = 0x5C18D0;
+		__asm
+		{
+			push	delayedAction;
+			mov		eax, playerState;
+			call	PM_Weapon_FireWeapon_func;
+			add		esp, 4;
+		}
+	}
 }
