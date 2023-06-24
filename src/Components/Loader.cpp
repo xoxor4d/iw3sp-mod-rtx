@@ -28,6 +28,7 @@ namespace Components
 		Loader::Postgame = false;
 		Loader::Uninitializing = false;
 
+		Loader::Register(new Singleton());
 		Loader::Register(new Config());
 		Loader::Register(new Flags());
 		Loader::Register(new FastFiles());

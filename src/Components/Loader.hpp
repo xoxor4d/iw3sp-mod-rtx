@@ -48,6 +48,7 @@ namespace Components
 	};
 }
 
+#include "Modules/Singleton.hpp"
 #include "Modules/Config.hpp"
 #include "Modules/Flags.hpp"
 #include "Modules/Branding.hpp"
