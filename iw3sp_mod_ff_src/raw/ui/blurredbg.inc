@@ -47,7 +47,7 @@ itemDef
 	rect			-107 0 1708 480
 	exp				rect X((-107) - ((float(milliseconds() % FOG_SCROLL_TIME) / FOG_SCROLL_TIME) * (854)))
 	background		"animbg_blur_fogscroll"
-	forecolor		0.2 0.8 0.2 0.8
+	forecolor		0.8 0.8 1 1
 	visible			when( dvarString( fs_game ) != "" );
 	decoration
 }
