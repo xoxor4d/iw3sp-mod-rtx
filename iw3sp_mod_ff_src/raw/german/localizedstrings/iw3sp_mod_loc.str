@@ -82,6 +82,9 @@ LANG_GERMAN         "Der Errungenschaften der Erfolge wurde zurückgesetzt"
 REFERENCE           MENU_ENEMY_INTEL_TITLE
 LANG_GERMAN         "Feindliche Intelligenz"
 
+REFERENCE           MENU_ENEMY_INTEL_COUNT
+LANG_GERMAN         "&&1/&&2 Aufklärungsdaten gerborgen"
+
 REFERENCE           MENU_ACHIEVEMENTS_DATE_RECEIVED
 LANG_GERMAN         "Datum des Eingangs:"
 
