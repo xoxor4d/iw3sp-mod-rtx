@@ -49,53 +49,50 @@ namespace Components
 		}, false);
 
 		GSC::AddMethod("IsReloading", [](Game::scr_entref_t entref)
-        {
+		{
 			const auto* ent = Game::GetPlayerEntity(entref);
 
 			if (ent->client->ps.weaponstate >= Game::WEAPON_RELOADING && ent->client->ps.weaponstate <= Game::WEAPON_RELOAD_END)
 				return Game::Scr_AddInt(true);
 			else
 				return Game::Scr_AddInt(false);
-        }, false);
+		}, false);
 
 		GSC::AddMethod("IsSprinting", [](Game::scr_entref_t entref)
-        {
+		{
 			const auto* ent = Game::GetPlayerEntity(entref);
-
-            if (ent->client->ps.pm_flags & Game::PMF_SPRINTING)
+			if (ent->client->ps.pm_flags & Game::PMF_SPRINTING)
 				return Game::Scr_AddInt(true);
-            else
+			else
 				return Game::Scr_AddInt(false);
-        }, false);
+		}, false);
 
 		GSC::AddMethod("IsUsingNVG", [](Game::scr_entref_t entref)
-        {
+		{
 			const auto* ent = Game::GetPlayerEntity(entref);
-
 			if (ent->client->ps.weaponstate >= Game::WEAPON_NIGHTVISION_WEAR && ent->client->ps.weaponstate <= Game::WEAPON_NIGHTVISION_REMOVE)
 				return Game::Scr_AddInt(true);
 			else
 				return Game::Scr_AddInt(false);
-        }, false);
+		}, false);
 
 		GSC::AddMethod("isMantling", [](Game::scr_entref_t entref)
-        {
+		{
 			const auto* ent = Game::GetPlayerEntity(entref);
-			if(ent->client->ps.pm_flags & Game::PMF_MANTLE)
+			if (ent->client->ps.pm_flags & Game::PMF_MANTLE)
 				return Game::Scr_AddInt(true);
 			else
 				return Game::Scr_AddInt(false);
-        }, false);
+		}, false);
 
 		GSC::AddMethod("isSwapping", [](Game::scr_entref_t entref)
-        {
+		{
 			const auto* ent = Game::GetPlayerEntity(entref);
-
 			if (ent->client->ps.weaponstate >= Game::WEAPON_DROPPING && ent->client->ps.weaponstate <= Game::WEAPON_DROPPING_QUICK)
 				return Game::Scr_AddInt(true);
 			else
 				return Game::Scr_AddInt(false);
-        }, false);
+		}, false);
 	}
 
 	void GSC::AddFunctions()
