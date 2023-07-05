@@ -15,6 +15,8 @@ namespace Dvars
 
 	Game::dvar_s* ui_language = nullptr;
 	Game::dvar_s* language_first_setting = nullptr;
+	Game::dvar_s* r_noborder = nullptr;
+	Game::dvar_s* ui_nativeCursor = nullptr;
 
 	// d3d9
 	Game::dvar_s* r_d3d9ex = nullptr;

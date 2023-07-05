@@ -73,3 +73,4 @@ namespace Components
 #include "Modules/Achievements.hpp"
 #include "Modules/Events.hpp"
 #include "Modules/Updater.hpp"
+#include "Modules/Window.hpp"
