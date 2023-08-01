@@ -518,7 +518,7 @@ namespace Components
 		Utils::Hook::Set<DWORD>(0x57164F, 0x129ADB8);
 
 		// Mouse fix
-		Utils::Hook::Nop(0x59611C, 8);
+		Utils::Hook::Nop(0x59681C, 8);
 		Scheduler::Loop([]
 		{
 			SetThreadExecutionState(ES_DISPLAY_REQUIRED);

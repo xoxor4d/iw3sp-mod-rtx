@@ -219,7 +219,6 @@ namespace Components
 		Utils::Hook::Nop(0x5D990C, 9);
 		Utils::Hook(0x5D990C, vid_xypos_stub, HOOK_JUMP).install()->quick();
 
-
 		Utils::Hook(0x5D9BC9, ExternalConsoleStub, HOOK_CALL).install()->quick();
 	}
 
