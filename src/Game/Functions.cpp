@@ -2,9 +2,7 @@
 
 namespace Game
 {
-	HWND__* hWnd = reinterpret_cast<HWND__*>(0x13E39A8);
-	HWND__* hWndParent = reinterpret_cast<HWND__*>(0x13E39B0);
-	HWND__* hwndBuffer = reinterpret_cast<HWND__*>(0x13E39B4);
+	char* sys_processSemaphoreFile = reinterpret_cast<char*>(0x13E1F10);
 
 	HANDLE DatabaseHandle = reinterpret_cast<HANDLE>(0xFC6308);
 	HANDLE databaseCompletedEvent2 = reinterpret_cast<HANDLE>(0xFC6348);
@@ -756,15 +754,16 @@ namespace Game
 
 	void Sys_ShowConsole()
 	{
-		if (!Game::hWnd)
+		if (!*Game::hWndParent)
 		{
 			HMODULE ModuleHandleA = GetModuleHandleA(0);
 			Game::Sys_CreateConsole(ModuleHandleA);
 		}
-		ShowWindow(Game::hWndParent, 1);
-		SendMessageA(Game::hwndBuffer, 182, 0, 65535);
-	}
 
+		ShowWindow(*Game::hWndParent, SW_SHOWNORMAL);
+		SendMessageA(*Game::hWndBuffer, 0xB6u, 0, 0xFFFF);
+		DeleteFileA(&*Game::sys_processSemaphoreFile);
+	}
 
 	void FS_DisplayPath(int bLanguageCull)
 	{

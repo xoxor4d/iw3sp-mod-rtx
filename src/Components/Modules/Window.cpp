@@ -138,12 +138,20 @@ namespace Components
 		return false;
 	}
 
+	void Window::ExternalConsoleStub()
+	{
+		if (Dvars::external_console->current.enabled)
+			Game::Sys_ShowConsole();
+
+		Utils::Hook::Call<HWND()>(0x5D9980)();
+	}
+
 	__declspec(naked) void vid_xypos_stub()
 	{
 		const static uint32_t retn_addr = 0x5D9915;
 		__asm
 		{
-			mov[esi + 10h], eax;	// overwritten op (wndParms->y)
+			mov		[esi + 10h], eax;	// overwritten op (wndParms->y)
 			mov		dword ptr[esi], 0;	// overwritten op
 
 			pushad;
@@ -157,9 +165,9 @@ namespace Components
 
 		NO_BORDER:
 			popad;
-			xor eax, eax;			// clear eax
-			mov[esi + 0Ch], eax;	// set wndParms->x to 0 (4 byte)
-			mov[esi + 10h], eax;	// set wndParms->y to 0 (4 byte)
+			xor		eax, eax;			// clear eax
+			mov		[esi + 0Ch], eax;	// set wndParms->x to 0 (4 byte)
+			mov		[esi + 10h], eax;	// set wndParms->y to 0 (4 byte)
 			jmp		retn_addr;
 		}
 	}
@@ -210,6 +218,9 @@ namespace Components
 		// Do not use vid_xpos / vid_ypos when r_noborder is enabled
 		Utils::Hook::Nop(0x5D990C, 9);
 		Utils::Hook(0x5D990C, vid_xypos_stub, HOOK_JUMP).install()->quick();
+
+
+		Utils::Hook(0x5D9BC9, ExternalConsoleStub, HOOK_CALL).install()->quick();
 	}
 
 	Window::~Window()

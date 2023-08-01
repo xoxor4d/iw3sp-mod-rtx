@@ -3,9 +3,11 @@
 
 namespace Game
 {
-	extern HWND__* hWnd;
-	extern HWND__* hWndParent;
-	extern HWND__* hwndBuffer;
+	const static HWND__* hWnd = reinterpret_cast<HWND__*>(0x13E39A8); // Splash screen (cod.bmp)
+	const static HWND* hWndParent = reinterpret_cast<HWND*>(0x13E39B0); // External console
+	const static HWND* hWndBuffer = reinterpret_cast<HWND*>(0x13E39B4); // External console buffer
+
+	extern char* sys_processSemaphoreFile;
 
 	extern IDirect3DDevice9** dx9_device_ptr;
 

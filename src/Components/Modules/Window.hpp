@@ -45,5 +45,6 @@ namespace Components
 		static HWND WINAPI CreateMainWindow(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpWindowName, DWORD dwStyle, int X, int Y, int nWidth, int nHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam);
 
 		static void EnableDpiAwareness();
+		static void ExternalConsoleStub();
 	};
 }

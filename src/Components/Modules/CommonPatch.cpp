@@ -156,11 +156,6 @@ namespace Components
 				Game::g_clients->ps.weapAnim = weaponIndex | ~(unsigned __int16)Game::g_clients->ps.weapAnim & 0x200;
 		});
 
-		//Command::Add("show_console", [](Command::Params*)
-		//{
-		//	Game::Sys_ShowConsole();
-		//});
-
 		Command::Add("test_loc_string_return_value", [](Command::Params*)
 		{
 			const auto value = Game::UI_SafeTranslateString("IW3SP_MOD_LOC_MAINMENU");
@@ -392,6 +387,8 @@ namespace Components
 	{
 		Events::OnDvarInit([]
 		{
+			Dvars::external_console = Dvars::Register::Dvar_RegisterBool("external_console", "Turn on/off the external console", false, Game::saved);
+
 			//TESTING DVARS
 			// Bool dvar register test
 			Dvars::test_dvar_bool = Dvars::Register::Dvar_RegisterBool("test_dvar_bool", "Test Bool Dvar", false, Game::none);

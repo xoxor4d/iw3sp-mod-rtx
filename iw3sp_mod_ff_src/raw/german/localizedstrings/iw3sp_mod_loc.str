@@ -91,4 +91,7 @@ LANG_GERMAN         "Datum des Eingangs:"
 REFERENCE           MENU_IW3SP_MOD_OPTIONS
 LANG_GERMAN         "IW3SP-MOD"
 
+REFERENCE           MENU_EXTERNAL_CONSOLE
+LANG_GERMAN         "Externe Konsole"
+
 ENDMARKER

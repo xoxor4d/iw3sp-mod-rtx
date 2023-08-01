@@ -31,6 +31,8 @@ namespace Dvars
 	// Player settings dvars
 	Game::dvar_s* p_allowFire = nullptr;
 
+	Game::dvar_s* external_console = nullptr;
+
 	namespace Functions
 	{
 		Dvar_FindVar_t Dvar_FindVar = (Dvar_FindVar_t)0x587B00;

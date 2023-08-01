@@ -31,6 +31,8 @@ namespace Dvars
 	// Player settings dvars
 	extern Game::dvar_s* p_allowFire;
 
+	extern Game::dvar_s* external_console;
+
 	namespace Functions
 	{
 		typedef Game::dvar_s* (__cdecl* Dvar_FindVar_t)(const char* dvarName);
