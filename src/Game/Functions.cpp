@@ -730,10 +730,11 @@ namespace Game
 		}
 		return result;
 	}
-	//58F8B0
 
 	BG_FindWeaponIndexForName_t BG_FindWeaponIndexForName = BG_FindWeaponIndexForName_t(0x5BEC90);
 
+	//temp
+	int* level_initializing = reinterpret_cast<int*>(0xE18E40);
 
 	int Sys_IsDatabaseReady2(void)
 	{
@@ -839,5 +840,12 @@ namespace Game
 			mov		result, al;
 		}
 		return result;
+	}
+	unsigned int G_GetWeaponIndexForName(const char* name)
+	{
+		if(level_initializing)
+			return Game::BG_GetWeaponIndexForName(name, Game::G_RegisterWeapon);
+		else
+			return Game::BG_FindWeaponIndexForName(name);
 	}
 }

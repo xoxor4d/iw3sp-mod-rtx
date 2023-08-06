@@ -65,7 +65,7 @@ namespace Components
 				return;
 			}
 
-			int weaponIndex = Game::BG_FindWeaponIndexForName(Game::Scr_GetString(0));
+			int weaponIndex = Game::G_GetWeaponIndexForName(Game::Scr_GetString(0));
 			const auto weapon = Game::BG_WeaponNames[weaponIndex];
 			return Game::Scr_AddInt(weapon->damage);
 		}, false);
@@ -78,7 +78,7 @@ namespace Components
 				return;
 			}
 
-			int weaponIndex = Game::BG_FindWeaponIndexForName(Game::Scr_GetString(0));
+			int weaponIndex = Game::G_GetWeaponIndexForName(Game::Scr_GetString(0));
 			const auto damage_value = Game::Scr_GetInt(1);
 
 			const auto weapon = Game::BG_WeaponNames[weaponIndex];

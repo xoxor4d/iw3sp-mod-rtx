@@ -159,6 +159,7 @@ namespace Game
 	extern Game::gclient_s* g_clients;
 	extern Game::pmove_t* pmove;
 	extern Game::itemDef_s* my_item;
+
 	//extern Game::snd_local_t* g_snd;
 	//06.01.23
 	extern Game::clipMap_t* cm;
@@ -266,10 +267,15 @@ namespace Game
 
 	char* Com_Parse(const char** data_p);
 
-	typedef int(__cdecl* BG_FindWeaponIndexForName_t)(const char* weaponName);
+	static Utils::function<unsigned int()> G_RegisterWeapon = 0x4B6140;
+	static Utils::function<unsigned int(const char* weaponName, void* registerWeaponFunction)> BG_GetWeaponIndexForName = 0x5BECE0;
+
+	typedef unsigned int(__cdecl* BG_FindWeaponIndexForName_t)(const char* weaponName);
 	extern BG_FindWeaponIndexForName_t BG_FindWeaponIndexForName;
 
 	extern int Sys_IsDatabaseReady2(void);
+
+	extern int* level_initializing;
 
 	extern Game::localization_t* localization;
 
@@ -290,4 +296,5 @@ namespace Game
 	void PM_Weapon_FireWeapon(Game::playerState_s* ps, int delayedAction);
 	bool ShotLimitReached(Game::WeaponDef_s* weaponDef, Game::playerState_s* playerState);
 
+	unsigned int G_GetWeaponIndexForName(const char* name);
 }
