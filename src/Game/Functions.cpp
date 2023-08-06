@@ -826,4 +826,18 @@ namespace Game
 			add		esp, 4;
 		}
 	}
+
+	bool ShotLimitReached(Game::WeaponDef_s* weaponDef, Game::playerState_s* playerState)
+	{
+		bool result;
+		const static uint32_t ShotLimitReached_func = 0x5C1020;
+		__asm
+		{
+			mov		eax, weaponDef;
+			mov		ecx, ps;
+			call	ShotLimitReached_func;
+			mov		result, al;
+		}
+		return result;
+	}
 }

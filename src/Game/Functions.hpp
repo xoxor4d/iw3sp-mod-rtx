@@ -288,4 +288,6 @@ namespace Game
 	void Com_ExecStartupConfigs(int localClientNum, char const* configFile);
 
 	void PM_Weapon_FireWeapon(Game::playerState_s* ps, int delayedAction);
+	bool ShotLimitReached(Game::WeaponDef_s* weaponDef, Game::playerState_s* playerState);
+
 }

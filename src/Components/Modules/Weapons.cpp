@@ -2,7 +2,29 @@
 
 namespace Components
 {
-	void __declspec(naked) FireWeaponStub()
+	void Weapons::BG_WeaponFixBurstMode(Game::playerState_s* ps)
+	{
+		Game::WeaponDef_s* weapon = Game::BG_WeaponNames[ps->weapon];
+
+		if (weapon->fireType >= Game::WEAPON_FIRETYPE_BURSTFIRE2 && weapon->fireType <= Game::WEAPON_FIRETYPE_BURSTFIRE4 && !Game::ShotLimitReached(weapon, ps))
+		{
+			if (ps->ammo[weapon->iAmmoIndex] <= 0)
+			{
+				if (!ps->ammoclip[weapon->iClipIndex])
+				{
+					ps->weaponShotCount = 0;
+				}
+			}
+		}
+	}
+
+	void Weapons::BG_FireWeaponStub(Game::playerState_s* playerState, int delayedAction)
+	{
+		Game::PM_Weapon_FireWeapon(playerState, delayedAction);
+		Weapons::BG_WeaponFixBurstMode(playerState);
+	}
+
+	void __declspec(naked) Weapons::FireWeaponStub()
 	{
 		const static uint32_t offset_return = 0x5C2C96;
 
@@ -22,7 +44,7 @@ namespace Components
 			jmp		offset_return;
 		STOCK:
 			push	eax;
-			call	Game::PM_Weapon_FireWeapon;
+			call	Weapons::BG_FireWeaponStub;
 			add		esp, 4;
 			jmp		offset_return;
 		}
@@ -63,7 +85,7 @@ namespace Components
 			weapon->damage = damage_value;
 		}, false);
 		
-		Utils::Hook(0x5C2C91, FireWeaponStub, HOOK_JUMP).install()->quick();
+		Utils::Hook(0x5C2C91, Weapons::FireWeaponStub, HOOK_JUMP).install()->quick();
 	}
 
 	Weapons::~Weapons()
