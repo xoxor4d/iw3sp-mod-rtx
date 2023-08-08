@@ -30,6 +30,7 @@ namespace Dvars
 
 	// Player settings dvars
 	extern Game::dvar_s* p_allowFire;
+	extern Game::dvar_s* player_sprintUnlimited;
 
 	extern Game::dvar_s* external_console;
 

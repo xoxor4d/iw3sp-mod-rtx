@@ -349,8 +349,102 @@ namespace Components
 		}
 	}
 
+	void __declspec(naked) Movement::PM_GetSprintLeft_stub()
+	{
+		const static uint32_t stock_retn_addr = 0x5B779F;
+		const static uint32_t unlimited_speed_jump = 0x5B77A3;
+		__asm
+		{
+			mov		edi, [esi + 5ACh]; //lastSprintStart = ps->sprintState.lastSprintStart;
+
+			push	eax;
+			mov		eax, Dvars::player_sprintUnlimited;
+			cmp		byte ptr[eax + 12], 1;
+			pop		eax;
+
+			// player_sprintUnlimited is false
+			jne		DISABLE;
+
+			// player_sprintUnlimited is true
+			jmp		ENABLE;
+		DISABLE:
+			jmp		stock_retn_addr;
+		ENABLE:
+			jmp		unlimited_speed_jump;
+		}
+	}
+
+	void __declspec(naked) Movement::PM_GetSprintLeftLastTime_stub()
+	{
+		const static uint32_t stock_retn_addr = 0x5B7855;
+		const static uint32_t unlimited_speed_jump = 0x5B7881;
+		__asm
+		{
+			cmp     eax, 3FFFh; //MaxSprintTime = (int)v4;
+
+			push	eax;
+			mov		eax, Dvars::player_sprintUnlimited;
+			cmp		byte ptr[eax + 12], 1;
+			pop		eax;
+
+			// player_sprintUnlimited is false
+			jne		DISABLE;
+
+			// player_sprintUnlimited is true
+			jmp		ENABLE;
+		DISABLE:
+			jmp		stock_retn_addr;
+		ENABLE:
+			jmp		unlimited_speed_jump;
+		}
+	}
+
+	void __declspec(naked) Movement::PM_UpdateSprint_stub()
+	{
+		const static uint32_t continue_offset = 0x5B7AC6;
+		const static uint32_t jmp_offset = 0x5B7AE8;
+
+		__asm
+		{
+			push	eax;
+			mov		eax, Dvars::player_sprintUnlimited;
+			cmp		byte ptr[eax + 12], 1;
+			pop		eax;	
+
+			je		ENABLE;
+
+			mov     edx, [ebp + 4];
+			fstp    st;
+			jmp		continue_offset;
+
+		ENABLE:
+			jmp		jmp_offset;
+		}
+	}
+
 	Movement::Movement()
 	{
+		Events::OnDvarInit([]
+		{
+			Dvars::player_sprintUnlimited = Dvars::Register::Dvar_RegisterBool("player_sprintUnlimited", "Whether player can sprint forever or not", false, Game::saved_flag);
+		});
+
+		GSC::AddMethod("UnlimitedSprint", [](Game::scr_entref_t entref)
+		{
+			const auto* ent = Game::GetPlayerEntity(entref);
+
+			if (Game::Scr_GetInt(0))
+			{
+				Dvars::player_sprintUnlimited->current.enabled = true;
+				Dvars::player_sprintUnlimited->latched.enabled = true;
+			}
+			else
+			{
+				Dvars::player_sprintUnlimited->current.enabled = false;
+				Dvars::player_sprintUnlimited->latched.enabled = false;
+			}
+		}, false);
+
 		//	Int dvar register test
 		//Game::dvar_s* fixed_pmove = Dvars::Register::Dvar_RegisterInt("fixed_pmove", "", 125, 0, 1000, Game::none);
 		//Game::dvar_s* pmove_fixed = Dvars::Register::Dvar_RegisterBool("pmove_fixed", "Turn on/off pmove_fixed", true, Game::none);
@@ -367,6 +461,13 @@ namespace Components
 		//Add for cj mode only
 		//Utils::Hook::Nop(0x5BD422, 5);
 		//Utils::Hook(0x5BD422, Pmovesingle_stub, HOOK_JUMP).install()->quick();
+
+		//Unlimited sprint
+		Utils::Hook(0x5B7799, PM_GetSprintLeft_stub, HOOK_JUMP).install()->quick();
+		Utils::Hook::Nop(0x5B7850, 5);
+		Utils::Hook(0x5B7850, PM_GetSprintLeftLastTime_stub, HOOK_JUMP).install()->quick();
+		Utils::Hook::Nop(0x5B7AC1, 5);
+		Utils::Hook(0x5B7AC1, PM_UpdateSprint_stub, HOOK_JUMP).install()->quick();
 	}
 
 	Movement::~Movement()
