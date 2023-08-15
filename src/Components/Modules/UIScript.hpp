@@ -26,11 +26,24 @@ namespace Components
 
 		using UIScriptHandler = std::function<void(const Token& token, const Game::uiInfo_s* info)>;
 
+		//int ownerDraw, float x, float y, float w, float h, int horzAlign, int vertAlign
+		using UIOwnerDrawHandler = std::function<void(float x, float y, float w, float h, int horzAlign, int vertAlign, float text_x, float text_y, float scale, 
+			Game::Font_s* font, const float* color, Game::Material* material, int textStyle, int textAlignMode)>;
+
 		static Game::uiInfo_s* UI_GetInfo();
+
 		static void Add(const std::string& name, const UIScriptHandler& callback);
+		static void AddOwnerDraw(int ownerdraw, const UIOwnerDrawHandler& callback);
+
 		static bool RunMenuScript(const char* name, const char** args);
-		static void UI_RunMenuScript_stub();
 	private:
+		static void OwnerDrawInit(int ownerDraw, float x, float y, float w, float h, int horzAlign, int vertAlign, float text_x, float text_y, float scale, 
+			Game::Font_s* font, const float* color, Game::Material* material, int textStyle, int textAlignMode);
+		static void OwnerDrawStub();
+
+		static void UI_RunMenuScript_stub();
+
 		static std::unordered_map<std::string, UIScriptHandler> UIScripts;
+		static std::unordered_map<int, UIOwnerDrawHandler> UIOwnerDraws;
 	};
 }
