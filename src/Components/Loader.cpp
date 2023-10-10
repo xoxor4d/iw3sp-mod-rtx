@@ -47,6 +47,7 @@ namespace Components
 		Loader::Register(new Movement());
 		Loader::Register(new Weapons());
 		Loader::Register(new Discord());
+		Loader::Register(new TextRenderer());
 		Loader::Register(new UIScript());
 		Loader::Register(new ServerCommand());
 		Loader::Register(new LocalizedStrings());
