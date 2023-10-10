@@ -26,14 +26,29 @@ CHOICE_MENU_TITLE( "@MENU_CONTROLS" )
 #define CHOICE_VERTICAL_ALIGN VERTICAL_ALIGN_TOP
 
 //CHOICE_SECTION_TITLE( 1, "@MENU_CONTROLS" )
-CHOICE_BUTTON( 2, "@MENU_LOOK", LOCAL_CLOSE_ALL open options_look )
-CHOICE_BUTTON( 3, "@MENU_MOVE", LOCAL_CLOSE_ALL open options_move )
-CHOICE_BUTTON( 4, "@MENU_COMBAT", LOCAL_CLOSE_ALL open options_shoot )
-CHOICE_BUTTON( 5, "@MENU_INTERACT", LOCAL_CLOSE_ALL open options_misc )
+
+// Removed 09.24.2023 (8:20 PM)
+// CHOICE_BUTTON( 2, "@MENU_LOOK", LOCAL_CLOSE_ALL open options_look )
+// CHOICE_BUTTON( 3, "@MENU_MOVE", LOCAL_CLOSE_ALL open options_move )
+// CHOICE_BUTTON( 4, "@MENU_COMBAT", LOCAL_CLOSE_ALL open options_shoot )
+// CHOICE_BUTTON( 5, "@MENU_INTERACT", LOCAL_CLOSE_ALL open options_misc )
+
+// Added 23.09.2023 (3:39 PM)
+
+//localize shit
+/*
+@IW3SP_MOD_LOC_MENU_KEYBOARD_AND_MOUSE_OPTIONS = "Keyboard/Mouse"
+@IW3SP_MOD_LOC_MENU_GAMEPAD_OPTIONS = "Gamepad"
+*/
+
+CHOICE_BUTTON( 2, "@IW3SP_MOD_LOC_MENU_KEYBOARD_AND_MOUSE_OPTIONS", LOCAL_CLOSE_ALL open iw3sp_mod_controls_pc_options )
+CHOICE_BUTTON( 3, "@IW3SP_MOD_LOC_MENU_GAMEPAD_OPTIONS", LOCAL_CLOSE_ALL open iw3sp_mod_gamepad_settings )
+
 // Removed 08.04.2023 (10:46 PM)
 // CHOICE_BUTTON_VIS( 6, "@MENU_MULTIPLAYER_CONTROLS", LOCAL_CLOSE_ALL open controls_multi, when( dvarint( ui_multiplayer ) ) )
 // CHOICE_DBUTTON_VIS( 6, "@MENU_MULTIPLAYER_CONTROLS", when( !dvarint( ui_multiplayer ) ); )
-CHOICE_BUTTON( 6, "@MENU_SET_DEFAULT_CONTROLS", LOCAL_CLOSE_ALL open options_control_defaults )
+
+//CHOICE_BUTTON( 7, "@MENU_SET_DEFAULT_CONTROLS", LOCAL_CLOSE_ALL open options_control_defaults )
 
 // ---
 /*

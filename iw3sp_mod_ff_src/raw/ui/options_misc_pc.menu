@@ -31,6 +31,12 @@
 			close options_graphics_texture;
 			close options_control_defaults;
 
+			close iw3sp_mod_options;
+			close iw3sp_mod_gamepad_options;
+			close iw3sp_mod_gamepad_controls;
+			close iw3sp_mod_controls_pc_main;
+			close iw3sp_mod_controls_pc_options;
+
 			setLocalVarBool ui_hideBack 1;
 		}
 		onClose
@@ -42,7 +48,7 @@
 			close self;		
 		}
 
-		#include "ui_mp/leftside_controls.inc"
+		#include "ui_mp/leftside_controls_keyboard_mouse.inc"
 		
 		CHOICE_SECTION_TITLE( 21, "@MENU_INTERACT" )
 

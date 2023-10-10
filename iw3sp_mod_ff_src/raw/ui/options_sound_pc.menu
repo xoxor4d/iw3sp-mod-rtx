@@ -30,6 +30,7 @@
 			close options_control_defaults;
 
 			close iw3sp_mod_options;
+			close iw3sp_mod_gamepad_options;
 
 			setLocalVarBool ui_showApply 0;
 			setLocalVarBool ui_hideBack 1;
@@ -52,9 +53,13 @@
 		CHOICE_SECTION_TITLE( 21, "@MENU_SOUND" )
 
 		CHOICE_DVARSLIDER( 22, "@MENU_MASTER_VOLUME", snd_volume, 0.8, 0.0, 1.0, ; )
-		CHOICE_DVARFLOATLIST_VIS( 23, "@MENU_SOUND_EQ", ui_snd_enableEq, { "@MENU_OFF" 0 "@MENU_ON" 1 }, setLocalVarBool ui_showApply 1, when( ( !dvarint( sv_running ) || dvarInt( ui_allow_graphic_change ) ) && dvarInt( arcademode ) == 0 ); )
-		CHOICE_DVARFLOATLIST_VIS( 24, "@MENU_SOUND_QUALITY", ui_snd_khz, { "@MENU_11KHZ" 11 "@MENU_22KHZ" 22 "@MENU_44KHZ" 44 }, setLocalVarBool ui_showApply 1, when( ( !dvarint( sv_running ) || dvarInt( ui_allow_graphic_change ) ) && dvarInt( arcademode ) == 0 ); )
-		CHOICE_DVARSTRINGLIST_VIS( 25, "@MENU_SPEAKER_CONFIG", ui_outputConfig, { "@MENU_WINDOWS_DEFAULT"; "Windows default"; "@MENU_MONO"; "Mono"; "@MENU_STEREO"; "Stereo"; "@MENU_FOUR_SPEAKERS"; "4 speakers"; "@MENU_FIVE_ONE_SPEAKERS"; "5.1 speakers"; }, setLocalVarBool ui_showApply 1, when( ( !dvarint( sv_running ) || dvarInt( ui_allow_graphic_change ) ) && dvarInt( arcademode ) == 0 ); )
+		CHOICE_DVARSLIDER( 23, "@IW3SP_MOD_LOC_MENU_MUSIC_VOLUME", snd_musicVolume, 0.8, 0.0, 1.0, ; )
+		CHOICE_DVARSLIDER( 24, "@IW3SP_MOD_LOC_MENU_VOICE_VOLUME", snd_voiceVolume, 0.8, 0.0, 1.0, ; )
+		CHOICE_DVARSLIDER( 25, "@IW3SP_MOD_LOC_MENU_CINEMATIC_VOLUME", snd_cinematicVolumeScale, 0.85, 0.0, 1.0, ; )
+
+		CHOICE_DVARFLOATLIST_VIS( 26, "@MENU_SOUND_EQ", ui_snd_enableEq, { "@MENU_OFF" 0 "@MENU_ON" 1 }, setLocalVarBool ui_showApply 1, when( ( !dvarint( sv_running ) || dvarInt( ui_allow_graphic_change ) ) && dvarInt( arcademode ) == 0 ); )
+		CHOICE_DVARFLOATLIST_VIS( 27, "@MENU_SOUND_QUALITY", ui_snd_khz, { "@MENU_11KHZ" 11 "@MENU_22KHZ" 22 "@MENU_44KHZ" 44 }, setLocalVarBool ui_showApply 1, when( ( !dvarint( sv_running ) || dvarInt( ui_allow_graphic_change ) ) && dvarInt( arcademode ) == 0 ); )
+		CHOICE_DVARSTRINGLIST_VIS( 28, "@MENU_SPEAKER_CONFIG", ui_outputConfig, { "@MENU_WINDOWS_DEFAULT"; "Windows default"; "@MENU_MONO"; "Mono"; "@MENU_STEREO"; "Stereo"; "@MENU_FOUR_SPEAKERS"; "4 speakers"; "@MENU_FIVE_ONE_SPEAKERS"; "5.1 speakers"; }, setLocalVarBool ui_showApply 1, when( ( !dvarint( sv_running ) || dvarInt( ui_allow_graphic_change ) ) && dvarInt( arcademode ) == 0 ); )
 
 		itemDef 
 		{

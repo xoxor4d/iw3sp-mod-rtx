@@ -94,4 +94,103 @@ LANG_GERMAN         "IW3SP-MOD"
 REFERENCE           MENU_EXTERNAL_CONSOLE
 LANG_GERMAN         "Externe Konsole"
 
+REFERENCE           MENU_BRANDING
+LANG_GERMAN         "Version-Präsentieren"
+
+REFERENCE           MENU_WIP
+LANG_GERMAN         "WORK IN PROGRESS"
+
+REFERENCE           MENU_STATS_TITLE
+LANG_GERMAN        	"STATISTIK"
+
+REFERENCE           MENU_STATS
+LANG_GERMAN        	"Statistik"
+
+REFERENCE           MENU_CAREER_BULLETS_FIRED
+LANG_GERMAN        	"Geschosse abgefeuert"
+
+REFERENCE           MENU_CAREER_BULLETS_HIT
+LANG_GERMAN        	"Getroffene Kugeln"
+
+REFERENCE           MENU_CAREER_DEATHS
+LANG_GERMAN        	"Tode"
+
+REFERENCE           MENU_CAREER_HEADSHOTS
+LANG_GERMAN        	"Kopfschässe"
+
+REFERENCE           MENU_CAREER_KILLS
+LANG_GERMAN        	"Absch"
+
+REFERENCE           MENU_CAREER_PLAYTIMESP
+LANG_GERMAN        	"Gesamte Spielzeit"
+
+REFERENCE           MENU_SP_STAT_TIME_FORMAT
+LANG_GERMAN        	"T      S        M       S"
+
+REFERENCE           MENU_MUSIC_VOLUME
+LANG_GERMAN        	"Musiklautstärke"
+
+REFERENCE           MENU_VOICE_VOLUME
+LANG_GERMAN        	"Sprachlautstärke"
+
+REFERENCE           MENU_CINEMATIC_VOLUME
+LANG_GERMAN        	"Kinolautstärke"
+
+REFERENCE           MENU_KEYBOARD_AND_MOUSE_OPTIONS
+LANG_GERMAN        	"Tastatur/Maus"
+
+REFERENCE           MENU_GAMEPAD_OPTIONS
+LANG_GERMAN        	"Gamepad"
+
+REFERENCE           MENU_GAMEPAD_MISC_SETTINGS
+LANG_GERMAN        	"Verschiedene Einstellungen"
+
+REFERENCE           MENU_GAMEPAD_BUTTONS_AND_STICKS_SETTINGS
+LANG_GERMAN        	"Tasten/Sticks"
+
+REFERENCE           MENU_GAMEPAD_RESET_DEFAULT_SETTINGS
+LANG_GERMAN        	"Standardsteuerungen zurucksetzen"
+
+REFERENCE           MENU_GAMEPAD_ENABLED
+LANG_GERMAN        	"Gamepad aktiviert"
+
+REFERENCE           MENU_GAMEPAD_BUTTON_STYLE
+LANG_GERMAN        	"Schaltflächenstil"
+
+REFERENCE           MENU_GAMEPAD_BUTTON_STYLE_XBOX
+LANG_GERMAN        	"Xbox"
+
+REFERENCE           MENU_GAMEPAD_BUTTON_STYLE_SONY
+LANG_GERMAN        	"PlayStation"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_LOW
+LANG_GERMAN        	"Gering"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_MEDIUM
+LANG_GERMAN        	"Mittel"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_HIGH
+LANG_GERMAN        	"Hoch"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_VERY_HIGN
+LANG_GERMAN        	"Sehr hoch"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_INSANE
+LANG_GERMAN        	"Verräckt"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_3
+LANG_GERMAN        	"(Eigene empfindlichkeit): 3"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_5
+LANG_GERMAN        	"(Eigene empfindlichkeit): 5"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_6
+LANG_GERMAN        	"(Eigene empfindlichkeit): 6"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_8
+LANG_GERMAN        	"(Eigene empfindlichkeit): 8"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
+LANG_GERMAN        	"(Eigene empfindlichkeit): 9"
+
 ENDMARKER

@@ -46,7 +46,8 @@
 		itemDef 
 		{
 			name				modlist
-			rect				-170 64 340 280 HORIZONTAL_ALIGN_CENTER CHOICE_VERTICAL_ALIGN
+			rect				-170 64 340 280 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_DEFAULT
+			origin				0 0
 			type				ITEM_TYPE_LISTBOX
 			style				WINDOW_STYLE_FILLED
 			textstyle 			ITEM_TEXTSTYLE_SHADOWED
@@ -56,7 +57,6 @@
 			elementtype			LISTBOX_TEXT
 			feeder				FEEDER_MODS
 			textalignx			6
-			textaligny			0
 			forecolor 			1 1 1 0.9
 			backcolor 			0 0 0 0
 			border				1

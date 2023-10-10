@@ -22,7 +22,7 @@
 #define CHOICE_HORIZONTAL_ALIGN HORIZONTAL_ALIGN_RIGHT
 
 #undef CHOICE_VERTICAL_ALIGN
-#define CHOICE_VERTICAL_ALIGN VERTICAL_ALIGN_TOP
+#define CHOICE_VERTICAL_ALIGN VERTICAL_ALIGN_DEFAULT
 
 {
 
@@ -89,7 +89,6 @@
 			elementtype 		LISTBOX_TEXT
 			feeder 				FEEDER_PLAYER_PROFILES
 			textalignx 			6
-			textaligny 			0
 			forecolor 			1 1 1 0.9
 			backcolor 			0 0 0 0
 			border				1

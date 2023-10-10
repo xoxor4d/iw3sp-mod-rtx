@@ -30,6 +30,7 @@
 			close options_control_defaults;
 
 			close iw3sp_mod_options;
+			close iw3sp_mod_gamepad_options;
 
 			setLocalVarBool ui_showApply 0;
 			setLocalVarBool ui_hideBack 1;

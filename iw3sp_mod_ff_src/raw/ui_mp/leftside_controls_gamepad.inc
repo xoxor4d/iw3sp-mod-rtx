@@ -1,0 +1,39 @@
+blurWorld		7.0
+
+PREPROC_SHADER_DRAW( -120 0 880 480, 0 0, "white", 0 0 0 0.75, 0, 1, 0 0 0 0 )
+
+#undef BACK_OPEN
+#define BACK_OPEN exec "wait";
+#include "ui_mp/navcontrols.inc"
+CHOICE_MENU_TITLE( "@MENU_CONTROLS" )
+
+#undef CHOICE_X_START
+#define CHOICE_X_START		-324
+
+#undef CHOICE_HORIZONTAL_ALIGN
+#define CHOICE_HORIZONTAL_ALIGN HORIZONTAL_ALIGN_CENTER
+
+#undef CHOICE_VERTICAL_ALIGN
+#define CHOICE_VERTICAL_ALIGN VERTICAL_ALIGN_TOP
+
+//localize shit
+/*
+@IW3SP_MOD_LOC_MENU_GAMEPAD_BUTTONS_AND_STICKS_SETTINGS = "Gamepad Button/Sticks"
+@IW3SP_MOD_LOC_MENU_GAMEPAD_BUTTONS_STICKS_SETTINGS = "Gamepad Setting"
+@IW3SP_MOD_LOC_MENU_RESET_GAMEPAD_DEFAULT_SETTINGS = "Reset Default Gamepad Settings/Controls"
+*/
+
+//#define CHOICE_BUTTON_VIS( itemIndex, textArg, actionArg, visArg )
+
+CHOICE_BUTTON(2, "@IW3SP_MOD_LOC_MENU_GAMEPAD_MISC_SETTINGS", LOCAL_CLOSE_ALL open iw3sp_mod_gamepad_settings )
+CHOICE_BUTTON_VIS( 3, "@IW3SP_MOD_LOC_MENU_GAMEPAD_BUTTONS_AND_STICKS_SETTINGS", LOCAL_CLOSE_ALL open iw3sp_mod_gamepad_controls, when(dvarBool("gpad_enabled") == 1) )
+CHOICE_DBUTTON_VIS(3, "@IW3SP_MOD_LOC_MENU_GAMEPAD_BUTTONS_AND_STICKS_SETTINGS", when(dvarBool("gpad_enabled") == 0) )
+CHOICE_BUTTON_VIS(4, "@IW3SP_MOD_LOC_MENU_GAMEPAD_RESET_DEFAULT_SETTINGS", LOCAL_CLOSE_ALL open iw3sp_mod_gamepad_default, when(dvarBool("gpad_enabled") == 1) )
+CHOICE_DBUTTON_VIS(4, "@IW3SP_MOD_LOC_MENU_GAMEPAD_RESET_DEFAULT_SETTINGS", when(dvarBool("gpad_enabled") == 0) )
+
+
+#undef	CHOICE_SIZE_X
+#define CHOICE_SIZE_X		180
+
+#undef  SECTION_X_OFFSET
+#define SECTION_X_OFFSET 	60

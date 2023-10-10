@@ -285,7 +285,7 @@
  	   	exp				rect X( 0 )
 		exp				rect Y( (BOTTOM_RECT_Y-46) - (ONLINEGAME * ONLINEGAME_OFFSET) );
  	   	fullScreen		0
-		visible			when( !SUBTITLES_ACTIVE && CHAPLIN_CHEAT_OFF && dvarBool( actionSlotsHide ) == 0 && dvarBool( hud_missionFailed ) == 0 && !inkillcam() && !flashbanged() && !ui_active() && !scoped() && dvarBool( compass ) == 1 && (dvarString( createfx ) != "on") );
+		visible			when( !SUBTITLES_ACTIVE && CHAPLIN_CHEAT_OFF && dvarBool( actionSlotsHide ) == 0 && dvarBool( hud_missionFailed ) == 0 && !inkillcam() && !flashbanged() && !ui_active() && !scoped() && dvarBool( compass ) == 1 && (dvarString( createfx ) != "on") && dvarBool ( gpad_in_use ) == 0 );
 
 		itemDef
         {
@@ -386,7 +386,6 @@
 			visible 	when( ActionSlotUsable( 4 ) )
 			decoration
 		}
-		
 		itemDef
         {
 			name			"slot4"
@@ -419,7 +418,107 @@
 			visible 	when( ActionSlotUsable( 3 ) )
 			decoration
 		}
+    }
 
+	menuDef
+	{
+		name			"DPad_Console"
+ 	   	rect			0 0 25 25 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
+ 	   	exp				rect X( 0 )
+		exp				rect Y( (BOTTOM_RECT_Y-46) - (ONLINEGAME * ONLINEGAME_OFFSET) );
+ 	   	fullScreen		0
+		visible			when( !SUBTITLES_ACTIVE && CHAPLIN_CHEAT_OFF && dvarBool( actionSlotsHide ) == 0 && dvarBool( hud_missionFailed ) == 0 && !inkillcam() && !flashbanged() && !ui_active() && !scoped() && dvarBool( compass ) == 1 && (dvarString( createfx ) != "on") && dvarBool ( gpad_in_use ) == 1 );
+
+		itemDef
+        {
+            name			"PadXenon"
+            exp rect X		( DPAD_BASE_X+65 )
+			exp rect Y		( DPAD_BASE_Y-70 )
+			exp rect W		( DPAD_BASE_SIZE )
+			exp rect H		( DPAD_BASE_SIZE )
+			ownerdraw		CG_PLAYER_ACTIONSLOT_DPAD
+			background		"hud_dpad"
+            forecolor		1 1 1 DPAD_ICON_ALPHA
+			visible			when ( dvarBool( gpad_style ) == 0 )
+			decoration
+        }
+		itemDef
+        {
+            name			"PadSony"
+            exp rect X		( DPAD_BASE_X+65 )
+			exp rect Y		( DPAD_BASE_Y-70 )
+			exp rect W		( DPAD_BASE_SIZE )
+			exp rect H		( DPAD_BASE_SIZE )
+			ownerdraw		CG_PLAYER_ACTIONSLOT_DPAD
+			background		"hud_dpad_ps3"
+            forecolor		1 1 1 DPAD_ICON_ALPHA
+			visible			when ( dvarBool( gpad_style ) == 1 )
+			decoration
+        }
+		itemDef
+        {
+			name			"slot1"
+			exp rect X		( DPAD_BASE_X+65 )
+			exp rect Y		( DPAD_BASE_Y-95 )
+			exp rect W		( DPAD_BASE_SIZE )
+			exp rect H		( DPAD_BASE_SIZE )
+			ownerdraw		CG_PLAYER_ACTIONSLOT_1
+			forecolor		1 1 1 HUD_ALPHA
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textalign		ITEM_ALIGN_LEFT
+			textscale		TEXTSIZE_SMALL
+			textfont		UI_FONT_BIG
+			visible			1
+			decoration
+        }
+		itemDef
+        {
+			name			"slot2"
+			exp rect X		( DPAD_BASE_X+65 )
+			exp rect Y		( DPAD_BASE_Y-40 )
+			exp rect W		( DPAD_BASE_SIZE )
+			exp rect H		( DPAD_BASE_SIZE )
+			ownerdraw		CG_PLAYER_ACTIONSLOT_2
+			forecolor		1 1 1 HUD_ALPHA
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textalign		ITEM_ALIGN_LEFT
+			textscale		TEXTSIZE_SMALL
+			textfont		UI_FONT_BIG
+			visible			1
+			decoration
+        }
+		itemDef
+        {
+			name			"slot3"
+			exp rect X		( DPAD_BASE_X )
+			exp rect Y		( DPAD_BASE_Y-65 )
+			exp rect W		( DPAD_BASE_SIZE )
+			exp rect H		( DPAD_BASE_SIZE )
+			ownerdraw		CG_PLAYER_ACTIONSLOT_3
+			forecolor		1 1 1 HUD_ALPHA
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textalign		ITEM_ALIGN_LEFT
+			textscale		TEXTSIZE_SMALL
+			textfont		UI_FONT_BIG
+			visible			1
+			decoration
+        }
+		itemDef
+        {
+			name			"slot4"
+			exp rect X		( DPAD_BASE_X+100 )
+			exp rect Y		( DPAD_BASE_Y-65 )
+			exp rect W		( DPAD_BASE_SIZE )
+			exp rect H		( DPAD_BASE_SIZE )
+			ownerdraw		CG_PLAYER_ACTIONSLOT_4
+			forecolor		1 1 1 HUD_ALPHA
+			textstyle		ITEM_TEXTSTYLE_SHADOWED
+			textalign		ITEM_ALIGN_LEFT
+			textscale		TEXTSIZE_SMALL
+			textfont		UI_FONT_BIG
+			visible			1
+			decoration
+        }
     }
 
 	//	Tank status
@@ -779,13 +878,14 @@
 	menuDef
 	{
 		name			"subtitles"
-		rect			0 432 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_TOP
+		rect			0 0 0 0 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM
 		fullScreen		0
 		visible when ( CHAPLIN_CHEAT_OFF && dvarBool( credits_active ) == 0 );
 		
 		itemDef
 		{
-			origin				0 0
+			//rect				0 -24 124 13
+			origin				0 -50
 			type				ITEM_TYPE_GAME_MESSAGE_WINDOW
 			gamemsgwindowindex	2
 			gamemsgwindowmode	MODE_BOTTOMUP_ALIGN_BOTTOM

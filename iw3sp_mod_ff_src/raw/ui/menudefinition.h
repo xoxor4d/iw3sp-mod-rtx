@@ -285,6 +285,9 @@
 #define CG_TALKER3					195
 #define CG_TALKER4					196
 
+#define UI_LOGGEDINUSER_PC		    197
+
+
 #define UI_OWNERDRAW_BASE			200
 #define UI_HANDICAP 				200
 #define UI_EFFECTS					201

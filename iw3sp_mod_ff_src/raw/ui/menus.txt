@@ -30,6 +30,13 @@
 
 	//Added 02.06.2023 (11:38 PM)
 	loadMenu { "ui/options_iw3sp_mod.menu" }
+	//Added 09.23.2023 (3:58 PM)
+	loadMenu { "ui/options_gamepad_settings.menu" }
+	//Added 09.24.2023 (9:20 PM)
+	loadMenu { "ui/options_gamepad_controls.menu" }
+	//Added 09.24.2023 (8:27 PM)
+	loadMenu { "ui/options_controls_settings.menu" }
+	loadMenu { "ui/options_controls_main.menu" }
 
 	loadMenu { "ui/playerprofile.menu" }
 	loadMenu { "ui/briefing.menu" }
@@ -38,4 +45,7 @@
 	loadMenu { "ui/vid_restart_pc.menu" }
 	loadMenu { "ui/language_restart.menu" }
 	loadMenu { "ui/snd_restart.menu" }
+	
+	//Added 17.08.2023 (9:20 PM)
+	loadMenu { "ui/stats.menu" }
 }

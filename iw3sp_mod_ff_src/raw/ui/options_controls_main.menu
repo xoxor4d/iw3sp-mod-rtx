@@ -1,0 +1,50 @@
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+#define OPTIONS_STYLE			1
+#include "ui_mp/menustyle.inc"
+#include "ui/choices_setup_common.menu"
+
+{
+	menuDef 
+	{
+		name			iw3sp_mod_controls_pc_main
+		fullScreen		0
+		rect			0 0 640 480
+		focusColor		COLOR_FOCUSED
+		soundloop		""
+		onOpen
+		{
+			focusFirst;
+
+			close options_look;
+			close options_move;
+			close options_shoot;
+			close options_misc;
+			close options_graphics;
+			close options_sound;
+			close options_view;
+			close options_defaults;
+			close options_driverinfo;
+			close options_credits;
+			close options_multi;
+			close options_graphics_defaults;
+			close options_graphics_texture;
+			close options_control_defaults;
+
+			close iw3sp_mod_options;
+			close iw3sp_mod_gamepad_options;
+			
+			setLocalVarBool ui_hideBack 1;
+		}
+		onClose
+		{
+			setLocalVarBool ui_hideBack 0;
+		}
+		onESC 
+		{ 
+			close self;
+		}
+
+		#include "ui_mp/leftside_controls.inc"
+	}
+}

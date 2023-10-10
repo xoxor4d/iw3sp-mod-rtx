@@ -29,6 +29,9 @@
 	#define PC_OFFSET_Y				0
 #endif
 
+// #undef BACK_OPEN
+// #define BACK_OPEN	open stats;
+
 #define ACHIEVEMENT_PREVIEW( achievementMaterial, visArg ) \
 		itemDef \
 		{ \
@@ -303,7 +306,7 @@
 		soundloop 		"music_mainmenu_mp"
 		onOpen {}
 		onEsc {	close achievements;	}
-		onClose	{open main; setdvar ui_achievement_page 0; setdvar ui_achievement_select_idx 0;}
+		onClose	{ /*open stats*/ open main; setdvar ui_achievement_page 0; setdvar ui_achievement_select_idx 0;}
 		#include "ui/blurredbg.inc"
 		#include "ui_mp/navcontrols.inc"
 		
@@ -346,7 +349,7 @@
 		soundloop 		"music_mainmenu_mp"
 		onOpen {}
 		onEsc {	close achievements_page_1;	}
-		onClose	{ open main; setdvar ui_achievement_page 0; setdvar ui_achievement_select_idx 0;}
+		onClose	{ /*open stats*/ open main; setdvar ui_achievement_page 0; setdvar ui_achievement_select_idx 0;}
 		#include "ui/blurredbg.inc"
 		#include "ui_mp/navcontrols.inc"
 		
@@ -389,7 +392,7 @@
 		soundloop 		"music_mainmenu_mp"
 		onOpen {}
 		onEsc {	close achievements_page_2;	}
-		onClose	{open main; setdvar ui_achievement_page 0; setdvar ui_achievement_select_idx 0;}
+		onClose	{ /*open stats*/ open main; setdvar ui_achievement_page 0; setdvar ui_achievement_select_idx 0;}
 		#include "ui/blurredbg.inc"
 		#include "ui_mp/navcontrols.inc"
 		

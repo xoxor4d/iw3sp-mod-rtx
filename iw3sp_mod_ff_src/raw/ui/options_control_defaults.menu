@@ -29,7 +29,7 @@
 			close options_control_defaults;		
 		}
 		
-		#include "ui_mp/leftside_controls.inc"
+		#include "ui_mp/leftside_controls_keyboard_mouse.inc"
 		
 		CHOICE_SECTION_TITLE( 21, "@MENU_SET_DEFAULT_CONTROLS" )
 		

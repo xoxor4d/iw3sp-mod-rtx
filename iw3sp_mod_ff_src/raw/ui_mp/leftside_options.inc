@@ -39,7 +39,6 @@ CHOICE_BUTTON( 4, "@MENU_SOUND", LOCAL_CLOSE_ALL open options_sound )
 CHOICE_BUTTON( 5, "@MENU_GAME_OPTIONS", LOCAL_CLOSE_ALL open options_game )
 
 CHOICE_BUTTON_VIS( 6, "@MENU_CHEATS_LOWCASE", open menu_special_features; close self;, when( dvarBool( sv_running ) && !dvarBool(ui_multiplayer) && !dvarBool( arcademode ) && !dvarBool( arcademode_full ) ); )
-CHOICE_BUTTON_VIS( 6, "@MENU_MULTIPLAYER_OPTIONS", LOCAL_CLOSE_ALL open options_multi, when( dvarint( ui_multiplayer ) ) )
 CHOICE_DBUTTON_VIS( 6, "@MENU_CHEATS_LOWCASE", when( ( !dvarBool( sv_running ) || dvarBool( arcademode ) || dvarBool( arcademode_full ) ) && !dvarBool(ui_multiplayer) ); )
 
 CHOICE_BUTTON( 7, "@IW3SP_MOD_LOC_MENU_IW3SP_MOD_OPTIONS", LOCAL_CLOSE_ALL open iw3sp_mod_options )

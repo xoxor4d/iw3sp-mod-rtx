@@ -1,0 +1,120 @@
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+#define OPTIONS_STYLE			1
+#include "ui_mp/menustyle.inc"
+#include "ui/choices_setup_common.menu"
+
+#define ON_GPAD_ENABLED when(dvarBool("gpad_enabled") == 1)
+#define ON_GPAD_DISABLED when(dvarBool("gpad_enabled") == 0)
+#define CUSTOM_BUTTON_LAYOUT_ALLOWED when(dvarBool("gpad_enabled") == 1 && dvarString("gpad_buttonConfig") == "custom")
+
+#define SENSITIVITY_1	0.6	//(Low)
+#define SENSITIVITY_2	1	//(Medium)
+#define SENSITIVITY_3	1.4
+#define SENSITIVITY_4	1.8	//(High)
+#define SENSITIVITY_5	2.0
+#define SENSITIVITY_6	2.2
+#define SENSITIVITY_7	2.6 //(Very High)
+#define SENSITIVITY_8	3.0
+#define SENSITIVITY_9	3.5
+#define SENSITIVITY_10	4.0 //(Insane)
+#define SENSITIVITY_1_S	"0.6"	//(Low)
+#define SENSITIVITY_2_S	"1"	//(Medium)
+#define SENSITIVITY_3_S	"1.4"
+#define SENSITIVITY_4_S	"1.8"	//(High)
+#define SENSITIVITY_5_S	"2.0"
+#define SENSITIVITY_6_S	"2.2"
+#define SENSITIVITY_7_S	"2.6" //(Very High)
+#define SENSITIVITY_8_S	"3.0"
+#define SENSITIVITY_9_S	"3.5"
+#define SENSITIVITY_10_S	"4.0" //(Insane)
+
+{
+	menuDef 
+	{
+		name			iw3sp_mod_gamepad_controls
+		fullScreen		0
+		rect			0 0 640 480
+		focusColor		COLOR_FOCUSED
+		soundloop		""
+		onOpen
+		{
+			focusFirst;
+
+			close options_look;
+			close options_move;
+			close options_shoot;
+			close options_misc;
+			close options_graphics;
+			close options_sound;
+			close options_view;
+			close options_defaults;
+			close options_driverinfo;
+			close options_credits;
+			close options_multi;
+			close options_graphics_defaults;
+			close options_graphics_texture;
+			close options_control_defaults;
+
+			close iw3sp_mod_options;
+			close iw3sp_mod_controls_pc_main;
+			close iw3sp_mod_controls_pc_options;
+			close iw3sp_mod_gamepad_settings;
+			
+			setLocalVarBool ui_hideBack 1;
+		}
+		onClose
+		{
+			setLocalVarBool ui_hideBack 0;
+		}
+		onESC 
+		{ 
+			close self;
+		}
+
+		#include "ui_mp/leftside_controls_gamepad.inc"
+
+		CHOICE_SECTION_TITLE( 21, "@IW3SP_MOD_LOC_MENU_GAMEPAD_OPTIONS" )
+		CHOICE_DVARYESNO_VIS( 22, "@MENU_LOOK_INVERSION", input_invertPitch, ;, ON_GPAD_ENABLED )
+		CHOICE_DVARSTRINGLIST_VIS( 23, "@MENU_THUMBSTICK_LAYOUT", gpad_sticksConfig, 
+		{ 
+			"@MENU_DEFAULT"; "thumbstick_default";
+			"@MENU_SOUTHPAW"; "thumbstick_southpaw";
+		 	"@MENU_LEGACY"; "thumbstick_legacy";
+		 	"@MENU_LEGACY_SOUTHPAW"; "thumbstick_legacysouthpaw"
+		}, execNow "bindgpsticksconfigs", ON_GPAD_ENABLED )
+
+		//temp
+		CHOICE_DVARSTRINGLIST_VIS( 24, "@MENU_BUTTON_LAYOUT", gpad_buttonConfig, 
+		{ 
+			"@MENU_DEFAULT"; "buttons_default";
+			"@MENU_TACTICAL"; "buttons_tactical";
+			"@MENU_LEFTY"; "buttons_lefty";
+			"@MENU_DEFAULT_ALT"; "buttons_default_alt";
+			"@MENU_TACTICAL_ALT"; "buttons_tactical_alt";
+			"@MENU_LEFTY_ALT"; "buttons_lefty_alt"
+		}, execNow "bindgpbuttonsconfigs", ON_GPAD_ENABLED )
+
+		CHOICE_DVARFLOATLIST_VIS( 25, "@MENU_LOOK_SENSITIVITY", input_viewSensitivity, 
+		{
+			"@IW3SP_MOD_LOC_MENU_GAMEPAD_SENSITIVITY_LOW" SENSITIVITY_1 
+			"@IW3SP_MOD_LOC_MENU_GAMEPAD_SENSITIVITY_MEDIUM" SENSITIVITY_2
+			"@IW3SP_MOD_LOC_MENU_GAMEPAD_SENSITIVITY_CUSTOM_3" SENSITIVITY_3
+			"@IW3SP_MOD_LOC_MENU_GAMEPAD_SENSITIVITY_HIGH" SENSITIVITY_4
+			"@IW3SP_MOD_LOC_MENU_GAMEPAD_SENSITIVITY_CUSTOM_5" SENSITIVITY_5
+			"@IW3SP_MOD_LOC_MENU_GAMEPAD_SENSITIVITY_CUSTOM_6" SENSITIVITY_6
+			"@IW3SP_MOD_LOC_MENU_GAMEPAD_SENSITIVITY_VERY_HIGH" SENSITIVITY_7
+			"@IW3SP_MOD_LOC_MENU_GAMEPAD_SENSITIVITY_CUSTOM_8" SENSITIVITY_8
+			"@IW3SP_MOD_LOC_MENU_GAMEPAD_SENSITIVITY_CUSTOM_9" SENSITIVITY_9
+			"@IW3SP_MOD_LOC_MENU_GAMEPAD_SENSITIVITY_INSANE" SENSITIVITY_10
+		}, ;, ON_GPAD_ENABLED )
+
+		CHOICE_BUTTON_VIS( 26, "Bind Button Layout", open iw3sp_mod_gamepad_bind_controls, CUSTOM_BUTTON_LAYOUT_ALLOWED)
+
+		#define HAS_SELECTED_THUMBSTICK (localvarint(ui_highlight) == 23)
+		#define HAS_SELECTED_BUTTONS (localvarint(ui_highlight) == 24)
+		//re-work via dll
+		#include "ui/controls_thumbstick_set.inc"
+		#include "ui/controls_buttons_set.inc"
+	}
+}

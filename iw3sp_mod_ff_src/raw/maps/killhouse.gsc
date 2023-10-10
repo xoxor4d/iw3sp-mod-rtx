@@ -424,7 +424,7 @@ look_training()
 	clear_hints();	
 	
 	setDvar( "ui_start_inverted", 0 );
-    if ( level.Console )
+    if ( level.Console || getdvarint("gpad_in_use") )
 	{
 		if(isdefined( getdvar("input_invertPitch") ) && getdvar("input_invertPitch") == "1" )
 			setDvar( "ui_start_inverted", 1 );	
@@ -437,7 +437,7 @@ look_training()
 	wait .1;//make sure dvar is set
 	
 	setDvar( "ui_invert_string", "@KILLHOUSE_AXIS_OPTION_MENU1_ALL" );
-	if ( level.console )
+	if ( level.console  )
 		level.player openMenu("invert_axis");
 	else
 		level.player openMenu("invert_axis_pc");
@@ -653,7 +653,7 @@ new_look_training_handler()
 	
 		
 	setDvar( "ui_start_inverted", 0 );
-    if ( level.Console )
+    if ( level.Console || getdvarint("gpad_in_use") )
 	{
 		if(isdefined( getdvar("input_invertPitch") ) && getdvar("input_invertPitch") == "1" )
 			setDvar( "ui_start_inverted", 1 );	
@@ -882,7 +882,7 @@ rifle_timed_shooting()
 	registerObjective( "obj_timed_rifle", &"KILLHOUSE_SHOOT_EACH_TARGET_AS", getEnt("obj_rifle_stall", "targetname" ) );
 	setObjectiveState( "obj_timed_rifle", "current" );
 	
-	if ( auto_aim() )
+	if ( auto_aim() || getdvarint("gpad_in_use") )
 	{
 		//ps3_flipped = is_ps3_flipped();
 				
@@ -2363,6 +2363,8 @@ cargoship_training()
 		        selection = "newrecord";
 				player_reach_record_gaz = true;
 		    }
+			else
+				selection = dialog_end_of_course( first_time, final_time, previous_time, previous_selection );
 		}
 	   	else if ( final_time < ( player_bestrecord ) && player_reach_record_gaz == true )
 	    {
@@ -2486,12 +2488,10 @@ movies_on_tvs()
 // 	  THE KILLHOUSE VIDEO FILE IS BROKEN AND WON'T LOOP
 	  wait 6;
 
-//    
-//	  while ( isSaveRecentlyLoaded() )
-//	    wait 1;
-//	  while ( !isSaveRecentlyLoaded() )
-//	    wait 1;
-//
+//	  wait 5;
+	  
+//	  while ( IsCinematicPlaying() )
+//		wait 1;
 	}
 }
 

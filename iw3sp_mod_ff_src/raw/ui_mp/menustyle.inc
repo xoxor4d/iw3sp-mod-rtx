@@ -51,7 +51,11 @@
 				close controls_multi; \
 				close main_options; \
 				close main_controls; \
-				close iw3sp_mod_options;
+				close iw3sp_mod_options; \
+				close iw3sp_mod_gamepad_options; \
+				close iw3sp_mod_gamepad_settings; \
+				close iw3sp_mod_controls_pc_main; \
+				close iw3sp_mod_controls_pc_options;
 		#endif
 		
 		// disable the other positioning overrides

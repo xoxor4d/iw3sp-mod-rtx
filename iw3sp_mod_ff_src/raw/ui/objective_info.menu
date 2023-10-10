@@ -16,6 +16,28 @@
 											dvarstring( mapname ) != "jeepride" && \
 											dvarstring( mapname ) != "simplecredits"
 
+#define LOCAL_VIS_INTEL_DISPLAY			dvarstring( mapname ) == "killhouse" || \
+										dvarstring( mapname ) == "cargoship" || \
+										dvarstring( mapname ) == "coup" || \
+										dvarstring( mapname ) == "blackout" || \
+										dvarstring( mapname ) == "armada" || \
+										dvarstring( mapname ) == "bog_a" || \
+										dvarstring( mapname ) == "hunted" || \
+										dvarstring( mapname ) == "bog_b" || \
+										dvarstring( mapname ) == "airlift" || \
+										dvarstring( mapname ) == "aftermath" || \
+										dvarstring( mapname ) == "village_assault" || \
+										dvarstring( mapname ) == "scoutsniper" || \
+										dvarstring( mapname ) == "sniperescape" || \
+										dvarstring( mapname ) == "village_defend" || \
+										dvarstring( mapname ) == "ambush" || \
+										dvarstring( mapname ) == "icbm" || \
+										dvarstring( mapname ) == "launchfacility_a" || \
+										dvarstring( mapname ) == "launchfacility_b" || \
+										dvarstring( mapname ) == "jeepride" || \
+										dvarstring( mapname ) == "simplecredits" || \
+										dvarstring( mapname ) == "airplane"
+
 #undef TEXTSIZE_DEFAULT
 #define TEXTSIZE_DEFAULT 0.35
 {
@@ -250,7 +272,7 @@
 			action
 			{
 				play "mouse_click";
-				open "options_look";
+				open "iw3sp_mod_controls_pc_main"; /*open "options_look";*/
 				close pausedmenu;
 			}
 		}
@@ -989,10 +1011,8 @@
 			decoration
 		}
 
-		// Intel Info
 		itemDef
 		{
-			name "intel_items_title"
 			rect 20 -60 400 32 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
 			decoration
 			visible 1
@@ -1000,12 +1020,11 @@
 			textfont 2
 			textalign 4
 			textscale 0.4
-			visible	when ( dvarInt( credits_active ) != 1 && LOCAL_VIS_OBJECTIVE_DISPLAY );
-			exp text ( "@IW3SP_MOD_LOC_MENU_ENEMY_INTEL_TITLE" ) //Enemy Intelligence
+			visible	when ( dvarInt( credits_active ) != 1 && LOCAL_VIS_INTEL_DISPLAY );
+			exp text ( "@IW3SP_MOD_LOC_MENU_ENEMY_INTEL_TITLE" )
 		}
 		itemDef
 		{
-			name "intel_items"
 			rect 20 -60 400 32 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_BOTTOM
 			decoration
 			visible 1
@@ -1014,8 +1033,8 @@
 			textalign 4
 			textaligny 17.5
 			textscale 0.3
-			visible	when ( dvarInt( credits_active ) != 1 && LOCAL_VIS_OBJECTIVE_DISPLAY );
-			exp	text( locString( "@MENU_CHEAT_POINTS_LEVEL", dvarInt( ui_level_player_cheatpoints ), dvarInt( ui_level_cheatpoints ) ) )
+			visible	when ( dvarInt( credits_active ) != 1 && LOCAL_VIS_INTEL_DISPLAY );
+			exp	text( locString( "@IW3SP_MOD_LOC_MENU_ENEMY_INTEL_COUNT", dvarInt( ui_level_player_cheatpoints ), dvarInt( ui_level_cheatpoints ) ) )
 		}
 		
 		// map --------------------

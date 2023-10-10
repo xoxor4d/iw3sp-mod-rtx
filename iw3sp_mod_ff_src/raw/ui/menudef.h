@@ -55,7 +55,7 @@
 #define COLOR_FOCUSED		1 1 1 1
 #define COLOR_UNFOCUSED		0.4823 0.4823 0.4823 1
 #define COLOR_DISABLED		0.35 0.35 0.35 1
-#define COLOR_SAFEAREA		0 0 1 1
+#define COLOR_SAFEAREA		0.5 0.6 0.8 0.5
 
 #define	BUTTON_A			1
 #define	BUTTON_B			2
