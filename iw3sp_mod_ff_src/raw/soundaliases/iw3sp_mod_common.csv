@@ -1,6 +1,7 @@
 name,sequence,file,vol_min,vol_max,vol_mod,pitch_min,pitch_max,dist_min,dist_max,channel,type,probability,loop,masterslave,loadspec,subtitle,compression,secondaryaliasname,volumefalloffcurve,startdelay,speakermap,reverb,lfe percentage,center percentage,platform,envelop_min,envelop_max,envelop percentage,conversion
 
 mission_unlock_cheat,,voiceovers/UK/mpvoice/UK_1mc_boost_01_R.wav,0.3,,interface,,,,,menu,,,,,menu,,,,,,,nowetlevel fulldrylevel,,,,,,,
+mission_unlock_cheat_og,,voiceovers/US/ICBM/icbm_grg_3_30.wav,0.3,,interface,,,,,menu,,,,,menu,,,,,,,nowetlevel fulldrylevel,,,,,,,
 mission_reset_cheat,,user_interface/ui_arcade_streak_lost1.wav,0.3,,interface,,,,,menu,,,,,menu,,,,,,,nowetlevel fulldrylevel,,,,,,,
 achievement_unlocked_xbox,,user_interface/achievement_unlocked_xbox.wav,1,1,interface,,,,,menu,,,,,menu,,,,,,,nowetlevel fulldrylevel,,
 achievement_unlocked_ps,,user_interface/achievement_unlocked_ps.wav,1,1,interface,,,,,menu,,,,,menu,,,,,,,nowetlevel fulldrylevel,,

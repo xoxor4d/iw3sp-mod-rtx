@@ -1710,7 +1710,7 @@ namespace Components
 	{
 		gamePads->IWCode.codeIndex = 0;
 		gamePads->IWCode.menu = "levels";
-		gamePads->IWCode.sound = "mission_unlock_cheat";
+		gamePads->IWCode.sound = "mission_unlock_cheat_og";
 		gamePads->IWCode.unlockCmd = "mis_cheat 1\n";
 
 		gamePads->IWCode.holdButtons[0] = Game::GPAD_L_TRIG;
