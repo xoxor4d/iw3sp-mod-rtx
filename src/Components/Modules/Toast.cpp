@@ -42,14 +42,6 @@ namespace Components
 
 			int xPos = 0;
 
-			Game::Font_s* font = Game::DB_FindXAssetHeader(Game::XAssetType::ASSET_TYPE_FONT, "fonts/objectiveFont").font;
-			Game::Font_s* descfont = Game::DB_FindXAssetHeader(Game::XAssetType::ASSET_TYPE_FONT, "fonts/bigFont").font;
-
-			if (font == nullptr || descfont == nullptr)
-			{
-				return;
-			}
-
 			Game::vec4_t wColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 			Game::vec4_t bgColor = { 0.0f, 0.0f, 0.0f, 0.8f };
 			Game::vec4_t borderColor = { 1.0f, 1.0f, 1.0f, 0.2f };
@@ -86,8 +78,8 @@ namespace Components
 			// Calculate width data
 			int iOffset = (bHeight - imgDim) / 2;
 			int iOffsetLeft = iOffset * 2;
-			float titleSize = Game::R_TextWidth(toast->title.data(), std::numeric_limits<int>::max(), font) * fontSize;
-			float descrSize = Game::R_TextWidth(toast->desc.data(), std::numeric_limits<int>::max(), descfont) * descSize;
+			float titleSize = Game::R_TextWidth(toast->title.data(), std::numeric_limits<int>::max(), Game::sharedUiInfo->assets.objectiveFont) * fontSize;
+			float descrSize = Game::R_TextWidth(toast->desc.data(), std::numeric_limits<int>::max(), Game::sharedUiInfo->assets.bigFont) * descSize;
 
 			float bWidth = iOffsetLeft * 3 + imgDim + std::max(titleSize, descrSize);
 
@@ -95,14 +87,13 @@ namespace Components
 			bHeight += (bHeight % 2);
 
 			// Background
-			Game::Material* whiteMaterial = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MATERIAL, "white").material;
-			Game::R_AddCmdDrawStretchPic(whiteMaterial, static_cast<float>(xPos), static_cast<float>(height - bHeight / 2), 400.0f * 1.0f, bHeight * 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, bgColor);
+			Game::R_AddCmdDrawStretchPic(Game::cgMedia->whiteMaterial, static_cast<float>(xPos), static_cast<float>(height - bHeight / 2), 400.0f * 1.0f, bHeight * 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, bgColor);
 
 			// Border
-			Game::R_AddCmdDrawStretchPic(whiteMaterial, static_cast<float>(xPos), static_cast<float>(height - bHeight / 2 - border), border * 1.0f, bHeight + (border * 2.0f), 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Left
-			Game::R_AddCmdDrawStretchPic(whiteMaterial, static_cast<float>(xPos + 400.f), static_cast<float>(height - bHeight / 2 - border), border * 1.0f, bHeight + (border * 2.0f), 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Right
-			Game::R_AddCmdDrawStretchPic(whiteMaterial, static_cast<float>(xPos), static_cast<float>(height - bHeight / 2 - border), 400.0f * 1.0f, border * 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Top
-			Game::R_AddCmdDrawStretchPic(whiteMaterial, static_cast<float>(xPos), static_cast<float>(height + bHeight / 2), 400.0f * 1.0f, border * 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Bottom
+			Game::R_AddCmdDrawStretchPic(Game::cgMedia->whiteMaterial, static_cast<float>(xPos), static_cast<float>(height - bHeight / 2 - border), border * 1.0f, bHeight + (border * 2.0f), 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Left
+			Game::R_AddCmdDrawStretchPic(Game::cgMedia->whiteMaterial, static_cast<float>(xPos + 400.f), static_cast<float>(height - bHeight / 2 - border), border * 1.0f, bHeight + (border * 2.0f), 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Right
+			Game::R_AddCmdDrawStretchPic(Game::cgMedia->whiteMaterial, static_cast<float>(xPos), static_cast<float>(height - bHeight / 2 - border), 400.0f * 1.0f, border * 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Top
+			Game::R_AddCmdDrawStretchPic(Game::cgMedia->whiteMaterial, static_cast<float>(xPos), static_cast<float>(height + bHeight / 2), 400.0f * 1.0f, border * 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Bottom
 
 			// Image
 			Game::Material* image = toast->image;
@@ -112,8 +103,8 @@ namespace Components
 			float title = xPos + 80.0f;
 			float desc = xPos + 80.0f;
 
-			Game::R_AddCmdDrawTextASM(toast->title.data(), std::numeric_limits<int>::max(), font, static_cast<float>(title), static_cast<float>(height - bHeight / 2 + cornerSize * 2 + 7), fontSize, fontSize, 0, wColor, 6); // Title
-			Game::R_AddCmdDrawTextASM(toast->desc.data(), std::numeric_limits<int>::max(), descfont, static_cast<float>(desc), static_cast<float>(height - bHeight / 2 + cornerSize * 2 + 33), descSize, descSize, 0, wColor, 6); // Description
+			Game::R_AddCmdDrawTextASM(toast->title.data(), std::numeric_limits<int>::max(), Game::sharedUiInfo->assets.objectiveFont, static_cast<float>(title), static_cast<float>(height - bHeight / 2 + cornerSize * 2 + 7), fontSize, fontSize, 0, wColor, 6); // Title
+			Game::R_AddCmdDrawTextASM(toast->desc.data(), std::numeric_limits<int>::max(), Game::sharedUiInfo->assets.bigFont, static_cast<float>(desc), static_cast<float>(height - bHeight / 2 + cornerSize * 2 + 33), descSize, descSize, 0, wColor, 6); // Description
 		}
 		else
 		{
@@ -130,14 +121,6 @@ namespace Components
 
 			float fontSize = 0.9f;
 			float descSize = 0.9f;
-
-			Game::Font_s* font = Game::DB_FindXAssetHeader(Game::XAssetType::ASSET_TYPE_FONT, "fonts/objectiveFont").font;
-			Game::Font_s* descfont = Game::DB_FindXAssetHeader(Game::XAssetType::ASSET_TYPE_FONT, "fonts/bigFont").font;
-
-			if (font == nullptr || descfont == nullptr)
-			{
-				return;
-			}
 
 			Game::vec4_t wColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 			Game::vec4_t bgColor = { 0.0f, 0.0f, 0.0f, 0.8f };
@@ -173,8 +156,8 @@ namespace Components
 			// Calculate width data
 			int iOffset = (bHeight - imgDim) / 2;
 			int iOffsetLeft = iOffset * 2;
-			float titleSize = Game::R_TextWidth(toast->title.data(), std::numeric_limits<int>::max(), font) * fontSize;
-			float descrSize = Game::R_TextWidth(toast->desc.data(), std::numeric_limits<int>::max(), descfont) * descSize;
+			float titleSize = Game::R_TextWidth(toast->title.data(), std::numeric_limits<int>::max(), Game::sharedUiInfo->assets.objectiveFont) * fontSize;
+			float descrSize = Game::R_TextWidth(toast->desc.data(), std::numeric_limits<int>::max(), Game::sharedUiInfo->assets.bigFont) * descSize;
 			float bWidth = iOffsetLeft * 3 + imgDim + std::max(titleSize, descrSize);
 
 			// Make stuff divisible by 2
@@ -184,14 +167,13 @@ namespace Components
 			bHeight += (bHeight % 2);
 
 			// Background
-			Game::Material* whiteMaterial = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MATERIAL, "white").material;
-			Game::R_AddCmdDrawStretchPic(whiteMaterial, static_cast<float>(width / 2 - bWidth / 2), static_cast<float>(height - bHeight / 2), bWidth * 1.0f, bHeight * 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, bgColor);
+			Game::R_AddCmdDrawStretchPic(Game::cgMedia->whiteMaterial, static_cast<float>(width / 2 - bWidth / 2), static_cast<float>(height - bHeight / 2), bWidth * 1.0f, bHeight * 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, bgColor);
 
 			// Border
-			Game::R_AddCmdDrawStretchPic(whiteMaterial, static_cast<float>(width / 2 - bWidth / 2 - border), static_cast<float>(height - bHeight / 2 - border), border * 1.0f, bHeight + (border * 2.0f), 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Left
-			Game::R_AddCmdDrawStretchPic(whiteMaterial, static_cast<float>(width / 2 - bWidth / 2 + bWidth), static_cast<float>(height - bHeight / 2 - border), border * 1.0f, bHeight + (border * 2.0f), 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Right
-			Game::R_AddCmdDrawStretchPic(whiteMaterial, static_cast<float>(width / 2 - bWidth / 2), static_cast<float>(height - bHeight / 2 - border), bWidth * 1.0f, border * 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Top
-			Game::R_AddCmdDrawStretchPic(whiteMaterial, static_cast<float>(width / 2 - bWidth / 2), static_cast<float>(height + bHeight / 2), bWidth * 1.0f, border * 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Bottom
+			Game::R_AddCmdDrawStretchPic(Game::cgMedia->whiteMaterial, static_cast<float>(width / 2 - bWidth / 2 - border), static_cast<float>(height - bHeight / 2 - border), border * 1.0f, bHeight + (border * 2.0f), 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Left
+			Game::R_AddCmdDrawStretchPic(Game::cgMedia->whiteMaterial, static_cast<float>(width / 2 - bWidth / 2 + bWidth), static_cast<float>(height - bHeight / 2 - border), border * 1.0f, bHeight + (border * 2.0f), 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Right
+			Game::R_AddCmdDrawStretchPic(Game::cgMedia->whiteMaterial, static_cast<float>(width / 2 - bWidth / 2), static_cast<float>(height - bHeight / 2 - border), bWidth * 1.0f, border * 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Top
+			Game::R_AddCmdDrawStretchPic(Game::cgMedia->whiteMaterial, static_cast<float>(width / 2 - bWidth / 2), static_cast<float>(height + bHeight / 2), bWidth * 1.0f, border * 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, borderColor); // Bottom
 
 
 			// Image
@@ -202,8 +184,8 @@ namespace Components
 			// Text
 			float leftText = width / 2 - bWidth / 2 - cornerSize + iOffsetLeft * 2 + imgDim;
 			float rightText = width / 2 + bWidth / 2 - cornerSize - iOffsetLeft;
-			Game::R_AddCmdDrawTextASM(toast->title.data(), std::numeric_limits<int>::max(), font, static_cast<float>(leftText + (rightText - leftText) / 2 - titleSize / 2 + cornerSize), static_cast<float>(height - bHeight / 2 + cornerSize * 2 + 7), fontSize, fontSize, 0, wColor, 6); // Title
-			Game::R_AddCmdDrawTextASM(toast->desc.data(), std::numeric_limits<int>::max(), descfont, leftText + (rightText - leftText) / 2 - descrSize / 2 + cornerSize, static_cast<float>(height - bHeight / 2 + cornerSize * 2 + 33), descSize, descSize, 0, wColor, 6); // Description
+			Game::R_AddCmdDrawTextASM(toast->title.data(), std::numeric_limits<int>::max(), Game::sharedUiInfo->assets.objectiveFont, static_cast<float>(leftText + (rightText - leftText) / 2 - titleSize / 2 + cornerSize), static_cast<float>(height - bHeight / 2 + cornerSize * 2 + 7), fontSize, fontSize, 0, wColor, 6); // Title
+			Game::R_AddCmdDrawTextASM(toast->desc.data(), std::numeric_limits<int>::max(), Game::sharedUiInfo->assets.bigFont, leftText + (rightText - leftText) / 2 - descrSize / 2 + cornerSize, static_cast<float>(height - bHeight / 2 + cornerSize * 2 + 33), descSize, descSize, 0, wColor, 6); // Description
 		}
 
 	}
