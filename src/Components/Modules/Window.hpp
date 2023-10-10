@@ -46,5 +46,9 @@ namespace Components
 
 		static void EnableDpiAwareness();
 		static void ExternalConsoleStub();
+
+		static void ScrPlace_CalcSafeAreaOffsets(float* realViewableMin, float* realViewableMax, float viewportX, float viewportY, float viewportWidth, float viewportHeight, float aspect, float safeAreaRatioHorz, float safeAreaRatioVert, float* virtualViewableMin, float* virtualViewableMax, int width, int height);
+		static void ScrPlace_SetupViewport(Game::ScreenPlacement* scrPlace, float viewportX, float viewportY, float viewportWidth, float viewportHeight);
+
 	};
 }
