@@ -75,3 +75,4 @@ namespace Components
 #include "Modules/Events.hpp"
 #include "Modules/Updater.hpp"
 #include "Modules/Window.hpp"
+#include "Modules/Sound.hpp"
