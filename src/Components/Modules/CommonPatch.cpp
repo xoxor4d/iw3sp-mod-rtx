@@ -323,14 +323,25 @@ namespace Components
 	void R_Cinematic_BinkOpen_stub01(char* buffer, size_t size, const char* /*format*/, const char* directory, const char* fileName, const char* videoFormat)
 	{
 		const char* languageName = Game::SEH_GetLanguageName(Dvars::Functions::Dvar_FindVar("loc_language")->current.unsignedInt);
+
 		if (Utils::IO::FileExists(Utils::String::VA("%s\\main\\video\\%s.%s", directory, fileName, videoFormat)))
 		{
 			_snprintf_s(buffer, size, _TRUNCATE, "%s\\main\\video\\%s.%s", directory, fileName, videoFormat);
 			return;
 		}
-		else
+		else if (Utils::IO::FileExists(Utils::String::VA("%s\\main\\%s_video\\%s.%s", directory, languageName, fileName, videoFormat)))
 		{
 			_snprintf_s(buffer, size, _TRUNCATE, "%s\\main\\%s_video\\%s.%s", directory, languageName, fileName, videoFormat);
+			return;
+		}
+		else if (Utils::IO::FileExists(Utils::String::VA("%s\\%s\\video\\%s.%s", directory, Dvars::Functions::Dvar_FindVar("fs_game")->current.string, fileName, videoFormat)))
+		{
+			_snprintf_s(buffer, size, _TRUNCATE, "%s\\%s\\video\\%s.%s", directory, Dvars::Functions::Dvar_FindVar("fs_game")->current.string, fileName, videoFormat);
+			return;
+		}
+		else
+		{
+			_snprintf_s(buffer, size, _TRUNCATE, "%s\\%s\\video\\%s\\%s.%s", directory, Dvars::Functions::Dvar_FindVar("fs_game")->current.string, languageName, fileName, videoFormat);
 			return;
 		}
 	}
