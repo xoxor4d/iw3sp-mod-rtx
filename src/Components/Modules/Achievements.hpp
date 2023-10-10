@@ -8,9 +8,6 @@ namespace Components
 	class Achievements : public Component
 	{
 	public:
-		Achievements();
-		~Achievements();
-	private:
 		//Original IW3 achievements from Xbox 360.
 		//https://callofduty.fandom.com/wiki/Achievements/Call_of_Duty_4:_Modern_Warfare
 		enum achievement_id
@@ -71,6 +68,12 @@ namespace Components
 			std::time_t timeStamp[ACHIEVEMENT_TOTAL_COUNT];
 		};
 
+		static int GetEarnedAchievementCount(achievement_file_t* file);
+		static void GetAchievementsData(achievement_file_t* file);
+
+		Achievements();
+		~Achievements();
+	private:
 		static bool HasAchievement(int id);
 		static bool HasAchievement(achievement_file_t* file, int id);
 		static std::string GetAchievementName(int id);
@@ -79,10 +82,8 @@ namespace Components
 		static std::optional<int> GetAchievementID(const std::string& name);
 		static void GiveAchievementByID_Internal(achievement_file_t* file, int id);
 		static void GiveAchievementByID(achievement_file_t* file, int id);
-		static void GetAchievementsData(achievement_file_t* file);
 		static void WriteAchievement(achievement_file_t* data);
 		static void GiveAchievement(const std::string& name);
-		static int GetEarnedAchievementCount(achievement_file_t* file);
 		static int CalculateProgressBarWidth(int totalWidth, int playerAchievements, int totalAchievements);
 		static bool isStockMap();
 
