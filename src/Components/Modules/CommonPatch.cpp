@@ -426,6 +426,8 @@ namespace Components
 			//for 'main_lockout' menu
 			Game::dvar_s* ui_skipMainLockout = Dvars::Register::Dvar_RegisterBool("ui_skipMainLockout", "", false, Game::none);
 			Game::dvar_s* profile_unlock_all = Dvars::Register::Dvar_RegisterBool("profile_unlock_all", "", false, Game::saved);
+			Game::dvar_s* cg_drawBrandingInfo = Dvars::Register::Dvar_RegisterBool("cg_drawBrandingInfo", "Show/Hide the branding text on the top-left screen", true, Game::saved);
+			//Game::dvar_s* ui_console_menu_style = Dvars::Register::Dvar_RegisterBool("ui_console_menu_style", "Enable/Disable menu style from console version", false, Game::none);
 		});
 
 		Utils::Hook::Set<const char*>(0x445667, "iw3sp_mod.exe"); //-startSingleplayer

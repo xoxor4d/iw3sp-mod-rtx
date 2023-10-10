@@ -8,5 +8,7 @@ namespace Components
 		Branding();
 		~Branding();
 	private:
+		static void DrawClientVersion();
+		static void VersionOfTheGameStub();
 	};
 }
