@@ -299,7 +299,7 @@ namespace Components
 		assert(input);
 		assert(pitchScale);
 		assert(yawScale);
-		AssertIn(input->localClientNum, Game::STATIC_MAX_LOCAL_CLIENTS);
+		AssertIn(input->localClientNum, 1);
 
 		auto& aaGlob = Game::aaGlobArray[input->localClientNum];
 
@@ -332,7 +332,7 @@ namespace Components
 	{
 		assert(input);
 		assert(output);
-		AssertIn(input->localClientNum, Game::STATIC_MAX_LOCAL_CLIENTS);
+		AssertIn(input->localClientNum, 1);
 
 		auto& aaGlob = Game::aaGlobArray[input->localClientNum];
 
@@ -493,7 +493,7 @@ namespace Components
 	{
 		assert(input);
 		assert(output);
-		AssertIn(input->localClientNum, Game::STATIC_MAX_LOCAL_CLIENTS);
+		AssertIn(input->localClientNum, 1);
 
 		auto& aaGlob = Game::aaGlobArray[input->localClientNum];
 
@@ -609,7 +609,7 @@ namespace Components
 	{
 		assert(input);
 		assert(output);
-		AssertIn(input->localClientNum, Game::STATIC_MAX_LOCAL_CLIENTS);
+		AssertIn(input->localClientNum, 1);
 
 		auto& aaGlob = Game::aaGlobArray[input->localClientNum];
 		const auto* weaponDef = Game::BG_WeaponNames[input->ps->weapon];
@@ -665,7 +665,7 @@ namespace Components
 	{
 		assert(input);
 		assert(output);
-		AssertIn(input->localClientNum, Game::STATIC_MAX_LOCAL_CLIENTS);
+		AssertIn(input->localClientNum, 1);
 
 		auto& aaGlob = Game::aaGlobArray[input->localClientNum];
 
@@ -1084,7 +1084,7 @@ namespace Components
 
 	bool Gamepad::CL_CheckForIgnoreDueToRepeat(const int localClientNum, const int key, const int repeatCount, const unsigned time)
 	{
-		AssertIn(localClientNum, Game::STATIC_MAX_LOCAL_CLIENTS);
+		AssertIn(localClientNum, 1);
 
 		auto& gamePadGlobal = gamePadGlobals[localClientNum];
 

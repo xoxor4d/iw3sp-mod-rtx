@@ -922,9 +922,11 @@ namespace Game
 		return 0;
 	}
 	*/
+
+	//skill issue
 	int DObjGetBoneIndex(Game::DObj_s* obj, unsigned int name, unsigned __int8* index)
 	{
-
+		return 1;
 	}
 
 	void ChangeViewmodelDobj(int weapIndex /*eax*/, unsigned __int8 weaponModel /*cl*/, Game::XModel* newHands, Game::XModel* newGoggles, Game::XModel* newRocket, Game::XModel* newKnife, char updateClientInfo)
