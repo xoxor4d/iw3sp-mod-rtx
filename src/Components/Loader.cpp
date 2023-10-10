@@ -43,6 +43,7 @@ namespace Components
 		Loader::Register(new Renderer());
 		Loader::Register(new Scheduler());
 		Loader::Register(new GSC());
+		Loader::Register(new ScriptExtension());
 		Loader::Register(new Movement());
 		Loader::Register(new Weapons());
 		Loader::Register(new Discord());

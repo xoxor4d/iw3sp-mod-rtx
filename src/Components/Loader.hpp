@@ -63,6 +63,7 @@ namespace Components
 #include "Modules/Renderer.hpp"
 #include "Modules/D3D9Ex.hpp"
 #include "Modules/GSC/GSC.hpp"
+#include "Modules/GSC/ScriptExtension.hpp"
 #include "Modules/Movement.hpp"
 #include "Modules/Weapons.hpp"
 #include "Modules/Discord.hpp"
