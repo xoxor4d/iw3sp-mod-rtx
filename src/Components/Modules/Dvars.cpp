@@ -17,6 +17,8 @@ namespace Dvars
 	Game::dvar_s* language_first_setting = nullptr;
 	Game::dvar_s* r_noborder = nullptr;
 	Game::dvar_s* ui_nativeCursor = nullptr;
+	Game::dvar_s* safeArea_horizontal = nullptr;
+	Game::dvar_s* safeArea_vertical = nullptr;
 
 	// d3d9
 	Game::dvar_s* r_d3d9ex = nullptr;
