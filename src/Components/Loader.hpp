@@ -77,3 +77,4 @@ namespace Components
 #include "Modules/Updater.hpp"
 #include "Modules/Window.hpp"
 #include "Modules/Sound.hpp"
+#include "Modules/Gamepad.hpp"

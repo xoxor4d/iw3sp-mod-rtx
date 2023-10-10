@@ -52,6 +52,8 @@
 
 using namespace std::literals;
 
+#define AssertIn(x, y) assert(static_cast<unsigned int>(x) < static_cast<unsigned int>(y))
+
 #define __thread __declspec(thread)
 
 #include <Urlmon.h>
@@ -75,6 +77,8 @@ using namespace std::literals;
 #pragma comment(lib, "d3dx9.lib")
 #pragma comment(lib, "Winmm.Lib")
 
+#include <XInput.h>
+#pragma comment (lib, "xinput.lib")
 
 // Ignore the warnings
 #pragma warning(push)
