@@ -7,14 +7,9 @@ namespace Game
 	const static HWND* hWndParent = reinterpret_cast<HWND*>(0x13E39B0); // External console
 	const static HWND* hWndBuffer = reinterpret_cast<HWND*>(0x13E39B4); // External console buffer
 
-	extern char* sys_processSemaphoreFile;
-
 	extern IDirect3DDevice9** dx9_device_ptr;
 
 	typedef void(__cdecl* CommandCB_t)(void);
-
-	typedef void(*Com_PrintMessage_t)(int, const char*, char);
-	extern Com_PrintMessage_t Com_PrintMessage;
 
 	void Cmd_AddCommand(const char* name, void(*callback)(), cmd_function_s* data, char);
 	void Cmd_AddCommand(const char* name, const char* args, const char* description, void(*callback)(), cmd_function_s* data, char);
@@ -24,12 +19,6 @@ namespace Game
 
 	typedef void(__cdecl* Cmd_AddServerCommand_t)(const char* name, CommandCB_t callback, cmd_function_s* data);
 	extern Cmd_AddServerCommand_t Cmd_AddServerCommand;
-
-	typedef void(__cdecl* Com_Printf_t)(int, const char*, ...);
-	extern Com_Printf_t Com_Printf;
-
-	typedef void(__cdecl* Com_Error_t)(int code, const char* fmt, ...);
-	extern Com_Error_t Com_Error;
 	
 	typedef void(__cdecl* Scr_ParamError_t)(const char* error, ...);
 	extern Scr_ParamError_t Scr_ParamError;
@@ -43,14 +32,6 @@ namespace Game
 	typedef int(__cdecl* FS_ReadFile_t)(const char* path, char** buffer);
 	extern FS_ReadFile_t FS_ReadFile;
 
-	typedef void (*DB_LoadXAssets_t)(XZoneInfo* data, unsigned int count, int sync);
-	extern DB_LoadXAssets_t DB_LoadXAssets;
-
-	typedef void(*DB_EnumXAssets_t)(XAssetType type, void(*)(XAssetHeader, void*), const void* userdata, bool overrides);
-	extern DB_EnumXAssets_t DB_EnumXAssets;
-
-	static XZoneName* g_zoneNames = (XZoneName*)0xAC3000;
-
 	static Utils::function<void()> R_BeginRemoteScreenUpdate = 0x5DC550;
 	static Utils::function<void()> R_EndRemoteScreenUpdate = 0x5DC5A0;
 
@@ -61,47 +42,16 @@ namespace Game
 
 	//-------------------------------------------------
 
-	extern HANDLE DatabaseHandle;
-
-	//XAssets
-	extern XAssetHeader* DB_XAssetPool;
-	extern unsigned int* g_poolSize;
-	extern const char** g_assetNames;
-
-	typedef int(__cdecl* DB_GetXAssetSizeHandler_t)();
-	extern DB_GetXAssetSizeHandler_t* DB_GetXAssetSizeHandlers;
-
-	typedef const char* (*DB_GetXAssetNameHandler_t)(Game::XAssetHeader* asset);
-	extern DB_GetXAssetNameHandler_t* DB_GetXAssetNameHandlers;
-
-	XAssetHeader DB_ReallocXAssetPool(XAssetType type, unsigned int new_size);
-
 	constexpr auto CMD_MAX_NESTING = 8;
 	extern Game::CmdArgs* cmd_args;
 	extern cmd_function_s** cmd_ptr;
 	extern cmd_function_s* cmd_functions;
-
-	extern int Sys_MilliSeconds();
-
-	typedef void(*DB_BeginRecoverLostDevice_t)();
-	extern DB_BeginRecoverLostDevice_t DB_BeginRecoverLostDevice;
-
-	typedef void(*DB_EndRecoverLostDevice_t)();
-	extern DB_EndRecoverLostDevice_t DB_EndRecoverLostDevice;
 
 	typedef void(*UpdateViewWeaponAnim_t)();
 	extern UpdateViewWeaponAnim_t UpdateViewWeaponAnim;
 
 	typedef int(__cdecl* SND_GetEntChannelFromName_t)(const char* channelName);
 	extern SND_GetEntChannelFromName_t SND_GetEntChannelFromName;
-
-	static Utils::function<void()> DB_SyncXAssets = 0x45B6F0;
-
-	typedef XAssetHeader(*DB_FindXAssetHeader_t)(XAssetType type, const char* name);
-	extern DB_FindXAssetHeader_t DB_FindXAssetHeader;
-
-	typedef bool(__cdecl* DB_IsXAssetDefault_t)(XAssetType assettype, const char* name);
-	extern DB_IsXAssetDefault_t DB_IsXAssetDefault;
 
 	extern snd_alias_list_t* Com_FindSoundAlias(const char* name);
 
@@ -147,33 +97,32 @@ namespace Game
 	typedef int(__cdecl* Cmd_RemoveCommand_t)(const char* name);
 	extern Cmd_RemoveCommand_t Cmd_RemoveCommand;
 
-	//15.10.22
 	typedef unsigned int(__cdecl* Scr_AllocString_t)(const char* s, int sys, size_t size);
 	extern Scr_AllocString_t Scr_AllocString;
 	extern scr_const_t* scr_const;
 	extern unsigned int GScr_AllocString(const char* s);
 
-	//16.10.22
 	extern Game::playerState_s* ps;
 	extern Game::gentity_s* g_entities;
 	extern Game::gclient_s* g_clients;
+	extern Game::PlayerKeyState* playerKeys;
+	extern Game::clientUIActive_t* clientUIActives;
+	extern Game::clientActive_t* clients;
 	extern Game::pmove_t* pmove;
+	extern Game::AimAssistGlobals* aaGlobArray;
 	extern Game::itemDef_s* my_item;
 
-	//extern Game::snd_local_t* g_snd;
-	//06.01.23
+	extern Game::WinMouseVars_t* s_wmv;
+	extern Game::snd_local_t* g_snd;
 	extern Game::clipMap_t* cm;
-	//01.02.23
 	//extern Game::GfxWorld* gfx_world;
 
-	//22.10.22
 	typedef int(__cdecl* StringTable_LookupRowNumForValue_t)(const StringTable* table, int comparisonColumn, const char* value);
 	extern StringTable_LookupRowNumForValue_t StringTable_LookupRowNumForValue;
 
 	extern const char* StringTable_Lookup(const StringTable* table /*<ebp>*/, const int comparisonColumn /*<esi>*/, const char* value/*<eax>*/, const int valueColumn /*<edi>*/);
 	extern void StringTable_GetAsset(const char* filename, const StringTable** tablePtr);
 
-	//26.10.22
 	typedef void(*Scr_AddInt_t)(int value);
 	extern Scr_AddInt_t Scr_AddInt;
 
@@ -187,12 +136,10 @@ namespace Game
 
 	extern const char* SEH_GetCurrentLanguage();
 
-	//29.10.22
 	typedef Game::gentity_s* (*GetPlayerEntity_t)(Game::scr_entref_t entref);
 	extern GetPlayerEntity_t GetPlayerEntity;
 
 	//	#define uiMem (*((uiMem_t*)(0x12909C8)))
-	//30.10.22
 	extern Game::ScreenPlacement* scrPlace;
 	extern Game::ScreenPlacement* scrPlaceFull;
 	extern Game::ScreenPlacement* scrPlaceFullUnsafe;
@@ -215,15 +162,18 @@ namespace Game
 	void ScrPlace_ApplyRect(const ScreenPlacement* ScrPlace, float* x, float* y, float* w, float* h, int horzAlign, int vertAlign);
 	void UI_DrawText(const ScreenPlacement* ScrPlace, const char* text, int maxChars, Font_s* font, float ix, float iy, int horzAlign, int vertAlign, float scale, const float* color, int style);
 	
-	//01.11.22
 	extern Game::WeaponDef_s** BG_WeaponNames;
+	extern Game::weaponInfo_s* cg_weaponsArray;
+	extern Game::scrVmPub_t* scrVmPub;
+	extern Game::GfxDrawMethod* gfxDrawMethod;
 
 	extern Game::cg_s* cgs;
+	extern Game::cgMedia_t* cgMedia;
+	extern Game::sharedUiInfo_t* sharedUiInfo;
+	extern int* g_waitingForKey;
+
 	extern int* g_entities_int;
 
-	extern Game::weaponInfo_s* cg_viewModelArray;
-
-	extern int* cg_weaponsArray;
 	extern DWORD* dword_FDBDCC;
 	extern __int16* word_13E45E8;
 	extern __int16* word_13E45DC;
@@ -233,7 +183,6 @@ namespace Game
 	void SV_SendServerCommand(int clientNum, const char* fmt);
 	void SV_GameSendServerCommand(int clientNum, const char* fmt);
 
-	//21.12.22
 	static Utils::function<void(Game::pmove_t* pm, Game::pml_t* pml)> PM_AirMove = 0x5BF480;
 	static Utils::function<void(Game::pmove_t* pm)> PM_UpdateSprint = 0x5B72F0;
 
@@ -243,7 +192,6 @@ namespace Game
 	typedef void(__cdecl* CG_GameMessage_t)(const char* message, int a2);
 	extern CG_GameMessage_t CG_GameMessage;
 
-	//24.03.2023
 	extern int* dword_129ADC4;
 	extern int* dword_129AFC8;
 
@@ -264,23 +212,18 @@ namespace Game
 
 	int I_stricmp/*eax*/(int a1/*eax*/, const char* a2 /*edx*/, const char* a3);
 
-
-	char* Com_Parse(const char** data_p);
-
 	static Utils::function<unsigned int()> G_RegisterWeapon = 0x4B6140;
 	static Utils::function<unsigned int(const char* weaponName, void* registerWeaponFunction)> BG_GetWeaponIndexForName = 0x5BECE0;
 
 	typedef unsigned int(__cdecl* BG_FindWeaponIndexForName_t)(const char* weaponName);
 	extern BG_FindWeaponIndexForName_t BG_FindWeaponIndexForName;
 
-	extern int Sys_IsDatabaseReady2(void);
-
 	extern int* level_initializing;
 
 	extern Game::localization_t* localization;
 
-	void Sys_CreateConsole/*ax*/(HINSTANCE hInstance /*edi*/);
-	void Sys_ShowConsole();
+	extern game_hudelem_s* g_hudelems;
+	extern game_hudelem_field_t* fields_0;
 
 	void FS_DisplayPath(int bLanguageCull);
 
@@ -291,10 +234,88 @@ namespace Game
 
 	void FS_AddLocalizedGameDirectory(const char* dir/*edi*/, const char* path);
 	int FS_FOpenFileWriteToDir(const char* a1/*eax*/, const char* a2/*esi*/, int a3);
-	void Com_ExecStartupConfigs(int localClientNum, char const* configFile);
 
 	void PM_Weapon_FireWeapon(Game::playerState_s* ps, int delayedAction);
+
+	void StartWeaponAnim(int weaponIndex /*eax*/, Game::DObj_s* obj /*edi*/, int animIndex, float transitionTime);
+
+	Game::Font_s* UI_GetFontHandleStock(int fontEnum, const ScreenPlacement* scrPlace, float scale);
+
 	bool ShotLimitReached(Game::WeaponDef_s* weaponDef, Game::playerState_s* playerState);
 
+	void PM_Weapon_BeginWeaponRaise(Game::playerState_s* playerState, int time, int anim, float aim, int altSwitch);
+
+	static const char* g_he_font_old[] =
+	{
+		"default",		// HE_FONT_DEFAULT
+		"bigfixed",		// HE_FONT_BIGFIXED
+		"smallfixed",	// HE_FONT_SMALLFIXED
+		"objective",	// HE_FONT_OBJECTIVE
+		"big",			// HE_FONT_BIG
+		"small",		// HE_FONT_SMALL
+	};
+
 	unsigned int G_GetWeaponIndexForName(const char* name);
+
+	int DObjGetBoneIndex(Game::DObj_s* obj, unsigned int name, unsigned __int8* index);
+	int XModelGetBoneIndex(Game::XModel* model, unsigned int name, unsigned int offset, unsigned __int8* index);
+
+	void ChangeViewmodelDobj(int weapIndex /*eax*/, unsigned __int8 weaponModel /*cl*/, Game::XModel* newHands, Game::XModel* newGoggles, Game::XModel* newRocket, Game::XModel* newKnife, char updateClientInfo);
+	float Vec2Normalize(float* v);
+	void Cbuf_InsertText(int localClientNum /*eax*/, const char* text);
+	void UI_KeyEvent(int down /*edi*/, int localClientNum, int key);
+	void Key_WriteBindings(int localClientNum /*eax*/, char* buffer);
+
+	typedef int(*FS_Printf_t)(int file, const char* fmt, ...);
+	extern FS_Printf_t FS_Printf;
+
+	void CL_DrawStretchPic(const Game::ScreenPlacement* ScrPlace, float x, float y, float w, float h, int horzAlign, int vertAlign, float s1, float t1, float s2, float t2, float* color, Game::Material* material);
+
+	//Gamepad stuff
+	constexpr auto KEY_NAME_COUNT = 95;
+	constexpr auto LOCALIZED_KEY_NAME_COUNT = 95;
+	extern Game::keyname_t* keyNames;
+	extern Game::keyname_t* localizedKeyNames;
+
+	typedef void(*UI_ReplaceConversions_t)(const char* sourceString, ConversionArguments* arguments, char* outputString);
+	extern UI_ReplaceConversions_t UI_ReplaceConversions;
+
+	int UI_GetActiveMenu();
+
+	void UI_FilterStringForButtonAnimation(char* str, unsigned int strMaxSize);
+
+	typedef void(*UI_SetActiveMenu_t)(int localClientNum, int menu);
+	extern UI_SetActiveMenu_t UI_SetActiveMenu;
+
+	void Key_SetBinding(int localClientNum /*eax*/, int keyNum /*ecx*/, const char* binding);
+
+	void AimAssist_UpdateTweakables(const AimInput* input);
+	void AimAssist_UpdateAdsLerp(const AimInput* input);
+	typedef void(*AimAssist_ApplyAutoMelee_t)(const AimInput* input, const AimOutput* output);
+	extern AimAssist_ApplyAutoMelee_t AimAssist_ApplyAutoMelee;
+	void AimAssist_ApplyMeleeCharge(const AimInput* input /*eax*/, const AimOutput* output);
+
+	extern Game::GraphFloat* aaInputGraph;
+
+	float GraphGetValueFromFraction(int knotCount, const float(*knots)[2], float fraction);
+	float GraphFloat_GetValue(const GraphFloat* graph, const float fraction);
+	int BG_WeaponAmmo(int weaponIndex /*eax*/, const Game::playerState_s* ps /*ecx*/);
+	void vectoangles(const float* vec /*esi*/, float* angles /*edi*/);
+	float AngleNormalize360(float angle);
+	float AngleNormalize180(float angle);
+
+	typedef float(*DiffTrackAngle_t)(float tgt, float cur, float rate, float deltaTime);
+	extern DiffTrackAngle_t DiffTrackAngle;
+
+	typedef float(*AngleSubtract_t)(const float a1, const float a2);
+	extern AngleSubtract_t AngleSubtract;
+
+	unsigned int SEH_DecodeLetter(char firstChar, char secondChar, int* usedCount);
+	unsigned int SEH_ReadCharFromString(const char** text);
+	Glyph* R_GetCharacterGlyph(Font_s* font, unsigned int letter);
+
+	typedef XAnimTree_s*(*CG_CreateWeaponViewModelXAnim_t)(Game::WeaponDef_s* weaponDef);
+	extern CG_CreateWeaponViewModelXAnim_t CG_CreateWeaponViewModelXAnim;
+
+	void RB_DrawStretchPicRotate(Game::Material* material, float x, float y, float w, float h, float s0, float t0, float s1, float t1, float sinAngle, float cosAngle, unsigned int color);
 }

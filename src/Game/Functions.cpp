@@ -2,11 +2,6 @@
 
 namespace Game
 {
-	char* sys_processSemaphoreFile = reinterpret_cast<char*>(0x13E1F10);
-
-	HANDLE DatabaseHandle = reinterpret_cast<HANDLE>(0xFC6308);
-	HANDLE databaseCompletedEvent2 = reinterpret_cast<HANDLE>(0xFC6348);
-
 	//d3d9
 	IDirect3D9** d3d9 = reinterpret_cast<IDirect3D9**>(0x1623F84);
 	IDirect3DDevice9** dx9_device_ptr = reinterpret_cast<IDirect3DDevice9**>(0x1623F88);
@@ -30,39 +25,8 @@ namespace Game
 		}
 	}
 
-	//Print_Info
-	Com_Printf_t Com_Printf = Com_Printf_t(0x532DB0);
-	Com_Error_t Com_Error = Com_Error_t(0x533580);
-
-	//LoadAssets
-	DB_LoadXAssets_t DB_LoadXAssets = (DB_LoadXAssets_t)0x45B990;
-	DB_EnumXAssets_t DB_EnumXAssets = DB_EnumXAssets_t(0x45A8C0);
-
-	//Files Things
 	FS_FreeFile_t FS_FreeFile = (FS_FreeFile_t)0x580310; //temp, not correct function and offset from 1.0 version :(
 	FS_ReadFile_t FS_ReadFile = (FS_ReadFile_t)0x578C50; //usercall func
-
-	//XAssets
-	XAssetHeader* DB_XAssetPool = reinterpret_cast<XAssetHeader*>(0x6DF200);
-	unsigned int* g_poolSize = reinterpret_cast<unsigned int*>(0x6DEFA0);
-	const char** g_assetNames = (const char**)0x6DF440;
-
-	DB_FindXAssetHeader_t DB_FindXAssetHeader = DB_FindXAssetHeader_t(0x45AD10);
-	DB_GetXAssetSizeHandler_t* DB_GetXAssetSizeHandlers = reinterpret_cast<DB_GetXAssetSizeHandler_t*>(0x6DF5F0);
-	DB_GetXAssetNameHandler_t* DB_GetXAssetNameHandlers = reinterpret_cast<DB_GetXAssetNameHandler_t*>(0x6DF4D8);
-
-	XAssetHeader DB_ReallocXAssetPool(XAssetType type, unsigned int new_size)
-	{
-		const XAssetHeader pool_entry =
-		{
-			Utils::Memory::GetAllocator()->allocate(new_size * DB_GetXAssetSizeHandlers[type]())
-		};
-
-		DB_XAssetPool[type] = pool_entry;
-		g_poolSize[type] = new_size;
-
-		return pool_entry;
-	}
 
 	void Cmd_AddCommand(const char* name, void(*callback)(), cmd_function_s* data, char)
 	{
@@ -84,21 +48,6 @@ namespace Game
 		*cmd_ptr = data;
 	}
 
-	int	sys_timeBase;
-	int Sys_MilliSeconds(void)
-	{
-		int	sys_curtime;
-		static bool	initialized = false;
-
-		if (!initialized) {
-			sys_timeBase = timeGetTime();
-			initialized = true;
-		}
-		sys_curtime = timeGetTime() - sys_timeBase;
-
-		return sys_curtime;
-	}
-
 	bool CL_IsCgameInitialized()
 	{
 		// Get the value from the offset.
@@ -109,14 +58,7 @@ namespace Game
 			return false;
 	}
 
-	DB_BeginRecoverLostDevice_t DB_BeginRecoverLostDevice = DB_BeginRecoverLostDevice_t(0x45B180);
-	DB_EndRecoverLostDevice_t DB_EndRecoverLostDevice = DB_EndRecoverLostDevice_t(0x45B210);
-
-	DB_IsXAssetDefault_t DB_IsXAssetDefault = DB_IsXAssetDefault_t(0x45B040);
-
-
 	FS_AddIwdFilesForGameDirectory_t FS_AddIwdFilesForGameDirectory = FS_AddIwdFilesForGameDirectory_t(0x579FD0);
-
 
 	snd_alias_list_t* __cdecl Com_FindSoundAlias_FastFile(const char* name)
 	{
@@ -299,15 +241,41 @@ namespace Game
 		return stringVal;
 	}
 
-	//	Game entities
+	// Game data
+	Game::cgMedia_t* cgMedia = reinterpret_cast<Game::cgMedia_t*>(0x729400);
+	Game::sharedUiInfo_t* sharedUiInfo = reinterpret_cast<Game::sharedUiInfo_t*>(0x129AD80);
+	int* g_waitingForKey = reinterpret_cast<int*>(0x1E209C4);
+
+
 	Game::cg_s* cgs = reinterpret_cast<Game::cg_s*>(0x6FA590);
 	Game::playerState_s* ps = reinterpret_cast<Game::playerState_s*>(0x714BA8);
-	Game::gentity_s* g_entities = reinterpret_cast<Game::gentity_s*>(0xC81418);
 	Game::gclient_s* g_clients = reinterpret_cast<Game::gclient_s*>(0xE0DA00);
+	Game::PlayerKeyState* playerKeys = reinterpret_cast<Game::PlayerKeyState*>(0x816764);
+	Game::clientActive_t* clients = reinterpret_cast<Game::clientActive_t*>(0x85BD98);
+	Game::clientUIActive_t* clientUIActives = reinterpret_cast<Game::clientUIActive_t*>(0x85BD70);
+	Game::AimAssistGlobals* aaGlobArray = reinterpret_cast<Game::AimAssistGlobals*>(0x6E1788);
+	//Game::clientStatic_t* cls = reinterpret_cast<Game::clientStatic_t*>(0x6E1788);
+
+	Game::GraphFloat* aaInputGraph = reinterpret_cast<Game::GraphFloat*>(0x6E25F0);
+
 	Game::pmove_t* pmove = reinterpret_cast<Game::pmove_t*>(0x7FDE88);
+
+	Game::gentity_s* g_entities = reinterpret_cast<Game::gentity_s*>(0xC81418);
+
 	Game::clipMap_t* cm = reinterpret_cast<Game::clipMap_t*>(0xF788C8);
+	Game::weaponInfo_s* cg_weaponsArray = reinterpret_cast<Game::weaponInfo_s*>(0x6F7C88);
+	Game::WinMouseVars_t* s_wmv = reinterpret_cast<Game::WinMouseVars_t*>(0x13E06F0);
+	Game::snd_local_t* g_snd = reinterpret_cast<Game::snd_local_t*>(0x14C30E0);
+
+	Game::scrVmPub_t* scrVmPub = reinterpret_cast<Game::scrVmPub_t*>(0x1287240);
+
+	Game::GfxDrawMethod* gfxDrawMethod = reinterpret_cast<Game::GfxDrawMethod*>(0x1D9E0A0);
 
 	Game::localization_t* localization = reinterpret_cast<Game::localization_t*>(0x13E0700);
+
+	Game::game_hudelem_s* g_hudelems = reinterpret_cast<Game::game_hudelem_s*>(0xC74818);
+
+	Game::game_hudelem_field_t* fields_0 = reinterpret_cast<Game::game_hudelem_field_t*>(0x6814B8);
 
 	Scr_AddInt_t Scr_AddInt = Scr_AddInt_t(0x558B80);
 	Scr_AddFloat_t Scr_AddFloat = Scr_AddFloat_t(0x558BC0);
@@ -323,8 +291,7 @@ namespace Game
 
 	bool Key_IsCatcherActive(int localClientNum, int mask)
 	{
-		int keyCathers = *(BYTE*)0x85BD74;
-		return (mask & keyCathers) != 0;
+		return (mask & Game::clientUIActives->keyCatchers) != 0;
 	}
 
 	const char* SEH_GetCurrentLanguage()
@@ -479,6 +446,65 @@ namespace Game
 		}
 	}
 
+	Game::Font_s* UI_GetFontHandleStock(int fontEnum, const ScreenPlacement* ScrPlace, float scale)
+	{
+		//Game::Com_Printf(0, "UI_GetFontHandleStock: \nFontEnum: %d\nScale: %f\n ScrPlace: %d\n", fontEnum, ScrPlace, scale);
+		Game::Font_s* bigFont = Game::R_RegisterFont("fonts/bigFont", sizeof("fonts/bigFont"));
+		Game::Font_s* boldFont = Game::R_RegisterFont("fonts/boldFont", sizeof("fonts/boldFont"));
+		Game::Font_s* consoleFont = Game::R_RegisterFont("fonts/consoleFont", sizeof("fonts/consoleFont"));
+		Game::Font_s* extraBigFont = Game::R_RegisterFont("fonts/extraBigFont", sizeof("fonts/extraBigFont"));
+		Game::Font_s* normalFont = Game::R_RegisterFont("fonts/normalFont", sizeof("fonts/normalFont"));
+		Game::Font_s* objectiveFont = Game::R_RegisterFont("fonts/objectiveFont", sizeof("fonts/objectiveFont"));
+		Game::Font_s* smallFont = Game::R_RegisterFont("fonts/smallFont", sizeof("fonts/smallFont"));
+		//from mw2
+		//Game::Font_s* hudsmallfont = Game::R_RegisterFont("fonts/hudsmallfont", sizeof("fonts/hudsmallfont"));
+		//Game::Font_s* hudbigfont = Game::R_RegisterFont("fonts/hudbigfont", sizeof("fonts/hudbigfont"));
+
+		switch (fontEnum)
+		{
+		case 1:
+			return normalFont;
+		case 2:
+			return bigFont;
+		case 3:
+			return smallFont;
+		case 4:
+			return boldFont;
+		case 5:
+			return consoleFont;
+		case 6:
+			return objectiveFont;
+		//case 7:
+		//	return hudsmallfont;
+		//case 8:
+			//return hudbigfont;
+		}
+
+		double fontscalea = ScrPlace->scaleVirtualToReal[1] * scale;
+
+		const auto ui_smallFont = Dvars::Functions::Dvar_FindVar("ui_smallFont");
+		const auto ui_extraBigFont = Dvars::Functions::Dvar_FindVar("ui_extraBigFont");
+		const auto ui_bigFont = Dvars::Functions::Dvar_FindVar("ui_bigFont");
+
+		if (fontEnum == 4)
+		{
+			if (ui_smallFont->current.value >= fontscalea)
+				return smallFont;
+			if (ui_bigFont->current.value <= fontscalea)
+				return boldFont;
+			return normalFont;
+		}
+		if (ui_smallFont->current.value >= fontscalea)
+			return smallFont;
+		if (ui_extraBigFont->current.value <= fontscalea)
+			return extraBigFont;
+		if (ui_bigFont->current.value > fontscalea)
+			return normalFont;
+		return bigFont;
+	}
+
+
+
 	int R_TextHeight(Font_s* font)
 	{
 		return font->pixelHeight;
@@ -595,12 +621,10 @@ namespace Game
 		R_AddCmdDrawTextASM(text, maxChars, font, x, y, xScale, yScale, 0.0, color, style);
 	}
 
-	//Command which doesn't work in 1.5 version because __usercall
-	//R_TextWidth_t R_TextWidth = R_TextWidth_t(0x5D5250);
-
-	//sharedUiInfo_t* sharedUiInfo = reinterpret_cast<sharedUiInfo_t*>(0x129AD80);
 	Game::uiInfo_s* uiInfo = reinterpret_cast<Game::uiInfo_s*>(0x1290F50);
 
+	//Command which doesn't work in 1.5 version because __usercall
+	//R_TextWidth_t R_TextWidth = R_TextWidth_t(0x5D5250);
 	int R_TextWidth/*eax*/(const char* text /*eax*/, signed int maxChars, Game::Font_s* font/*ecx*/)
 	{
 		int result = 0;
@@ -718,53 +742,10 @@ namespace Game
 		return result;
 	}
 
-	char* Com_Parse(const char** data_p)
-	{
-		const static uint32_t Com_Parse_func = 0x58F8B0;
-		static char* result{};
-		__asm
-		{
-			mov		edi, data_p;
-			call	Com_Parse_func;
-			mov		result, eax;
-		}
-		return result;
-	}
-
 	BG_FindWeaponIndexForName_t BG_FindWeaponIndexForName = BG_FindWeaponIndexForName_t(0x5BEC90);
 
 	//temp
 	int* level_initializing = reinterpret_cast<int*>(0xE18E40);
-
-	int Sys_IsDatabaseReady2(void)
-	{
-		return WaitForSingleObject(Game::databaseCompletedEvent2, 0) == 0;
-	}
-
-
-	void Sys_CreateConsole/*ax*/(HINSTANCE hInstance /*edi*/)
-	{
-		const static uint32_t Sys_CreateConsole_func = 0x5962B0;
-		__asm
-		{
-			mov		edi, hInstance;
-			call	Sys_CreateConsole_func;
-		}
-	}
-	
-
-	void Sys_ShowConsole()
-	{
-		if (!*Game::hWndParent)
-		{
-			HMODULE ModuleHandleA = GetModuleHandleA(0);
-			Game::Sys_CreateConsole(ModuleHandleA);
-		}
-
-		ShowWindow(*Game::hWndParent, SW_SHOWNORMAL);
-		SendMessageA(*Game::hWndBuffer, 0xB6u, 0, 0xFFFF);
-		DeleteFileA(&*Game::sys_processSemaphoreFile);
-	}
 
 	void FS_DisplayPath(int bLanguageCull)
 	{
@@ -804,18 +785,6 @@ namespace Game
 		return result;
 	}
 
-	//int a1@<ecx>, const char *a2@<edi>, int a3@<esi>
-	void Com_ExecStartupConfigs(int localClientNum, char const* configFile)
-	{
-		const static uint32_t Com_ExecStartupConfigs_func = 0x534A30;
-		__asm
-		{
-			mov		esi, localClientNum;
-			mov		edi, configFile;
-			call	Com_ExecStartupConfigs_func;
-		}
-	}
-
 	void PM_Weapon_FireWeapon(Game::playerState_s* playerState, int delayedAction)
 	{
 		const static uint32_t PM_Weapon_FireWeapon_func = 0x5C18D0;
@@ -841,11 +810,519 @@ namespace Game
 		}
 		return result;
 	}
+
+	void StartWeaponAnim(int weaponIndex /*eax*/, Game::DObj_s* obj /*edi*/, int animIndex, float transitionTime)
+	{
+		const static uint32_t StartWeaponAnim_func = 0x4307C0;
+		__asm
+		{
+			pushad;
+			mov		eax, weaponIndex;
+			mov		edi, obj;
+			push	transitionTime;
+			push	animIndex;
+			call	StartWeaponAnim_func;
+			add		esp, 8;
+			popad;
+		}
+	}
+
+	void PM_Weapon_BeginWeaponRaise(Game::playerState_s* playerState, int time, int anim, float aim, int altSwitch)
+	{
+		const static uint32_t PM_Weapon_BeginWeaponRaise_func = 0x5C03C0;
+		__asm
+		{
+			pushad;
+			mov		eax, playerState;
+			mov		edx, time;
+			push	altSwitch;
+			push	aim;
+			push	anim;
+			call	PM_Weapon_BeginWeaponRaise_func;
+			add		esp, 0xC;
+			popad;
+		}
+	}
+
 	unsigned int G_GetWeaponIndexForName(const char* name)
 	{
 		if(level_initializing)
 			return Game::BG_GetWeaponIndexForName(name, Game::G_RegisterWeapon);
 		else
 			return Game::BG_FindWeaponIndexForName(name);
+	}
+
+	void CL_DrawStretchPic(const Game::ScreenPlacement* ScrPlace, float x, float y, float w, float h, int horzAlign, int vertAlign, float s1, float t1, float s2, float t2, float* color, Game::Material* material)
+	{
+		ScrPlace_ApplyRect(ScrPlace, &x, &y, &w, &h, horzAlign, vertAlign);
+		R_AddCmdDrawStretchPic(material, x, y, w, h, s1, t1, s2, t2, color);
+	}
+
+	int XModelGetBoneIndex(Game::XModel* model, unsigned int name, unsigned int offset, unsigned __int8* index)
+	{
+		unsigned int numBones;
+		unsigned int localBoneIndex;
+		unsigned __int16* boneNames;
+
+		boneNames = model->boneNames;
+		numBones = model->numBones;
+
+		for (localBoneIndex = 0; ; ++localBoneIndex)
+		{
+			if (localBoneIndex >= numBones)
+				return 0;
+			if (name == boneNames[localBoneIndex])
+				break;
+		}
+		*index = localBoneIndex + offset;
+		return 1;
+	}
+
+	/*
+	int DObjGetBoneIndex(Game::DObj_s* obj, unsigned int name, unsigned __int8* index)
+	{
+		int j; // [esp+0h] [ebp-18h]
+		int ja; // [esp+0h] [ebp-18h]
+		unsigned int boneIndex; // [esp+4h] [ebp-14h]
+		int numModels; // [esp+8h] [ebp-10h]
+		Game::XModel* model; // [esp+Ch] [ebp-Ch]
+		Game::XModel* modela; // [esp+Ch] [ebp-Ch]
+		unsigned int localBoneIndex; // [esp+10h] [ebp-8h]
+		Game::XModel** models; // [esp+14h] [ebp-4h]
+
+		localBoneIndex = *index;
+		if (localBoneIndex == 255)
+			return 0;
+		models = obj->models;
+
+		numModels = obj->numModels;
+		if (localBoneIndex < obj->numBones)
+		{
+			for (j = 0; j < numModels; ++j)
+			{
+				model = models[j];
+				if (localBoneIndex < model->numBones)
+				{
+					if (name != model->boneNames[localBoneIndex])
+						break;
+					return 1;
+				}
+				localBoneIndex -= model->numBones;
+			}
+		}
+		boneIndex = 0;
+		for (ja = 0; ja < numModels; ++ja)
+		{
+			modela = models[ja];
+			if (XModelGetBoneIndex(modela, name, boneIndex, index))
+				return 1;
+			boneIndex += modela->numBones;
+		}
+		*index = -1;
+		return 0;
+	}
+	*/
+	int DObjGetBoneIndex(Game::DObj_s* obj, unsigned int name, unsigned __int8* index)
+	{
+
+	}
+
+	void ChangeViewmodelDobj(int weapIndex /*eax*/, unsigned __int8 weaponModel /*cl*/, Game::XModel* newHands, Game::XModel* newGoggles, Game::XModel* newRocket, Game::XModel* newKnife, char updateClientInfo)
+	{
+		const static uint32_t ChangeViewmodelDobj_func = 0x431400;
+		__asm
+		{
+			pushad;
+			mov		eax, weapIndex;
+			mov		cl, weaponModel;
+			push	1;
+			push	newKnife;
+			push	newRocket;
+			push	newGoggles;
+			push	newHands;
+			call	ChangeViewmodelDobj_func;
+			add		esp, 0x14;
+			popad;
+		}
+	}
+
+	float Vec2Normalize(float* v)
+	{
+		/*i'm not sure that this code return the correct result*/
+		float result;
+		const static uint32_t Vec2Normalize_func = 0x57BA10;
+		__asm
+		{
+			mov		esi, [v];
+			call	Vec2Normalize_func;
+			fstp	[result];
+		}
+
+		return result;
+	}
+
+	void Cbuf_InsertText(int localClientNum /*eax*/, const char* text)
+	{
+		const static uint32_t Cbuf_InsertText_func = 0x5303E0;
+		__asm
+		{
+			pushad;
+			mov		eax, localClientNum;
+			push	text;
+			call	Cbuf_InsertText_func;
+			add		esp, 4;
+			popad;
+		}
+	}
+
+	//(int a1@<ecx>, int a2@<edi>, int a3, int a4)
+	void UI_KeyEvent(int down /*edi*/, int localClientNum, int key)
+	{
+		const static uint32_t UI_KeyEvent_func = 0x567C80;
+		__asm
+		{
+			mov		edi, down;
+			push	key;
+			push	localClientNum;
+			call	UI_KeyEvent_func;
+			add		esp, 8;
+		}
+	}
+
+	void Key_WriteBindings(int localClientNum /*eax*/, char* buffer)
+	{
+		const static uint32_t Key_WriteBindings_func = 0x443B00;
+		__asm
+		{
+			pushad;
+			mov		eax, localClientNum;
+			push	buffer;
+			call	Key_WriteBindings_func;
+			add		esp, 4;
+			popad;
+		}
+	}
+
+	FS_Printf_t FS_Printf = (FS_Printf_t)0x578A90;
+
+	//Gamepad stuff
+	keyname_t* keyNames = reinterpret_cast<keyname_t*>(0x6DFB30);
+	keyname_t* localizedKeyNames = reinterpret_cast<keyname_t*>(0x6DFE30);
+
+	UI_ReplaceConversions_t UI_ReplaceConversions = UI_ReplaceConversions_t(0x568240);
+
+	int UI_GetActiveMenu()
+	{
+		return *(int*)(0x1E209B4);
+	}
+
+	void updateButtonString(char* str, unsigned int strMaxSize, const char* findStr, const char* replaceStr) {
+		auto location = strstr(str, findStr);
+
+		if (location) {
+			std::size_t replaceOffset = location - str;
+			std::size_t findStrLen = strlen(findStr);
+			std::size_t replaceStrLen = strlen(replaceStr);
+
+			if (replaceOffset + replaceStrLen < strMaxSize) {
+				memmove(location + replaceStrLen,
+					location + findStrLen,
+					strMaxSize - replaceOffset - findStrLen);
+
+				for (int i = 0; i < static_cast<int>(replaceStrLen); ++i) {
+					location[i] = replaceStr[i];
+				}
+			}
+		}
+	}
+
+	void UI_FilterStringForButtonAnimation(char* str, unsigned int strMaxSize)
+	{
+		const auto remainder = Game::Sys_MilliSeconds() % 1000;
+		if (remainder <= 800)
+		{
+			return;
+		}
+
+		// Sony Icons
+		if (std::strstr(str, "button_sony_09"))
+		{
+			updateButtonString(str, strMaxSize, "button_sony_09", "button_sony_17");
+			if (std::strstr(str, "button_sony_10"))
+				updateButtonString(str, strMaxSize, "button_sony_10", "button_sony_18");
+		}
+		else if (std::strstr(str, "button_sony_17"))
+		{
+			updateButtonString(str, strMaxSize, "button_sony_17", "button_sony_09");
+			if (std::strstr(str, "button_sony_18"))
+				updateButtonString(str, strMaxSize, "button_sony_18", "button_sony_10");
+		}
+		else if (std::strstr(str, "button_sony_10"))
+		{
+			updateButtonString(str, strMaxSize, "button_sony_10", "button_sony_18");
+			if (std::strstr(str, "button_sony_10"))
+				updateButtonString(str, strMaxSize, "button_sony_10", "button_sony_18");
+		}
+		else if (std::strstr(str, "button_sony_18"))
+		{
+			updateButtonString(str, strMaxSize, "button_sony_18", "button_sony_10");
+			if (std::strstr(str, "button_sony_18"))
+				updateButtonString(str, strMaxSize, "button_sony_18", "button_sony_10");
+		}
+
+		// Xbox Icons
+		if (std::strstr(str, "button_xbox_09"))
+		{
+			updateButtonString(str, strMaxSize, "button_xbox_09", "button_xbox_17");
+			if (std::strstr(str, "button_xbox_10"))
+				updateButtonString(str, strMaxSize, "button_xbox_10", "button_xbox_18");
+		}
+		else if (std::strstr(str, "button_xbox_17"))
+		{
+			updateButtonString(str, strMaxSize, "button_xbox_17", "button_xbox_09");
+			if (std::strstr(str, "button_xbox_18"))
+				updateButtonString(str, strMaxSize, "button_xbox_18", "button_xbox_10");
+		}
+		else if (std::strstr(str, "button_xbox_10"))
+		{
+			updateButtonString(str, strMaxSize, "button_xbox_10", "button_xbox_18");
+			if (std::strstr(str, "button_xbox_10"))
+				updateButtonString(str, strMaxSize, "button_xbox_10", "button_xbox_18");
+		}
+		else if (std::strstr(str, "button_xbox_18"))
+		{
+			updateButtonString(str, strMaxSize, "button_xbox_18", "button_xbox_10");
+			if (std::strstr(str, "button_xbox_18"))
+				updateButtonString(str, strMaxSize, "button_xbox_18", "button_xbox_10");
+		}
+	}
+
+	UI_SetActiveMenu_t UI_SetActiveMenu = UI_SetActiveMenu_t(0x567E00);
+
+	void Key_SetBinding(int localClientNum /*eax*/, int keyNum /*ecx*/, const char* binding)
+	{
+		const static uint32_t Key_SetBinding_func = 0x4437B0;
+		__asm
+		{
+			pushad;
+			mov		ecx, keyNum;
+			mov		eax, localClientNum;
+			push	binding;
+			call	Key_SetBinding_func;
+			add		esp, 4;
+			popad;
+		}
+	}
+
+	void AimAssist_UpdateTweakables(const AimInput* input /*eax*/)
+	{
+		const static uint32_t AimAssist_UpdateTweakables_func = 0x401170;
+		__asm
+		{
+			mov		eax, input;
+			call	AimAssist_UpdateTweakables_func;
+		}
+	}
+
+	void AimAssist_UpdateAdsLerp(const AimInput* input)
+	{
+		auto& aaGlob = Game::aaGlobArray[input->localClientNum];
+		aaGlob.adsLerp = input->ps->fWeaponPosFrac;
+		if ((input->ps->eFlags & 0x300) != 0 && (input->buttons & Game::CMD_BUTTON_ADS) != 0)
+		{
+			aaGlob.adsLerp = 1.0;
+		}
+	}
+
+	AimAssist_ApplyAutoMelee_t AimAssist_ApplyAutoMelee = AimAssist_ApplyAutoMelee_t(0x402690);
+
+	void AimAssist_ApplyMeleeCharge(const AimInput* input /*eax*/, const AimOutput* output)
+	{
+		const static uint32_t AimAssist_ApplyMeleeCharge_func = 0x402880;
+		__asm
+		{
+			mov		eax, input;
+			push	output;
+			call	AimAssist_ApplyMeleeCharge_func;
+			add		esp, 4;
+		}
+	}
+
+	float GraphGetValueFromFraction(const int knotCount, const float(*knots)[2], const float fraction)
+	{
+		for (auto knotIndex = 1; knotIndex < knotCount; ++knotIndex)
+		{
+			if (knots[knotIndex][0] >= fraction)
+			{
+				const auto adjustedFraction = (fraction - knots[knotIndex - 1][0]) / (knots[knotIndex][0] - knots[knotIndex - 1][0]);
+
+				return (knots[knotIndex][1] - knots[knotIndex - 1][1]) * adjustedFraction + knots[knotIndex - 1][1];
+			}
+		}
+
+		return -1.0f;
+	}
+
+	float GraphFloat_GetValue(const GraphFloat* graph, const float fraction)
+	{
+		return GraphGetValueFromFraction(graph->knotCount, graph->knots, fraction) * graph->scale;
+	}
+
+	int BG_WeaponAmmo(int weaponIndex /*eax*/, const Game::playerState_s* playerState /*ecx*/)
+	{
+		int result;
+		const static uint32_t BG_WeaponAmmo_func = 0x5BFA70;
+		__asm
+		{
+			mov		eax, weaponIndex;
+			mov		ecx, playerState;
+			call	BG_WeaponAmmo_func;
+			mov		result, eax;
+		}
+
+		return result;
+	}
+
+	void vectoangles(const float* vec /*esi*/, float* angles /*edi*/)
+	{
+		const static uint32_t vectoangles_func = 0x57BFE0;
+		__asm
+		{
+			mov		esi, [vec];
+			mov		edi, [angles];
+			call	vectoangles_func;
+		}
+	}
+
+	float AngleNormalize360(float angle)
+	{
+		return (360.0 / 65536) * ((int)(angle * (65536 / 360.0)) & 65535);
+	}
+
+	float AngleNormalize180(float angle) {
+		angle = AngleNormalize360(angle);
+		if (angle > 180.0) {
+			angle -= 360.0;
+		}
+		return angle;
+	}
+
+	DiffTrackAngle_t DiffTrackAngle = DiffTrackAngle_t(0x57B670);
+	AngleSubtract_t AngleSubtract = AngleSubtract_t(0x57DCB0);
+
+	bool sub_55C330(int a1, int a2) {
+		return a1 - 176 <= 0x18 && a2 - 161 <= 0x5D;
+	}
+
+	bool Taiwanese_ValidBig5Code(uint16_t uiCode) {
+		return ((((uiCode >> 8) >= 0xA1 && (uiCode >> 8) <= 0xC6) || (((uiCode >> 8) + 55) <= 0x30)) && (((uiCode & 0xFF) >= 0x40 && (uiCode & 0xFF) <= 0x7E) || ((uiCode & 0xFF) >= 0xA1 && (uiCode & 0xFF) != 0xFF)));
+	}
+
+	bool sub_55C380(uint16_t a1, uint16_t a2) {
+		return ((a1 >= 0x81 && a1 <= 0x9F) || a1 - 224 <= 0xF) && ((a2 >= 0x40 && a2 <= 0x7E) || a2 - 128 <= 0x7C);
+	}
+
+	bool sub_55C3B0(uint16_t a1) {
+		return (static_cast<uint8_t>(a1 >> 8) + 127) <= 0x7D && (static_cast<uint8_t>(a1) > 0x40) && (static_cast<uint8_t>(a1) != 0xFF);
+	}
+
+	unsigned int SEH_DecodeLetter(byte firstChar, byte secondChar, int* usedCount)
+	{
+		int g_currentAsian = *(int*)0x128F9AC;
+		unsigned int v7;
+
+		if (g_currentAsian)
+		{
+			switch (Dvars::Functions::Dvar_FindVar("loc_language")->current.integer)
+			{
+			case 8:
+				if (sub_55C330(firstChar, secondChar)) 
+				{
+					*usedCount = 2;
+					return secondChar + (firstChar << 8);
+				}
+				break;
+			case 9:
+				v7 = secondChar + (firstChar << 8);
+				if (Taiwanese_ValidBig5Code(v7)) 
+				{
+					*usedCount = 2;
+					return v7;
+				}
+				break;
+			case 10:
+				if (sub_55C380(firstChar, secondChar)) 
+				{
+					*usedCount = 2;
+					return secondChar + (firstChar << 8);
+				}
+				break;
+			case 11:
+				v7 = secondChar + (firstChar << 8);
+				if (sub_55C3B0(v7)) 
+				{
+					*usedCount = 2;
+					return v7;
+				}
+				break;
+			}
+		}
+
+		*usedCount = 1;
+		return firstChar;
+	}
+
+	unsigned int SEH_ReadCharFromString(const char** text)
+	{
+		int usedCount;
+		unsigned int letter;
+		letter = Game::SEH_DecodeLetter(*(unsigned char*)*text, *((unsigned char*)*text + 1), &usedCount);
+		*text += usedCount;
+		return letter;
+	}
+
+	Glyph* R_GetCharacterGlyph(Font_s* font, unsigned int letter /*edi*/)
+	{
+		Game::Glyph* result;
+		const static uint32_t R_GetCharacterGlyph_func = 0x5D50D0;
+		__asm
+		{
+			mov		edi, letter;
+			push	font;
+			call	R_GetCharacterGlyph_func;
+			add		esp, 4;
+			mov		result, eax;
+		}
+		return result;
+	}
+
+
+	CG_CreateWeaponViewModelXAnim_t CG_CreateWeaponViewModelXAnim = CG_CreateWeaponViewModelXAnim_t(0x430EA0);
+
+	__declspec(naked) void RB_DrawStretchPicRotate(Material* /*material*/, float /*x*/, float /*y*/, float /*w*/, float /*h*/, float /*s0*/, float /*t0*/, float /*s1*/, float /*t1*/, float /*sinAngle*/, float /*cosAngle*/, unsigned int /*color*/)
+	{
+		__asm
+		{
+			pushad
+
+			mov eax, [esp + 0x4 + 0x20] // material
+			push[esp + 0x30 + 0x20] // color
+			push[esp + 0x30 + 0x20] // cosAngle
+			push[esp + 0x30 + 0x20] // sinAngle
+			push[esp + 0x30 + 0x20] // t1
+			push[esp + 0x30 + 0x20] // s1
+			push[esp + 0x30 + 0x20] // t0
+			push[esp + 0x30 + 0x20] // s0
+			push[esp + 0x30 + 0x20] // h
+			push[esp + 0x30 + 0x20] // w
+			push[esp + 0x30 + 0x20] // y
+			push[esp + 0x30 + 0x20] // x
+			mov ebx, 0x5FB310
+			call ebx
+			add esp, 0x2C
+
+			popad
+			ret
+		}
 	}
 }

@@ -111,7 +111,7 @@ using namespace std::literals;
 #include "Utils\HTTP.hpp"
 
 #include "Game\Structs.hpp"
-#include "Game\Functions.hpp"
+#include "Game\Game.hpp"
 #include "Components\Modules\Dvars.hpp"
 
 #include "Components\Loader.hpp"
