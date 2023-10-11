@@ -35,6 +35,7 @@ This software has been created purely for the purposes of academic research. Pro
   - Weapon: 2400
   - Xmodel: 5125
 - Added the game achievements;
+- Added the gamepad support with aim assist;
 - Added the custom methods and functions for GSC;
 - Added loading the additional .ff files `[level name]_patch.ff`;
 - Added FOV logic from multiplayer to singleplayer;
