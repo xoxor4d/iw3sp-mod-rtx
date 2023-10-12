@@ -612,7 +612,7 @@ rifleTraining()
 	if ( !isADS() )
 	{
 		//Now aim your rifle down range, Soap.
-		if ( level.Xenon )
+		if ( level.Xenon || getdvarint("gpad_style") == 0 )
 			thread keyHint( "ads_360" );
 		else
 			thread keyHint( "ads" );//PC and PS3 are both press
@@ -638,7 +638,7 @@ new_look_training_handler()
 	aim_up_target = getEnt( "aim_up_target", "targetname" );
 	
 	//thread add_dialogue_line( "GAZ", "Shoot the targets." );
-	if( level.Xenon )
+	if( level.Xenon || getdvarint("gpad_style") == 0 )
 		thread keyHint( "attack" );
 	else
 		thread keyHint( "pc_attack" );//PC and PS3 are both press
@@ -697,7 +697,7 @@ new_look_training_handler()
 		setblur(0, .2);
 		level.player freezecontrols(false);
 	}
-	//Lovely…
+	//Lovelyï¿½
 	level.waters execDialog( "lovely" );
 	
 	thread rifle_hip_shooting();
@@ -747,7 +747,7 @@ rifle_hip_shooting()
 	thread flag_when_lowered( "hip_targets_shot" );
 	
 
-	if( level.xenon )
+	if( level.xenon || getdvarint("gpad_style") == 0 )
 		keyHint( "hip_attack" );
 	else
 		keyHint( "pc_hip_attack" );//PC and ps3 are both "press"
@@ -770,10 +770,10 @@ rifle_hip_shooting()
 crosshair_dialog()
 {
 	wait 1;
-	//Notice that your crosshair changes size as you fire, this indicates your current accuracy blah blah blaaah…
+	//Notice that your crosshair changes size as you fire, this indicates your current accuracy blah blah blaaahï¿½
 	level.waters execDialog( "changessize" );
 	
-	//…uhhh, also note that you will never be as accurate when you fire from the hip, as when you aim down your sights. (Bloody hell this is a stupid test innit?) All right let's get this over with.
+	//ï¿½uhhh, also note that you will never be as accurate when you fire from the hip, as when you aim down your sights. (Bloody hell this is a stupid test innit?) All right let's get this over with.
 	level.waters execDialog( "stupidtest" );
 	
 	wait 1;
@@ -882,12 +882,12 @@ rifle_timed_shooting()
 	registerObjective( "obj_timed_rifle", &"KILLHOUSE_SHOOT_EACH_TARGET_AS", getEnt("obj_rifle_stall", "targetname" ) );
 	setObjectiveState( "obj_timed_rifle", "current" );
 	
-	if ( auto_aim() || getdvarint("gpad_in_use") )
+	if ( auto_aim() )
 	{
 		//ps3_flipped = is_ps3_flipped();
 				
 		//if ( ( level.xenon ) || ( ps3_flipped ) )
-		if ( level.xenon )
+		if ( level.xenon || getdvarint("gpad_style") == 0 )
 			actionBind = getActionBind( "ads_switch" );
 		else
 			actionBind = getActionBind( "ads_switch_shoulder" );
@@ -907,7 +907,7 @@ rifle_timed_shooting()
 	}
 	
 	tooslow_dialog = [];
-	tooslow_dialog[ 0 ] = "stilltooslow"; //You're still too slow…
+	tooslow_dialog[ 0 ] = "stilltooslow"; //You're still too slowï¿½
 	tooslow_dialog[ 1 ] = "again"; //Again.
 	tooslow_dialog[ 2 ] = "again2"; //Again.
 	tooslow_dialog[ 3 ] = "walkinpark"; //Too slow. Come on. This should be a walk in the park for you.
@@ -924,7 +924,7 @@ rifle_timed_shooting()
 			//ps3_flipped = is_ps3_flipped();
 				
 			//if ( ( level.xenon ) || ( ps3_flipped ) )
-			if ( level.xenon )
+			if ( level.xenon || getdvarint("gpad_style") == 0 )
 				actionBind = getActionBind( "ads_switch" );
 			else
 				actionBind = getActionBind( "ads_switch_shoulder" );
@@ -1257,7 +1257,7 @@ frag_Training()
 
 	setObjectiveString( "obj_frags", &"KILLHOUSE_PICK_UP_THE_FRAG_GRENADES" );
 
-	//It's time for some fun mate. Let's blow some shit up…
+	//It's time for some fun mate. Let's blow some shit upï¿½
 	level.newcastle execDialog( "timeforfun" );
 	
 	if ( !( level.player GetWeaponAmmoStock( "fraggrenade" ) ) &&  (!( in_pit() ) ) )
@@ -1484,7 +1484,7 @@ launcherTraining()
 	//Fire at the wall with the number one on it.
 	level.newcastle execDialog( "firewall1" );	
 	
-	if( level.Xenon )
+	if( level.Xenon || getdvarint("gpad_style") == 0 )
 		thread keyHint( "attack" );
 	else
 		thread keyHint( "pc_attack" );//PC and PS3 are both press
@@ -1796,7 +1796,7 @@ C4_complete_dialog()
 		level.newcastle execDialog( "reporttomac" ); //Now report to Mac on the obstacle course.	
 		
 	if ( ! flag ( "start_obstacle" ) )
-		level.newcastle execDialog( "thrilledtosee" ); //I’m sure he'll be thrilled to see you.	
+		level.newcastle execDialog( "thrilledtosee" ); //Iï¿½m sure he'll be thrilled to see you.	
 		
 	//level.newcastle execDialog( "justbetween" ); //Just between you and me, he's a real arsehole.	
 	//level.newcastle execDialog( "goodluck" ); //Good luck!	
@@ -1863,7 +1863,7 @@ obstacle_Training()
 	wait .1;
 	
 	//player must sprint
-	if ( level.xenon )// ghetto but PS3 requires "Press X" and 360 requires "Click X"
+	if ( level.xenon || getdvarint("gpad_style") == 0 )// ghetto but PS3 requires "Press X" and 360 requires "Click X"
 		keyHint( "sprint" ); 
 	else
 		keyHint( "sprint_pc" );
@@ -2325,7 +2325,7 @@ cargoship_training()
 		thread dialog_sprint_reminders();
 		
 		//player must sprint
-		if ( level.xenon )// ghetto but PS3 requires "Press X" and 360 requires "Click X"
+		if ( level.xenon || getdvarint("gpad_style") == 0 )// ghetto but PS3 requires "Press X" and 360 requires "Click X"
 			thread keyHint( "sprint" ); 
 		else
 			thread keyHint( "sprint_pc" );

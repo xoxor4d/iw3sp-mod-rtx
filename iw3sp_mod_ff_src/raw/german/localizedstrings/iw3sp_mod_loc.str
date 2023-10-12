@@ -2,7 +2,7 @@
 // If a sentence is the same in your language then please change it to "#same"
 //
 // eg:
-// LANG_ENGLISH  "HALT"
+// LANG_GERMAN  "HALT"
 // LANG_GERMAN   "#same"
 //
 // (This is so we can tell which strings have been signed-off as ok to be the same words for QA
@@ -17,13 +17,13 @@ REFERENCE           MENU_UNLOCK_ALL
 LANG_GERMAN         "Alle Missionen & Cheats freischalten"
 
 REFERENCE           MENU_RESET_ALL
-LANG_GERMAN         "Alle Missionen & Cheats zurücksetzen"
+LANG_GERMAN         "Alle Missionen & Cheats zuräcksetzen"
 
 REFERENCE           MENU_ARE_YOU_SURE_UNLOCK
 LANG_GERMAN         "Alle Missionen und Cheats freischalten?"
 
 REFERENCE           MENU_ARE_YOU_SURE_RESET
-LANG_GERMAN         "Bist du sicher, dass du deinen Missionsfortschritt und deine Cheats zurücksetzen möchtest?"
+LANG_GERMAN         "Bist du sicher, dass du deinen Missionsfortschritt und deine Cheats zuräcksetzen mächtest?"
 
 REFERENCE           MENU_QUIT_TO_DESKTOP
 LANG_GERMAN         "Auf Desktop beenden"
@@ -32,13 +32,13 @@ REFERENCE           MENU_LASTCHECKPOINT
 LANG_GERMAN         "Letzter Kontrollpunkt"
 
 REFERENCE           MENU_LASTCHECKPOINT_DESC
-LANG_GERMAN         "Zum letzten Kontrollpunkt zurückkehren?"
+LANG_GERMAN         "Zum letzten Kontrollpunkt zuräckkehren?"
 
 REFERENCE           MENU_STATSHASBEENRESET
-LANG_GERMAN         "Ihr Profilfortschritt, einschließlich Missionen und Cheats, wurde zurückgesetzt."
+LANG_GERMAN         "Ihr Profilfortschritt, einschlieälich Missionen und Cheats, wurde zuräckgesetzt."
 
 REFERENCE           MENU_UPDATE_NEW_UPDATE
-LANG_GERMAN         "Neues Client-Update verfügbar.\n Möchten Sie das neue Update herunterladen?"
+LANG_GERMAN         "Neues Client-Update verfägbar.\n Mächten Sie das neue Update herunterladen?"
 
 REFERENCE           MENU_UPDATE_REQUIRES_RESTART
 LANG_GERMAN         "Update erfordert Neustart."
@@ -50,7 +50,7 @@ REFERENCE          	MENU_ENABLE_AUTOUPDATE
 LANG_GERMAN        	"Automatisches Update aktivieren"
 
 REFERENCE          	MENU_CHECK_FOR_UPDATE
-LANG_GERMAN        	"Auf Updates prüfen"
+LANG_GERMAN        	"Auf Updates präfen"
 
 REFERENCE          	MENU_CHECKING_UPDATE
 LANG_GERMAN        	"Suche nach Updates"
@@ -59,7 +59,7 @@ REFERENCE          	MENU_NO_UPDATES_AVAILABLE
 LANG_GERMAN        	"Keine Updates verfugbar"
 
 REFERENCE          	MENU_SERVER_OFFLINE
-LANG_GERMAN        	"Update-Download nicht verfügbar. Server offline."
+LANG_GERMAN        	"Update-Download nicht verfägbar. Server offline."
 
 REFERENCE           MENU_UPDATER_CUR_DOWNLOAD_SPEED
 LANG_GERMAN         "Aktuelle Download-Geschwindigkeit: "
@@ -71,13 +71,13 @@ REFERENCE           MENU_ACHIEVEMENTS_TITLE
 LANG_GERMAN         "ERRUNGENSCHAFTEN"
 
 REFERENCE           MENU_RESET_ACHIEVEMENTS
-LANG_GERMAN         "Errungenschaften zurücksetzen"
+LANG_GERMAN         "Errungenschaften zuräcksetzen"
 
 REFERENCE           MENU_RESET_ACHIEVEMENTS_SURE
-LANG_GERMAN         "Möchten Sie den Errungenschaften der Erfolge zurücksetzen?"
+LANG_GERMAN         "Mächten Sie den Errungenschaften der Erfolge zuräcksetzen?"
 
 REFERENCE           MENU_RESET_ACHIEVEMENTS_COMPELETED
-LANG_GERMAN         "Der Errungenschaften der Erfolge wurde zurückgesetzt"
+LANG_GERMAN         "Der Errungenschaften der Erfolge wurde zuräckgesetzt"
 
 REFERENCE           MENU_ENEMY_INTEL_TITLE
 LANG_GERMAN         "Feindliche Intelligenz"
@@ -93,6 +93,12 @@ LANG_GERMAN         "IW3SP-MOD"
 
 REFERENCE           MENU_EXTERNAL_CONSOLE
 LANG_GERMAN         "Externe Konsole"
+
+REFERENCE           MENU_BRANDING
+LANG_GERMAN         "Version-Präsentieren"
+
+REFERENCE           MENU_WIP
+LANG_GERMAN         "WORK IN PROGRESS"
 
 REFERENCE           MENU_BRANDING
 LANG_GERMAN         "Version-Präsentieren"
@@ -192,5 +198,8 @@ LANG_GERMAN        	"(Eigene empfindlichkeit): 8"
 
 REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
 LANG_GERMAN        	"(Eigene empfindlichkeit): 9"
+
+REFERENCE           PLACEHOLDER_FOR_GERMANS
+LANG_GERMAN        	"PLACEHOLDER FOR GERMANS (FIX ME!)"
 
 ENDMARKER

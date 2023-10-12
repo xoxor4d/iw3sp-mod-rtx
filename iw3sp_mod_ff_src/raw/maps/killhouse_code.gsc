@@ -30,7 +30,7 @@ new_look_wait_for_target( up, down)
 			break;
 		else
 		{
-			if ( level.Xenon )
+			if ( level.Xenon || getdvarint("gpad_style") == 0 )
 				thread keyHint( "ads_360" );
 			else
 				thread keyHint( "ads" );
@@ -197,7 +197,7 @@ objective_hints( completion_flag )
 	
 	if ( level.Console || getdvarint("gpad_in_use") )
 	{
-		if ( level.Xenon )
+		if ( level.Xenon /*|| getdvarint("gpad_style") == 0*/ )
 			keyHint( "objectives", 6.0);
 		else
 			hint( &"KILLHOUSE_HINT_CHECK_OBJECTIVES_SCORES_PS3", 6 ); 
@@ -1370,7 +1370,7 @@ targetDummyThink()
 					dialog = [];
 					dialog[ 0 ] = "gotostation1"; //Soap! Go to Station One.
 					dialog[ 1 ] = "heygo"; //Hey. Go to Station One.
-					dialog[ 2 ] = "getback"; //Oi, where are you going? Get back to Station One…
+					dialog[ 2 ] = "getback"; //Oi, where are you going? Get back to Station Oneï¿½
 					
 					selection = dialog[ randomint( dialog.size ) ];
 					
@@ -2039,7 +2039,7 @@ keyHint( actionName, timeOut, doubleline )
 	level.hintElem.sort = 0.5;
 
 	actionBind = getActionBind( actionName );
-	if ( ( actionName == "melee" ) && ( level.xenon ) && ( actionBind.key == "BUTTON_RSTICK" ) )
+	if ( ( actionName == "melee" ) && ( level.xenon || getdvarint("gpad_style") == 0 ) && ( actionBind.key == "BUTTON_RSTICK" ) )
 		level.hintElem setText( &"KILLHOUSE_HINT_MELEE_CLICK" );
 	else
 		level.hintElem setText( actionBind.hint );
@@ -2614,10 +2614,14 @@ C4_icon_hint()
 
 auto_aim()
 {
-	if ( level.console )
+	if ( level.console || getdvarint("gpad_in_use") )
 	{
 		if(isdefined( getdvar("input_autoaim") ) )
 			if ( getdvar("input_autoaim") == "1" )
+				return true;
+		//iw3sp-mod
+		if(isdefined( getdvar("gpad_autoaim_enabled") ) )
+			if ( getdvar("gpad_autoaim_enabled") == "1" )
 				return true;
 	}
 	return false;
