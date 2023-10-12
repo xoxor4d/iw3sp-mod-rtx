@@ -2619,10 +2619,6 @@ auto_aim()
 		if(isdefined( getdvar("input_autoaim") ) )
 			if ( getdvar("input_autoaim") == "1" )
 				return true;
-		//iw3sp-mod
-		if(isdefined( getdvar("gpad_autoaim_enabled") ) )
-			if ( getdvar("gpad_autoaim_enabled") == "1" )
-				return true;
 	}
 	return false;
 }

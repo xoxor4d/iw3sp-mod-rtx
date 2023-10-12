@@ -882,7 +882,7 @@ rifle_timed_shooting()
 	registerObjective( "obj_timed_rifle", &"KILLHOUSE_SHOOT_EACH_TARGET_AS", getEnt("obj_rifle_stall", "targetname" ) );
 	setObjectiveState( "obj_timed_rifle", "current" );
 	
-	if ( auto_aim() )
+	if ( /*auto_aim()*/ getdvarint("gpad_in_use") && getdvarint("gpad_aimassist"))
 	{
 		//ps3_flipped = is_ps3_flipped();
 				
