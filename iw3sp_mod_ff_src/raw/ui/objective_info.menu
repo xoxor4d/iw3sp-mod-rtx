@@ -296,7 +296,7 @@
 			action
 			{
 				play "mouse_click";
-				open "options_look";
+				open "iw3sp_mod_controls_pc_main"; /*open "options_look";*/
 				close pausedmenu;
 			}
 		}
