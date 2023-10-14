@@ -14,7 +14,8 @@ namespace Components
 	void Toast::Show(Game::Material* material, const std::string& title, const std::string& description, int length, bool special,const Utils::Slot<void()>& callback)
 	{
 		std::lock_guard _(Mutex);
-		Queue.push({ material, Utils::String::ToUpper(title), description, length, 0, special, callback });
+		Queue.push({ material, (Language::GetCurrentLanguage() != "french") ? Utils::String::ToUpper(title) : title, description, length, 0, special, callback });
+		//Queue.push({ material, Utils::String::ToUpper(title), description, length, 0, special, callback });
 	}
 
 	void Toast::Draw(UIToast* toast)
