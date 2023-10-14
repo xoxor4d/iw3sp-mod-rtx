@@ -1,0 +1,247 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           EARNED
+LANG_ITALIAN        "Realizzazione sbloccato!"
+
+REFERENCE           NAME_0
+LANG_ITALIAN        "La solita routine"
+
+REFERENCE           DETAIL_0
+LANG_ITALIAN        "Ottieni tutti i trofei disponibili in Call of Duty 4: Modern Warfare."
+
+REFERENCE           NAME_1
+LANG_ITALIAN        "Ottieni lo stemma col pugnale alato."
+
+REFERENCE           DETAIL_1
+LANG_ITALIAN        "Completa 'F.N.G.'."
+
+REFERENCE           NAME_2
+LANG_ITALIAN        "Fai il grande salto"
+
+REFERENCE           DETAIL_2
+LANG_ITALIAN        "Infiltrati nel mercantile."
+
+REFERENCE           NAME_3
+LANG_ITALIAN        "Ballando nella notte"
+
+REFERENCE           DETAIL_3
+LANG_ITALIAN        "Togli l'alimentazione."
+
+REFERENCE           NAME_4
+LANG_ITALIAN        "Salva il bestione"
+
+REFERENCE           DETAIL_4
+LANG_ITALIAN        "Proteggi 'War Pig', il carro armato Abrams."
+
+REFERENCE           NAME_5
+LANG_ITALIAN        "Morte dall'alto"
+
+REFERENCE           DETAIL_5
+LANG_ITALIAN        "Apri il fuoco da un AC-130."
+
+REFERENCE           NAME_6
+LANG_ITALIAN        "Numero errato"
+
+REFERENCE           DETAIL_6
+LANG_ITALIAN        "Trova il nascondiglio di Al-Asad."
+
+REFERENCE           NAME_7
+LANG_ITALIAN        "Gita sulle spalle"
+
+REFERENCE           DETAIL_7
+LANG_ITALIAN        "Porta al sicuro il cap. MacMillan."
+
+REFERENCE           NAME_8
+LANG_ITALIAN        "Rimedi estremi"
+
+REFERENCE           DETAIL_8
+LANG_ITALIAN        "Metti il figlio di Zakhaev con le spalle al muro."
+
+REFERENCE           NAME_9
+LANG_ITALIAN        "Corsa alla vittoria"
+
+REFERENCE           DETAIL_9
+LANG_ITALIAN        "Completa il gioco a un qualunque livello di difficoltà."
+
+REFERENCE           NAME_10
+LANG_ITALIAN        "All'erta"
+
+REFERENCE           DETAIL_10
+LANG_ITALIAN        "Trova 15 documenti intelligence nemici."
+
+REFERENCE           NAME_11
+LANG_ITALIAN        "Occhi e orecchie ovunque"
+
+REFERENCE           DETAIL_11
+LANG_ITALIAN        "Trova 30 documenti intelligence nemici."
+
+REFERENCE           NAME_12
+LANG_ITALIAN        "Buono, bello... buono..."
+
+REFERENCE           DETAIL_12
+LANG_ITALIAN        "Sopravvivi all'attacco di un cane."
+
+REFERENCE           NAME_13
+LANG_ITALIAN        "Nuovo record di squadra"
+
+REFERENCE           DETAIL_13
+LANG_ITALIAN        "Completa il percorso del mercantile simulato in meno di 19 secondi."
+
+REFERENCE           NAME_14
+LANG_ITALIAN        "Salva Roycewicz"
+
+REFERENCE           DETAIL_14
+LANG_ITALIAN        "Salva il soldato Roycewicz sulle scale."
+
+REFERENCE           NAME_15
+LANG_ITALIAN        "TV spazzatura"
+
+REFERENCE           DETAIL_15
+LANG_ITALIAN        "Distruggi tutti i televisori che trasmettono il discorso di Al-Asad."
+
+REFERENCE           NAME_16
+LANG_ITALIAN        "Uomo del popolo"
+
+REFERENCE           DETAIL_16
+LANG_ITALIAN        "Salva il contadino."
+
+REFERENCE           NAME_17
+LANG_ITALIAN        "Piazza pulita"
+
+REFERENCE           DETAIL_17
+LANG_ITALIAN        "Esegui 5 uccisioni in un solo colpo con la mitragliatrice dell'AC-130."
+
+REFERENCE           NAME_18
+LANG_ITALIAN        "Nascosti nella nebbia"
+
+REFERENCE           DETAIL_18
+LANG_ITALIAN        "Completa la missione 'Mimetizzazione perfetta' senza farti mai scoprire."
+
+REFERENCE           NAME_19
+LANG_ITALIAN        "Club Mile High"
+
+REFERENCE           DETAIL_19
+LANG_ITALIAN        "Plana al sicuro giocando a livello di difficoltà Veterano."
+
+REFERENCE           NAME_20
+LANG_ITALIAN        "Non c'è posto per i deboli"
+
+REFERENCE           DETAIL_20
+LANG_ITALIAN        "Pugnala un nemico ferito mentre striscia a terra."
+
+REFERENCE           NAME_21
+LANG_ITALIAN        "Fino in fondo"
+
+REFERENCE           DETAIL_21
+LANG_ITALIAN        "Completa il gioco a difficoltà Esperto o Veterano."
+
+REFERENCE           NAME_22
+LANG_ITALIAN        "Il 'carico'"
+
+REFERENCE           DETAIL_22
+LANG_ITALIAN        "Completa la missione 'Equipaggio sacrificabile' a difficoltà Veterano."
+
+REFERENCE           NAME_23
+LANG_ITALIAN        "Salvataggio"
+
+REFERENCE           DETAIL_23
+LANG_ITALIAN        "Completa la missione 'Blackout' a difficoltà Veterano."
+
+REFERENCE           NAME_24
+LANG_ITALIAN        "Il setaccio"
+
+REFERENCE           DETAIL_24
+LANG_ITALIAN        "Completa la missione 'Charlie non fa surf' a difficoltà Veterano."
+
+REFERENCE           NAME_25
+LANG_ITALIAN        "L'acquitrino"
+
+REFERENCE           DETAIL_25
+LANG_ITALIAN        "Completa le missioni 'L'acquitrino' e 'War Pig' a difficoltà Veterano."
+
+REFERENCE           NAME_26
+LANG_ITALIAN        "La fuga"
+
+REFERENCE           DETAIL_26
+LANG_ITALIAN        "Completa le missioni 'Preda' e 'Morte dall'alto' a difficoltà Veterano."
+
+REFERENCE           NAME_27
+LANG_ITALIAN        "Il primo cavaliere"
+
+REFERENCE           DETAIL_27
+LANG_ITALIAN        "Completa la missione 'Guerra lampo' a difficoltà Veterano."
+
+REFERENCE           NAME_28
+LANG_ITALIAN        "Il secondo cavaliere"
+
+REFERENCE           DETAIL_28
+LANG_ITALIAN        "Completa la missione 'Nascondiglio' a difficoltà Veterano."
+
+REFERENCE           NAME_29
+LANG_ITALIAN        "Pronto a colpire"
+
+REFERENCE           DETAIL_29
+LANG_ITALIAN        "Completa le missioni 'Mimetizzazione perfetta' e 'Sicario infallibile' a difficoltà Veterano."
+
+REFERENCE           NAME_30
+LANG_ITALIAN        "Il terzo cavaliere"
+
+REFERENCE           DETAIL_30
+LANG_ITALIAN        "Completa le missioni 'Calore' e 'I peccati del padre' a difficoltà Veterano."
+
+REFERENCE           NAME_31
+LANG_ITALIAN        "L'Ultimatum"
+
+REFERENCE           DETAIL_31
+LANG_ITALIAN        "Completa 'Ultimatum', 'Tutti dentro' e 'La stanza dei bottoni' a difficoltà Veterano."
+
+REFERENCE           NAME_32
+LANG_ITALIAN        "Il quarto cavaliere"
+
+REFERENCE           DETAIL_32
+LANG_ITALIAN        "Completa la missione 'Game Over' a difficoltà Veterano."
+
+REFERENCE           NAME_33
+LANG_ITALIAN        "Daredevil"
+
+REFERENCE           DETAIL_33
+LANG_ITALIAN        "Uccidi un nemico mentre sei accecato da una granata accecante nella Campagna (Giocatore singolo)."
+
+REFERENCE           NAME_34
+LANG_ITALIAN        "Auto mortale"
+
+REFERENCE           DETAIL_34
+LANG_ITALIAN        "Uccidi 2 nemici facendo saltare un'auto nella modalità Campagna (Giocatore singolo)."
+
+REFERENCE           NAME_35
+LANG_ITALIAN        "Minaccia dall'alto"
+
+REFERENCE           DETAIL_35
+LANG_ITALIAN        "Abbatti un elicottero nemico con un RPG nella modalità Campagna (Giocatore singolo)."
+
+REFERENCE           NAME_36
+LANG_ITALIAN        "4 di un tipo"
+
+REFERENCE           DETAIL_36
+LANG_ITALIAN        "Uccidi 4 nemici di fila con un colpo alla testa nella modalità Campagna (Giocatore singolo)."
+
+REFERENCE           NAME_37
+LANG_ITALIAN        "3 di un tipo"
+
+REFERENCE           DETAIL_37
+LANG_ITALIAN        "Uccidi 3 nemici di fila usando il coltello nella modalità Campagna (Giocatore singolo)."
+
+ENDMARKER

@@ -1,0 +1,103 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           KILLHOUSE
+LANG_GERMAN         "'Bleu'"
+
+REFERENCE           CARGOSHIP
+LANG_GERMAN         "'Équipage sans importance'"
+
+REFERENCE           COUP
+LANG_GERMAN         "'Le coup'"
+
+REFERENCE           BLACKOUT
+LANG_GERMAN         "'Coupure'"
+
+REFERENCE           ARMADA
+LANG_GERMAN         "'Charlie ne surfe pas'"
+
+REFERENCE           BOG_A
+LANG_GERMAN         "'Le marais'"
+
+REFERENCE           HUNTED
+LANG_GERMAN         "'Traqué'"
+
+REFERENCE           AC130
+LANG_GERMAN         "'La mort vient du ciel'"
+
+REFERENCE           BOG_B
+LANG_GERMAN         "'Sanglier'"
+
+REFERENCE           AIRLIFT
+LANG_GERMAN         "'Choc et effroi'"
+
+REFERENCE           AFTERMATH
+LANG_GERMAN         "'Conséquences'"
+
+REFERENCE           VILLAGE_ASSAULT
+LANG_GERMAN         "'Cachette'"
+
+REFERENCE           SCOUTSNIPER
+LANG_GERMAN         "'Camouflage'"
+
+REFERENCE           SNIPERESCAPE
+LANG_GERMAN         "'Une balle, un mort'"
+
+REFERENCE           VILLAGE_DEFEND
+LANG_GERMAN         "'Enfer'"
+
+REFERENCE           AMBUSH
+LANG_GERMAN         "'Les péchés du père'"
+
+REFERENCE           ICBM
+LANG_GERMAN         "'Ultimatum'"
+
+REFERENCE           LAUNCHFACILITY_A
+LANG_GERMAN         "'À l'intérieur'"
+
+REFERENCE           LAUNCHFACILITY_B
+LANG_GERMAN         "'Sans combat dans la salle d'ops'"
+
+REFERENCE           JEEPRIDE
+LANG_GERMAN         "'Fin de la partie'"
+
+REFERENCE           AIRPLANE
+LANG_GERMAN         "'En plein air'"
+
+REFERENCE           SIMPLECREDITS
+LANG_GERMAN         "Regarder les credits du jeu"
+
+REFERENCE           MAINMENU
+LANG_GERMAN         "Dans Le Menu Principal"
+
+REFERENCE           MAPUNKNOWN
+LANG_GERMAN         "Map: &&1"
+
+REFERENCE           DIFFICULTY_EASY
+LANG_GERMAN         "Difficulté: Recrue"
+
+REFERENCE           DIFFICULTY_MEDIUM
+LANG_GERMAN         "Difficulté: 2nde classe"
+
+REFERENCE           DIFFICULTY_HARD
+LANG_GERMAN         "Difficulté: Commando"
+
+REFERENCE           DIFFICULTY_FU
+LANG_GERMAN         "Difficulté: Vétéran"
+
+REFERENCE           DIFFICULTY_UNKNOWN
+LANG_GERMAN         "Difficulté: Inconnue"
+
+ENDMARKER

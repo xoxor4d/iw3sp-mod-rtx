@@ -1,0 +1,103 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           KILLHOUSE
+LANG_ENGLISH        "'F.N.G.'"
+
+REFERENCE           CARGOSHIP
+LANG_ENGLISH        "'Equipaggio sacrificabile'"
+
+REFERENCE           COUP
+LANG_ENGLISH        "'Il colpo di stato'"
+
+REFERENCE           BLACKOUT
+LANG_ENGLISH        "'Blackout'"
+
+REFERENCE           ARMADA
+LANG_ENGLISH        "'Charlie non fa surf'"
+
+REFERENCE           BOG_A
+LANG_ENGLISH        "'L'acquitrino'"
+
+REFERENCE           HUNTED
+LANG_ENGLISH        "'Preda'"
+
+REFERENCE           AC130
+LANG_ENGLISH        "'Morte dall'alto'"
+
+REFERENCE           BOG_B
+LANG_ENGLISH        "'War Pig'"
+
+REFERENCE           AIRLIFT
+LANG_ENGLISH        "'Guerra lampo'"
+
+REFERENCE           AFTERMATH
+LANG_ENGLISH        "'Dopo il disastro'"
+
+REFERENCE           VILLAGE_ASSAULT
+LANG_ENGLISH        "'Nascondiglio'"
+
+REFERENCE           SCOUTSNIPER
+LANG_ENGLISH        "'Mimetizzazione perfetta'"
+
+REFERENCE           SNIPERESCAPE
+LANG_ENGLISH        "'Sicario infallibile'"
+
+REFERENCE           VILLAGE_DEFEND
+LANG_ENGLISH        "'Calore'"
+
+REFERENCE           AMBUSH
+LANG_ENGLISH        "'I peccati del padre'"
+
+REFERENCE           ICBM
+LANG_ENGLISH        "'Ultimatum'"
+
+REFERENCE           LAUNCHFACILITY_A
+LANG_ENGLISH        "'Tutti dentro'"
+
+REFERENCE           LAUNCHFACILITY_B
+LANG_ENGLISH        "'La stanza dei bottoni'"
+
+REFERENCE           JEEPRIDE
+LANG_ENGLISH        "'Game Over'"
+
+REFERENCE           AIRPLANE
+LANG_ENGLISH        "'Club Mile High'"
+
+REFERENCE           SIMPLECREDITS
+LANG_ENGLISH        "Guardare il gioco Credits"
+
+REFERENCE           MAINMENU
+LANG_ENGLISH        "Nel menu principale"
+
+REFERENCE           MAPUNKNOWN
+LANG_ENGLISH        "Map: &&1"
+
+REFERENCE           DIFFICULTY_EASY
+LANG_ENGLISH        "Difficoltà: Recluta"
+
+REFERENCE           DIFFICULTY_MEDIUM
+LANG_ENGLISH        "Difficoltà: Soldato"
+
+REFERENCE           DIFFICULTY_HARD
+LANG_ENGLISH        "Difficoltà: Esperto"
+
+REFERENCE           DIFFICULTY_FU
+LANG_ENGLISH        "Difficoltà: Veterano"
+
+REFERENCE           DIFFICULTY_UNKNOWN
+LANG_ENGLISH        "Difficoltà: Sconosciuto"
+
+ENDMARKER

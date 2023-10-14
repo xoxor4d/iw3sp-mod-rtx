@@ -1,0 +1,196 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           MENU_UNLOCK_ALL
+LANG_FRENCH         "Débloquer missions & codes"
+
+REFERENCE           MENU_RESET_ALL
+LANG_FRENCH         "Réinitialiser missions & codes"
+
+REFERENCE           MENU_ARE_YOU_SURE_UNLOCK
+LANG_FRENCH         "Débloquer missions & codes"
+
+REFERENCE           MENU_ARE_YOU_SURE_RESET
+LANG_FRENCH         "Êtes-vous sûr de vouloir réinitialiser votre progression de mission et codes de triche?"
+
+REFERENCE           MENU_QUIT_TO_DESKTOP
+LANG_FRENCH         "Quitter vers le bureau"
+
+REFERENCE           MENU_LASTCHECKPOINT
+LANG_FRENCH         "Dernier point de contrôle"
+
+REFERENCE           MENU_LASTCHECKPOINT_DESC
+LANG_FRENCH         "Recommencer au dernier point de contrôle?"
+
+REFERENCE           MENU_STATSHASBEENRESET
+LANG_FRENCH         "Votre progression de profil, y compris les missions et codes de triche, a été réinitialisée."
+
+REFERENCE           MENU_UPDATE_NEW_UPDATE
+LANG_FRENCH         "Nouvelle mise à jour du client disponible.\n Voulez-vous télécharger la nouvelle mise à jour?"
+
+REFERENCE           MENU_UPDATE_REQUIRES_RESTART
+LANG_FRENCH         "La mise à jour nécessite un redémarrage."
+
+REFERENCE           MENU_UPDATE_RESTART
+LANG_FRENCH        	"Redémarrer le jeu"
+
+REFERENCE          	MENU_ENABLE_AUTOUPDATE
+LANG_FRENCH        	"Mise à jour automatique"
+
+REFERENCE          	MENU_CHECK_FOR_UPDATE
+LANG_FRENCH        	"Vérifier les mises à jour"
+
+REFERENCE          	MENU_CHECKING_UPDATE
+LANG_FRENCH        	"Vérification des mises à jour en cours"
+
+REFERENCE          	MENU_NO_UPDATES_AVAILABLE
+LANG_FRENCH        	"Aucune mise à jour disponible"
+
+REFERENCE          	MENU_SERVER_OFFLINE
+LANG_FRENCH        	"Téléchargement de la mise à jour indisponible. Serveur hors ligne."
+
+REFERENCE           MENU_UPDATER_CUR_DOWNLOAD_SPEED
+LANG_FRENCH         "Vitesse de téléchargement actuelle: "
+
+REFERENCE           MENU_ACHIEVEMENTS
+LANG_FRENCH         "Succès"
+
+REFERENCE           MENU_ACHIEVEMENTS_TITLE
+LANG_FRENCH         "SUCCÈS"
+
+REFERENCE           MENU_RESET_ACHIEVEMENTS
+LANG_FRENCH         "Réinitialiser les succès"
+
+REFERENCE           MENU_RESET_ACHIEVEMENTS_SURE
+LANG_FRENCH         "Voulez-vous réinitialiser la progression des succès?"
+
+REFERENCE           MENU_RESET_ACHIEVEMENTS_COMPELETED
+LANG_FRENCH         "La progression des succès a été réinitialisée"
+
+REFERENCE           MENU_ENEMY_INTEL_TITLE
+LANG_FRENCH         "Renseignements ennemis"
+
+REFERENCE           MENU_ENEMY_INTEL_COUNT
+LANG_FRENCH         "&&1/&&2 renseignements trouvés"
+
+REFERENCE           MENU_ACHIEVEMENTS_DATE_RECEIVED
+LANG_FRENCH         "Date de réception:"
+
+REFERENCE           MENU_IW3SP_MOD_OPTIONS
+LANG_FRENCH         "IW3SP-MOD"
+
+REFERENCE           MENU_EXTERNAL_CONSOLE
+LANG_FRENCH         "Console externe"
+
+REFERENCE           MENU_BRANDING
+LANG_FRENCH         "Présentation de la version"
+
+REFERENCE           MENU_WIP
+LANG_FRENCH         "TRAVAIL EN COURS"
+
+REFERENCE           MENU_STATS_TITLE
+LANG_FRENCH        	"STATISTIQUES"
+
+REFERENCE           MENU_STATS
+LANG_FRENCH        	"Statistiques"
+
+REFERENCE           MENU_CAREER_BULLETS_FIRED
+LANG_FRENCH        	"Balles tirées"
+
+REFERENCE           MENU_CAREER_BULLETS_HIT
+LANG_FRENCH        	"Balles touchées"
+
+REFERENCE           MENU_CAREER_DEATHS
+LANG_FRENCH        	"Morts"
+
+REFERENCE           MENU_CAREER_HEADSHOTS
+LANG_FRENCH        	"Tirs dans la tête"
+
+REFERENCE           MENU_CAREER_KILLS
+LANG_FRENCH        	"Tués"
+
+REFERENCE           MENU_CAREER_PLAYTIMESP
+LANG_FRENCH        	"Temps total de jeu"
+
+REFERENCE           MENU_SP_STAT_TIME_FORMAT
+LANG_FRENCH        	"J      H        M       S"
+
+REFERENCE           MENU_MUSIC_VOLUME
+LANG_FRENCH        	"Volume de la musique"
+
+REFERENCE           MENU_VOICE_VOLUME
+LANG_FRENCH        	"Volume de la voix"
+
+REFERENCE           MENU_CINEMATIC_VOLUME
+LANG_FRENCH        	"Volume cinématique"
+
+REFERENCE           MENU_KEYBOARD_AND_MOUSE_OPTIONS
+LANG_FRENCH        	"Clavier/Souris"
+
+REFERENCE           MENU_GAMEPAD_OPTIONS
+LANG_FRENCH        	"Gamepad"
+
+REFERENCE           MENU_GAMEPAD_MISC_SETTINGS
+LANG_FRENCH        	"Paramètres divers"
+
+REFERENCE           MENU_GAMEPAD_BUTTONS_AND_STICKS_SETTINGS
+LANG_FRENCH        	"Boutons/Joysticks"
+
+REFERENCE           MENU_GAMEPAD_RESET_DEFAULT_SETTINGS
+LANG_FRENCH        	"Réinitialiser les commandes par défaut"
+
+REFERENCE           MENU_GAMEPAD_ENABLED
+LANG_FRENCH        	"Gamepad activé"
+
+REFERENCE           MENU_GAMEPAD_BUTTON_STYLE
+LANG_FRENCH        	"Style de bouton"
+
+REFERENCE           MENU_GAMEPAD_BUTTON_STYLE_XBOX
+LANG_FRENCH        	"Xbox"
+
+REFERENCE           MENU_GAMEPAD_BUTTON_STYLE_SONY
+LANG_FRENCH        	"PlayStation"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_LOW
+LANG_FRENCH        	"Faible"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_MEDIUM
+LANG_FRENCH        	"Moyen"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_HIGH
+LANG_FRENCH        	"Élevé"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_VERY_HIGN
+LANG_FRENCH        	"Très élevé"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_INSANE
+LANG_FRENCH        	"Insensé"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_3
+LANG_FRENCH        	"(Personnalisé): 3"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_5
+LANG_FRENCH        	"(Personnalisé): 5"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_6
+LANG_FRENCH        	"(Personnalisé): 6"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_8
+LANG_FRENCH        	"(Personnalisé): 8"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
+LANG_FRENCH        	"(Personnalisé): 9"
+
+ENDMARKER

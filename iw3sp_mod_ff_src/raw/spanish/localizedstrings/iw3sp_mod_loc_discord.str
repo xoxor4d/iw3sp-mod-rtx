@@ -1,0 +1,103 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           KILLHOUSE
+LANG_ENGLISH        "'P.N.S.'"
+
+REFERENCE           CARGOSHIP
+LANG_ENGLISH        "'Tripulación prescindible'"
+
+REFERENCE           COUP
+LANG_ENGLISH        "'El golpe'"
+
+REFERENCE           BLACKOUT
+LANG_ENGLISH        "'Apagón'"
+
+REFERENCE           ARMADA
+LANG_ENGLISH        "'Charlie no hace surf'"
+
+REFERENCE           BOG_A
+LANG_ENGLISH        "'El pantano'"
+
+REFERENCE           HUNTED
+LANG_ENGLISH        "'Cazado'"
+
+REFERENCE           AC130
+LANG_ENGLISH        "'Muerte aérea'"
+
+REFERENCE           BOG_B
+LANG_ENGLISH        "'Jabalí'"
+
+REFERENCE           AIRLIFT
+LANG_ENGLISH        "'Sorpresa y pavor'"
+
+REFERENCE           AFTERMATH
+LANG_ENGLISH        "'Secuelas'"
+
+REFERENCE           VILLAGE_ASSAULT
+LANG_ENGLISH        "'Casa franca'"
+
+REFERENCE           SCOUTSNIPER
+LANG_ENGLISH        "'Todos camuflados'"
+
+REFERENCE           SNIPERESCAPE
+LANG_ENGLISH        "'Un tiro, un muerto'"
+
+REFERENCE           VILLAGE_DEFEND
+LANG_ENGLISH        "'Un tiro, un muerto'"
+
+REFERENCE           AMBUSH
+LANG_ENGLISH        "'Los pecados del padre'"
+
+REFERENCE           ICBM
+LANG_ENGLISH        "'Ultimátum'"
+
+REFERENCE           LAUNCHFACILITY_A
+LANG_ENGLISH        "'Todos dentro'"
+
+REFERENCE           LAUNCHFACILITY_B
+LANG_ENGLISH        "'En el CG no se lucha'"
+
+REFERENCE           JEEPRIDE
+LANG_ENGLISH        "'Fin del juego'"
+
+REFERENCE           AIRPLANE
+LANG_ENGLISH        "'Club del ligue aéreo'"
+
+REFERENCE           SIMPLECREDITS
+LANG_ENGLISH        "Ver los Créditos del Juego"
+
+REFERENCE           MAINMENU
+LANG_ENGLISH        "En el Menú Principal"
+
+REFERENCE           MAPUNKNOWN
+LANG_ENGLISH        "Map: &&1"
+
+REFERENCE           DIFFICULTY_EASY
+LANG_ENGLISH        "Dificultad: Recluta"
+
+REFERENCE           DIFFICULTY_MEDIUM
+LANG_ENGLISH        "Dificultad: Profesional"
+
+REFERENCE           DIFFICULTY_HARD
+LANG_ENGLISH        "Dificultad: Curtido"
+
+REFERENCE           DIFFICULTY_FU
+LANG_ENGLISH        "Dificultad: Veterano"
+
+REFERENCE           DIFFICULTY_UNKNOWN
+LANG_ENGLISH        "Dificultad: Desconocido"
+
+ENDMARKER

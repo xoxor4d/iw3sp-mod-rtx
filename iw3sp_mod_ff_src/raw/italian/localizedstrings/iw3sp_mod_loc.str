@@ -1,0 +1,196 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           MENU_UNLOCK_ALL
+LANG_ITALIAN        "Sblocca tutte le missioni e i trucchi"
+
+REFERENCE           MENU_RESET_ALL
+LANG_ITALIAN        "Reimposta il progresso delle missioni e i trucchi"
+
+REFERENCE           MENU_ARE_YOU_SURE_UNLOCK
+LANG_ITALIAN        "Sbloccare tutte le missioni e i trucchi?"
+
+REFERENCE           MENU_ARE_YOU_SURE_RESET
+LANG_ITALIAN        "Sei sicuro di voler ripristinare il progresso delle missioni e i trucchi?"
+
+REFERENCE           MENU_QUIT_TO_DESKTOP
+LANG_ITALIAN        "Esci e torna al desktop"
+
+REFERENCE           MENU_LASTCHECKPOINT
+LANG_ITALIAN        "Ultimo checkpoint"
+
+REFERENCE           MENU_LASTCHECKPOINT_DESC
+LANG_ITALIAN        "Ricomincia dall'ultimo checkpoint?"
+
+REFERENCE           MENU_STATSHASBEENRESET
+LANG_ITALIAN        "Il tuo profilo, compreso il progresso delle missioni e i trucchi, è stato ripristinato."
+
+REFERENCE           MENU_UPDATE_NEW_UPDATE
+LANG_ITALIAN        "Nuovo aggiornamento disponibile.\n Vuoi scaricare il nuovo aggiornamento?"
+
+REFERENCE           MENU_UPDATE_REQUIRES_RESTART
+LANG_ITALIAN        "L'aggiornamento richiede il riavvio."
+
+REFERENCE           MENU_UPDATE_RESTART
+LANG_ITALIAN        "Riavvia il gioco"
+
+REFERENCE           MENU_ENABLE_AUTOUPDATE
+LANG_ITALIAN        "Aggiornamento automatico"
+
+REFERENCE           MENU_CHECK_FOR_UPDATE
+LANG_ITALIAN        "Verifica aggiornamenti"
+
+REFERENCE           MENU_CHECKING_UPDATE
+LANG_ITALIAN        "Verifica degli aggiornamenti in corso"
+
+REFERENCE           MENU_NO_UPDATES_AVAILABLE
+LANG_ITALIAN        "Nessun aggiornamento disponibile"
+
+REFERENCE           MENU_SERVER_OFFLINE
+LANG_ITALIAN        "Download dell'aggiornamento non disponibile. Server offline."
+
+REFERENCE           MENU_UPDATER_CUR_DOWNLOAD_SPEED
+LANG_ITALIAN        "Velocità di download attuale: "
+
+REFERENCE           MENU_ACHIEVEMENTS
+LANG_ITALIAN        "Obiettivi"
+
+REFERENCE           MENU_ACHIEVEMENTS_TITLE
+LANG_ITALIAN        "OBIETTIVI"
+
+REFERENCE           MENU_ACHIEVEMENTS_DATE_RECEIVED
+LANG_ITALIAN        "Data di ricezione:"
+
+REFERENCE           MENU_IW3SP_MOD_OPTIONS
+LANG_ITALIAN        "IW3SP-MOD"
+
+REFERENCE           MENU_RESET_ACHIEVEMENTS
+LANG_ITALIAN        "Ripristina obiettivi"
+
+REFERENCE           MENU_RESET_ACHIEVEMENTS_SURE
+LANG_ITALIAN        "Vuoi ripristinare il progresso degli obiettivi?"
+
+REFERENCE           MENU_RESET_ACHIEVEMENTS_COMPELETED
+LANG_ITALIAN        "Il progresso degli obiettivi è stato ripristinato"
+
+REFERENCE           MENU_ENEMY_INTEL_TITLE
+LANG_ITALIAN        "Informazioni nemico"
+
+REFERENCE           MENU_ENEMY_INTEL_COUNT
+LANG_ITALIAN        "&&1/&&2 informazioni trovate"
+
+REFERENCE           MENU_EXTERNAL_CONSOLE
+LANG_ITALIAN        "Console esterna"
+
+REFERENCE           MENU_BRANDING
+LANG_ITALIAN        "Versione in mostra"
+
+REFERENCE           MENU_WIP
+LANG_ITALIAN        "LAVORO IN CORSO"
+
+REFERENCE           MENU_STATS_TITLE
+LANG_ITALIAN        "STATISTICHE"
+
+REFERENCE           MENU_STATS
+LANG_ITALIAN        "Statistiche"
+
+REFERENCE           MENU_CAREER_BULLETS_FIRED
+LANG_ITALIAN        "Proiettili sparati"
+
+REFERENCE           MENU_CAREER_BULLETS_HIT
+LANG_ITALIAN        "Proiettili colpiti"
+
+REFERENCE           MENU_CAREER_DEATHS
+LANG_ITALIAN        "Morti"
+
+REFERENCE           MENU_CAREER_HEADSHOTS
+LANG_ITALIAN        "Colpi alla testa"
+
+REFERENCE           MENU_CAREER_KILLS
+LANG_ITALIAN        "Uccisioni"
+
+REFERENCE           MENU_CAREER_PLAYTIMESP
+LANG_ITALIAN        "Tempo di gioco totale"
+
+REFERENCE           MENU_SP_STAT_TIME_FORMAT
+LANG_ITALIAN        "G      O        M       S"
+
+REFERENCE           MENU_MUSIC_VOLUME
+LANG_ITALIAN        "Volume della musica"
+
+REFERENCE           MENU_VOICE_VOLUME
+LANG_ITALIAN        "Volume della voce"
+
+REFERENCE           MENU_CINEMATIC_VOLUME
+LANG_ITALIAN        "Volume cinematico"
+
+REFERENCE           MENU_KEYBOARD_AND_MOUSE_OPTIONS
+LANG_ITALIAN        "Tastiera/Mouse"
+
+REFERENCE           MENU_GAMEPAD_OPTIONS
+LANG_ITALIAN        "Gamepad"
+
+REFERENCE           MENU_GAMEPAD_MISC_SETTINGS
+LANG_ITALIAN        "Impostazioni varie"
+
+REFERENCE           MENU_GAMEPAD_BUTTONS_AND_STICKS_SETTINGS
+LANG_ITALIAN        "Pulsanti/Sticks"
+
+REFERENCE           MENU_GAMEPAD_RESET_DEFAULT_SETTINGS
+LANG_ITALIAN        "Ripristina Controlli Predefiniti"
+
+REFERENCE           MENU_GAMEPAD_ENABLED
+LANG_ITALIAN        "Gamepad Abilitato"
+
+REFERENCE           MENU_GAMEPAD_BUTTON_STYLE
+LANG_ITALIAN        "Stile Pulsanti"
+
+REFERENCE           MENU_GAMEPAD_BUTTON_STYLE_XBOX
+LANG_ITALIAN        "Xbox"
+
+REFERENCE           MENU_GAMEPAD_BUTTON_STYLE_SONY
+LANG_ITALIAN        "PlayStation"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_LOW
+LANG_ITALIAN        "Bassa"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_MEDIUM
+LANG_ITALIAN        "Media"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_HIGH
+LANG_ITALIAN        "Alta"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_VERY_HIGN
+LANG_ITALIAN        "Molto Alta"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_INSANE
+LANG_ITALIAN        "Folle"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_3
+LANG_ITALIAN        "(Personalizzata): 3"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_5
+LANG_ITALIAN        "(Personalizzata): 5"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_6
+LANG_ITALIAN        "(Personalizzata): 6"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_8
+LANG_ITALIAN        "(Personalizzata): 8"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
+LANG_ITALIAN        "(Personalizzata): 9"
+
+ENDMARKER
