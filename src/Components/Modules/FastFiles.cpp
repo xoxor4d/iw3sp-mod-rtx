@@ -120,7 +120,10 @@ namespace Components
 
 		FastFiles::AddZonePath("iw3sp_data\\zone\\");
 		FastFiles::AddZonePath("iw3sp_data\\zone\\english\\");
+		FastFiles::AddZonePath("iw3sp_data\\zone\\french\\");
 		FastFiles::AddZonePath("iw3sp_data\\zone\\german\\");
+		FastFiles::AddZonePath("iw3sp_data\\zone\\italian\\");
+		FastFiles::AddZonePath("iw3sp_data\\zone\\spanish\\");
 		FastFiles::AddZonePath("iw3sp_data\\zone\\russian\\");
 
 		Command::Add("loadzone", [](Command::Params* params)
