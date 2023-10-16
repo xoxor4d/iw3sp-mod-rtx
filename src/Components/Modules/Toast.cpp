@@ -37,9 +37,19 @@ namespace Components
 			int bHeight = 74;
 
 			int imgDim = 60;
+			float fontSize = 0.0f;
+			float descSize = 0.0f;
 
-			float fontSize = 0.55f;
-			float descSize = 0.75f;
+			if (Language::GetCurrentLanguage() == "russian")
+			{
+				fontSize = 1.0f;
+				descSize = 1.05f;
+			}
+			else
+			{
+				fontSize = 0.55f;
+				descSize = 0.75f;
+			}
 
 			int xPos = 0;
 
