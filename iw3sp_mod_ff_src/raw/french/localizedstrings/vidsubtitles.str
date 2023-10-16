@@ -1,0 +1,327 @@
+// dumped by IW3SP_MOD Sun Oct 15 22:36:14 2023
+
+// Note to translators:
+// If a sentence is the same in your language then please change it to #same
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN  "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG				 "C:\trees\cod3\cod3\bin\StringEd.cfg"
+FILENOTES			 ""
+
+REFERENCE           AIRLIFT_VIDEO11
+LANG_FRENCH        "^2Commandement: ^7Marines ! On a peut-être une info sur la position d'Al-Asad dans la capitale. Le 1er bataillon est en route."
+
+REFERENCE           AIRLIFT_VIDEO12
+LANG_FRENCH        "^2Commandement: ^7Les renseignements des S.A.S. indiquent qu'Al-Asad pourrait détenir une tête nucléaire russe. Il faut agir vite. Les équipes du déminage ont été déployées dans la zone."
+
+REFERENCE           AIRLIFT_VIDEO13
+LANG_FRENCH        "^2Commandement: ^7Les unités Reconnaissance et Belette Sauvage ont détruit la plupart des défenses aériennes, mais les forces au sol d'Al-Asad restent une menace."
+
+REFERENCE           AIRLIFT_VIDEO14
+LANG_FRENCH        "^2Lt. Vasquez: ^7Bref, on va mettre le paquet. On chope Al-Asad et on la termine, cette guerre. À vous de jouer, Marines."
+
+REFERENCE           AMBUSH_VIDEO11
+LANG_FRENCH        "^2Sergent Griggs: ^7Bon, on l'a eu, l'enfoiré."
+
+REFERENCE           AMBUSH_VIDEO110
+LANG_FRENCH        "^2Gaz: ^7Les péchés de nos pères..."
+
+REFERENCE           AMBUSH_VIDEO111
+LANG_FRENCH        "^2Sergent Griggs: ^7C'est des conneries !"
+
+REFERENCE           AMBUSH_VIDEO12
+LANG_FRENCH        "^2Capitaine Price: ^7Pourtant, ce n'est pas le responsable de la mort de vos marines. Désolé."
+
+REFERENCE           AMBUSH_VIDEO13
+LANG_FRENCH        "^2Gaz: ^7Imran Zakhaev, hein ? C'est un vrai fantôme. Nos services disent qu'il se cache."
+
+REFERENCE           AMBUSH_VIDEO14
+LANG_FRENCH        "^2Capitaine Price: ^7Eh bien, j'ai un plan pour le trouver."
+
+REFERENCE           AMBUSH_VIDEO15
+LANG_FRENCH        "^2Sergent Griggs: ^7J'écoute."
+
+REFERENCE           AMBUSH_VIDEO16
+LANG_FRENCH        "^2Sergent Griggs: ^7Le fiston."
+
+REFERENCE           AMBUSH_VIDEO17
+LANG_FRENCH        "^2Capitaine Price: ^7Le fils de Zakhaev. Chef des forces ultranationalistes sur le terrain. Les pommes pourries ne tombent jamais loin de l'arbre."
+
+REFERENCE           AMBUSH_VIDEO18
+LANG_FRENCH        "^2Capitaine Price: ^7Le loyaliste Kamarov sait où se trouve le gamin."
+
+REFERENCE           AMBUSH_VIDEO19
+LANG_FRENCH        "^2Sergent Griggs: ^7Et, ce petit con sait où se trouve Zakhaev."
+
+REFERENCE           ARMADA_VIDEO11
+LANG_FRENCH        "^2Lt. Vasquez: ^7Marines ! Les guetteurs ont peut-être repéré Al-Asad dans un bâtiment à l'ouest de la ville."
+
+REFERENCE           ARMADA_VIDEO12
+LANG_FRENCH        "^2Lt. Vasquez: ^7On va sécuriser le périmètre et choper Al-Asad. Ok, Marines ?"
+
+REFERENCE           ATTRACT_LOOP_VIDEO1
+LANG_FRENCH        "50 000 personnes vivaient ici... Et aujourd'hui, c'est une ville fantôme."
+
+REFERENCE           ATTRACT_LOOP_VIDEO10
+LANG_FRENCH        "Je recharge !"
+
+REFERENCE           ATTRACT_LOOP_VIDEO11
+LANG_FRENCH        "Contre-mesures, allez !"
+
+REFERENCE           ATTRACT_LOOP_VIDEO12
+LANG_FRENCH        "Faites-nous un tir de couverture !"
+
+REFERENCE           ATTRACT_LOOP_VIDEO13
+LANG_FRENCH        "Restez sur vos gardes ! En avant !"
+
+REFERENCE           ATTRACT_LOOP_VIDEO2
+LANG_FRENCH        "Nos soi-disant chefs n'ont pas été à la hauteur. Ils ont détruit notre culture, notre économie et notre honneur."
+
+REFERENCE           ATTRACT_LOOP_VIDEO3
+LANG_FRENCH        "... Les Marines américains en alerte rouge ont reçu l'ordre d'envahir ce petit pays riche en pétrole..."
+
+REFERENCE           ATTRACT_LOOP_VIDEO4
+LANG_FRENCH        "Nikolai, le coup d'état n'est qu'une diversion."
+
+REFERENCE           ATTRACT_LOOP_VIDEO5
+LANG_FRENCH        "Aussi vrai qu'ils ont dévasté notre pays, nous dévasterons le leur"
+
+REFERENCE           ATTRACT_LOOP_VIDEO6
+LANG_FRENCH        "Et vous croyez que ça mettra fin au carnage ?"
+
+REFERENCE           ATTRACT_LOOP_VIDEO7
+LANG_FRENCH        "On a un homme à terre !"
+
+REFERENCE           ATTRACT_LOOP_VIDEO8
+LANG_FRENCH        "Il nous le faut vivant !"
+
+REFERENCE           ATTRACT_LOOP_VIDEO9
+LANG_FRENCH        "Contact !"
+
+REFERENCE           BLACKOUT_VIDEO11
+LANG_FRENCH        "^2Gaz: ^7Capitaine Price, Al-Asad vient d'exécuter le président Al-Fulani en direct."
+
+REFERENCE           BLACKOUT_VIDEO13
+LANG_FRENCH        "^2Capitaine Price: ^7Les Américains se chargent d'Al-Asad. Et on ne peut plus rien pour Al-Fulani. Mais dans moins de trois heures, nom de code Nikolai sera exécuté en Russie."
+
+REFERENCE           BLACKOUT_VIDEO14
+LANG_FRENCH        "^2Gaz: ^7Nikolai ?"
+
+REFERENCE           BLACKOUT_VIDEO15
+LANG_FRENCH        "^2Capitaine Price: ^7Nikolai est notre informateur chez les ultranationalistes. Il a fourni les renseignements sur l'opération du cargo."
+
+REFERENCE           BLACKOUT_VIDEO16
+LANG_FRENCH        "^2Capitaine Price: ^7Nikolai est grillé à présent. On doit le sortir de là."
+
+REFERENCE           BLACKOUT_VIDEO17
+LANG_FRENCH        "^Capitaine Price: ^7... On s'occupe de nos amis. On y va."
+
+REFERENCE           BOG_A_VIDEO11
+LANG_FRENCH        "^2Présentateur: ^7Après de durs combats aujourd'hui, les Marines ont avancé dans la ville où s'est retranché Al-Asad..."
+
+REFERENCE           BOG_A_VIDEO12
+LANG_FRENCH        "^2Présentateur: ^7Les combats se sont intensifiés dans la capitale. La nuit est illuminée par les tirs anti-aériens et les bâtiments en flammes."
+
+REFERENCE           BOG_A_VIDEO13
+LANG_FRENCH        "^2Commandement: ^7Position confirmée. Je répète. Coordonnées 52761-9, terminé."
+
+REFERENCE           BOG_A_VIDEO14
+LANG_FRENCH        "^2Lt. Vasquez: ^7Bravo Six, bien reçu, à vous."
+
+REFERENCE           BOG_A_VIDEO15
+LANG_FRENCH        "^2Commandement: ^7Bravo Six, on a un Abrams immobilisé. Unité "Sanglier"."
+
+REFERENCE           BOG_A_VIDEO16
+LANG_FRENCH        "^2Commandement: ^7Lieutenant Vasquez, votre unité se fait canarder."
+
+REFERENCE           BOG_A_VIDEO17
+LANG_FRENCH        "^2Lt. Vasquez: ^7Reçu. Bravo en approche. Dites à "Sanglier" d'être prêt. On y va. Terminé."
+
+REFERENCE           BOG_B_VIDEO11
+LANG_FRENCH        "^2Présentateur: ^7...combats intensifs ont eu lieu toute la nuit pendant que les Marines progressaient dans la capitale pour capturer Khaled Al-Asad."
+
+REFERENCE           BOG_B_VIDEO12
+LANG_FRENCH        "^2Présentateur: ^7Des combats sporadiques se déroulent alors que le gros des forces d'Al-Asad se replie vers le palais présidentiel."
+
+REFERENCE           BOG_B_VIDEO13
+LANG_FRENCH        "^2Lt. Vasquez: ^7Q.G. ici le lieutenant Vasquez. Sanglier est en route. Pour rien au monde on manquerait la fête..."
+
+REFERENCE           CARGOSHIP_VIDEO11
+LANG_FRENCH        "^2Capitaine Price: ^7Équipe Bravo, nos renseignements viennent de notre informateur en Russie..."
+
+REFERENCE           CARGOSHIP_VIDEO12
+LANG_FRENCH        "^2Capitaine Price: ^7...Le colis est à bord d'un cargo estonien, immatriculé 52775..."
+
+REFERENCE           CARGOSHIP_VIDEO13
+LANG_FRENCH        "^2Capitaine Price: ^7Présence d'un équipage réduit et de sécurité à bord."
+
+REFERENCE           CARGOSHIP_VIDEO14
+LANG_FRENCH        "^2Gaz: ^7Règles d'engagement ?"
+
+REFERENCE           CARGOSHIP_VIDEO15
+LANG_FRENCH        "^2Capitaine Price: ^7Équipage sans importance."
+
+REFERENCE           COUP_VIDEO11
+LANG_FRENCH        "^2Marine: ^7Voiture en approche."
+
+REFERENCE           COUP_VIDEO12
+LANG_FRENCH        "^2Commandement: ^7Continuez de chercher."
+
+REFERENCE           HUNTED_VIDEO11
+LANG_FRENCH        "^2Gaz: ^7On a Nikolai ! On l'emmène à la cache d'Hambourg !"
+
+REFERENCE           HUNTED_VIDEO12
+LANG_FRENCH        "^2Gaz: ^7Arrivée estimée dans 7 heures ! Terminé !"
+
+REFERENCE           ICBM_VIDEO11
+LANG_FRENCH        "^2Imran Zakhaev: ^7Nos soi-disants chefs nous ont vendus à l'Ouest... ont détruit notre culture... notre économie... notre honneur."
+
+REFERENCE           ICBM_VIDEO12
+LANG_FRENCH        "^2Imran Zakhaev: ^7Notre sang a été répandu sur notre sol."
+
+REFERENCE           ICBM_VIDEO13
+LANG_FRENCH        "^2Imran Zakhaev: ^7Mon sang..."
+
+REFERENCE           ICBM_VIDEO14
+LANG_FRENCH        "^2Imran Zakhaev: ^7Sur leurs mains."
+
+REFERENCE           ICBM_VIDEO15
+LANG_FRENCH        "^2Imran Zakhaev: ^7Ce sont eux les envahisseurs."
+
+REFERENCE           ICBM_VIDEO16
+LANG_FRENCH        "^2Imran Zakhaev: ^7Les troupes américaines et anglaises doivent quitter la Russie immédiatement..."
+
+REFERENCE           ICBM_VIDEO17
+LANG_FRENCH        "^2Imran Zakhaev: ^7Ou devront en payer le prix !"
+
+REFERENCE           ICBM_VIDEO21
+LANG_FRENCH        "^2Capitaine Price: ^7C'est simple. Si on reprend pas le site de lancement, dès demain toutes les cartes d'état-major seront fausses."
+
+REFERENCE           ICBM_VIDEO22
+LANG_FRENCH        "^2Capitaine Price: ^7OK pour le parachutage. Equipe Charlie, on y va"
+
+REFERENCE           ICBM_VIDEO23
+LANG_FRENCH        "^2Capitaine Price: ^7Second largage, en approche. Bravo, tenez-vous prêts. Go."
+
+REFERENCE           JEEPRIDE_VIDEO11
+LANG_FRENCH        "^2Commandement: ^7Point d'extraction No 1 compromis. Rejoignez le point d'extraction No 2 au sud du pont."
+
+REFERENCE           JEEPRIDE_VIDEO12
+LANG_FRENCH        "^2Commandement: ^7Présence ennemie... importante."
+
+REFERENCE           JEEPRIDE_VIDEO13
+LANG_FRENCH        "^2Sergent Griggs: ^7C'est trop chaud, mec... Mais, la température de la pièce ? Pitié. Une bière aurait déjà gelé !"
+
+REFERENCE           JEEPRIDE_VIDEO14
+LANG_FRENCH        "^2Capitaine Price: ^7Une blonde peut-être. Ou un verre d'eau, à la limite. Mais une pinte de brune ?"
+
+REFERENCE           JEEPRIDE_VIDEO15
+LANG_FRENCH        "^2Sergent Griggs: ^7Va falloir que je fasse votre éducation quand on sera rentré au pays."
+
+REFERENCE           JEEPRIDE_VIDEO16
+LANG_FRENCH        "^2Gaz: ^7En tout cas, on passe d'abord par Londres. C'est moi qui paie."
+
+REFERENCE           JEEPRIDE_VIDEO17
+LANG_FRENCH        "^2Sergent Griggs: ^7Ouais... au moins, c'est pas la fin du monde... vas-y"
+
+REFERENCE           KILLHOUSE_VIDEO11
+LANG_FRENCH        "^2Gaz: ^7D'abord, la bonne nouvelle : le monde pète le feu."
+
+REFERENCE           KILLHOUSE_VIDEO12
+LANG_FRENCH        "^2Gaz: ^7On a une guerre civile en Russie : gouvernement contre ultranationalistes, et 15 000 bombes nucléaires en jeu."
+
+REFERENCE           KILLHOUSE_VIDEO13
+LANG_FRENCH        "^2Capitaine Price: ^7Ouais, la routine, quoi."
+
+REFERENCE           KILLHOUSE_VIDEO14
+LANG_FRENCH        "^2Gaz: ^7Khaled Al-Asad. Actuellement le deuxième homme fort du Moyen-Orient. Le bruit court qu'il a les moyens de passer numéro un, là-bas. Les services secrets l'ont à l'oeil."
+
+REFERENCE           KILLHOUSE_VIDEO15
+LANG_FRENCH        "^2Capitaine Price: ^7Et la mauvaise nouvelle ?"
+
+REFERENCE           KILLHOUSE_VIDEO16
+LANG_FRENCH        "^2Gaz: ^7On a un bleu qui arrive aujourd'hui, tout droit sorti des sélections. Il s'appelle Soap."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO11
+LANG_FRENCH        "^2Gaz: ^7Équipe Une en approche."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO12
+LANG_FRENCH        "^2Marine: ^7Équipe Deux vers la sécurité de la base."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO13
+LANG_FRENCH        "^2SAS: ^7Équipe Trois dans la base."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO14
+LANG_FRENCH        "^2Commandement: ^7Équipe Bravo, on a une bonne et une mauvaise nouvelles. La salle de contrôle est tout près, à moins de 500 mètres au sud-ouest de votre position."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO14PT2
+LANG_FRENCH        "^2Gaz : ^7 Vous devez y charger les codes d'annulation pour détruire les missiles en vol."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO15
+LANG_FRENCH        "^2Capitaine Price: ^7Gaz, accompagne les Yankees et attaque le poste de sécurité. Soap, Griggs et moi, on va vers la salle de contrôle."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO16
+LANG_FRENCH        "^2Gaz: ^7Compris. C'est quoi la mauvaise nouvelle ?"
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO17
+LANG_FRENCH        "^2Commandement: ^7La mauvaise nouvelle c'est qu'on a pas encore ces codes, terminé."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO18
+LANG_FRENCH        "^2Capitaine Price: ^7Ouais. On va mettre le paquet. Terminé."
+
+REFERENCE           SCOUTSNIPER_VIDEO11
+LANG_FRENCH        "^2Capitaine Price: ^7J'étais juste lieutenant à l'époque... à faire le sale boulot."
+
+REFERENCE           SCOUTSNIPER_VIDEO12
+LANG_FRENCH        "^2Capitaine Price: ^7Tchernobyl. Noël pour les méchants. Même dix ans plus tard, beaucoup y allaient pour obtenir du matériel nucléaire. Beaucoup... y compris un certain Imran Zakhaev."
+
+REFERENCE           SCOUTSNIPER_VIDEO13
+LANG_FRENCH        "^2Capitaine Price: ^7Bien sûr on pouvait pas les regarder sans rien faire. Laisser ces tarés se payer du combustile irradié? Hmm.. L'hiver nucléaire c'est pas ma saison préférée."
+
+REFERENCE           SCOUTSNIPER_VIDEO14
+LANG_FRENCH        "^2Capitaine Price: ^7C'était la première fois depuis la Deuxième Guerre mondiale que notre gouvernement autorisait un assassinat... J'étais sous les ordres du capitaine MacMillan..."
+
+REFERENCE           VILLAGE_ASSAULT_VIDEO11
+LANG_FRENCH        "^2Nikolai: ^7C'est un lâche, capitaine Price. Al-Asad ne se sacrifierait pas."
+
+REFERENCE           VILLAGE_ASSAULT_VIDEO12
+LANG_FRENCH        "^2Nikolai: ^7Al-Asad utilisait une cachette en Azerbaïdjan. Je vous envoie les coordonnées."
+
+REFERENCE           VILLAGE_ASSAULT_VIDEO13
+LANG_FRENCH        "^2Capitaine Price: ^7Compris Nikolai. Gaz, rassemble l'équipe. On va en Azerbaïdjan."
+
+REFERENCE           VILLAGE_ASSAULT_VIDEO14
+LANG_FRENCH        "^2Gaz: ^7Oui. J'ai entendu dire que c'est très beau à cette période."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO11
+LANG_FRENCH        "^2Gaz: ^7Arrivée estimée de l'hélico dans une demi-heure minimum, capitaine."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO12
+LANG_FRENCH        "^2Capitaine Price: ^7C'est pas bon, ça. On tiendra pas vingt minutes, ici."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO13
+LANG_FRENCH        "^2Capitaine Price: ^7Tous les tarés ultranationalistes à la botte de Zakhaev vont se pointer par ici pour récupérer Al-Asad."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO14
+LANG_FRENCH        "^2Gaz: ^7Ou ce qu'il reste de lui."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO15
+LANG_FRENCH        "^2Capitaine Price: ^7Exact. On va placer des charges le long de la ligne Alpha sur la colline sud..."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO16
+LANG_FRENCH        "^2Capitaine Price: ^7... Et d'autres sur la ligne Bravo."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO17
+LANG_FRENCH        "^2Capitaine Price: ^7On va les retenir jusqu'au sommet, puis on se fixera sur le site d'extraction, dans les champs autour de la ferme. Des questions ?"
+
+REFERENCE           VILLAGE_DEFEND_VIDEO18
+LANG_FRENCH        "^2Gaz: ^7Ok c'est parti."
+
+ENDMARKER

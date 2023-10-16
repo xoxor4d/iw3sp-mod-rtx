@@ -281,16 +281,16 @@ REFERENCE           VILLAGE_DEFEND_VIDEO18
 LANG_ENGLISH        "^2Gaz: ^7Let's do this."
 
 REFERENCE           LAUNCHFACILITY_B_VIDEO14PT2
-LANG_ENGLISH        "^2Gaz: ^7 That's where you'll need to upload the abort codes to destroy the missiles in flight."
+LANG_ENGLISH        "^2Command: ^7That's where you'll need to upload the abort codes to destroy the missiles in flight."
 
 REFERENCE           ATTRACT_LOOP_VIDEO1
-LANG_ENGLISH        "50 thousand people used to live here... now its a ghost town."
+LANG_ENGLISH        "Fifty thousand people used to live here... now it's a ghost town."
 
 REFERENCE           ATTRACT_LOOP_VIDEO2
 LANG_ENGLISH        "Our so-called leaders prostituted us to the west...Destroyed our culture...Our economies...Our honor."
 
 REFERENCE           ATTRACT_LOOP_VIDEO3
-LANG_ENGLISH        "US Marines stationed on high alert were given the order to invade a small but oil..."
+LANG_ENGLISH        "U.S Marines, stationed on high alert, were given the order to invade a small but oil..."
 
 REFERENCE           ATTRACT_LOOP_VIDEO4
 LANG_ENGLISH        "Nikolai, the coup is just a distraction."
@@ -302,22 +302,22 @@ REFERENCE           ATTRACT_LOOP_VIDEO6
 LANG_ENGLISH        "You think this will stop the bloodshed?"
 
 REFERENCE           ATTRACT_LOOP_VIDEO7
-LANG_ENGLISH        "We gotta man down!"
+LANG_ENGLISH        "We got a man down!"
 
 REFERENCE           ATTRACT_LOOP_VIDEO8
-LANG_ENGLISH        "We need take him alive!"
+LANG_ENGLISH        "We need to take him alive!"
 
 REFERENCE           ATTRACT_LOOP_VIDEO9
 LANG_ENGLISH        "Contact!"
 
 REFERENCE           ATTRACT_LOOP_VIDEO10
-LANG_ENGLISH        "Zampella, reloading!"
+LANG_ENGLISH        "Zampella! Reloading!"
 
 REFERENCE           ATTRACT_LOOP_VIDEO11
 LANG_ENGLISH        "Flares away, flares away!"
 
 REFERENCE           ATTRACT_LOOP_VIDEO12
-LANG_ENGLISH        "Give me some coveving fire!"
+LANG_ENGLISH        "Give me some covering fire!"
 
 REFERENCE           ATTRACT_LOOP_VIDEO13
 LANG_ENGLISH        "Stay close! Let's go!"
