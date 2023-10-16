@@ -6,6 +6,8 @@ sound,iw3sp_mod_common,,all_sp
 rawfile,maps/killhouse.gsc
 rawfile,maps/killhouse_code.gsc
 rawfile,maps/village_assault_code.gsc
+rawfile,maps/village_defend.gsc
+rawfile,maps/village_defend_code.gsc
 rawfile,animscripts/battlechatter.gsc
 material,trophy_0
 material,trophy_1
