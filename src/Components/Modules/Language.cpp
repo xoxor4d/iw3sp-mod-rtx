@@ -54,7 +54,7 @@ namespace Components
 	
 	void Language::IntroSubtitlesStub()
 	{
-		if (Language::GetCurrentLanguage() == "english")
+		if (Language::GetCurrentLanguage() == "english" || Language::GetCurrentLanguage() == "russian")
 		{
 			Utils::Hook::Set<const char*>(0x420F45, "video/vidsubtitles.csv");
 			Utils::Hook::Set<const char*>(0x567AA4, "video/vidsubtitles.csv");

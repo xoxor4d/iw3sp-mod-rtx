@@ -21,10 +21,29 @@ namespace Components
 		if (FastFiles::Exists(Utils::String::VA("%s_iw3sp_mod_patch", languageName)))
 		{
 			XZoneInfoStack[i].name = Utils::String::VA("%s_iw3sp_mod_patch", languageName);
-			XZoneInfoStack[i].allocFlags = Game::XZONE_FLAGS::XZONE_LOC_POST_GFX;
-			XZoneInfoStack[i].freeFlags = Game::XZONE_FLAGS::XZONE_LOC_POST_GFX_FREE;
+			XZoneInfoStack[i].allocFlags = Game::XZONE_FLAGS::XZONE_MOD;
+			XZoneInfoStack[i].freeFlags = Game::XZONE_FLAGS::XZONE_MOD_FREE;
 			++i;
+			
 			CommonPatch::iw3sp_mod_ff_exists = true;
+
+			//override the exists the fonts from code_post_gfx
+			if (Language::GetCurrentLanguage() == "russian")
+			{
+				Game::DB_LoadXAssets(XZoneInfoStack, i, false);
+				Game::R_BeginRemoteScreenUpdate();
+				WaitForSingleObject(Game::DatabaseHandle, 0xFFFFFFFF);
+				Game::R_EndRemoteScreenUpdate();
+				i = 0;
+
+				Utils::Hook::Set<const char*>(0x42033E, "decode_characters_64px");
+				Utils::Hook::Set<const char*>(0x420365, "decode_characters_64px_glow");
+		}
+		else
+			{
+				Utils::Hook::Set<const char*>(0x42033E, "decode_characters");
+				Utils::Hook::Set<const char*>(0x420365, "decode_characters_glow");
+			}
 		}
 		else
 			CommonPatch::iw3sp_mod_ff_exists = false;
@@ -381,9 +400,9 @@ namespace Components
 		Config::Set<std::string>("language", Game::SEH_GetLanguageName(langIndex));
 	}
 
-	void __declspec(naked) ui_language_stub()
+	void __declspec(naked) updateLanguageStub()
 	{
-		const static uint32_t retn_addr = 0x5669B8;
+		const static uint32_t retn_addr = 0x5674FD;
 		__asm
 		{
 			push	eax; // value
@@ -488,6 +507,7 @@ namespace Components
 		Utils::Hook(0x5D70DA, R_Cinematic_BinkOpen_stub01, HOOK_CALL).install()->quick();
 		Utils::Hook(0x5D70FC, R_Cinematic_BinkOpen_stub02, HOOK_CALL).install()->quick();
 
+		Utils::Hook(0x5674F8, updateLanguageStub, HOOK_JUMP).install()->quick();
 
 		Utils::Hook(0x5669B3, ui_language_stub, HOOK_JUMP).install()->quick();
 
