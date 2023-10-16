@@ -509,8 +509,6 @@ namespace Components
 
 		Utils::Hook(0x5674F8, updateLanguageStub, HOOK_JUMP).install()->quick();
 
-		Utils::Hook(0x5669B3, ui_language_stub, HOOK_JUMP).install()->quick();
-
 		// Com_Quit_f_stub for auto-update.
 		//Utils::Hook(0x595324, Com_Quit_f_stub, HOOK_CALL).install()->quick();
 
