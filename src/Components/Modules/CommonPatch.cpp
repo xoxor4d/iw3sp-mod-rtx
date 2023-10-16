@@ -127,62 +127,14 @@ namespace Components
 			Game::Com_Printf(0, "Game [^3INFO^7]: missions and cheats has been resets on your game profile.\n");
 		});
 
-		Command::Add("test_sendservercmd_1", [](Command::Params*)
-		{
-			Game::SV_GameSendServerCommand(-1, "server_test_cmd");
-		});
-
-		Command::Add("test_sendservercmd_2", [](Command::Params*)
-		{
-			Game::SV_GameSendServerCommand(-1, Utils::String::VA("print \"%s\"", "testing"));
-		});
-
 		ServerCommand::Add("server_test_cmd", []()
 		{
 			Game::Com_Printf(0, "^8MY FIRST TEST SERVER COMMAND\n");
 		});
 
-		Command::Add("vm_anim", [](Command::Params* params)
-		{
-			//Game::g_clients->ps.events[Game::g_clients->ps.eventSequence & 3] = 22;
-			//Game::g_clients->ps.aimSpreadScale = 255.0;
-			//Game::g_clients->ps.weaponTime = 1000;
-			//Game::g_clients->ps.weaponstate = (0 != 0) + 1;
-			//int pm_flags = Game::g_clients->ps.pm_flags;
-			//if ((pm_flags & 1) != 0)
-			//	Game::g_clients->ps.pm_flags = pm_flags | 0x200;
-			//if (Game::g_clients->ps.pm_type < 4)
-			//	Game::g_clients->ps.weapAnim = 20 | ~(unsigned __int16)Game::g_clients->ps.weapAnim & 0x200;
-
-			//Game::g_clients->ps.weapFlags |= 0x400;
-			//Game::g_clients->ps.forcedViewAnimWeaponIdx |= Game::g_clients->ps.weapon;
-			//Game::g_clients->ps.forcedViewAnimWeaponState = 7;
-
-			if (params->size() < 1) 
-			{
-				Game::Com_Printf(0, "Usage: vm_anim <index (integer from 0 to 32)>\n");
-				return;
-			}
-
-			int weaponIndex = std::atoi(params->get(1)); //Game::weapAnimFiles_t
-
-			Game::g_clients->ps.weaponstate = 0x0;
-			Game::g_clients->ps.weaponTime = Game::BG_WeaponNames[Game::g_clients->ps.weapon]->iReloadTime;
-			int pm_flags = Game::g_clients->ps.pm_flags;
-			if ((pm_flags & 1) != 0)
-				Game::g_clients->ps.pm_flags = pm_flags | 0x200;
-			if (Game::g_clients->ps.pm_type < 4)
-				Game::g_clients->ps.weapAnim = weaponIndex | ~(unsigned __int16)Game::g_clients->ps.weapAnim & 0x200;
-		});
-
-		Command::Add("test_loc_string_return_value", [](Command::Params*)
-		{
-			const auto value = Game::UI_SafeTranslateString("IW3SP_MOD_LOC_MAINMENU");
-			Game::Com_Printf(0, "^1%s\n", value);
-		});
-		
 		// Unlocked the developer_script flag from "write only" to "none"
 		Dvars::Functions::Dvar_FindVar("developer_script")->flags = Game::none;
+		Dvars::Functions::Dvar_FindVar("r_ignorehwgamma")->flags = Game::saved;
 
 		const float newDefault_con_inputBoxColor[4] = { 0.15f, 0.15f, 0.15f, 1.0f };
 		const float newDefault_con_inputHintBoxColor[4] = { 0.1f, 0.1f, 0.1f, 1.0f };
