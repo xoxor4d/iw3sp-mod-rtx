@@ -38,6 +38,24 @@ namespace Components
 		else if (!strcmp(languageName, "russian"))
 		{
 			LocalizedStrings::Set("MENU_ENGLISH", "Английский");
+			LocalizedStrings::Set("MENU_RECRUIT", "Новобранец");
+			LocalizedStrings::Set("MENU_REGULAR", "Рядовой");
+			LocalizedStrings::Set("MENU_HARDENED", "Закалённый");
+			LocalizedStrings::Set("SUBTITLE_BLACKOUT_PRI_SWITCHTOSNIPER411", "^2Капитан Прайс: ^7Соуп, бери снайперку.");
+			LocalizedStrings::Set("SUBTITLE_BLACKOUT_PRI_MAKEITQUICK4641", "^2Капитан Прайс: ^7Быстрее, Комаров. Мне нужен этот шпион...");
+			LocalizedStrings::Set("SCRIPT_INTELLIGENCE_FOUND", "Вы нашли вражеские разведданные.");
+			LocalizedStrings::Set("SCRIPT_INTELLIGENCE_OF_FOURTYFIVE", "Разведданных найдено &&1/45.");
+			LocalizedStrings::Set("SCRIPT_INTELLIGENCE_OF_SIXTY", "Разведданных найдено &&1/60.");
+			LocalizedStrings::Set("SCRIPT_INTELLIGENCE_OF_THIRTY", "Разведданных найдено &&1/30.");
+			LocalizedStrings::Set("SCRIPT_INTELLIGENCE_ONEREMAINING", "Остался &&1 разведданное.");
+			LocalizedStrings::Set("SCRIPT_INTELLIGENCE_PTS", "Разведданных найдено: &&1.");
+			LocalizedStrings::Set("SCRIPT_INTELLIGENCE_REMAINING", "Разведданных осталось: &&1.");
+			LocalizedStrings::Set("SCRIPT_PLATFORM_LAUNCHFACILITY_A_HINT_SMOKE", "Бросьте дымовую гранату ^3[{+smoke}]^7, чтобы незаметно приблизиться к вражеской технике.");
+			LocalizedStrings::Set("PLATFORM_SAVE_AND_QUIT", "Выйти в главное меню");
+			LocalizedStrings::Set("PLATFORM_PICKUPNEWWEAPON", "Нажмите ^3&&1^7, чтобы подобрать");
+			LocalizedStrings::Set("PLATFORM_SWAPWEAPONS", "Нажмите ^3&&1^7, чтобы сменить оружие и взять");
+			LocalizedStrings::Set("KILLHOUSE_ACCURACY_BONUS", "Премия за точность: -");
+			LocalizedStrings::Set("KILLHOUSE_ACCURACY_BONUS_ZERO", "Премия за точность: -0.0");
 			return;
 		}
 		else
