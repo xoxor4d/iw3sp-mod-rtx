@@ -1,0 +1,103 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           KILLHOUSE
+LANG_RUSSIAN        "'Новобранец'"
+
+REFERENCE           CARGOSHIP
+LANG_RUSSIAN        "'Корабль'"
+
+REFERENCE           COUP
+LANG_RUSSIAN        "'Переворот'"
+
+REFERENCE           BLACKOUT
+LANG_RUSSIAN        "'Полное затмение'"
+
+REFERENCE           ARMADA
+LANG_RUSSIAN        "'Чарли не сёрфят'"
+
+REFERENCE           BOG_A
+LANG_RUSSIAN        "'Болото'"
+
+REFERENCE           HUNTED
+LANG_RUSSIAN        "'Преследование'"
+
+REFERENCE           AC130
+LANG_RUSSIAN        "'Божья кара'"
+
+REFERENCE           BOG_B
+LANG_RUSSIAN        "'Кабан'"
+
+REFERENCE           AIRLIFT
+LANG_RUSSIAN        "'Шок и трепет'"
+
+REFERENCE           AFTERMATH
+LANG_RUSSIAN        "'Последствия'"
+
+REFERENCE           VILLAGE_ASSAULT
+LANG_RUSSIAN        "'Конспиративная квартира'"
+
+REFERENCE           SCOUTSNIPER
+LANG_RUSSIAN        "'Все в камуфляже'"
+
+REFERENCE           SNIPERESCAPE
+LANG_RUSSIAN        "'Убить одним выстрелом'"
+
+REFERENCE           VILLAGE_DEFEND
+LANG_RUSSIAN        "'Жара'"
+
+REFERENCE           AMBUSH
+LANG_RUSSIAN        "'Грехи отцов'"
+
+REFERENCE           ICBM
+LANG_RUSSIAN        "'Ультиматум'"
+
+REFERENCE           LAUNCHFACILITY_A
+LANG_RUSSIAN        "'Все на месте'"
+
+REFERENCE           LAUNCHFACILITY_B
+LANG_RUSSIAN        "'В командном пункте'"
+
+REFERENCE           JEEPRIDE
+LANG_RUSSIAN        "'Игра окончена'"
+
+REFERENCE           AIRPLANE
+LANG_RUSSIAN        "'Над облаками'"
+
+REFERENCE           SIMPLECREDITS
+LANG_RUSSIAN        "Смотрит игровые цитры"
+
+REFERENCE           MAINMENU
+LANG_RUSSIAN        "В главном меню"
+
+REFERENCE           MAPUNKNOWN
+LANG_RUSSIAN        "Карта: Неизвестно"
+
+REFERENCE           DIFFICULTY_EASY
+LANG_RUSSIAN        "Сложность: Новобранец"
+
+REFERENCE           DIFFICULTY_MEDIUM
+LANG_RUSSIAN        "Сложность: Рядовой"
+
+REFERENCE           DIFFICULTY_HARD
+LANG_RUSSIAN        "Сложность: Закалённый"
+
+REFERENCE           DIFFICULTY_FU
+LANG_RUSSIAN        "Сложность: Ветеран"
+
+REFERENCE           DIFFICULTY_UNKNOWN
+LANG_RUSSIAN        "Сложность: Неизвестно"
+
+ENDMARKER

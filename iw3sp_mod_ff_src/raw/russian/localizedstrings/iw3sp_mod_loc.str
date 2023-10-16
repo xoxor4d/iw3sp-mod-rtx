@@ -1,0 +1,193 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           MENU_UNLOCK_ALL
+LANG_RUSSIAN        "Открыть все задания и читы"
+
+REFERENCE           MENU_RESET_ALL
+LANG_RUSSIAN        "Сбросить прогресс"
+
+REFERENCE           MENU_ARE_YOU_SURE_UNLOCK
+LANG_RUSSIAN        "Вы действительно хотите открыть все задания и читы?\nПрогресс заданий не будет учитываться."
+
+REFERENCE           MENU_ARE_YOU_SURE_RESET
+LANG_RUSSIAN        "Вы действительно хотите сбросить ваш игровой прогресс заданий и читов?"
+
+REFERENCE           MENU_QUIT_TO_DESKTOP
+LANG_RUSSIAN        "Выйти на рабочий стол"
+
+REFERENCE           MENU_LASTCHECKPOINT
+LANG_RUSSIAN        "Посл. контрольная точка"
+
+REFERENCE           MENU_LASTCHECKPOINT_DESC
+LANG_ENGLISH        "Перезапустить прогресс к последней контрольной точки?"
+
+REFERENCE           MENU_STATSHASBEENRESET
+LANG_RUSSIAN        "Прогресс открытия заданий и читов сброшен, как при новой игре."
+
+REFERENCE           MENU_UPDATE_NEW_UPDATE
+LANG_RUSSIAN        "Доступно обновление клиента игры,\nначать установку сейчас?"
+
+REFERENCE           MENU_UPDATE_REQUIRES_RESTART
+LANG_RUSSIAN        "Для применения изменений необходим перезапуск игры"
+
+REFERENCE           MENU_UPDATE_RESTART
+LANG_RUSSIAN        "Перезапустить игру"
+
+REFERENCE           MENU_ENABLE_AUTOUPDATE
+LANG_RUSSIAN        "Автоматическое обновление"
+
+REFERENCE           MENU_CHECK_FOR_UPDATE
+LANG_RUSSIAN        "Проверить на обновления"
+
+REFERENCE           MENU_CHECKING_UPDATE
+LANG_RUSSIAN        "Проверка наличия обновлений"
+
+REFERENCE           MENU_NO_UPDATES_AVAILABLE
+LANG_RUSSIAN        "У вас установлены все последние обновления"
+
+REFERENCE           MENU_SERVER_OFFLINE
+LANG_RUSSIAN        "Загрузка обновления для обновления клиента недоступна. Сервер отключен."
+
+REFERENCE           MENU_UPDATER_CUR_DOWNLOAD_SPEED
+LANG_RUSSIAN        "Текущая скорость скачивания: "
+
+REFERENCE           MENU_ACHIEVEMENTS
+LANG_RUSSIAN        "Достижения"
+
+REFERENCE           MENU_ACHIEVEMENTS_TITLE
+LANG_RUSSIAN        "ДОСТИЖЕНИЯ"
+
+REFERENCE           MENU_ACHIEVEMENTS_DATE_RECEIVED
+LANG_RUSSIAN        "Дата получения:"
+
+REFERENCE           MENU_IW3SP_MOD_OPTIONS
+LANG_RUSSIAN        "IW3SP-MOD"
+
+REFERENCE           MENU_RESET_ACHIEVEMENTS
+LANG_RUSSIAN        "Сброс достижений"
+
+REFERENCE           MENU_RESET_ACHIEVEMENTS_SURE
+LANG_RUSSIAN        "Хотите сбросить текущий прогресс достижений?"
+
+REFERENCE           MENU_RESET_ACHIEVEMENTS_COMPELETED
+LANG_RUSSIAN        "Прогресс достижений был сброшен"
+
+REFERENCE           MENU_ENEMY_INTEL_TITLE
+LANG_RUSSIAN        "Вражеские разведданные"
+
+REFERENCE           MENU_ENEMY_INTEL_COUNT
+LANG_RUSSIAN        "Найдено разведданных: &&1/&&2"
+
+REFERENCE           MENU_EXTERNAL_CONSOLE
+LANG_RUSSIAN        "Внешняя консоль"
+
+REFERENCE           MENU_BRANDING
+LANG_RUSSIAN        "Показ версии клиента"
+
+REFERENCE           MENU_STATS_TITLE
+LANG_RUSSIAN        "СТАТИСТИКА"
+
+REFERENCE           MENU_STATS
+LANG_RUSSIAN        "Статистика"
+
+REFERENCE           MENU_CAREER_BULLETS_FIRED
+LANG_RUSSIAN        "Количество выстрелов"
+
+REFERENCE           MENU_CAREER_BULLETS_HIT
+LANG_RUSSIAN        "Попадания"
+
+REFERENCE           MENU_CAREER_DEATHS
+LANG_RUSSIAN        "Смерти"
+
+REFERENCE           MENU_CAREER_HEADSHOTS
+LANG_RUSSIAN        "Убийства в голову"
+
+REFERENCE           MENU_CAREER_KILLS
+LANG_RUSSIAN        "Убийства"
+
+REFERENCE           MENU_CAREER_PLAYTIMESP
+LANG_RUSSIAN        "Игровое время"
+
+REFERENCE           MENU_SP_STAT_TIME_FORMAT
+LANG_RUSSIAN        "Д      Ч        М       С"
+
+REFERENCE           MENU_MUSIC_VOLUME
+LANG_RUSSIAN        "Громкость музыки"
+
+REFERENCE           MENU_VOICE_VOLUME
+LANG_RUSSIAN        "Громкость голосов"
+
+REFERENCE           MENU_CINEMATIC_VOLUME
+LANG_RUSSIAN        "Громкость видеороликов"
+
+REFERENCE           MENU_KEYBOARD_AND_MOUSE_OPTIONS
+LANG_RUSSIAN        "Клавиатура/Мышь"
+
+REFERENCE           MENU_GAMEPAD_OPTIONS
+LANG_RUSSIAN        "Геймпад"
+
+REFERENCE           MENU_GAMEPAD_MISC_SETTINGS
+LANG_RUSSIAN        "Доп. настройки"
+
+REFERENCE           MENU_GAMEPAD_BUTTONS_AND_STICKS_SETTINGS
+LANG_RUSSIAN        "Кнопки/стики"
+
+REFERENCE           MENU_GAMEPAD_RESET_DEFAULT_SETTINGS
+LANG_RUSSIAN        "Сброс управления по умолчанию"
+
+REFERENCE           MENU_GAMEPAD_ENABLED
+LANG_RUSSIAN        "Включить геймпад"
+
+REFERENCE           MENU_GAMEPAD_BUTTON_STYLE
+LANG_RUSSIAN        "Стиль кнопок"
+
+REFERENCE           MENU_GAMEPAD_BUTTON_STYLE_XBOX
+LANG_RUSSIAN        "Xbox"
+
+REFERENCE           MENU_GAMEPAD_BUTTON_STYLE_SONY
+LANG_RUSSIAN        "PlayStation"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_LOW
+LANG_RUSSIAN        "Низкая"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_MEDIUM
+LANG_RUSSIAN        "Средняя"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_HIGH
+LANG_RUSSIAN        "Высокая"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_VERY_HIGH
+LANG_RUSSIAN        "Очень высокая"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_INSANE
+LANG_RUSSIAN        "Безумная"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_3
+LANG_RUSSIAN        "(Пользовательская): 3"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_5
+LANG_RUSSIAN        "(Пользовательская): 5"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_6
+LANG_RUSSIAN        "(Пользовательская): 6"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_8
+LANG_RUSSIAN        "(Пользовательская): 8"
+
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
+LANG_RUSSIAN        "(Пользовательская): 9"
+
+ENDMARKER

@@ -1,0 +1,327 @@
+// dumped by IW3SP_MOD Sun Oct 15 22:36:14 2023
+
+// Note to translators:
+// If a sentence is the same in your language then please change it to #same
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN  "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG				 "C:\trees\cod3\cod3\bin\StringEd.cfg"
+FILENOTES			 ""
+
+REFERENCE           AIRLIFT_VIDEO11
+LANG_RUSSIAN        "^2Центр: ^7Мы получили координаты возможного местонахождения аль-Асада в столице. 1-й батальон уже в пути."
+
+REFERENCE           AIRLIFT_VIDEO12
+LANG_RUSSIAN        "^2Центр: ^7Данные свидетельствуют о том, что в распоряжении аль-Асада находится боеголовка. На место высланы отряды по нейтрализации ядерной угрозы."
+
+REFERENCE           AIRLIFT_VIDEO13
+LANG_RUSSIAN        "^2Центр: ^7Силы морской пехоты нейтрализовали ПВО, но наземные войска аль-Асада все еще представляют серьезную угрозу."
+
+REFERENCE           AIRLIFT_VIDEO14
+LANG_RUSSIAN        "^2Лейтенант Васкес: ^7Похоже, это наш единственный шанс. Мы должны схватить аль-Асада и покончить с этой войной здесь и сейчас. Всем приготовиться к бою."
+
+REFERENCE           AMBUSH_VIDEO11
+LANG_RUSSIAN        "^2Штаб-сержант Григгс: ^7Мы уничтожили ублюдка."
+
+REFERENCE           AMBUSH_VIDEO110
+LANG_RUSSIAN        "^2Гас: ^7Грехи отцов..."
+
+REFERENCE           AMBUSH_VIDEO111
+LANG_RUSSIAN        "^2Штаб-сержант Григгс: ^7Вот сволота, а?"
+
+REFERENCE           AMBUSH_VIDEO12
+LANG_RUSSIAN        "^2Капитан Прайс: ^7И все же, не он несет ответственность за смерть твоих ребят. Прости, дружище."
+
+REFERENCE           AMBUSH_VIDEO13
+LANG_RUSSIAN        "^2Гас: ^7Имран Захаев, да? Человек-призрак. По данным разведки, он залег на дно."
+
+REFERENCE           AMBUSH_VIDEO14
+LANG_RUSSIAN        "^2Капитан Прайс: ^7У меня есть план, как найти его."
+
+REFERENCE           AMBUSH_VIDEO15
+LANG_RUSSIAN        "^2Штаб-сержант Григгс:: ^7Слушаю."
+
+REFERENCE           AMBUSH_VIDEO16
+LANG_RUSSIAN        "^2Штаб-сержант Григгс: ^7Папенькин сынок."
+
+REFERENCE           AMBUSH_VIDEO17
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Сын Захаева. Лидер сепаратистов на этой территории. Яблочко от яблони недалеко падает."
+
+REFERENCE           AMBUSH_VIDEO18
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Комаров знает, где находится парень."
+
+REFERENCE           AMBUSH_VIDEO19
+LANG_RUSSIAN        "^2Штаб-сержант Григгс: ^7И этот ублюдок знает, где найти Захаева."
+
+REFERENCE           ARMADA_VIDEO11
+LANG_RUSSIAN        "^2Лейтенант Васкес: ^7Разведка сообщает, что аль-Асад возможно находится в одном из зданий западного района города."
+
+REFERENCE           ARMADA_VIDEO12
+LANG_RUSSIAN        "^2Лейтенант Васкес: ^7Мы окружим их и возьмем аль-Асада! Всем ясно? Приготовиться!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO1
+LANG_RUSSIAN        "Раньше здесь жили 50 000 человек. Теперь это город-призрак."
+
+REFERENCE           ATTRACT_LOOP_VIDEO10
+LANG_RUSSIAN        "Зампелла! Перезаряжаюсь!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO11
+LANG_RUSSIAN        "Ловушки пошли, ловушки пошли!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO12
+LANG_RUSSIAN        "Нужно огневое прикрытие!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO13
+LANG_RUSSIAN        "Всем быть начеку! Пошли!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO2
+LANG_RUSSIAN        "Наши так называемые лидеры продали нас западу. Они уничтожили нашу культуру, нашу экономику, нашу честь."
+
+REFERENCE           ATTRACT_LOOP_VIDEO3
+LANG_RUSSIAN        "Морским пехотинцам США был дан приказ о вторжении в небольшую, но богатую нефтью страну."
+
+REFERENCE           ATTRACT_LOOP_VIDEO4
+LANG_RUSSIAN        "Попытка свержения власти - это отвлекающий маневр."
+
+REFERENCE           ATTRACT_LOOP_VIDEO5
+LANG_RUSSIAN        "Как они разрушали нашу страну, так и мы разрушим их."
+
+REFERENCE           ATTRACT_LOOP_VIDEO6
+LANG_RUSSIAN        "Думаешь это остановит кровопролитие?"
+
+REFERENCE           ATTRACT_LOOP_VIDEO7
+LANG_RUSSIAN        "Несем потери!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO8
+LANG_RUSSIAN        "Его нужно взять живым!"
+
+REFERENCE           ATTRACT_LOOP_VIDEO9
+LANG_RUSSIAN        "Контакт!"
+
+REFERENCE           BLACKOUT_VIDEO11
+LANG_RUSSIAN        "^2Гас: ^7Капитан Прайс, аль-Асад только что казнил президента аль-Фулани в прямом эфире центрального канала."
+
+REFERENCE           BLACKOUT_VIDEO13
+LANG_RUSSIAN        "^2Капитан Прайс: ^7У американцев свои планы насчет аль-Асада. Аль-Фулани уже ничем не поможешь. Менее, чем через три часа в России будет казнен объект под кодовым именем Николай."
+
+REFERENCE           BLACKOUT_VIDEO14
+LANG_RUSSIAN        "^2Гас: ^7Николай?"
+
+REFERENCE           BLACKOUT_VIDEO15
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Николай - наш шпион в лагере сепаратистов. Именно он передал нам данные перед десантной операцией."
+
+REFERENCE           BLACKOUT_VIDEO16
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Николай сейчас в аду. Проводим его..."
+
+REFERENCE           BLACKOUT_VIDEO17
+LANG_RUSSIAN        "^2Капитан Прайс: ^7...Мы позаботимся о наших друзьях. Уходим."
+
+REFERENCE           BOG_A_VIDEO11
+LANG_RUSSIAN        "^2Диктор: ^7Cегодня, после ожесточенного боя силы морской пехоты США ворвались в город, где аль-Асад занял оборонительную позицию..."
+
+REFERENCE           BOG_A_VIDEO12
+LANG_RUSSIAN        "^2Диктор: ^7В столице ведутся ожесточенные бои. Ночное небо озаряется зенитными ракетами и заревом пожаров."
+
+REFERENCE           BOG_A_VIDEO13
+LANG_RUSSIAN        "^2Центр: ^7Повторяю координаты: 52761-9. Прием."
+
+REFERENCE           BOG_A_VIDEO14
+LANG_RUSSIAN        "^2Лейтенант Васкес: ^7Вас понял, прием."
+
+REFERENCE           BOG_A_VIDEO15
+LANG_RUSSIAN        "^2Центр: ^7B-6, в болоте застрял Абрамс. Позывной - "Кабан"."
+
+REFERENCE           BOG_A_VIDEO16
+LANG_RUSSIAN        "^2Центр: ^7Лейтенант Васкес, берите дробовик, прием."
+
+REFERENCE           BOG_A_VIDEO17
+LANG_RUSSIAN        "^2Лейтенант Васкес: ^7Вас понял. Группа В в пути. Пусть "Кабан" ждет, мы уже приближаемся. Конец связи."
+
+REFERENCE           BOG_B_VIDEO11
+LANG_RUSSIAN        "^2Диктор: ^7...бои продолжались всю ночь. Силы ВМС США пытались прорваться через город в поисках Халеда аль-Асада."
+
+REFERENCE           BOG_B_VIDEO12
+LANG_RUSSIAN        "^2Диктор: ^7На улицах периодически слышны выстрелы. Войска аль-Асада продолжают отступать к президентскому дворцу."
+
+REFERENCE           BOG_B_VIDEO13
+LANG_RUSSIAN        "^2Лейтенант Васкес: ^7Центр, говорит лейтенант Васкес. Кабан в пути. Такое веселье мы ни за что не пропустим..."
+
+REFERENCE           CARGOSHIP_VIDEO11
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Все данные об этой операции мы получили от нашего шпиона в России..."
+
+REFERENCE           CARGOSHIP_VIDEO12
+LANG_RUSSIAN        "^2Капитан Прайс: ^7...Посылка находится на борту грузового судна, эстонский регистрационный номер 52775..."
+
+REFERENCE           CARGOSHIP_VIDEO13
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Экипаж небольшой, на борту будет охрана."
+
+REFERENCE           CARGOSHIP_VIDEO14
+LANG_RUSSIAN        "^2Гас: ^7Можно применять силу?"
+
+REFERENCE           CARGOSHIP_VIDEO15
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Экипаж разрешено ликвидировать."
+
+REFERENCE           COUP_VIDEO11
+LANG_RUSSIAN        "^2Морпех: ^7Приближается автомобиль."
+
+REFERENCE           COUP_VIDEO12
+LANG_RUSSIAN        "^2Центр: ^7Продолжать слежение."
+
+REFERENCE           HUNTED_VIDEO11
+LANG_RUSSIAN        "^2Гас: ^7Николай у нас! Мы заберем его в штаб-квартиру, в Гамбург!"
+
+REFERENCE           HUNTED_VIDEO12
+LANG_RUSSIAN        "^2Гас: ^7Расчетное время прибытия семь ноль-ноль! Конец связи!"
+
+REFERENCE           ICBM_VIDEO11
+LANG_RUSSIAN        "^2Имран Захаев: ^7Наши так называемые лидеры продали нас западу... Уничтожили нашу культуру... Нашу экономику... Нашу честь."
+
+REFERENCE           ICBM_VIDEO12
+LANG_RUSSIAN        "^2Имран Захаев: ^7На нашей земле пролилась кровь."
+
+REFERENCE           ICBM_VIDEO13
+LANG_RUSSIAN        "^2Имран Захаев: ^7Моя кровь..."
+
+REFERENCE           ICBM_VIDEO14
+LANG_RUSSIAN        "^2Имран Захаев: ^7На их руках."
+
+REFERENCE           ICBM_VIDEO15
+LANG_RUSSIAN        "^2Имран Захаев: ^7Они оккупанты."
+
+REFERENCE           ICBM_VIDEO16
+LANG_RUSSIAN        "^2Имран Захаев: ^7Все американские и британские войска немедленно покинут территорию России..."
+
+REFERENCE           ICBM_VIDEO17
+LANG_RUSSIAN        "^2Имран Захаев: ^7Или же пусть готовятся к последствиям..."
+
+REFERENCE           ICBM_VIDEO21
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Либо мы сейчас захватим центр управления пуском, либо завтра мы этот мир не узнаем."
+
+REFERENCE           ICBM_VIDEO22
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Получено разрешение на сброс. Группа С, пошла!"
+
+REFERENCE           ICBM_VIDEO23
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Приближаемся ко второй зоне сброса. Группа В, ждать сигнала."
+
+REFERENCE           JEEPRIDE_VIDEO11
+LANG_RUSSIAN        "^2Центр: ^7Противник окружил главную зону посадки. Отправляйтесь к вторичной зоне посадки к югу от моста."
+
+REFERENCE           JEEPRIDE_VIDEO12
+LANG_RUSSIAN        "^2Центр: ^7Количество вражеских сил... Огромное."
+
+REFERENCE           JEEPRIDE_VIDEO13
+LANG_RUSSIAN        "^2Штаб-сержант Григгс: ^7Какая жара... А, комнатной температуры? Ради бога! Пиво должно быть ледяным!"
+
+REFERENCE           JEEPRIDE_VIDEO14
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Может, лагера? Или стакан воды, как ты любишь. Или кружку стаута?"
+
+REFERENCE           JEEPRIDE_VIDEO15
+LANG_RUSSIAN        "^2Штаб-сержант Григгс: ^7Придется мне вам обоим преподать урок, как только вернемся в Штаты."
+
+REFERENCE           JEEPRIDE_VIDEO16
+LANG_RUSSIAN        "^2Гас: ^7В любом случае, сначала остановимся в Лондоне. За мой счет."
+
+REFERENCE           JEEPRIDE_VIDEO17
+LANG_RUSSIAN        "^2Штаб-сержант Григгс: ^7Что ж, по крайней мере, конец света не наступил... Уходим отсюда."
+
+REFERENCE           KILLHOUSE_VIDEO11
+LANG_RUSSIAN        "^2Гас: ^7Сначала хорошая новость. В мире все отлично."
+
+REFERENCE           KILLHOUSE_VIDEO12
+LANG_RUSSIAN        "^2Гас: ^7В России идет гражданская война. На карту поставлено 15 000 ядерных боеголовок."
+
+REFERENCE           KILLHOUSE_VIDEO13
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Очередной рабочий день."
+
+REFERENCE           KILLHOUSE_VIDEO14
+LANG_RUSSIAN        "^2Гас: ^7Халед аль-Асад. В настоящее время является вторым по влиятельности человеком на Ближнем Востоке. Ходят слухи, что он намерен стать первым. Наша разведка следит за ним."
+
+REFERENCE           KILLHOUSE_VIDEO15
+LANG_RUSSIAN        "^2Капитан Прайс: ^7А плохая новость?"
+
+REFERENCE           KILLHOUSE_VIDEO16
+LANG_RUSSIAN        "^2Гас: ^7Сегодня к нам присоединился новичок. Его зовут Соуп."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO11
+LANG_RUSSIAN        "^2Гас: ^7Группа 1 приближается."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO12
+LANG_RUSSIAN        "^2Морпех: ^7Группа 2 направляется к центру охраны."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO13
+LANG_RUSSIAN        "^2САС: ^7Группа 3 вошла на территорию базы."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO14
+LANG_RUSSIAN        "^2Центр: ^7У нас хорошая новость и плохая новость. Пульт управления запуском находится к юго-западу от вас."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO14PT2
+LANG_RUSSIAN        "^2Центр: ^7Вы должны ввести в него коды отмены, чтобы уничтожить ракеты в воздухе."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO15
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Гас, атакуйте центр охраны. Соуп, Григгс и я отправимся к центру управления запуском."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO16
+LANG_RUSSIAN        "^2Гас: ^7Вас понял. Центр, а что за плохая новость?"
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO17
+LANG_RUSSIAN        "^2Центр: ^7Плохая новость - у нас до сих пор нет этих кодов отмены."
+
+REFERENCE           LAUNCHFACILITY_B_VIDEO18
+LANG_RUSSIAN        "^2Капитан Прайс: ^7К черту. Попробуем сделать все возможное."
+
+REFERENCE           SCOUTSNIPER_VIDEO11
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Тогда я еще был лейтенантом... выполнял всякую грязную работу."
+
+REFERENCE           SCOUTSNIPER_VIDEO12
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Чернобыль. Настоящий рай для преступников. Даже спустя десять лет они могли воспользоваться ситуацией и наложить свои лапы на ядерное оружие. Желающих было много... включая и Имрана Захаева."
+
+REFERENCE           SCOUTSNIPER_VIDEO13
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Естественно, мы не могли всего этого допустить. Выкупить топливные стержни? Отличный способ массового уничтожения."
+
+REFERENCE           SCOUTSNIPER_VIDEO14
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Тогда наше правительство впервые дало приказ об убийстве со времен Второй мировой войны... Я служил под командованием капитана МакМиллана..."
+
+REFERENCE           VILLAGE_ASSAULT_VIDEO11
+LANG_RUSSIAN        "^2Николай: ^7Этот человек - трус, капитан Прайс. Аль-Асад никогда не пожертвовал бы собой."
+
+REFERENCE           VILLAGE_ASSAULT_VIDEO12
+LANG_RUSSIAN        "^2Николай: ^7В прошлом у аль-Асада была конспиративная квартира в Азербайджане. Высылаю координаты."
+
+REFERENCE           VILLAGE_ASSAULT_VIDEO13
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Ясно, Николай. Гас, собирай ребят. Отправляемся в Азербайджан."
+
+REFERENCE           VILLAGE_ASSAULT_VIDEO14
+LANG_RUSSIAN        "^2Гас: ^7Да, сэр. Говорят, в это время года там просто чудесно..."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO11
+LANG_RUSSIAN        "^2Гас: ^7Расчетное время прибытия вертолета - полчаса, капитан Прайс."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO12
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Так не пойдет. К тому моменту мы уже десять минут как будем мертвы."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO13
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Сейчас сюда заявятся все психопаты-сепаратисты Захаева, чтобы освободить аль-Асада."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO14
+LANG_RUSSIAN        "^2Гас: ^7Или то, что от него осталось."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO15
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Так. Мы установим заряды вдоль рубежа А на южном холме..."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO16
+LANG_RUSSIAN        "^2Капитан Прайс: ^7...а затем вдоль рубежа Б."
+
+REFERENCE           VILLAGE_DEFEND_VIDEO17
+LANG_RUSSIAN        "^2Капитан Прайс: ^7Мы задержим их по пути к холму, а затем займем позицию на зоне посадки в поле у фермы. Вопросы есть?"
+
+REFERENCE           VILLAGE_DEFEND_VIDEO18
+LANG_RUSSIAN        "^2Гас: ^7Пора действовать."
+
+ENDMARKER

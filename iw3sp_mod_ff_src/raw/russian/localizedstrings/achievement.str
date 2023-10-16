@@ -1,0 +1,247 @@
+// Note to translators:
+// If a sentence is the same in your language then please change it to "#same"
+//
+// eg:
+// LANG_ENGLISH  "HALT"
+// LANG_GERMAN   "#same"
+//
+// (This is so we can tell which strings have been signed-off as ok to be the same words for QA
+//  and because we do not store duplicate strings, which will then get exported again next time
+//  as being untranslated.)
+//
+VERSION             "1"
+CONFIG              "C:\trees\cod2\bin\StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           EARNED
+LANG_RUSSIAN        "Достижение разблокировано!"
+
+REFERENCE           NAME_0
+LANG_RUSSIAN        "Очередной рабочий день"
+
+REFERENCE           DETAIL_0
+LANG_RUSSIAN        "Получить все достижения в Call of Duty 4: Modern Warfare."
+
+REFERENCE           NAME_1
+LANG_RUSSIAN        "Крылатый кинжал"
+
+REFERENCE           DETAIL_1
+LANG_RUSSIAN        "Пройти миссию «Новобранец»."
+
+REFERENCE           NAME_2
+LANG_RUSSIAN        "Прыжок"
+
+REFERENCE           DETAIL_2
+LANG_RUSSIAN        "Проникнуть на грузовой корабль."
+
+REFERENCE           NAME_3
+LANG_RUSSIAN        "Танцы в темноте"
+
+REFERENCE           DETAIL_3
+LANG_RUSSIAN        "Отключить электричество."
+
+REFERENCE           NAME_4
+LANG_RUSSIAN        "Спасенная ветчина"
+
+REFERENCE           DETAIL_4
+LANG_RUSSIAN        "Защитить танк «Абрамс» с позывным «Кабан»."
+
+REFERENCE           NAME_5
+LANG_RUSSIAN        "Божья кара"
+
+REFERENCE           DETAIL_5
+LANG_RUSSIAN        "Использовать вооружение самолета AC-130."
+
+REFERENCE           NAME_6
+LANG_RUSSIAN        "Неверный номер"
+
+REFERENCE           DETAIL_6
+LANG_RUSSIAN        "Найти конспиративную квартиру аль-Асада."
+
+REFERENCE           NAME_7
+LANG_RUSSIAN        "На закорках"
+
+REFERENCE           DETAIL_7
+LANG_RUSSIAN        "Донести капитана МакМиллана до вертолёта."
+
+REFERENCE           NAME_8
+LANG_RUSSIAN        "Крайние меры"
+
+REFERENCE           DETAIL_8
+LANG_RUSSIAN        "Загнать сына Захаева в ловушку."
+
+REFERENCE           NAME_9
+LANG_RUSSIAN        "Выигранная война"
+
+REFERENCE           DETAIL_9
+LANG_RUSSIAN        "Пройти игру на любом уровне сложности."
+
+REFERENCE           NAME_10
+LANG_RUSSIAN        "Внимательный взгляд"
+
+REFERENCE           DETAIL_10
+LANG_RUSSIAN        "Собрать 15 частей вражеских разведданных."
+
+REFERENCE           NAME_11
+LANG_RUSSIAN        "Глаза и уши"
+
+REFERENCE           DETAIL_11
+LANG_RUSSIAN        "Собрать 30 частей вражеских разведданных."
+
+REFERENCE           NAME_12
+LANG_RUSSIAN        "Лежать!"
+
+REFERENCE           DETAIL_12
+LANG_RUSSIAN        "Выжить после схватки с собакой."
+
+REFERENCE           NAME_13
+LANG_RUSSIAN        "Новый рекорд роты"
+
+REFERENCE           DETAIL_13
+LANG_RUSSIAN        "Пройти обучающий макет корабля менее чем за 19 секунд."
+
+REFERENCE           NAME_14
+LANG_RUSSIAN        "Спасение Ройсевича"
+
+REFERENCE           DETAIL_14
+LANG_RUSSIAN        "Спасти рядового Ройсевича на лестнице."
+
+REFERENCE           NAME_15
+LANG_RUSSIAN        "Отстойное шоу"
+
+REFERENCE           DETAIL_15
+LANG_RUSSIAN        "Уничтожить все телевизоры, показывающие речь аль-Асада."
+
+REFERENCE           NAME_16
+LANG_RUSSIAN        "Народный заступник"
+
+REFERENCE           DETAIL_16
+LANG_RUSSIAN        "Спасти фермера."
+
+REFERENCE           NAME_17
+LANG_RUSSIAN        "Удачный выстрел"
+
+REFERENCE           DETAIL_17
+LANG_RUSSIAN        "Убить 5 противников одним выстрелом из орудия AC-130."
+
+REFERENCE           NAME_18
+LANG_RUSSIAN        "Камуфляж в тумане"
+
+REFERENCE           DETAIL_18
+LANG_RUSSIAN        "Пройти миссию «Все в камуфляже», не встревожив ни одного противника."
+
+REFERENCE           NAME_19
+LANG_RUSSIAN        "Над облаками"
+
+REFERENCE           DETAIL_19
+LANG_RUSSIAN        "Совершить прыжок с парашютом на уровне сложности «Ветеран»."
+
+REFERENCE           NAME_20
+LANG_RUSSIAN        "Нет покоя грешным душам"
+
+REFERENCE           DETAIL_20
+LANG_RUSSIAN        "Зарезать смертельно раненного врага."	
+
+REFERENCE           NAME_21
+LANG_RUSSIAN        "Решительная победа"
+
+REFERENCE           DETAIL_21
+LANG_RUSSIAN        "Пройти игру на уровне сложности «Закалённый» или ««Ветеран»»."
+
+REFERENCE           NAME_22
+LANG_RUSSIAN        "Посылка"
+
+REFERENCE           DETAIL_22
+LANG_RUSSIAN        "Пройти миссию «Корабль» на уровне сложности ««Ветеран»»."
+
+REFERENCE           NAME_23
+LANG_RUSSIAN        "Спасение"
+
+REFERENCE           DETAIL_23
+LANG_RUSSIAN        "Пройти миссию «Полное затмение» на уровне сложности ««Ветеран»»."
+
+REFERENCE           NAME_24
+LANG_RUSSIAN        "Поиск"
+
+REFERENCE           DETAIL_24
+LANG_RUSSIAN        "Пройти миссию «Чарли не сёрфят» на уровне сложности ««Ветеран»»."
+
+REFERENCE           NAME_25
+LANG_RUSSIAN        "Болото"
+
+REFERENCE           DETAIL_25
+LANG_RUSSIAN        "Пройти миссии «Болото» и «Кабан» на уровне сложности «Ветеран»."
+
+REFERENCE           NAME_26
+LANG_RUSSIAN        "Побег"
+
+REFERENCE           DETAIL_26
+LANG_RUSSIAN        "Пройти миссии «Преследование» и «Божья кара» на уровне сложности «Ветеран»."
+
+REFERENCE           NAME_27
+LANG_RUSSIAN        "Первый всадник"
+
+REFERENCE           DETAIL_27
+LANG_RUSSIAN        "Пройти миссию «Шок и трепет» на уровне сложности «Ветеран»."
+
+REFERENCE           NAME_28
+LANG_RUSSIAN        "Второй всадник"
+
+REFERENCE           DETAIL_28
+LANG_RUSSIAN        "Пройти миссию «Конспиративная квартира» на уровне сложности «Ветеран»."
+
+REFERENCE           NAME_29
+LANG_RUSSIAN        "Выстрел"
+
+REFERENCE           DETAIL_29
+LANG_RUSSIAN        "Пройти миссии «Все в камуфляже» и «Убить одним выстрелом» на уровне сложности «Ветеран»."
+
+REFERENCE           NAME_30
+LANG_RUSSIAN        "Третий всадник"
+
+REFERENCE           DETAIL_30
+LANG_RUSSIAN        "Пройти миссии «Жара» и «Грехи отцов» на уровне сложности «Ветеран»."
+
+REFERENCE           NAME_31
+LANG_RUSSIAN        "Ультиматум"
+
+REFERENCE           DETAIL_31
+LANG_RUSSIAN        "Пройти миссии «Ультиматум», «Все на месте» и «В командном пункте» на уровне сложности «Ветеран»."
+
+REFERENCE           NAME_32
+LANG_RUSSIAN        "Четвертый всадник"
+
+REFERENCE           DETAIL_32
+LANG_RUSSIAN        "Пройти миссию «Игра окончена» на уровне сложности «Ветеран»."
+
+REFERENCE           NAME_33
+LANG_RUSSIAN        "Сорвиголова"
+
+REFERENCE           DETAIL_33
+LANG_RUSSIAN        "Убить противника под воздействием светошумовой гранаты в одиночной кампании."
+
+REFERENCE           NAME_34
+LANG_RUSSIAN        "Дорожная авария"
+
+REFERENCE           DETAIL_34
+LANG_RUSSIAN        "Убить двоих противников, взорвав машину, в одиночной кампании."
+
+REFERENCE           NAME_35
+LANG_RUSSIAN        "Долетался"
+
+REFERENCE           DETAIL_35
+LANG_RUSSIAN        "Сбить из РПГ вражеский вертолёт в одиночной кампании."
+
+REFERENCE           NAME_36
+LANG_RUSSIAN        "Четыре подряд"
+
+REFERENCE           DETAIL_36
+LANG_RUSSIAN        "Убить подряд 4 противников выстрелами в голову."
+
+REFERENCE           NAME_37
+LANG_RUSSIAN        "Три подряд"
+
+REFERENCE           DETAIL_37
+LANG_RUSSIAN        "Убить 3 противников подряд ножом в одиночной кампании."
+
+ENDMARKER
