@@ -22,3 +22,9 @@
 [submodule "deps/GSL"]
 	path = deps/GSL
 	url = https://github.com/microsoft/GSL.git
+[submodule "deps/imgui"]
+	path = deps/imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "deps/imgui_markdown"]
+	path = deps/imgui_markdown
+	url = https://github.com/juliettef/imgui_markdown.git
