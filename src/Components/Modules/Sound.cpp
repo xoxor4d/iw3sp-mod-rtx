@@ -103,31 +103,39 @@ namespace Components
 		}
 	}
 
+	void Sound::SND_SetChannelVolumesShellshocked()
+	{
+		if (!(Game::g_clients->ps.pm_flags & Game::PMF_SHELLSHOCKED))
+		{
+			Game::g_snd->channelvol->channelIndex[Game::SND_GetEntChannelFromName("music")].volume = Dvars::Functions::Dvar_FindVar("snd_musicVolume")->current.value;
+			Game::g_snd->channelvol->channelIndex[Game::SND_GetEntChannelFromName("musicnopause")].volume = Dvars::Functions::Dvar_FindVar("snd_musicVolume")->current.value;
+
+			Game::g_snd->channelvol->channelIndex[Game::SND_GetEntChannelFromName("voice")].volume = Dvars::Functions::Dvar_FindVar("snd_voiceVolume")->current.value;
+			Game::g_snd->channelvol->channelIndex[Game::SND_GetEntChannelFromName("mission")].volume = Dvars::Functions::Dvar_FindVar("snd_voiceVolume")->current.value;
+			Game::g_snd->channelvol->channelIndex[Game::SND_GetEntChannelFromName("announcer")].volume = Dvars::Functions::Dvar_FindVar("snd_voiceVolume")->current.value;
+		}
+	}
+
+	void Sound::SND_Update_stub()
+	{
+		Utils::Hook::Call<void()>(0x5CECE0)();
+		SND_SetChannelVolumesShellshocked();
+	}
+
 	Sound::Sound()
 	{
 		Utils::Hook(0x429138, Sound::SetChannelVolCmd_stub, HOOK_JUMP).install()->quick();
 		Utils::Hook(0x42A873, Sound::UpdateShellShockSound_stub, HOOK_JUMP).install()->quick();
 		Utils::Hook(0x433787, Sound::PlayerBreathSounds_stub, HOOK_JUMP).install()->quick();
 
+		Utils::Hook(0x44786C, Sound::SND_Update_stub, HOOK_CALL).install()->quick();
+		Utils::Hook(0X5D43C3, Sound::SND_Update_stub, HOOK_CALL).install()->quick();
+
 		Events::OnDvarInit([]
 		{
-			Game::dvar_s* snd_musicVolume = Dvars::Register::Dvar_RegisterFloat("snd_musicVolume", "options menu music", 0.8f, 0.0f, 1.0f, Game::none);
-			Game::dvar_s* snd_voiceVolume = Dvars::Register::Dvar_RegisterFloat("snd_voiceVolume", "options voice music", 0.8f, 0.0f, 1.0f, Game::none);
+			Game::dvar_s* snd_musicVolume = Dvars::Register::Dvar_RegisterFloat("snd_musicVolume", "options menu music", 0.8f, 0.0f, 1.0f, Game::saved);
+			Game::dvar_s* snd_voiceVolume = Dvars::Register::Dvar_RegisterFloat("snd_voiceVolume", "options voice music", 0.8f, 0.0f, 1.0f, Game::saved);
 		});
-
-		Scheduler::Loop([]
-		{
-			//check if player is not in the shellshocked state
-			if (!(Game::g_clients->ps.pm_flags & Game::PMF_SHELLSHOCKED))
-			{
-				Game::g_snd->channelvol->channelIndex[Game::SND_GetEntChannelFromName("music")].volume = Dvars::Functions::Dvar_FindVar("snd_musicVolume")->current.value;
-				Game::g_snd->channelvol->channelIndex[Game::SND_GetEntChannelFromName("musicnopause")].volume = Dvars::Functions::Dvar_FindVar("snd_musicVolume")->current.value;
-
-				Game::g_snd->channelvol->channelIndex[Game::SND_GetEntChannelFromName("voice")].volume = Dvars::Functions::Dvar_FindVar("snd_voiceVolume")->current.value;
-				Game::g_snd->channelvol->channelIndex[Game::SND_GetEntChannelFromName("mission")].volume = Dvars::Functions::Dvar_FindVar("snd_voiceVolume")->current.value;
-				Game::g_snd->channelvol->channelIndex[Game::SND_GetEntChannelFromName("announcer")].volume = Dvars::Functions::Dvar_FindVar("snd_voiceVolume")->current.value;
-			}
-		}, Scheduler::Pipeline::MAIN);
 	}
 
 	Sound::~Sound()

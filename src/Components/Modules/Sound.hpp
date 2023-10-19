@@ -12,5 +12,7 @@ namespace Components
 		static void UpdateShellShockSound_stub();
 		static void PlayerBreathSounds_stub();
 		static void SetChannelVolCmd_stub();
+		static void SND_Update_stub();
+		static void SND_SetChannelVolumesShellshocked();
 	};
 }
