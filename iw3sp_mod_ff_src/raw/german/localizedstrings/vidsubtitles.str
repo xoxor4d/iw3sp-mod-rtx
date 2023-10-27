@@ -15,6 +15,15 @@ VERSION             "1"
 CONFIG				 "C:\trees\cod3\cod3\bin\StringEd.cfg"
 FILENOTES			 ""
 
+REFERENCE           AIRPLANE_VIDEO11
+LANG_GERMAN        "^2Romeo Eins-Eins: ^7Und los dann auf die harte Tour."
+
+REFERENCE           AIRPLANE_VIDEO12
+LANG_GERMAN        "^2Charlie Eins-Eins: ^7Das kann doch nicht dein Ernst sein?"
+
+REFERENCE           AIRPLANE_VIDEO13
+LANG_GERMAN        "^2Romeo Eins-Eins: ^7Ich meine es ernst...und melde mich nicht, Charly."
+
 REFERENCE           AIRLIFT_VIDEO11
 LANG_GERMAN        "^2Kommando: ^7Marines, wir haben eventuell Al-Asad in der Hauptstadt entdeckt. Das 1. Bataillon ist auf dem Weg."
 
