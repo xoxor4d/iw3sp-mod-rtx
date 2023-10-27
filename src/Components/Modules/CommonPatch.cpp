@@ -4,7 +4,9 @@ namespace Components
 {
 	void sv_cheats_hook()
 	{
-		Dvars::Override::DvarBoolOverride("sv_cheats", true, Game::none);
+		Dvars::Override::DvarBoolOverride("sv_cheats", 
+			Dvars::Functions::Dvar_FindVar("sv_allowCheats")->current.enabled ? true : false, 
+			Dvars::Functions::Dvar_FindVar("sv_allowCheats")->current.enabled ? Game::none : Game::cheat_protected);
 	}
 
 	void DB_LoadCommonFastFiles()
@@ -409,8 +411,12 @@ namespace Components
 			Game::dvar_s* ui_skipMainLockout = Dvars::Register::Dvar_RegisterBool("ui_skipMainLockout", "", false, Game::none);
 			Game::dvar_s* profile_unlock_all = Dvars::Register::Dvar_RegisterBool("profile_unlock_all", "", false, Game::saved);
 			Game::dvar_s* cg_drawBrandingInfo = Dvars::Register::Dvar_RegisterBool("cg_drawBrandingInfo", "Show/Hide the branding text on the top-left screen", true, Game::saved);
+			Game::dvar_s* sv_allowCheats = Dvars::Register::Dvar_RegisterBool("sv_allowCheats", "Enable/Disable the game cheats", false, Game::saved);
 			//Game::dvar_s* ui_console_menu_style = Dvars::Register::Dvar_RegisterBool("ui_console_menu_style", "Enable/Disable menu style from console version", false, Game::none);
 		});
+
+		Utils::Hook(0x4B83CF, sv_cheats_hook, HOOK_CALL).install()->quick();
+		Utils::Hook::Nop(0x5899E8, 5);
 
 		Utils::Hook::Set<const char*>(0x445667, "iw3sp_mod.exe"); //-startSingleplayer
 		//Utils::Hook::Set<BYTE>(0x41D652, Game::saved);
@@ -513,6 +519,28 @@ namespace Components
 				Utils::Hook::Set<bool>(0x1E209D4, 1);
 			else
 				Utils::Hook::Set<bool>(0x1E209D4, 0);
+
+			if (Dvars::Functions::Dvar_FindVar("sv_allowCheats")->current.enabled)
+			{
+				Command::Execute("seta thereisacow 1337", false);
+
+				Utils::Hook::Set<BYTE>(0x587872, 0xEB); // Read only.
+				Utils::Hook::Set<BYTE>(0x58788F, 0xEB); // Write protected.
+				Utils::Hook::Set<BYTE>(0x5878AD, 0xEB); // Cheat protected.
+			}
+			else
+			{
+				Command::Execute("seta thereisacow 0", false);
+
+				Utils::Hook::Set<BYTE>(0x587872, 0x74); // Read only.
+				Utils::Hook::Set<BYTE>(0x58788F, 0x74); // Write protected.
+				Utils::Hook::Set<BYTE>(0x5878AD, 0x75); // Cheat protected.
+			}
+
+			Dvars::Override::DvarBoolOverride("sv_cheats", 
+				Dvars::Functions::Dvar_FindVar("sv_allowCheats")->current.enabled ? true : false,
+				Dvars::Functions::Dvar_FindVar("sv_allowCheats")->current.enabled ? Game::none : Game::cheat_protected);
+
 		}, Scheduler::Pipeline::MAIN, 50ms);
 	}
 }
