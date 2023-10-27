@@ -1,5 +1,7 @@
 #include "STDInc.hpp"
 
+IMGUI_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 namespace Components
 {
 	HWND Window::MainWindow = nullptr;
@@ -107,6 +109,8 @@ namespace Components
 	HWND WINAPI Window::CreateMainWindow(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpWindowName, DWORD dwStyle, int X, int Y, int nWidth, int nHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam)
 	{
 		Window::MainWindow = CreateWindowExA(dwExStyle, lpClassName, lpWindowName, dwStyle, X, Y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam);
+			
+		GUI::Reset();
 
 		CreateSignals();
 
@@ -120,10 +124,45 @@ namespace Components
 
 	BOOL WINAPI Window::MessageHandler(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	{
-		if (const auto cb = WndMessageCallbacks.find(Msg); cb != WndMessageCallbacks.end())
+		auto menu_open = false;
+
+		if (Game::gui.initialized)
 		{
-			return cb->second(lParam, wParam);
+			// handle input and mouse cursor for open menus
+			for (auto menu = 0; menu < 1; menu++)
+			{
+				if (Game::gui.menus[menu].menustate)
+				{
+					if (ImGui_ImplWin32_WndProcHandler(hWnd, Msg, wParam, lParam))
+					{
+						ImGui::GetIO().MouseDrawCursor = true;
+						return true;
+					}
+
+					menu_open = true;
+				}
+			}
+
+			ImGui::GetIO().MouseDrawCursor = false;
 		}
+
+		// draw cursor (if no imgui menu opened) when cod4 inactive and hovering over it
+		if (!menu_open)
+		{
+			if (Msg == WM_SETCURSOR)
+			{
+				Window::ApplyCursor();
+				return TRUE;
+			}
+		}
+
+
+
+
+		//if (const auto cb = WndMessageCallbacks.find(Msg); cb != WndMessageCallbacks.end())
+		//{
+		//	return cb->second(lParam, wParam);
+		//}
 
 		return Utils::Hook::Call<BOOL(__stdcall)(HWND, UINT, WPARAM, LPARAM)>(0x596810)(hWnd, Msg, wParam, lParam);
 	}
