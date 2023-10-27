@@ -583,6 +583,7 @@ namespace Components
 		Game::vectoangles(targetDir, targetAngles);
 		aaGlob->autoAimPitchTarget = targetAngles[0];
 		aaGlob->autoAimYawTarget = targetAngles[1];
+		return true;
 	}
 
 	void Gamepad::AimAssist_ClearAutoAimTarget(Game::AimAssistGlobals* aaGlob)
