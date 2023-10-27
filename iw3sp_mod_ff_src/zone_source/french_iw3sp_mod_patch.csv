@@ -4,6 +4,7 @@ localize,iw3sp_mod_loc
 localize,iw3sp_mod_loc_discord
 localize,achievement
 localize,vidsubtitles
+stringtable,video/fr/vidsubtitles.csv
 material,button_xbox_01
 material,button_xbox_02
 material,button_xbox_03
