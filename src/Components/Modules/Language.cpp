@@ -79,12 +79,12 @@ namespace Components
 	
 	void Language::VideoSubtitlesStub()
 	{
-		if (Language::GetCurrentLanguage() == "english" ||
+		if ( (Language::GetCurrentLanguage() == "english" ||
 			Language::GetCurrentLanguage() == "french"	||
 			Language::GetCurrentLanguage() == "german"	||
 			Language::GetCurrentLanguage() == "italian" ||
 			Language::GetCurrentLanguage() == "russian" ||
-			Language::GetCurrentLanguage() == "spanish")
+			Language::GetCurrentLanguage() == "spanish") && strlen(Dvars::Functions::Dvar_FindVar("fs_game")->current.string) == 0)
 		{
 			Utils::Hook::Set<const char*>(0x420F45, GetLanguageForVidSubtitles());
 			Utils::Hook::Set<const char*>(0x567AA4, GetLanguageForVidSubtitles());

@@ -281,6 +281,7 @@ namespace Components
 			}
 
 			Dvars::Functions::Dvar_SetStringByName("fs_game", modName);
+			Language::VideoSubtitlesStub();
 			Config::GameWithMod = true;
 			Config::CallExecFromCFG(true);
 		}
@@ -289,6 +290,7 @@ namespace Components
 	void ClearModStub()
 	{
 		Dvars::Functions::Dvar_Reset(0, Dvars::Functions::Dvar_FindVar("fs_game"));
+		Language::VideoSubtitlesStub();
 		Config::GameWithMod = false;
 		Config::CallExecFromCFG(false);
 	}
