@@ -157,19 +157,6 @@ namespace Components
 		Dvars::Override::DvarVec4OverrideDefaultValue("con_outputSliderColor", newDefault_con_outputSliderColor);
 		Dvars::Override::DvarVec4Override("con_outputSliderColor", Dvars::Functions::Dvar_FindVar("con_outputSliderColor")->current.vector);
 
-		// Disable cheat protection for dvars
-		// WTF, WHY DEVS USED 4 DVAR_REGISTERBOOL FOR SV_CHEATS....?!1!
-		if (Flags::HasFlag("allowcheat"))
-		{
-			Utils::Hook::Set<BYTE>(0x587872, 0xEB); // Read only.
-			Utils::Hook::Set<BYTE>(0x58788F, 0xEB); // Write protected.
-			Utils::Hook::Set<BYTE>(0x5878AD, 0xEB); // Cheat protected.
-
-			Utils::Hook(0x4B83CF, sv_cheats_hook, HOOK_CALL).install()->quick();
-			Utils::Hook::Nop(0x5899E8, 5);
-			Dvars::Override::DvarBoolOverride("sv_cheats", true, Game::none);
-		}
-
 		// Override existing localize entries.
 		LocalizedStrings::OverrideLocalizeStrings();
 
