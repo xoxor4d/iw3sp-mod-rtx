@@ -5969,4 +5969,10 @@ namespace Game
 		TEXT_RENDERFLAG_OUTLINE = 0x400,
 		TEXT_RENDERFLAG_OUTLINE_EXTRA = 0x800,
 	};
+
+	struct languageInfo_t
+	{
+		const char* pszName;
+		int bPresent;
+	};
 }

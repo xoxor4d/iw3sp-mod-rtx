@@ -195,18 +195,13 @@ namespace Game
 	extern int* dword_129ADC4;
 	extern int* dword_129AFC8;
 
-	extern const char* g_languages;
+	extern Game::languageInfo_t* g_languages;
+
 	const char* SEH_GetLanguageName(unsigned int iLanguage);
 	const char* UI_SafeTranslateString/*eax*/(const char* reference /*eax*/);
 
 	typedef const char*(__cdecl* UI_ReplaceConversionString_t)(const char* reference, const char* value);
 	extern UI_ReplaceConversionString_t UI_ReplaceConversionString;
-
-	//	New g_languages array.
-	static const char* g_languages_new[] = { "english", "french", "german", "italian",
-				  "spanish", "british", "russian", "polish",
-				  "korean", "taiwanese", "japanese", "chinese",
-				  "thai", "leet", "czech" };
 
 	int SEH_GetLanguageIndexFromName(const char* language, int* langindex);
 

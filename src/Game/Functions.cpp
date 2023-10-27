@@ -684,18 +684,13 @@ namespace Game
 	int* dword_129ADC4 = reinterpret_cast<int*>(0x129ADC4);
 	int* dword_129AFC8 = reinterpret_cast<int*>(0x129AFC8);
 
-	const char* g_languages = reinterpret_cast<const char*>(0x6DD360);
+	Game::languageInfo_t* g_languages = reinterpret_cast<Game::languageInfo_t*>(0x6DD360);
 	const char* SEH_GetLanguageName(unsigned int iLanguage)
 	{
-		//if (iLanguage > 14)
-		//	return *(const char**)g_languages;
-		//else
-		//	return *(const char**)&g_languages[8 * iLanguage];
-
 		if (iLanguage > 14)
-			return g_languages_new[0];
+			return Game::g_languages[0].pszName;
 		else
-			return g_languages_new[iLanguage];
+			return Game::g_languages[iLanguage].pszName;
 	}
 
 	const char* UI_SafeTranslateString/*eax*/(const char* reference /*eax*/)
@@ -718,7 +713,7 @@ namespace Game
 	{
 		for (int i = 0; i < 15; i++)
 		{
-			if (!stricmp(language, Game::g_languages_new[i]))
+			if (!stricmp(language, Game::g_languages[i].pszName))
 			{
 				return *langindex = i;
 			}
