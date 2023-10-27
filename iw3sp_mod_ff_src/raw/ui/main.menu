@@ -247,19 +247,19 @@
 			decoration
 			visible			when( !localVarBool( ui_hideBack ) );
 		}
-		itemDef
-		{
-			name			signedinas
-			type			ITEM_TYPE_TEXT
-			rect			0 0 250 15 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
-			textscale		TEXTSIZE_SMALL
-			textstyle		ITEM_TEXTSTYLE_SHADOWED
-			textfont		UI_FONT_NORMAL
-			forecolor		COLOR_UNFOCUSED
-			ownerdraw		UI_LOGGEDINUSER_PC
-			visible			when( !localVarBool( ui_hideBack ) );
-			decoration
-		}
+		// itemDef
+		// {
+		// 	name			signedinas
+		// 	type			ITEM_TYPE_TEXT
+		// 	rect			0 0 250 15 HORIZONTAL_ALIGN_LEFT VERTICAL_ALIGN_TOP
+		// 	textscale		TEXTSIZE_SMALL
+		// 	textstyle		ITEM_TEXTSTYLE_SHADOWED
+		// 	textfont		UI_FONT_NORMAL
+		// 	forecolor		COLOR_UNFOCUSED
+		// 	ownerdraw		UI_LOGGEDINUSER_PC
+		// 	visible			when( !localVarBool( ui_hideBack ) );
+		// 	decoration
+		// }
 		
 		// all buttons will be hidden when option menus are opened, LocalVarBool(ui_hideBack)
 		CHOICE_BUTTON_VIS( 1, "@IW3SP_MOD_LOC_MENU_CHECK_FOR_UPDATE", open updater_checking_for_updates_internal; LOCAL_ARCADE_RESET, when( !localvarBool( ui_hideBack ) ); )
@@ -285,7 +285,29 @@
  //		CHOICE_BUTTON_FOCUS_VIS_NOHI( 7, "@MENU_CREDITS", ;, ;, CLEARUIHINT, when( !localvarBool( ui_hideBack ) && dvarInt(mis_01)<20 ); ) 
  		CHOICE_BUTTON_VIS( 10, "@MENU_MODS", close self; open mods_menu;, when( !localvarBool( ui_hideBack ) ) )
  		CHOICE_BUTTON_VIS( 11, "@MENU_MULTIPLAYER", open multi_popmenu, when( !localvarBool( ui_hideBack ) ); )
- 		CHOICE_BUTTON_VIS( 12, "@MENU_QUIT", open quit_popmenu, when( !localvarBool( ui_hideBack ) ); )			
+ 		CHOICE_BUTTON_VIS( 12, "@MENU_QUIT", open quit_popmenu, when( !localvarBool( ui_hideBack ) ); )		
+
+		itemDef
+		{
+			name 			changelogButton
+			text 			"@IW3SP_MOD_LOC_MENU_CHANGELOG"
+			type 			ITEM_TYPE_BUTTON
+			textfont 		UI_FONT_NORMAL
+			style 			WINDOW_STYLE_FILLED
+			textstyle 		ITEM_TEXTSTYLE_SHADOWED
+			rect 			-130 -40 60 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_BOTTOM
+			textalign 		ITEM_ALIGN_CENTER
+			textscale 		0.33
+			textaligny 		15
+			forecolor		CHOICE_TEXTCOLOR
+			visible 		when( !localvarBool( ui_hideBack ) )
+			mouseEnter 		{ play "mouse_over"; }
+			action
+			{
+				play "mouse_click";
+				open changelog_menu;
+			}
+  		}
 
 		/*
 		#ifdef XENON

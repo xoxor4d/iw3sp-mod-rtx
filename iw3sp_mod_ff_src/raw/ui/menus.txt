@@ -48,4 +48,6 @@
 	
 	//Added 17.08.2023 (9:20 PM)
 	loadMenu { "ui/stats.menu" }
+	//10.16.2023 (11:11 PM)
+	loadMenu { "ui/changelog.menu" }
 }

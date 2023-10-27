@@ -1,0 +1,85 @@
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+#define CHOICE_GROUP			"changelog"
+#include "ui_mp/menustyle.inc"
+#include "ui/choices_setup_common.menu"
+
+#define ITEM_CHANGLOG_PANEL_WIDTH									580
+#define ITEM_CHANGLOG_PANEL_HEIGHT									400
+#define ITEM_CHANGLOG_PANEL_RECT									0 40 ITEM_CHANGLOG_PANEL_WIDTH ITEM_CHANGLOG_PANEL_HEIGHT HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_TOP
+
+#define ITEM_CHANGLOG_TEXT_WIDTH									ITEM_CHANGLOG_PANEL_WIDTH
+#define ITEM_CHANGLOG_TEXT_HEIGHT									(ITEM_CHANGLOG_PANEL_HEIGHT - 3)
+#define ITEM_CHANGLOG_TEXT_RECT										0 60 ITEM_CHANGLOG_TEXT_WIDTH ITEM_CHANGLOG_TEXT_HEIGHT HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_TOP
+
+#define ITEM_CHANGELOG_BACKGROUND \
+	itemDef \
+	{ \
+		name														"changelog_area" \
+		rect														ITEM_CHANGLOG_PANEL_RECT \
+		style														WINDOW_STYLE_SHADER \
+		foreColor													0.3 0.3 0.3 0.5 \
+		background													"white" \
+		decoration													\
+		visible														1 \
+		exp															rect x (0 - (ITEM_CHANGLOG_PANEL_WIDTH / 2)) \
+	} \
+	itemDef \
+	{ \
+		rect														ITEM_CHANGLOG_PANEL_RECT \
+		style														WINDOW_STYLE_FILLED \
+		foreColor													CHOICE_TEXTCOLOR \
+		backColor													0 0 0 0.375 \
+		background													"white" \
+		visible														1 \
+		exp															rect x (0 - (ITEM_CHANGLOG_PANEL_WIDTH / 2)) \
+	}
+
+{
+	menuDef
+	{
+		name			"changelog_menu"
+		fullscreen		1
+		rect			0 0 640 480
+		focuscolor		COLOR_FOCUSED
+		style			WINDOW_STYLE_FILLED
+		border			0
+		soundloop 		"music_mainmenu_mp"
+		onOpen {;}
+		onEsc {	close changelog_menu; }
+		onClose	{ open main; }
+		#include "ui/blurredbg.inc"
+		#include "ui_mp/navcontrols.inc"
+
+        CHOICE_MENU_TITLE( "@IW3SP_MOD_LOC_MENU_CHANGELOG_TITLE" )
+
+        //ITEM_CHANGELOG_BACKGROUND
+
+		itemDef
+    	{
+        	name        				"changelog_area"
+        	rect        				-300 0 600 (380 - 25) HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_SUBTOP
+        	origin      				0 (60 + 25)
+        	style       				1
+        	backcolor   				1 1 1 0.01
+        	visible						1  
+        	decoration
+    	}
+
+        itemDef
+		{
+            name            "changeLogTextInfo"
+            text            ITEM_TYPE_TEXT
+			rect		    ITEM_CHANGLOG_TEXT_RECT
+			style		    WINDOW_STYLE_FILLED
+            textalignx      3
+			foreColor	    CHOICE_TEXTCOLOR
+			textScale	    0.35
+			textFont	    UI_FONT_BIG
+			visible		    1
+            text            ""
+			exp			    rect x(0 - (ITEM_CHANGLOG_TEXT_WIDTH / 2))
+            decoration
+        }
+    }
+}

@@ -49,26 +49,6 @@
 		CHOICE_DVARYESNO( 22, "@IW3SP_MOD_LOC_MENU_ENABLE_AUTOUPDATE", iw3sp_auto_update, ; )
 		CHOICE_DVARYESNO( 23, "@IW3SP_MOD_LOC_MENU_BRANDING", cg_drawBrandingInfo, ; )
 		CHOICE_DVARYESNO( 24, "@IW3SP_MOD_LOC_MENU_EXTERNAL_CONSOLE", external_console, ; )
-
-		itemDef 
-		{
-			name			apply
-			text			"@MENU_APPLY_LANGUAGE_CHANGE"
-			type			1
-			style			WINDOW_STYLE_FILLED
-			textstyle		ITEM_TEXTSTYLE_SHADOWED
-			rect			50 -26 200 20 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM
-			textfont		UI_FONT_NORMAL
-			textalign		ITEM_ALIGN_CENTER
-			textscale		TEXTSIZE_SMALL
-			textaligny		18
-			visible			when ( dvarint( ui_languageChanged ) );
-			mouseEnter		{ play "mouse_over"; }
-			action 
-			{
-				play "mouse_click";
-				open language_restart_popmenu
-			}	
-		}
+		CHOICE_DVARYESNO( 25, "@IW3SP_MOD_LOC_MENU_ALLOW_CHEATS_CMD", sv_allowCheats, ; )
 	}
 }
