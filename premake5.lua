@@ -223,6 +223,9 @@ workspace "iw3sp_dev"
         "Debug", 
         "Release" 
     }
+	
+	language "C++"
+	cppdialect "C++20"
     
     platforms "Win32"
 	architecture "x86"
