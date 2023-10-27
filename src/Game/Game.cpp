@@ -2,4 +2,5 @@
 
 namespace Game
 {
+	Game::gui_t gui = {};
 }

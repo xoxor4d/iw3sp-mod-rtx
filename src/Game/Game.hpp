@@ -7,4 +7,5 @@
 
 namespace Game
 {
+	extern Game::gui_t gui;
 }

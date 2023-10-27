@@ -78,3 +78,6 @@ namespace Components
 #include "Modules/Window.hpp"
 #include "Modules/Sound.hpp"
 #include "Modules/Gamepad.hpp"
+#include "Modules/GUI/GUI.hpp"
+#include "Modules/GUI/Markdown.hpp"
+#include "Modules/Changelog.hpp"

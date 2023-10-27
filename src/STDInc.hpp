@@ -100,6 +100,9 @@ using namespace std::literals;
 #pragma warning(disable: 6387)
 #pragma warning(disable: 26812)
 
+#include <imgui.h>
+#include <backends/imgui_impl_dx9.h>
+#include <backends/imgui_impl_win32.h>
 
 //Game Structure
 #include "Utils\IO.hpp"
@@ -118,4 +121,5 @@ using namespace std::literals;
 #include "Game\Game.hpp"
 #include "Components\Modules\Dvars.hpp"
 
+#include "Components\Modules\GUI\ImGui_Fonts.hpp"
 #include "Components\Loader.hpp"

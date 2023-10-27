@@ -5975,4 +5975,31 @@ namespace Game
 		const char* pszName;
 		int bPresent;
 	};
+
+	enum GUI_MENUS
+	{
+		CHANGELOG = 0
+	};
+
+	struct gui_menus_t
+	{
+		bool menustate;
+		bool mouse_ignores_menustate;
+		bool was_open;
+		bool hk_is_clicked;
+		bool hk_is_down;
+		bool one_time_init;
+		bool got_layout_from_menu;
+		float position[2];
+		float size[2];
+		int horzAlign;
+		int vertAlign;
+	};
+
+	struct gui_t
+	{
+		bool initialized;
+		bool any_menus_open;
+		gui_menus_t menus[1];
+	};
 }

@@ -92,6 +92,13 @@ namespace Components
 
 	HRESULT D3D9Ex::D3D9Device::Reset(D3DPRESENT_PARAMETERS* pPresentationParameters)
 	{
+		if (Game::gui.initialized)
+		{
+			ImGui_ImplDX9_InvalidateDeviceObjects();
+			auto hr = m_pIDirect3DDevice9->Reset(pPresentationParameters);
+			ImGui_ImplDX9_CreateDeviceObjects();
+		}
+
 		return m_pIDirect3DDevice9->Reset(pPresentationParameters);
 	}
 
@@ -234,6 +241,7 @@ namespace Components
 
 	HRESULT D3D9Ex::D3D9Device::EndScene()
 	{
+		GUI::LoopRender();
 		return m_pIDirect3DDevice9->EndScene();
 	}
 
