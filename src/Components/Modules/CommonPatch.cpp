@@ -533,28 +533,5 @@ namespace Components
 			else
 				Utils::Hook::Set<bool>(0x1E209D4, 0);
 		}, Scheduler::Pipeline::MAIN, 50ms);
-
-			if (Dvars::Functions::Dvar_FindVar("sv_allowCheats")->current.enabled)
-			{
-				Command::Execute("seta thereisacow 1337", false);
-
-				Utils::Hook::Set<BYTE>(0x587872, 0xEB); // Read only.
-				Utils::Hook::Set<BYTE>(0x58788F, 0xEB); // Write protected.
-				Utils::Hook::Set<BYTE>(0x5878AD, 0xEB); // Cheat protected.
-			}
-			else
-			{
-				Command::Execute("seta thereisacow 0", false);
-
-				Utils::Hook::Set<BYTE>(0x587872, 0x74); // Read only.
-				Utils::Hook::Set<BYTE>(0x58788F, 0x74); // Write protected.
-				Utils::Hook::Set<BYTE>(0x5878AD, 0x75); // Cheat protected.
-			}
-
-			Dvars::Override::DvarBoolOverride("sv_cheats", 
-				Dvars::Functions::Dvar_FindVar("sv_allowCheats")->current.enabled ? true : false,
-				Dvars::Functions::Dvar_FindVar("sv_allowCheats")->current.enabled ? Game::none : Game::cheat_protected);
-
-		}, Scheduler::Pipeline::MAIN, 50ms);
 	}
 }
