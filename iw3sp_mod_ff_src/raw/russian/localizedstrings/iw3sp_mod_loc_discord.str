@@ -83,7 +83,7 @@ REFERENCE           MAINMENU
 LANG_RUSSIAN        "В главном меню"
 
 REFERENCE           MAPUNKNOWN
-LANG_RUSSIAN        "Карта: Неизвестно"
+LANG_RUSSIAN        "Карта: &&1"
 
 REFERENCE           DIFFICULTY_EASY
 LANG_RUSSIAN        "Сложность: Новобранец"

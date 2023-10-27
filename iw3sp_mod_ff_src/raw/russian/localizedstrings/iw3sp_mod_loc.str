@@ -190,4 +190,16 @@ LANG_RUSSIAN        "(Пользовательская): 8"
 REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
 LANG_RUSSIAN        "(Пользовательская): 9"
 
+REFERENCE           MENU_CHANGELOG
+LANG_RUSSIAN        "Список изменений"
+
+REFERENCE           MENU_CHANGELOG_TITLE
+LANG_RUSSIAN        "СПИСОК ИЗМЕНЕНИЙ"
+
+REFERENCE           MENU_CHANGELOG_CANT_GET
+LANG_RUSSIAN        ""
+
+REFERENCE           MENU_ALLOW_CHEATS_CMD
+LANG_RUSSIAN        "Разрешить читерские команды"
+
 ENDMARKER
