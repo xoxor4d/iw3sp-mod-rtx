@@ -22,6 +22,15 @@ LANG_ENGLISH        "^2Command: ^7Intel gathered by S.A.S. indicates that Al-Asa
 REFERENCE           AIRLIFT_VIDEO13
 LANG_ENGLISH        "^2Command: ^7Force Recon and Wild Weasel units have taken out most of the air defenses but Al-Asad's ground forces still pose a serious threat."
 
+REFERENCE           AIRPLANE_VIDEO11
+LANG_ENGLISH        "^2Romeo One-One: ^7We're going deep...and we're going hard."
+
+REFERENCE           AIRPLANE_VIDEO12
+LANG_ENGLISH        "^2Charlie One-One: ^7Surely you can't be serious?"
+
+REFERENCE           AIRPLANE_VIDEO13
+LANG_ENGLISH        "^2Romeo One-One: ^7I am serious...and don't call me Shirley."
+
 REFERENCE           AIRLIFT_VIDEO14
 LANG_ENGLISH        "^2Lt. Vasquez: ^7Looks like we're rollin' in with everything we got. We get Al-Asad, we end this war right here, right now. Lock and load Marines."
 
@@ -284,13 +293,13 @@ REFERENCE           LAUNCHFACILITY_B_VIDEO14PT2
 LANG_ENGLISH        "^2Command: ^7That's where you'll need to upload the abort codes to destroy the missiles in flight."
 
 REFERENCE           ATTRACT_LOOP_VIDEO1
-LANG_ENGLISH        "Fifty thousand people used to live here... now it's a ghost town."
+LANG_ENGLISH        "50 thousand people used to live here... now it's a ghost town."
 
 REFERENCE           ATTRACT_LOOP_VIDEO2
 LANG_ENGLISH        "Our so-called leaders prostituted us to the west...Destroyed our culture...Our economies...Our honor."
 
 REFERENCE           ATTRACT_LOOP_VIDEO3
-LANG_ENGLISH        "U.S Marines, stationed on high alert, were given the order to invade a small but oil..."
+LANG_ENGLISH        "U.S. Marines, stationed on high alert, were given the order to invade the small but oil..."
 
 REFERENCE           ATTRACT_LOOP_VIDEO4
 LANG_ENGLISH        "Nikolai, the coup is just a distraction."
@@ -314,7 +323,7 @@ REFERENCE           ATTRACT_LOOP_VIDEO10
 LANG_ENGLISH        "Zampella! Reloading!"
 
 REFERENCE           ATTRACT_LOOP_VIDEO11
-LANG_ENGLISH        "Flares away, flares away!"
+LANG_ENGLISH        "Flares away. Flares away!"
 
 REFERENCE           ATTRACT_LOOP_VIDEO12
 LANG_ENGLISH        "Give me some covering fire!"

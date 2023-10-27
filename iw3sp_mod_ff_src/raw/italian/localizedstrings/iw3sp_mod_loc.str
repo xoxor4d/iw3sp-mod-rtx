@@ -193,4 +193,16 @@ LANG_ITALIAN        "(Personalizzata): 8"
 REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
 LANG_ITALIAN        "(Personalizzata): 9"
 
+REFERENCE           MENU_ALLOW_CHEATS_CMD
+LANG_ITALIAN        "Consentire comandi cheat"
+
+REFERENCE           MENU_CHANGELOG
+LANG_ITALIAN        "Changelog"
+
+REFERENCE           MENU_CHANGELOG_TITLE
+LANG_ITALIAN        "CHANGELOG"
+
+REFERENCE           MENU_CHANGELOG_CANT_GET
+LANG_ITALIAN        ""
+
 ENDMARKER

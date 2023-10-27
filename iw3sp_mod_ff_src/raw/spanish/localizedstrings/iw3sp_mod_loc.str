@@ -194,4 +194,16 @@ LANG_SPANISH        "(Personalizada): 8"
 REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
 LANG_SPANISH        "(Personalizada): 9"
 
+REFERENCE           MENU_ALLOW_CHEATS_CMD
+LANG_SPANISH        "Permitir comandos de trucos"
+
+REFERENCE           MENU_CHANGELOG
+LANG_SPANISH        "Changelog"
+
+REFERENCE           MENU_CHANGELOG_TITLE
+LANG_SPANISH        "CHANGELOG"
+
+REFERENCE           MENU_CHANGELOG_CANT_GET
+LANG_SPANISH        ""
+
 ENDMARKER

@@ -193,4 +193,19 @@ LANG_FRENCH        	"(Personnalisé): 8"
 REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
 LANG_FRENCH        	"(Personnalisé): 9"
 
+REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
+LANG_FRENCH        	"(Personnalisé): 9"
+
+REFERENCE           MENU_ALLOW_CHEATS_CMD
+LANG_FRENCH        	"Autoriser les commandes de triche"
+
+REFERENCE           MENU_CHANGELOG
+LANG_FRENCH         "Changelog"
+
+REFERENCE           MENU_CHANGELOG_TITLE
+LANG_FRENCH         "CHANGELOG"
+
+REFERENCE           MENU_CHANGELOG_CANT_GET
+LANG_FRENCH         ""
+
 ENDMARKER
