@@ -9,8 +9,9 @@ namespace Components
 		~Language();
 		static std::string GetCurrentLanguage();
 	private:
+		static const char* GetLanguageForVidSubtitles();
 		static void LanguageInstallStub();
 		static void LanguageSetupInit();
-		static void IntroSubtitlesStub();
+		static void VideoSubtitlesStub();
 	};
 }

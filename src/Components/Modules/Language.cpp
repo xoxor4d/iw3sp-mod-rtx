@@ -51,13 +51,43 @@ namespace Components
 			Config::Set<bool>("language_first_setting", false);
 		}
 	}
-	
-	void Language::IntroSubtitlesStub()
+
+	const char* Language::GetLanguageForVidSubtitles()
 	{
-		if (Language::GetCurrentLanguage() == "english" || Language::GetCurrentLanguage() == "russian")
+		int language = Dvars::Functions::Dvar_FindVar("loc_language")->current.integer;
+
+		switch (language)
 		{
-			Utils::Hook::Set<const char*>(0x420F45, "video/vidsubtitles.csv");
-			Utils::Hook::Set<const char*>(0x567AA4, "video/vidsubtitles.csv");
+			case 0: return "video/en/vidsubtitles.csv"; break;
+			case 1: return "video/fr/vidsubtitles.csv"; break;
+			case 2: return "video/ge/vidsubtitles.csv"; break;
+			case 3: return "video/it/vidsubtitles.csv"; break;
+			case 4: return "video/sp/vidsubtitles.csv"; break;
+			case 5: return "video/br/vidsubtitles.csv"; break;
+			case 6: return "video/ru/vidsubtitles.csv"; break;
+			case 7: return "video/po/vidsubtitles.csv"; break;
+			case 8: return "video/ko/vidsubtitles.csv"; break;
+			case 9: return "video/tw/vidsubtitles.csv"; break;
+			case 10: return "video/jp/vidsubtitles.csv"; break;
+			case 11: return "video/cn/vidsubtitles.csv"; break;
+			case 12: return "video/th/vidsubtitles.csv"; break;
+			case 13: return "video/1337/vidsubtitles.csv"; break;
+			case 14: return "video/cz/vidsubtitles.csv"; break;
+			default: return "video/en/vidsubtitles.csv"; break;
+		}
+	}
+	
+	void Language::VideoSubtitlesStub()
+	{
+		if (Language::GetCurrentLanguage() == "english" ||
+			Language::GetCurrentLanguage() == "french"	||
+			Language::GetCurrentLanguage() == "german"	||
+			Language::GetCurrentLanguage() == "italian" ||
+			Language::GetCurrentLanguage() == "russian" ||
+			Language::GetCurrentLanguage() == "spanish")
+		{
+			Utils::Hook::Set<const char*>(0x420F45, GetLanguageForVidSubtitles());
+			Utils::Hook::Set<const char*>(0x567AA4, GetLanguageForVidSubtitles());
 		}
 		else
 		{
@@ -69,7 +99,7 @@ namespace Components
 	void Language::LanguageInstallStub()
 	{
 		Language::LanguageSetupInit();
-		Language::IntroSubtitlesStub();
+		Language::VideoSubtitlesStub();
 		Utils::Hook::Call<std::uint8_t()>(0x614640)();
 	}
 
