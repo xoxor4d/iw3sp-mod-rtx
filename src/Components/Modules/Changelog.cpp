@@ -100,7 +100,7 @@ namespace Components
 				int inputTextLen = *(int*)0x800CCC;
 				char activeApp = *(char*)0x13E3FE4;
 
-				if ((matchCount >= 7 && matchCount <= 24  && inputTextLen > 0 ) || con_outputVisible && activeApp)
+				if ((matchCount >= 7 && matchCount <= 24  && inputTextLen > 0 ) || con_outputVisible)
 				{
 					changeLogWindowFlags |= ImGuiWindowFlags_NoTitleBar |
 						ImGuiWindowFlags_NoBackground |
