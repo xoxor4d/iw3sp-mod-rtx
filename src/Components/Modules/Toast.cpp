@@ -42,7 +42,7 @@ namespace Components
 
 			if (Language::GetCurrentLanguage() == "russian")
 			{
-				fontSize = 1.0f;
+				fontSize = 1.05f;
 				descSize = 1.05f;
 			}
 			else
