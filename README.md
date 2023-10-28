@@ -13,12 +13,23 @@ Singleplayer client modification for Call of Duty 4: Modern Warfare (IW3). This 
 ___
 
 # Credits
-- [Bogdan Konstantinou AKA Nikolai Belinski](https://github.com/Nikolai2390)
+- [Bogdan Konstantinou](https://github.com/Nikolai2390)
 - [xoxor4d - IW3xo](https://github.com/xoxor4d/iw3xo-dev)
 - [X Labs Team](https://github.com/XLabsProject)
 - [fed - h2-mod](https://github.com/fedddddd/h2-mod)
 - [Nukem9 - LinkerMod](https://github.com/Nukem9/LinkerMod)
 - [CoD4X Server/Client](https://github.com/callofduty4x)
+- [Vlad Loktionov](https://www.youtube.com/@ruvlad)
+
+## [Dependencies]
+- [ocornut - Dear ImGui](https://github.com/ocornut/imgui)
+- [curl](https://github.com/curl/curl)
+- [juliettef - imgui_markdown](https://github.com/juliettef/imgui_markdown)
+- [discord-rpc](https://github.com/discord/discord-rpc)
+- [nlohmann - json](https://github.com/nlohmann/json)
+- [DirectX SDK](https://github.com/devKlausS/dxsdk)
+- [LibTomCrypt](https://github.com/libtom/libtomcrypt)
+- [LibTomMath](https://github.com/libtom/libtommath)
 
 # Disclaimer
 This software has been created purely for the purposes of academic research. Project maintainers are not responsible or liable for misuse of the software. Use responsibly.
@@ -42,7 +53,7 @@ This software has been created purely for the purposes of academic research. Pro
 - Added map entities editing for the stock maps and more...
 
 # How to install modification? (For regular users)
-**NOTE**: You must legally own Steam version of Call of Duty® 4: Modern Warfare® (2007) to run this mod. Cracked/Pirated/CDs versions of the game are **NOT** supported.
+**NOTE**: You must legally own [Steam version](https://store.steampowered.com/app/7940/Call_of_Duty_4_Modern_Warfare_2007/) of Call of Duty® 4: Modern Warfare® (2007) to run this mod. Cracked/Pirated/CDs versions of the game are **NOT** supported.
 1. Download the latest [release](https://github.com/JerryALT/iw3sp_mod/releases/latest)
 2. Place the .zip contents into your cod4 root folder
 3. Start the **iw3sp_mod.exe**
