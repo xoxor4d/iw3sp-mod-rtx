@@ -592,7 +592,7 @@ namespace Game
 		CMD_BUTTON_BREATH = 1 << 13,
 		CMD_BUTTON_FRAG = 1 << 14,
 		CMD_BUTTON_OFFHAND_SECONDARY = 1 << 15,
-		CMD_BUTTON_THROW = 1 << 19,
+		CMD_BUTTON_ADS_PC = 1 << 19, //This works with ADS when mode on toggle or hold
 	};
 
 	struct usercmd_s
@@ -6001,5 +6001,13 @@ namespace Game
 		bool initialized;
 		bool any_menus_open;
 		gui_menus_t menus[1];
+	};
+
+	enum pmType_t
+	{
+		PM_TYPE_NONE = 0x0,
+		PM_TYPE_DEFAULT = 0x1,
+		PM_TYPE_NOCLIP = 0x2,
+		PM_TYPE_UFO = 0x3,
 	};
 }

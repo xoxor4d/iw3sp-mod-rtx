@@ -313,4 +313,7 @@ namespace Game
 	extern CG_CreateWeaponViewModelXAnim_t CG_CreateWeaponViewModelXAnim;
 
 	void RB_DrawStretchPicRotate(Game::Material* material, float x, float y, float w, float h, float s0, float t0, float s1, float t1, float sinAngle, float cosAngle, unsigned int color);
+
+	void Sys_SnapVector();
+	Game::vec_t Vec3Normalize(Game::vec3_t v);
 }

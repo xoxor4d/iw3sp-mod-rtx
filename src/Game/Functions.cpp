@@ -1322,4 +1322,28 @@ namespace Game
 			ret
 		}
 	}
+
+	void Sys_SnapVector()
+	{
+		Game::g_clients->ps.velocity[0] = rint(Game::g_clients->ps.velocity[0]);
+		Game::g_clients->ps.velocity[1] = rint(Game::g_clients->ps.velocity[1]);
+		Game::g_clients->ps.velocity[2] = rint(Game::g_clients->ps.velocity[2]);
+	}
+
+	Game::vec_t Vec3Normalize(Game::vec3_t v) 
+	{
+		float length, ilength;
+
+		length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+		length = sqrt(length);
+
+		if (length) {
+			ilength = 1 / length;
+			v[0] *= ilength;
+			v[1] *= ilength;
+			v[2] *= ilength;
+		}
+
+		return length;
+	}
 }
