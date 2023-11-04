@@ -27,14 +27,15 @@ namespace Components
 		Loader::Pregame = true;
 		Loader::Postgame = false;
 		Loader::Uninitializing = false;
-		Utils::Memory::GetAllocator()->clear();
 
 		Loader::Register(new Singleton());
+		Loader::Register(new AssetHandler());
+		Loader::Register(new Command());
+		Loader::Register(new ServerCommand());
+		Loader::Register(new UIScript());
 		Loader::Register(new Config());
 		Loader::Register(new Flags());
 		Loader::Register(new FastFiles());
-		Loader::Register(new Command());
-		Loader::Register(new AssetHandler());
 		Loader::Register(new Branding());
 		Loader::Register(new FileSystem());
 		Loader::Register(new Language());
@@ -49,8 +50,6 @@ namespace Components
 		Loader::Register(new Weapons());
 		Loader::Register(new Discord());
 		Loader::Register(new TextRenderer());
-		Loader::Register(new UIScript());
-		Loader::Register(new ServerCommand());
 		Loader::Register(new LocalizedStrings());
 		Loader::Register(new Toast());
 		Loader::Register(new Achievements());
