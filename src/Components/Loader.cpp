@@ -27,6 +27,7 @@ namespace Components
 		Loader::Pregame = true;
 		Loader::Postgame = false;
 		Loader::Uninitializing = false;
+		Utils::Memory::GetAllocator()->clear();
 
 		Loader::Register(new Singleton());
 		Loader::Register(new Config());
