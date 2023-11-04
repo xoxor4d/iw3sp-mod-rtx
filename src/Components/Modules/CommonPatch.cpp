@@ -348,19 +348,10 @@ namespace Components
 		}
 	}
 
-	//void Com_Quit_f_stub()
-	//{
-		// This stub is necessary if we really want to close the game completely
-		// Auto-Update can stay in the process even you close the game via quit.
-		//if (Updater::UpdateRestart == true)
-		//{
-		//	Utils::Library::Terminate();
-		//}
-		//else
-		//{
-		//	Utils::Hook::Call<void()>(0x595324); //sys_exitCmdLine
-		//}
-	//}
+	void Com_Quit_f_stub()
+	{
+		Utils::Library::Terminate();
+	}
 
 	void LanguageSetValueConfig(int langIndex)
 	{
@@ -481,7 +472,7 @@ namespace Components
 		Utils::Hook(0x5674F8, updateLanguageStub, HOOK_JUMP).install()->quick();
 
 		// Com_Quit_f_stub for auto-update.
-		//Utils::Hook(0x595324, Com_Quit_f_stub, HOOK_CALL).install()->quick();
+		Utils::Hook(0x595324, Com_Quit_f_stub, HOOK_CALL).install()->quick();
 
 		// Increase fps cap to 250 for menus.
 		Utils::Hook::Set<BYTE>(0x535881, 0xEB);
