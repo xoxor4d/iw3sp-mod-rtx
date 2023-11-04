@@ -67,6 +67,16 @@ namespace Components
 		return Window::MainWindow;
 	}
 
+	void Window::OnWndMessage(UINT Msg, Utils::Slot<Window::WndProcCallback> callback)
+	{
+		WndMessageCallbacks.emplace(Msg, callback);
+	}
+
+	void Window::OnCreate(Utils::Slot<CreateCallback> callback)
+	{
+		CreateSignals.connect(callback);
+	}
+
 	__declspec(naked) void Window::StyleHookStub()
 	{
 		const static uint32_t retn_pt = 0x5D9628;
@@ -136,7 +146,7 @@ namespace Components
 					if (ImGui_ImplWin32_WndProcHandler(hWnd, Msg, wParam, lParam))
 					{
 						ImGui::GetIO().MouseDrawCursor = true;
-						return true;
+						return TRUE;
 					}
 
 					menu_open = true;
@@ -156,13 +166,10 @@ namespace Components
 			}
 		}
 
-
-
-
-		//if (const auto cb = WndMessageCallbacks.find(Msg); cb != WndMessageCallbacks.end())
-		//{
-		//	return cb->second(lParam, wParam);
-		//}
+		if (const auto cb = WndMessageCallbacks.find(Msg); cb != WndMessageCallbacks.end())
+		{
+			return cb->second(lParam, wParam);
+		}
 
 		return Utils::Hook::Call<BOOL(__stdcall)(HWND, UINT, WPARAM, LPARAM)>(0x596810)(hWnd, Msg, wParam, lParam);
 	}

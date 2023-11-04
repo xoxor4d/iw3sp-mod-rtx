@@ -2,11 +2,11 @@
 
 namespace Main
 {
-    static Utils::Hook EntryPointHook_;
+    //static Utils::Hook EntryPointHook_;
 
     void Initialize()
     {
-        Main::EntryPointHook_.uninstall();
+        //Main::EntryPointHook_.uninstall();
         Components::Loader::Initialize();
     }
 
@@ -14,33 +14,41 @@ namespace Main
     {
         Components::Loader::Uninitialize();
     }
-}
 
-__declspec(naked) void start_entry_point()
-{
-    __asm
+    __declspec(naked) void StartEntryPoint()
     {
-        call	Main::Initialize;
+        __asm
+        {
+            pushad;
+            call	Main::Initialize;
+            popad;
 
-        mov		eax, 0x643AFB;
-        jmp		eax;
+            push    64391Bh;
+            push    64CB85h;
+            retn;
+            //mov		eax, 0x643AFB;
+            //jmp		eax;
+        }
     }
 }
 
 BOOL APIENTRY DllMain(HMODULE /*hModule*/, DWORD  ul_reason_for_call, LPVOID /*lpReserved*/)
 {
-    auto* _module = reinterpret_cast<char*>(0x400000);
+    //auto* _module = reinterpret_cast<char*>(0x400000);
 
     if (ul_reason_for_call == DLL_PROCESS_ATTACH)
     {
         if (Components::Loader::BinaryCheck())
         {
-            DWORD oldProtect;
-            VirtualProtect(_module + 0x1000, 0x0FB7000, PAGE_EXECUTE_READWRITE, &oldProtect);
+            //DWORD oldProtect;
+            //VirtualProtect(_module + 0x1000, 0x0FB7000, PAGE_EXECUTE_READWRITE, &oldProtect);
 
-            Main::EntryPointHook_.initialize(0x643AFB, start_entry_point)->install();
+            //Main::EntryPointHook_.initialize(0x643AFB, start_entry_point)->install();
 
-            Utils::Hook(0x643AFB, start_entry_point, HOOK_JUMP).install()->quick();
+            SetProcessDEPPolicy(PROCESS_DEP_ENABLE);
+            std::srand(std::uint32_t(std::time(nullptr)) ^ ~(GetTickCount() * GetCurrentProcessId()));
+            Utils::SetEnvironment();
+            Utils::Hook(0x643AFB, Main::StartEntryPoint, HOOK_JUMP).install()->quick();
         }
         else
             return FALSE;
