@@ -105,21 +105,22 @@ using namespace std::literals;
 #include <backends/imgui_impl_win32.h>
 
 //Game Structure
-#include "Utils\IO.hpp"
-#include "Utils\Time.hpp"
 #include "Utils\Memory.hpp"
+
 #include "Utils\Cryptography.hpp"
-#include "Utils\Hooking.hpp"
 #include "Utils\Function.hpp"
+#include "Utils\Hooking.hpp"
+#include "Utils\HTTP.hpp"
+#include "Utils\IO.hpp"
+#include "Utils\Library.hpp"
 #include "Utils\String.hpp"
 #include "Utils\Thread.hpp"
+#include "Utils\Time.hpp"
 #include "Utils\Utils.hpp"
-#include "Utils\Library.hpp"
-#include "Utils\HTTP.hpp"
 
 #include "Game\Structs.hpp"
 #include "Game\Game.hpp"
 #include "Components\Modules\Dvars.hpp"
 
-#include "Components\Modules\GUI\ImGui_Fonts.hpp"
 #include "Components\Loader.hpp"
+#include "Components\Modules\GUI\ImGui_Fonts.hpp"
