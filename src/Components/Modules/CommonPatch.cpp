@@ -506,6 +506,7 @@ namespace Components
 		Utils::Hook::Nop(0x4477A1, 4);
 
 		Utils::Hook::Nop(0x44045E, 5); // MAX_PACKET_USERCMDS\n
+		Utils::Hook::Nop(0x53A334, 5); // Ragdoll allocation failed, out of ragdoll bodies (obj %d)
 
 		// ui_showList: changing the font.
 		Utils::Hook::Set<DWORD>(0x57164F, 0x129ADB8);
