@@ -9,6 +9,9 @@ namespace Game
 
 	extern IDirect3DDevice9** dx9_device_ptr;
 
+	typedef void(*longjmp_internal_t)(jmp_buf env, int status);
+	extern longjmp_internal_t longjmp_internal;
+
 	typedef void(__cdecl* CommandCB_t)(void);
 
 	void Cmd_AddCommand(const char* name, void(*callback)(), cmd_function_s* data, char);

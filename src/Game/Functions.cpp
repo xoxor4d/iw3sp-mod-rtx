@@ -5,6 +5,8 @@ namespace Game
 	//d3d9
 	IDirect3D9** d3d9 = reinterpret_cast<IDirect3D9**>(0x1623F84);
 	IDirect3DDevice9** dx9_device_ptr = reinterpret_cast<IDirect3DDevice9**>(0x1623F88);
+	
+	longjmp_internal_t longjmp_internal = longjmp_internal_t(0x64285C);
 
 	//Cmd
 	Cmd_ExecuteSingleCommand_t	Cmd_ExecuteSingleCommand = Cmd_ExecuteSingleCommand_t(0x531380);

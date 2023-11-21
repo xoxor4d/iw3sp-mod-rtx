@@ -4,6 +4,7 @@ namespace Game
 {
 	char* sys_processSemaphoreFile = reinterpret_cast<char*>(0x13E1F10);
 	//-------------------------------------------------
+	Sys_SuspendOtherThreads_t Sys_SuspendOtherThreads = Sys_SuspendOtherThreads_t(0x539E40);
 	//-------------------------------------------------
 	int	sys_timeBase;
 	int Sys_MilliSeconds()

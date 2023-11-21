@@ -74,6 +74,7 @@ namespace Components
 #include "Modules/Toast.hpp"
 #include "Modules/Achievements.hpp"
 #include "Modules/Events.hpp"
+#include "Modules/Exception.hpp"
 #include "Modules/Updater.hpp"
 #include "Modules/Window.hpp"
 #include "Modules/Sound.hpp"

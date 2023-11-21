@@ -31,6 +31,7 @@ namespace Components
 		Loader::Register(new Singleton());
 		Loader::Register(new AssetHandler());
 		Loader::Register(new Command());
+		Loader::Register(new Exception());
 		Loader::Register(new ServerCommand());
 		Loader::Register(new UIScript());
 		Loader::Register(new Config());

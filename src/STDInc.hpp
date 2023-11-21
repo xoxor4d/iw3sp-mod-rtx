@@ -36,6 +36,9 @@
 #include <cstdio>
 #include <utility>
 
+#include <setjmp.h>
+#include <DbgHelp.h>
+
 #include <gsl/gsl>
 #include <curl/curl.h>
 
@@ -76,6 +79,7 @@ using namespace std::literals;
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
 #pragma comment(lib, "Winmm.Lib")
+#pragma comment(lib, "dbghelp.lib")
 
 #include <XInput.h>
 #pragma comment (lib, "xinput.lib")
