@@ -134,7 +134,7 @@ namespace Game
 
 	void Scr_AddString(const char* value /*esi*/);
 
-	extern bool Key_IsCatcherActive(int localClientNum, int mask);
+	extern bool Key_IsCatcherActive(int mask);
 	//extern Game::PlayerKeyState* playerKeys;
 
 	extern const char* SEH_GetCurrentLanguage();
