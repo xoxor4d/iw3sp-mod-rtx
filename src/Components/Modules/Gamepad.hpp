@@ -53,8 +53,9 @@ namespace Components
 
 	public:
 		Gamepad();
-		static void OnMouseMove(int dx, int dy);
 		~Gamepad();
+		static void OnMouseMove(int x, int y, int dx, int dy);
+		static bool IsGamePadInUse();
 	private:
 		static Game::ButtonToCodeMap_t buttonList[];
 		static Game::StickToCodeMap_t analogStickList[4];
@@ -103,6 +104,7 @@ namespace Components
 		static void CL_GamepadMove(Game::usercmd_s* cmd);
 		static void CL_MouseMove(Game::usercmd_s* cmd);
 		static void CL_MouseMove_Stub();
+		static void CL_MouseEvent_Stub();
 
 		static bool Key_IsValidGamePadChar(int key);
 		static bool CL_CheckForIgnoreDueToRepeat(int localClientNum, int key, int repeatCount, unsigned int time);
@@ -157,13 +159,13 @@ namespace Components
 		static void Key_SetBinding_stub01();
 		static void Key_SetBinding_stub02();
 		static void Key_SetBinding_stub03();
-		static bool IsGamePadInUse();
 		static void CL_KeyEvent_Hk(int localClientNum, int key, int down, unsigned int time);
+		static int CL_MouseEvent_Hk(int x, int y, int dx, int dy);
 		static bool UI_RefreshViewport_Hk();
 		static void UI_RefreshStub();
 		static void UI_MouseEventStub();
 
-		static bool Gamepad_ShouldUse(const Game::gentity_s* playerEnt, unsigned useTime);
+		static bool Gamepad_ShouldUse(Game::gentity_s* client, unsigned useTime);
 		static void Player_UseEntity_Stub();
 
 		static Game::keyname_t* GetLocalizedKeyNameMap();

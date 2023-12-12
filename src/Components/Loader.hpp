@@ -60,6 +60,7 @@ namespace Components
 #include "Modules/CommonPatch.hpp"
 #include "Modules/Language.hpp"
 #include "Modules/Maps.hpp"
+#include "Modules/RawMouse.hpp"
 #include "Modules/Renderer.hpp"
 #include "Modules/D3D9Ex.hpp"
 #include "Modules/GSC/GSC.hpp"

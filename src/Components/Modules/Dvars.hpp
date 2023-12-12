@@ -36,6 +36,11 @@ namespace Dvars
 
 	extern Game::dvar_s* external_console;
 
+	extern Game::dvar_s* M_RawInput;
+
+	// Gamepad
+	extern Game::dvar_s* gpad_use_hold_time;
+
 	namespace Functions
 	{
 		typedef Game::dvar_s* (__cdecl* Dvar_FindVar_t)(const char* dvarName);

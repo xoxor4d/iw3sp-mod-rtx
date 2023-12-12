@@ -5,7 +5,7 @@ namespace Game
 	extern unsigned int* g_poolSize;
 	extern const char** g_assetNames;
 	extern XAssetHeader* DB_XAssetPool;
-	extern HANDLE DatabaseHandle;
+	extern HANDLE databaseCompletedEvent;
 	extern HANDLE databaseCompletedEvent2;
 	static Utils::function<void()> DB_SyncXAssets = 0x45B6F0;
 	static XZoneName* g_zoneNames = (XZoneName*)0xAC3000;

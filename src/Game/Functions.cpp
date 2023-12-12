@@ -291,9 +291,9 @@ namespace Game
 		}
 	}
 
-	bool Key_IsCatcherActive(int localClientNum, int mask)
+	bool Key_IsCatcherActive(int mask)
 	{
-		return (mask & Game::clientUIActives->keyCatchers) != 0;
+		return (mask & Game::clientUIActives->keyCatchers);
 	}
 
 	const char* SEH_GetCurrentLanguage()
@@ -1347,5 +1347,44 @@ namespace Game
 		}
 
 		return length;
+	}
+	
+	
+	IN_RecenterMouse_t IN_RecenterMouse = IN_RecenterMouse_t(0x594570);
+	IN_MouseMove_t IN_MouseMove = IN_MouseMove_t(0x594730);
+	IN_Init_t IN_Init = IN_Init_t(0x5947F0);
+	UI_MouseEvent_t UI_MouseEvent = UI_MouseEvent_t(0x567D30);
+
+	void UI_DrawHandlePic(const float* color /*ecx*/, Game::ScreenPlacement* ScrPlace /*edx*/, float x, float y, float w, float h, int horzAlign, int vertAlign, Game::Material* material)
+	{
+		const static uint32_t UI_DrawHandlePic_func = 0x55F3D0;
+		__asm
+		{
+			pushad;
+			push	material;
+			push	vertAlign;
+			push	horzAlign;
+
+			sub     esp, 10h;
+
+			fld		h;
+			fstp	[esp + 0Ch];
+
+			fld		w;
+			fstp	[esp + 8h];
+
+			fld		y;
+			fstp	[esp + 4h];
+
+			fld		x;
+			fstp	[esp];
+
+			mov		ecx, [color];
+			mov		edx, [ScrPlace];
+
+			call	UI_DrawHandlePic_func;
+			add		esp, 1Ch;
+			popad;
+		}
 	}
 }

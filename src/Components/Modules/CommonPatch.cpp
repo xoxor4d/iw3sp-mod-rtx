@@ -34,7 +34,7 @@ namespace Components
 			{
 				Game::DB_LoadXAssets(XZoneInfoStack, i, false);
 				Game::R_BeginRemoteScreenUpdate();
-				WaitForSingleObject(Game::DatabaseHandle, 0xFFFFFFFF);
+				WaitForSingleObject(Game::databaseCompletedEvent, 0xFFFFFFFF);
 				Game::R_EndRemoteScreenUpdate();
 				i = 0;
 
@@ -78,7 +78,7 @@ namespace Components
 			Game::DB_LoadXAssets(XZoneInfoStack, i, true);
 
 			Game::R_BeginRemoteScreenUpdate();
-			WaitForSingleObject(Game::DatabaseHandle, 0xFFFFFFFF);
+			WaitForSingleObject(Game::databaseCompletedEvent, 0xFFFFFFFF);
 			Game::R_EndRemoteScreenUpdate();
 			i = 0;
 		}
@@ -96,7 +96,7 @@ namespace Components
 		Game::DB_LoadXAssets(XZoneInfoStack, i, true);
 
 		Game::R_BeginRemoteScreenUpdate();
-		WaitForSingleObject(Game::DatabaseHandle, 0xFFFFFFFF);
+		WaitForSingleObject(Game::databaseCompletedEvent, 0xFFFFFFFF);
 		Game::R_EndRemoteScreenUpdate();
 
 		Game::Com_Printf(0, "Game [^2Success^7]: main .ff files has been loaded.\n");
@@ -287,7 +287,7 @@ namespace Components
 			if (Dvars::Functions::Dvar_FindVar("useFastFile")->current.enabled)
 			{
 				Game::R_BeginRemoteScreenUpdate();
-				WaitForSingleObject(Game::DatabaseHandle, 0xFFFFFFFF);
+				WaitForSingleObject(Game::databaseCompletedEvent, 0xFFFFFFFF);
 				Game::R_EndRemoteScreenUpdate();
 			}
 

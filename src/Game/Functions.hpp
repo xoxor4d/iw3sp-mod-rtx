@@ -319,4 +319,18 @@ namespace Game
 
 	void Sys_SnapVector();
 	Game::vec_t Vec3Normalize(Game::vec3_t v);
+
+	typedef void(*IN_RecenterMouse_t)();
+	extern IN_RecenterMouse_t IN_RecenterMouse;
+
+	typedef void(*IN_MouseMove_t)();
+	extern IN_MouseMove_t IN_MouseMove;
+
+	typedef void(*IN_Init_t)();
+	extern IN_Init_t IN_Init;
+
+	typedef void(*UI_MouseEvent_t)(int x, int y);
+	extern UI_MouseEvent_t UI_MouseEvent;
+
+	void UI_DrawHandlePic(const float* color /*ecx*/, Game::ScreenPlacement* ScrPlace /*edx*/, float x, float y, float w, float h, int horzAlign, int vertAlign, Game::Material* material);
 }

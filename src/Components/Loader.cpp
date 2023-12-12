@@ -43,6 +43,7 @@ namespace Components
 		Loader::Register(new CommonPatch());
 		Loader::Register(new Maps());
 		Loader::Register(new D3D9Ex());
+		Loader::Register(new RawMouse());
 		Loader::Register(new Renderer());
 		Loader::Register(new Scheduler());
 		Loader::Register(new GSC());

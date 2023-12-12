@@ -5,7 +5,7 @@ namespace Game
 	unsigned int* g_poolSize = reinterpret_cast<unsigned int*>(0x6DEFA0);
 	const char** g_assetNames = (const char**)0x6DF440;
 	XAssetHeader* DB_XAssetPool = reinterpret_cast<XAssetHeader*>(0x6DF200);
-	HANDLE DatabaseHandle = reinterpret_cast<HANDLE>(0xFC6308);
+	HANDLE databaseCompletedEvent = reinterpret_cast<HANDLE>(0xFC6308);
 	HANDLE databaseCompletedEvent2 = reinterpret_cast<HANDLE>(0xFC6348);
 	//-------------------------------------------------
 	DB_LoadXAssets_t DB_LoadXAssets = (DB_LoadXAssets_t)0x45B990;

@@ -82,19 +82,38 @@ namespace Components
 		const static uint32_t retn_pt = 0x5D9628;
 		__asm
 		{
-			push	eax;
-			mov		eax, Dvars::r_noborder;
-			cmp		byte ptr[eax + 12], 1;
-			pop		eax;
+			call	Window::IsNoBorder;
+			test	al, al
 
-			jne		STOCK;
+			jz		SetBorder
 
 			mov		ebp, WS_VISIBLE | WS_POPUP;
 			jmp		retn_pt;
 
-		STOCK:
+		SetBorder:
 			mov		ebp, WS_VISIBLE | WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX;
 			jmp		retn_pt;
+		}
+	}
+
+	void Window::DrawCursor(const float* color, Game::ScreenPlacement* ScrPlace, float x, float y, float w, float h, int horzAlign, int vertAlign, Game::Material* material)
+	{
+		if (Dvars::ui_nativeCursor->current.enabled)
+			Window::CursorVisible = TRUE;
+		else
+			Game::UI_DrawHandlePic(color, Game::scrPlace, x, y, w, h, horzAlign, vertAlign, material);
+	}
+
+	__declspec(naked) void Window::DrawCursorStub()
+	{
+		const static uint32_t jump_offset = 0x565453;
+		__asm 
+		{
+			push	edx;
+			push	ecx;
+			call	Window::DrawCursor;
+			add		esp, 8;
+			jmp		jump_offset;
 		}
 	}
 
@@ -120,21 +139,27 @@ namespace Components
 	{
 		Window::MainWindow = CreateWindowExA(dwExStyle, lpClassName, lpWindowName, dwStyle, X, Y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam);
 			
-		GUI::Reset();
-
 		CreateSignals();
+
+		GUI::Reset();
 
 		return Window::MainWindow;
 	}
 
 	void Window::ApplyCursor()
 	{
+		bool isLoading = !FastFiles::Ready();
 		SetCursor(LoadCursor(nullptr, IDC_ARROW));
 	}
 
 	BOOL WINAPI Window::MessageHandler(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	{
 		auto menu_open = false;
+
+		if (const auto cb = WndMessageCallbacks.find(Msg); cb != WndMessageCallbacks.end())
+		{
+			return cb->second(lParam, wParam);
+		}
 
 		if (Game::gui.initialized)
 		{
@@ -166,12 +191,13 @@ namespace Components
 			}
 		}
 
-		if (const auto cb = WndMessageCallbacks.find(Msg); cb != WndMessageCallbacks.end())
-		{
-			return cb->second(lParam, wParam);
+		return Utils::Hook::Call<BOOL(__stdcall)(HWND, UINT, WPARAM, LPARAM)>(0x596810)(hWnd, Msg, wParam, lParam);
 		}
 
-		return Utils::Hook::Call<BOOL(__stdcall)(HWND, UINT, WPARAM, LPARAM)>(0x596810)(hWnd, Msg, wParam, lParam);
+	void Window::EnableDpiAwareness()
+	{
+		const Utils::Library user32{ "user32.dll" };
+		user32.invokePascal<void>("SetProcessDpiAwarenessContext", DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 	}
 
 	bool Window::IsNoBorder()
@@ -375,15 +401,8 @@ namespace Components
 		Utils::Hook::Nop(0x5D968A, 6);
 		Utils::Hook(0x5D968A, Window::CreateMainWindow, HOOK_CALL).install()->quick();
 
-		// Don't let the game interact with the native cursor
-		Utils::Hook::Set(0x65D2B8, Window::ShowCursorHook);
-
-		Utils::Hook::Nop(0x445427, 5);
-		Utils::Hook(0x445427, Window::ScrPlace_SetupViewport, HOOK_CALL).install()->quick();
-		Utils::Hook::Nop(0x445451, 5);
-		Utils::Hook(0x445451, Window::ScrPlace_SetupViewport, HOOK_CALL).install()->quick();
-		Utils::Hook::Nop(0x44547B, 5);
-		Utils::Hook(0x44547B, Window::ScrPlace_SetupViewport, HOOK_CALL).install()->quick();
+		// Mark the cursor as visible
+		Utils::Hook(0x56544E, Window::DrawCursorStub, HOOK_JUMP).install()->quick();
 
 		// Draw the cursor if necessary
 		Scheduler::Loop([]
@@ -408,9 +427,26 @@ namespace Components
 			}
 		}, Scheduler::Pipeline::RENDERER);
 
+		// Don't let the game interact with the native cursor
+		Utils::Hook::Set(0x65D2B8, Window::ShowCursorHook);
 
 		// Use custom message handler
 		Utils::Hook::Set(0x595C1E, Window::MessageHandler);
+
+		Window::OnWndMessage(WM_SETCURSOR, [](WPARAM, LPARAM)
+		{
+			Window::ApplyCursor();
+			return TRUE;
+		});
+
+		Window::EnableDpiAwareness();
+
+		Utils::Hook::Nop(0x445427, 5);
+		Utils::Hook(0x445427, Window::ScrPlace_SetupViewport, HOOK_CALL).install()->quick();
+		Utils::Hook::Nop(0x445451, 5);
+		Utils::Hook(0x445451, Window::ScrPlace_SetupViewport, HOOK_CALL).install()->quick();
+		Utils::Hook::Nop(0x44547B, 5);
+		Utils::Hook(0x44547B, Window::ScrPlace_SetupViewport, HOOK_CALL).install()->quick();
 
 		// Do not use vid_xpos / vid_ypos when r_noborder is enabled
 		Utils::Hook::Nop(0x5D990C, 9);

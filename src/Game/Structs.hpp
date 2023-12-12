@@ -1872,18 +1872,20 @@ namespace Game
 		int useCount;
 	};
 
+	union compassUnion
+	{
+		unsigned __int8 scale;
+		unsigned __int8 eventParm2;
+		unsigned __int8 vehicleCompassType;
+	};
+
 	struct entityState_s
 	{
 		char eType;
 		char surfType;
 		char weapon;
 		char weaponModel;
-		union
-		{
-			char scale;
-			char eventParm2;
-			char vehicleCompassType;
-		}un1;
+		compassUnion un1;
 		LerpEntityState lerp;
 		unsigned int eventParm;
 		unsigned __int16 loopSound;
@@ -2367,31 +2369,227 @@ namespace Game
 		int index;
 	};
 
+	struct sentient_t
+	{
+		int ent;
+		int eTeam;
+	};
+
+	struct SentientHandle
+	{
+		unsigned __int16 number;
+		unsigned __int16 infoIndex;
+	};
+
+	enum team_t
+	{
+		TEAM_FREE = 0x0,
+		TEAM_BAD = 0x0,
+		TEAM_AXIS = 0x1,
+		TEAM_ALLIES = 0x2,
+		TEAM_NEUTRAL = 0x3,
+		TEAM_DEAD = 0x4,
+		TEAM_NUM_TEAMS = 0x5,
+	};
+
+	struct TurretInfo
+	{
+		bool inuse;
+		int state;
+		int flags;
+		int fireTime;
+		EntHandle manualTarget;
+		EntHandle target;
+		float targetPos[3];
+		int targetTime;
+		float missOffsetNormalized[3];
+		float arcmin[2];
+		float arcmax[2];
+		float initialYawmin;
+		float initialYawmax;
+		float forwardAngleDot;
+		float dropPitch;
+		int convergenceTime[2];
+		int suppressTime;
+		float maxRangeSquared;
+		SentientHandle detachSentient;
+		int stance;
+		int prevStance;
+		int fireSndDelay;
+		float accuracy;
+		float userOrigin[3];
+		int prevSentTarget;
+		float aiSpread;
+		float playerSpread;
+		team_t eTeam;
+		float originError[3];
+		float anglesError[3];
+		float pitchCap;
+		int triggerDown;
+		unsigned __int16 fireSnd;
+		unsigned __int16 fireSndPlayer;
+		unsigned __int16 stopSnd;
+		unsigned __int16 stopSndPlayer;
+	};
+
+	struct spawner_ent_t
+	{
+		int team;
+		int timestamp;
+	};
+
+	struct __declspec(align(4)) trigger_ent_t
+	{
+		int threshold;
+		int accumulate;
+		int timestamp;
+		bool requireLookAt;
+	};
+
+	struct mover_ent_t
+	{
+		float decelTime;
+		float aDecelTime;
+		float speed;
+		float aSpeed;
+		float midTime;
+		float aMidTime;
+		float pos1[3];
+		float pos2[3];
+		float pos3[3];
+		float apos1[3];
+		float apos2[3];
+		float apos3[3];
+	};
+
+	enum MissileStage
+	{
+		MISSILESTAGE_SOFTLAUNCH = 0x0,
+		MISSILESTAGE_ASCENT = 0x1,
+		MISSILESTAGE_DESCENT = 0x2,
+	};
+
+	enum MissileFlightMode
+	{
+		MISSILEFLIGHTMODE_TOP = 0x0,
+		MISSILEFLIGHTMODE_DIRECT = 0x1,
+	};
+
+	struct missile_ent_t
+	{
+		float predictLandPos[3];
+		int predictLandTime;
+		int timestamp;
+		float time;
+		int timeOfBirth;
+		float travelDist;
+		float surfaceNormal[3];
+		team_t team;
+		int thrownBack;
+		float curvature[3];
+		float targetOffset[3];
+		MissileStage stage;
+		MissileFlightMode flightMode;
+	};
+
+
+	union $148CB041F1C051EDB799F9C7708D3EB8
+	{
+		item_ent_t item[2];
+		spawner_ent_t spawner;
+		trigger_ent_t trigger;
+		mover_ent_t mover;
+		missile_ent_t missile;
+	};
+
+	struct soundEntity
+	{
+		unsigned __int16 notifyString;
+		unsigned __int16 index;
+		unsigned __int8 stoppable;
+		int basetime;
+		int duration;
+	};
+
+	struct gentity_s;
+
+	struct tagInfo_s
+	{
+		gentity_s* parent;
+		gentity_s* next;
+		unsigned __int16 name;
+		int index;
+		float axis[4][3];
+		float parentInvAxis[4][3];
+	};
+
+	struct animscripted_s
+	{
+		float axis[4][3];
+		float originError[3];
+		float anglesError[3];
+		unsigned __int16 anim;
+		unsigned __int16 root;
+		unsigned __int8 bStarted;
+		unsigned __int8 mode;
+		float fHeightOfs;
+		float fEndPitch;
+		float fEndRoll;
+		float fOrientLerp;
+	};
+
+	struct XAnimTree_s;
+
 	struct gentity_s
 	{
 		entityState_s s;
 		entityShared_t r;
 		gclient_s* client;
-		int actor;
-		int sentient;
+		int actor; //wip
+		sentient_t* sentient;
 		scr_vehicle_s* scr_vehicle;
-		char gap0[20];
-		int entnum;
-		char gap1[28];
-		int maxHealth;
+		TurretInfo* pTurretInfo;
+		unsigned __int8 physicsObject;
+		unsigned __int8 takedamage;
+		unsigned __int8 active;
+		unsigned __int8 nopickup;
+		unsigned __int16 model;
+		unsigned __int8 handler;
+		unsigned __int16 classname;
+		unsigned __int16 script_linkName;
+		unsigned __int16 script_noteworthy;
+		unsigned __int16 target;
+		unsigned __int16 targetname;
+		unsigned int attachIgnoreCollision;
+		int spawnflags;
+		int flags;
+		int clipmask;
+		int processedFrame;
+		EntHandle parent;
+		int nextthink;
 		int health;
+		int maxHealth;
 		int nexteq;
 		int damage;
 		int count;
 		gentity_s* chain;
 		gentity_s* activator;
-		union
-		{
-			item_ent_t item[2];
-			char gap2[94];
-		}u32;
+		$148CB041F1C051EDB799F9C7708D3EB8 ___u32;
+		EntHandle missileTargetEnt;
+		unsigned __int16 lookAtText0;
+		unsigned __int16 lookAtText1;
+		soundEntity snd_wait;
+		tagInfo_s* tagInfo;
+		gentity_s* tagChildren;
+		animscripted_s* scripted;
+		unsigned __int16 attachModelNames[31];
+		unsigned __int16 attachTagNames[31];
+		unsigned __int16 disconnectedLinks;
+		int iDisconnectTime;
+		float angleLerpRate;
+		XAnimTree_s* pAnimTree;
+		gentity_s* nextFree;
 	};
-
 
 	enum TraceHitType
 	{
@@ -6009,5 +6207,20 @@ namespace Game
 		PM_TYPE_DEFAULT = 0x1,
 		PM_TYPE_NOCLIP = 0x2,
 		PM_TYPE_UFO = 0x3,
+	};
+
+	struct cgs_t
+	{
+		int viewX;
+		int viewY;
+		int viewWidth;
+		int viewHeight;
+		float viewAspect;
+		char mapname[64];
+		bool started;
+		FxEffectDef* fxs[100];
+		shellshock_parms_t holdBreathParams;
+		float compassWidth;
+		float compassHeight;
 	};
 }

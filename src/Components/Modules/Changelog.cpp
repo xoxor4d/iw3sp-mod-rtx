@@ -93,7 +93,7 @@ namespace Components
 
 			changeLogWindowFlags = 0; //clean up the flags
 
-			if (Game::Key_IsCatcherActive(0, Game::KEYCATCH_CONSOLE))
+			if (Game::Key_IsCatcherActive(Game::KEYCATCH_CONSOLE))
 			{
 				char con_outputVisible = *(char*)0x8114C4;
 				int matchCount = *(int*)0x800CC4;

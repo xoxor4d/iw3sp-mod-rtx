@@ -13,6 +13,11 @@ namespace Components
 			}), &callback, includeOverride);
 	}
 
+	bool FastFiles::Ready()
+	{
+		return (Game::Sys_IsDatabaseReady() && Game::Sys_IsDatabaseReady2());
+	}
+
 	const char* FastFiles::GetZoneLocation(const char* file)
 	{
 		const auto& dir = Dvars::Functions::Dvar_FindVar("fs_basepath")->current.string;

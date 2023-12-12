@@ -38,7 +38,7 @@ namespace Components
 
 			Game::DB_LoadXAssets(zoneInfo, i, false);
 			Game::R_BeginRemoteScreenUpdate();
-			WaitForSingleObject(Game::DatabaseHandle, 0xFFFFFFFF);
+			WaitForSingleObject(Game::databaseCompletedEvent, 0xFFFFFFFF);
 			Game::R_EndRemoteScreenUpdate();
 			return true;
 		}

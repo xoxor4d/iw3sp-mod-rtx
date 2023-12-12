@@ -687,7 +687,7 @@ namespace Components
 
 	bool Gamepad::CG_ShouldUpdateViewAngles()
 	{
-		return !Game::Key_IsCatcherActive(0, Game::KEYCATCH_MASK_ANY);
+		return !Game::Key_IsCatcherActive(Game::KEYCATCH_MASK_ANY);
 	}
 
 	float Gamepad::CL_GamepadAxisValue(const Game::GamepadVirtualAxis virtualAxis)
@@ -802,7 +802,8 @@ namespace Components
 		}
 		else if (Dvars::Functions::Dvar_FindVar("gpad_enabled")->current.enabled && gamePad.enabled)
 		{
-			CL_GamepadMove(cmd);
+			if(!Game::Key_IsCatcherActive(Game::KEYCATCH_CONSOLE)) //disable any actions from gamepad if game console is opened
+				CL_GamepadMove(cmd);
 		}
 	}
 
@@ -911,6 +912,25 @@ namespace Components
 		}
 	}
 
+	int Gamepad::CL_MouseEvent_Hk(const int x, const int y, const int dx, const int dy)
+	{
+		OnMouseMove(x, y, dx, dy);
+		return RawMouse::CL_MouseEvent(x, y, dx, dy);
+	}
+
+	__declspec (naked) void Gamepad::CL_MouseEvent_Stub()
+	{
+		const static uint32_t jump_offset = 0x5947B1;
+		__asm
+		{
+			mov		edx, [esp + 14h]; //(Point.x)
+			push	edx;
+			call	CL_MouseEvent_Hk;
+			add		esp, 4;
+			jmp		jump_offset;
+		}
+	}
+
 	void Gamepad::Key_SetBinding_Hk(const int localClientNum, const int keyNum, const char* binding)
 	{
 		if (Key_IsValidGamePadChar(keyNum))
@@ -943,7 +963,7 @@ namespace Components
 		return gamePads[0].inUse;
 	}
 
-	void Gamepad::OnMouseMove(const int dx, const int dy)
+	void Gamepad::OnMouseMove([[maybe_unused]] const int x, [[maybe_unused]] const int y, const int dx, const int dy)
 	{
 		if (dx != 0 || dy != 0)
 		{
@@ -1089,7 +1109,7 @@ namespace Components
 
 		auto& gamePadGlobal = gamePadGlobals[localClientNum];
 
-		if (Game::Key_IsCatcherActive(localClientNum, Game::KEYCATCH_UI))
+		if (Game::Key_IsCatcherActive(Game::KEYCATCH_UI))
 		{
 			const int scrollDelayFirst = Dvars::Functions::Dvar_FindVar("gpad_menu_scroll_delay_first")->current.integer;
 			const int scrollDelayRest = Dvars::Functions::Dvar_FindVar("gpad_menu_scroll_delay_rest")->current.integer;
@@ -1146,7 +1166,7 @@ namespace Components
 		if (pressedOrUpdated && CL_CheckForIgnoreDueToRepeat(localClientNum, key, keyState.keys[key].repeats, time))
 			return;
 
-		if (Game::Key_IsCatcherActive(localClientNum, Game::KEYCATCH_LOCATION_SELECTION) && pressedOrUpdated)
+		if (Game::Key_IsCatcherActive(Game::KEYCATCH_LOCATION_SELECTION) && pressedOrUpdated)
 		{
 			if (key == Game::K_BUTTON_B || keyState.keys[key].binding && std::strcmp(keyState.keys[key].binding, "+actionslot 4") == 0)
 			{
@@ -1166,7 +1186,7 @@ namespace Components
 		char cmd[1024];
 		if (pressedOrUpdated)
 		{
-			if (Game::Key_IsCatcherActive(localClientNum, Game::KEYCATCH_UI))
+			if (Game::Key_IsCatcherActive(Game::KEYCATCH_UI))
 			{
 				UI_GamepadKeyEvent(localClientNum, key, pressedOrUpdated);
 				return;
@@ -1193,7 +1213,7 @@ namespace Components
 				Game::Cbuf_AddText(localClientNum, cmd);
 			}
 
-			if (Game::Key_IsCatcherActive(localClientNum, Game::KEYCATCH_UI))
+			if (Game::Key_IsCatcherActive(Game::KEYCATCH_UI))
 			{
 				UI_GamepadKeyEvent(localClientNum, key, pressedOrUpdated);
 			}
@@ -1209,7 +1229,7 @@ namespace Components
 		Dvars::Functions::Dvar_FindVar("gpad_in_use")->current.enabled = true;
 		Dvars::Functions::Dvar_FindVar("gpad_in_use")->latched.enabled = true;
 
-		if (Game::Key_IsCatcherActive(localClientNum, Game::KEYCATCH_UI))
+		if (Game::Key_IsCatcherActive(Game::KEYCATCH_UI))
 		{
 			CL_GamepadResetMenuScrollTime(localClientNum, key, buttonEvent == Game::GPAD_BUTTON_PRESSED, time);
 		}
@@ -1254,49 +1274,41 @@ namespace Components
 		outY = stickVec[1] * len;
 	}
 
-	bool Gamepad::Gamepad_ShouldUse(const Game::gentity_s* playerEnt, const unsigned useTime)
+	bool Gamepad::Gamepad_ShouldUse(Game::gentity_s* ent, const unsigned useTime)
 	{
-		Game::Com_Printf(0, "use hold time: %d\n", useTime);
 		// Only apply hold time to +usereload keybind
-
-		//Dvars::Functions::Dvar_FindVar("gpad_use_hold_time")->current.integer
-
-		return !(playerEnt->client->buttons & Game::CMD_BUTTON_USE_RELOAD) || (useTime >= 250);
+		return !(ent->client->buttons & Game::CMD_BUTTON_USE_RELOAD) || useTime >= Dvars::gpad_use_hold_time->current.unsignedInt;
 	}
 
 	__declspec(naked) void Gamepad::Player_UseEntity_Stub()
 	{
+		const static uint32_t continue_offset = 0x4F92DC;
+		const static uint32_t pop_offset = 0x4F92F4;
 		__asm
 		{
 			// Execute overwritten instructions
-			cmp     esi, [ecx + 0xC]
-			jl		skipUse
-
+			cmp     esi, [ecx + 0xC];
+			jl		skipUseWithoutPopad;
 			// Call our custom check
-			push	esi
-			pushad
+			pushad;
 			push	esi //useTime
 			push	edx //playerEnt
-			call	Gamepad_ShouldUse
-			add		esp, 8h
-			mov		[esp + 0x20], esi
-			popad
-			pop		esi
-
+			call	Gamepad_ShouldUse;
+			add     esp, 8;
 			// Skip use if custom check returns false
-			test	al, al
-			jz		skipUse
+			test	al, al;
+			jz		skipUseWithPopad;
+			popad;
 
-			// perform use
-			push	 0x4F92DC
-			ret
-
-		skipUse:
-			pop		eax;
-			ret
+			jmp		continue_offset;
+		skipUseWithoutPopad:
+			jmp		pop_offset;
+		skipUseWithPopad:
+			popad;
+			jmp		pop_offset;
 		}
 	}
-
+	
 	bool Gamepad::Key_IsValidGamePadChar(const int key)
 	{
 		return key >= Game::K_FIRSTGAMEPADBUTTON_RANGE_1 && key <= Game::K_LASTGAMEPADBUTTON_RANGE_1
@@ -1730,7 +1742,7 @@ namespace Components
 
 	void Gamepad::IN_GamePadsMove()
 	{
-		if (!Dvars::Functions::Dvar_FindVar("gpad_enabled")->current.enabled)
+		if (!Dvars::Functions::Dvar_FindVar("gpad_enabled")->current.enabled || Game::Key_IsCatcherActive(Game::KEYCATCH_CONSOLE))
 			return;
 
 		GPad_UpdateAll();
@@ -1794,7 +1806,7 @@ namespace Components
 
 	void Gamepad::IN_Frame_Hk()
 	{
-		Utils::Hook::Call<void()>(0x594730)();
+		RawMouse::IN_MouseMove();
 		IN_GamePadsMove();
 	}
 
@@ -2105,7 +2117,7 @@ namespace Components
 			Game::dvar_s* gpad_button_deadzone = Dvars::Register::Dvar_RegisterFloat("gpad_button_deadzone", "Game pad button deadzone threshhold", 0.13f, 0.0f, 1.0f, Game::none);
 			Game::dvar_s* gpad_button_lstick_deflect_max = Dvars::Register::Dvar_RegisterFloat("gpad_button_lstick_deflect_max", "Game pad maximum pad stick pressed value", 1.0f, 0.0f, 1.0f, Game::none);
 			Game::dvar_s* gpad_button_rstick_deflect_max = Dvars::Register::Dvar_RegisterFloat("gpad_button_rstick_deflect_max", "Game pad maximum pad stick pressed value", 1.0f, 0.0f, 1.0f, Game::none);
-			Game::dvar_s* gpad_use_hold_time = Dvars::Register::Dvar_RegisterInt("gpad_use_hold_time", "Time to hold the 'use' button on gamepads taim_lockon_strengtho activate use", 250, 0, std::numeric_limits<int>::max(), Game::none);
+			Dvars::gpad_use_hold_time = Dvars::Register::Dvar_RegisterInt("gpad_use_hold_time", "Time to hold the 'use' button on gamepads taim_lockon_strengtho activate use", 250, 0, std::numeric_limits<int>::max(), Game::none);
 			Game::dvar_s* gpad_lockon_enabled = Dvars::Register::Dvar_RegisterBool("gpad_lockon_enabled", "Game pad lockon aim assist enabled", true, Game::saved);
 			Game::dvar_s* gpad_slowdown_enabled = Dvars::Register::Dvar_RegisterBool("gpad_slowdown_enabled", "Game pad slowdown aim assist enabled", true, Game::saved);
 			Game::dvar_s* gpad_autoaim_enabled = Dvars::Register::Dvar_RegisterBool("gpad_autoaim_enabled", "Gamepad auto aim", true, Game::saved);
@@ -2119,8 +2131,7 @@ namespace Components
 		});
 
 		// Add hold time to gamepad usereload on hold prompts
-		// work in progress
-		//Utils::Hook(0x4F92D7, Player_UseEntity_Stub, HOOK_JUMP).install()->quick();
+		Utils::Hook(0x4F92D7, Player_UseEntity_Stub, HOOK_JUMP).install()->quick();
 
 		CreateKeyNameMap();
 
@@ -2142,14 +2153,13 @@ namespace Components
 		// Mark controller as unused when keyboard key is pressed
 		Utils::Hook(0x533B8F, CL_KeyEvent_Hk, HOOK_CALL).install()->quick();
 
-		// Mark controller as unused when mouse is moved (need to fix!)
-		// P.S: Broken in IW3
-		//Utils::Hook::Nop(0x5947AC, 5);
-		//Utils::Hook(0x5947A7, CL_MouseEvent_Stub, HOOK_JUMP).install()->quick();
-		//Utils::Hook(0x5947AC, CL_MouseEvent_Stub, HOOK_JUMP).install()->quick();
+		// Mark controller as unused when mouse is moved
+		Utils::Hook::Nop(0x5947A8, 9);
+		Utils::Hook(0x5947A8, CL_MouseEvent_Stub, HOOK_JUMP).install()->quick();
 		
-		Utils::Hook::Nop(0x43F921, 10);
-		Utils::Hook(0x43F921, UI_MouseEventStub, HOOK_JUMP).install()->quick();
+		// Added in RawMouse::CL_MouseEvent();
+		//Utils::Hook::Nop(0x43F921, 10);
+		//Utils::Hook(0x43F921, UI_MouseEventStub, HOOK_JUMP).install()->quick();
 
 		// Hide cursor when controller is active
 		Utils::Hook(0x5653CA, UI_RefreshStub, HOOK_JUMP).install()->quick();
@@ -2186,18 +2196,6 @@ namespace Components
 
 			}
 		});
-
-		// Check the cursor movement
-		Scheduler::Loop([]
-		{
-			tagPOINT Point;
-			GetCursorPos(&Point);
-
-			auto dx = Point.x - Game::s_wmv->oldPos.x;
-			auto dy = Point.y - Game::s_wmv->oldPos.y;
-
-			OnMouseMove(dx, dy);
-		}, Scheduler::Pipeline::MAIN);
 	}
 
 	Gamepad::~Gamepad()

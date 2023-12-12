@@ -39,7 +39,8 @@ namespace Components
 		static BOOL WINAPI MessageHandler(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 
 		static int WINAPI ShowCursorHook(BOOL show);
-		static void DrawCursorStub(Game::ScreenPlacement* scrPlace, float x, float y, float w, float h, int horzAlign, int vertAlign, const float* color, Game::Material* material);
+		static void DrawCursorStub();
+		static void DrawCursor(const float* color, Game::ScreenPlacement* ScrPlace, float x, float y, float w, float h, int horzAlign, int vertAlign, Game::Material* material);
 
 		static void StyleHookStub();
 		static HWND WINAPI CreateMainWindow(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpWindowName, DWORD dwStyle, int X, int Y, int nWidth, int nHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam);

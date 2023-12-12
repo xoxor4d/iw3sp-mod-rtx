@@ -36,6 +36,11 @@ namespace Dvars
 
 	Game::dvar_s* external_console = nullptr;
 
+	Game::dvar_s* M_RawInput = nullptr;
+
+	// Gamepad
+	Game::dvar_s* gpad_use_hold_time = nullptr;
+
 	namespace Functions
 	{
 		Dvar_FindVar_t Dvar_FindVar = (Dvar_FindVar_t)0x587B00;

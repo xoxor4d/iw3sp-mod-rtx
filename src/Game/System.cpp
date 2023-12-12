@@ -26,6 +26,11 @@ namespace Game
 		return timeGetTime();
 	}
 
+	int Sys_IsDatabaseReady()
+	{
+		return WaitForSingleObject(Game::databaseCompletedEvent, 0) == 0;
+	}
+
 	int Sys_IsDatabaseReady2()
 	{
 		return WaitForSingleObject(Game::databaseCompletedEvent2, 0) == 0;
