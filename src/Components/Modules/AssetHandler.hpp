@@ -48,5 +48,7 @@ namespace Components
 
 		static int HasThreadBypass();
 		static void SetBypassState(bool value);
+
+		void reallocateEntryPool();
 	};
 }

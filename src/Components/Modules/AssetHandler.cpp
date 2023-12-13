@@ -167,8 +167,52 @@ namespace Components
 		return originalHeader;
 	}
 
+	void AssetHandler::reallocateEntryPool()
+	{
+		const size_t size = 789312;
+		Game::XAssetEntry* entryPool = Utils::Memory::GetAllocator()->allocateArray<Game::XAssetEntry>(size);
+
+		// Apply new size
+		Utils::Hook::Set<DWORD>(0x45A6F0, size);
+
+		// Apply new pool
+		DWORD patches[] =
+		{
+			0x45A6E8, 0x45A918, 0x45A945, 0x45AA64, 0x45AAD5, 0x45AB28,
+			0x45ABEE, 0x45B094, 0x45B144, 0x45B307, 0x45B3C3, 0x45B47A,
+			0x45B4A3, 0x45B541, 0x45B696, 0x45C3ED, 0x45C544, 0x45C5C9,
+			0x45C6EC, 0x45C764, 0x45CA24, 0x45CA78
+		};
+
+		for (int i = 0; i < ARRAYSIZE(patches); ++i)
+		{
+			Utils::Hook::Set<Game::XAssetEntry*>(patches[i], entryPool);
+		}
+
+		Utils::Hook::Set<Game::XAssetEntry*>(0x45A6D1, entryPool + 1);
+		Utils::Hook::Set<Game::XAssetEntry*>(0x45A6E2, entryPool + 1);
+	}
+
+
 	AssetHandler::AssetHandler()
 	{
+		this->reallocateEntryPool();
+
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_IMAGE, 7168);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_SOUND, 24000);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_LOADED_SOUND, 2700);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_FX, 1200);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_LOCALIZE_ENTRY, 14000);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_XANIMPARTS, 8192);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_XMODEL, 5125);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_PHYSPRESET, 128);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_MENU, 1280);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_MENULIST, 256);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_MATERIAL, 8192);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_WEAPON, 1024);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_STRINGTABLE, 800);
+		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_GAMEWORLD_MP, 1);
+
 		//AssetHandler::ClearTemporaryAssets();
 		//Utils::Hook(Game::DB_FindXAssetHeader, AssetHandler::FindAssetStub).install()->quick();
 	}

@@ -426,22 +426,6 @@ namespace Components
 		//Utils::Hook::Set<BYTE>(0x41D652, Game::saved);
 		//Utils::Hook::Set<BYTE>(0x41D653, 0x0);
 
-		// Increase of the game assets limits.
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_IMAGE, 7168);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_SOUND, 24000);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_LOADED_SOUND, 2700);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_FX, 1200);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_LOCALIZE_ENTRY, 14000);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_XANIMPARTS, 8192);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_XMODEL, 5125);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_PHYSPRESET, 128);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_MENU, 1280);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_MENULIST, 256);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_MATERIAL, 8192);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_WEAPON, 2400);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_STRINGTABLE, 800);
-		Game::DB_ReallocXAssetPool(Game::ASSET_TYPE_GAMEWORLD_MP, 1);
-
 		// g_mem limit expansion. Thanks to Nikolai for offsets.
 		Utils::Hook::Set<DWORD>(0x534B3F, 0x20000000); //528mb
 		Utils::Hook::Set<DWORD>(0x534B70, 0x20000000); //528mb
@@ -520,10 +504,7 @@ namespace Components
 
 		Scheduler::Loop([]
 		{
-			if(Dvars::ui_debugMode->current.enabled)
-				Utils::Hook::Set<bool>(0x1E209D4, 1);
-			else
-				Utils::Hook::Set<bool>(0x1E209D4, 0);
+			Utils::Hook::Set<bool>(0x1E209D4, (Dvars::ui_debugMode->current.enabled) ? 1 : 0);
 		}, Scheduler::Pipeline::MAIN, 50ms);
 	}
 }
