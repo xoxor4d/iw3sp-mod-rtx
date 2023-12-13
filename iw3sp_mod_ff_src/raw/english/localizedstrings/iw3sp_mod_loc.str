@@ -203,6 +203,36 @@ REFERENCE           MENU_CHANGELOG_CANT_GET
 LANG_ENGLISH        "Unable to get changelog."
 
 REFERENCE           MENU_ALLOW_CHEATS_CMD
-LANG_ENGLISH        "Allow cheat commands"
+LANG_ENGLISH        "Allow Cheat Commands"
+
+REFERENCE           MENU_VIDEO
+LANG_ENGLISH        "Video"
+
+REFERENCE           MENU_VIDEO_SETTINGS
+LANG_ENGLISH        "Video Settings"
+
+REFERENCE           MENU_GRAPHICS_SETTINGS
+LANG_ENGLISH        "Graphics Settings"
+
+REFERENCE           MENU_BRIGHTNESS_WARNING
+LANG_ENGLISH        "Brightness adjustment has no effect when playing in a window."
+
+REFERENCE           MENU_8X
+LANG_ENGLISH        "8x"
+
+REFERENCE           MENU_16X
+LANG_ENGLISH        "16x"
+
+REFERENCE           MENU_DISPLAY_MODE
+LANG_ENGLISH        "Display Mode"
+
+REFERENCE           MENU_DISPLAY_MODE_FULL
+LANG_ENGLISH        "Fullscreen"
+
+REFERENCE           MENU_DISPLAY_MODE_WIN
+LANG_ENGLISH        "Windowed"
+
+REFERENCE           MENU_DISPLAY_MODE_WIN_NO_BORD
+LANG_ENGLISH        "Windowed (No Borders)"
 
 ENDMARKER

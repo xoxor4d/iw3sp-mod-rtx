@@ -24,6 +24,7 @@
 
 #define LOCAL_SETTING_ACTION \
 	exec "exec options_graphics_set.cfg"; \
+	uiScript "applyVideoMode"; \
 	execondvarstringvalue ui_zfeather 0 "set cg_laserLight 0"; \
 	execondvarstringvalue ui_zfeather 1 "set cg_laserLight 1"; \
 	close self; \

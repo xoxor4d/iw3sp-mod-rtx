@@ -193,9 +193,6 @@ LANG_ITALIAN        "(Personalizzata): 8"
 REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
 LANG_ITALIAN        "(Personalizzata): 9"
 
-REFERENCE           MENU_ALLOW_CHEATS_CMD
-LANG_ITALIAN        "Consentire comandi cheat"
-
 REFERENCE           MENU_CHANGELOG
 LANG_ITALIAN        "Changelog"
 
@@ -204,5 +201,38 @@ LANG_ITALIAN        "CHANGELOG"
 
 REFERENCE           MENU_CHANGELOG_CANT_GET
 LANG_ITALIAN        ""
+
+REFERENCE           MENU_ALLOW_CHEATS_CMD
+LANG_ITALIAN        "Consentire comandi cheat"
+
+REFERENCE           MENU_VIDEO
+LANG_ITALIAN        "Video"
+
+REFERENCE           MENU_VIDEO_SETTINGS
+LANG_ITALIAN        "Impostazioni video"
+
+REFERENCE           MENU_GRAPHICS_SETTINGS
+LANG_ITALIAN        "Impostazioni grafiche"
+
+REFERENCE           MENU_BRIGHTNESS_WARNING
+LANG_ITALIAN        "L'aggiustamento della luminosità non ha effetto quando si gioca in una finestra."
+
+REFERENCE           MENU_8X
+LANG_ITALIAN        "8x"
+
+REFERENCE           MENU_16X
+LANG_ITALIAN        "16x"
+
+REFERENCE           MENU_DISPLAY_MODE
+LANG_ITALIAN        "Modalità schermo"
+
+REFERENCE           MENU_DISPLAY_MODE_FULL
+LANG_ITALIAN        "Schermo intero"
+
+REFERENCE           MENU_DISPLAY_MODE_WIN
+LANG_ITALIAN        "In finestra"
+
+REFERENCE           MENU_DISPLAY_MODE_WIN_NO_BORD
+LANG_ITALIAN        "In finestra (senza bordi)"
 
 ENDMARKER

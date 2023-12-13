@@ -196,9 +196,6 @@ LANG_FRENCH        	"(Personnalisé): 9"
 REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
 LANG_FRENCH        	"(Personnalisé): 9"
 
-REFERENCE           MENU_ALLOW_CHEATS_CMD
-LANG_FRENCH        	"Autoriser les commandes de triche"
-
 REFERENCE           MENU_CHANGELOG
 LANG_FRENCH         "Changelog"
 
@@ -207,5 +204,32 @@ LANG_FRENCH         "CHANGELOG"
 
 REFERENCE           MENU_CHANGELOG_CANT_GET
 LANG_FRENCH         ""
+
+REFERENCE           MENU_ALLOW_CHEATS_CMD
+LANG_FRENCH        	"Autoriser les commandes de triche"
+
+REFERENCE           MENU_VIDEO
+LANG_FRENCH         "Vidéo"
+
+REFERENCE           MENU_VIDEO_SETTINGS
+LANG_FRENCH         "Paramètres vidéo"
+
+REFERENCE           MENU_GRAPHICS_SETTINGS
+LANG_FRENCH         "Paramètres graphiques"
+
+REFERENCE           MENU_BRIGHTNESS_WARNING
+LANG_FRENCH         "Le réglage de la luminosité n'a aucun effet lorsqu'il est joué dans une fenêtre."
+
+REFERENCE           MENU_8X
+LANG_FRENCH         "8x"
+
+REFERENCE           MENU_16X
+LANG_FRENCH         "16x"
+
+REFERENCE           MENU_DISPLAY_MODE
+LANG_FRENCH         "Mode d'affichage"
+
+REFERENCE           MENU_DISPLAY_MODE_FULL
+LANG_FRENCH         "Plein écran"
 
 ENDMARKER

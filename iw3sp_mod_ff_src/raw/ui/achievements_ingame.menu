@@ -133,7 +133,7 @@
 #define ACHIEVEMENT_BACKGROUND_DATE_UNLOCKED(visArg) \
 		itemDef \
 		{ \
-			name 			date_achievement_received\
+			name 			date_achievement_received \
 			type 			ITEM_TYPE_TEXT\
 			rect 			-315 305 255 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP \
 			forecolor 		1 1 1 1 \
@@ -152,7 +152,7 @@
 #define ACHIEVEMENT_BACKGROUND_DATE_UNLOCKED_TITLE\
 		itemDef \
 		{ \
-			name 			date_achievement_received\
+			name 			date_achievement_received_label\
 			type 			ITEM_TYPE_TEXT\
 			rect			-315 305 255 20 HORIZONTAL_ALIGN_RIGHT VERTICAL_ALIGN_TOP \
 			forecolor 		1 1 1 1 \
@@ -278,10 +278,11 @@
 			forecolor       0 .8 0 1 \
 		} \
 		itemDef { \
+			name			"achievement_total_count_info" \
 			type 			ITEM_TYPE_TEXT \
 			rect			0 -60 16 16 HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_BOTTOM\
 			visible			1 \
-			text			"achievement_printinfo" \
+			text			"" \
 			textscale 		0.3 \
 			textstyle 		ITEM_TEXTSTYLE_SHADOWED \
 			textaligny 		16 \

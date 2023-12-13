@@ -202,4 +202,34 @@ LANG_RUSSIAN        ""
 REFERENCE           MENU_ALLOW_CHEATS_CMD
 LANG_RUSSIAN        "Разрешить читерские команды"
 
+REFERENCE           MENU_VIDEO
+LANG_RUSSIAN        "Видео"
+
+REFERENCE           MENU_VIDEO_SETTINGS
+LANG_RUSSIAN        "Настройки видео"
+
+REFERENCE           MENU_GRAPHICS_SETTINGS
+LANG_RUSSIAN        "Настройки графики"
+
+REFERENCE           MENU_BRIGHTNESS_WARNING
+LANG_RUSSIAN        "Регулировка яркости не влияет при игре в оконном режиме."
+
+REFERENCE           MENU_8X
+LANG_RUSSIAN        "8x"
+
+REFERENCE           MENU_16X
+LANG_RUSSIAN        "16x"
+
+REFERENCE           MENU_DISPLAY_MODE
+LANG_RUSSIAN        "Режим отображения"
+
+REFERENCE           MENU_DISPLAY_MODE_FULL
+LANG_RUSSIAN        "Полноэкранный режим"
+
+REFERENCE           MENU_DISPLAY_MODE_WIN
+LANG_RUSSIAN        "Оконный режим"
+
+REFERENCE           MENU_DISPLAY_MODE_WIN_NO_BORD
+LANG_RUSSIAN        "Оконный режим (без рамок)"
+
 ENDMARKER

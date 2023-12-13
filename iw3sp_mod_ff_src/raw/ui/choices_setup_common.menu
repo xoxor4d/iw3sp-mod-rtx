@@ -781,6 +781,42 @@
 			CHOICE_SCRIPTS_ACTION( itemIndex, actionArg ) \
 		}
 
+// Added 11.06.2023 (2:46 PM)
+#define CHOICE_DVARSLIDER_BRIGHTNESS( itemIndex, textArg, dvarArg, defaultArg, minArg, maxArg, actionArg ) \
+		CHOICE_DVARSLIDER_BRIGHTNESSVIS( itemIndex, textArg, dvarArg, defaultArg, minArg, maxArg, actionArg, 1 )
+
+#define CHOICE_DVARSLIDER_BRIGHTNESSVIS( itemIndex, textArg, dvarArg, defaultArg, minArg, maxArg, actionArg, visArg ) \
+		CHOICE_DVARSLIDER_BRIGHTNESSVIS_EX( itemIndex, textArg, dvarArg, defaultArg, minArg, maxArg, actionArg, ;, 1 )
+
+#define CHOICE_DVARSLIDER_BRIGHTNESSVIS_EX( itemIndex, textArg, dvarArg, defaultArg, minArg, maxArg, actionArg, extraArg, visArg ) \
+		CHOICE_BUTTON_BG( itemIndex, 1 ) \
+		CHOICE_HIGHLIGHT( itemIndex, 1 ) \
+		CHOICE_CAPTION( itemIndex, textArg ) \
+		itemDef \
+		{ \
+			type			ITEM_TYPE_SLIDER \
+			dvarfloat		dvarArg defaultArg minArg maxArg \
+			rect			CHOICE_ORIGIN( itemIndex ) (CHOICE_SIZE_X+120) CHOICE_SIZE_Y CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN \
+			textalign		ITEM_ALIGN_MIDDLE_LEFT \
+			textalignx		(CHOICE_SIZE_X+20) /*(-(CHOICE_TEXT_OFFSET_X))*/ \
+			textscale		CHOICE_TEXTSIZE \
+			textstyle		ITEM_TEXTSTYLE_SHADOWED \
+			style			WINDOW_STYLE_FILLED \
+			forecolor		CHOICE_TEXTCOLOR \
+			visible			visArg \
+			extraArg \
+			CHOICE_SCRIPTS_ACTION( itemIndex, actionArg ) \
+			onFocus \
+			{ \
+				play "mouse_over"; \
+				setLocalVarBool ui_brightness_hint_display 1; \
+			} \
+			leaveFocus \
+			{ \
+				setLocalVarBool ui_brightness_hint_display 0; \
+			} \
+		}
+
 
 #define CHOICE_DVARYESNO( itemIndex, textArg, dvarArg, actionArg ) \
 		CHOICE_DVARYESNO_VIS( itemIndex, textArg, dvarArg, actionArg, 1 )

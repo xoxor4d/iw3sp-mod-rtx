@@ -194,9 +194,6 @@ LANG_SPANISH        "(Personalizada): 8"
 REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
 LANG_SPANISH        "(Personalizada): 9"
 
-REFERENCE           MENU_ALLOW_CHEATS_CMD
-LANG_SPANISH        "Permitir comandos de trucos"
-
 REFERENCE           MENU_CHANGELOG
 LANG_SPANISH        "Changelog"
 
@@ -205,5 +202,38 @@ LANG_SPANISH        "CHANGELOG"
 
 REFERENCE           MENU_CHANGELOG_CANT_GET
 LANG_SPANISH        ""
+
+REFERENCE           MENU_ALLOW_CHEATS_CMD
+LANG_SPANISH        "Permitir comandos de trucos"
+
+REFERENCE           MENU_VIDEO
+LANG_SPANISH        "Video"
+
+REFERENCE           MENU_VIDEO_SETTINGS
+LANG_SPANISH        "Configuración de video"
+
+REFERENCE           MENU_GRAPHICS_SETTINGS
+LANG_SPANISH        "Configuración de gráficos"
+
+REFERENCE           MENU_BRIGHTNESS_WARNING
+LANG_SPANISH        "El ajuste de brillo no tiene efecto al jugar en una ventana."
+
+REFERENCE           MENU_8X
+LANG_SPANISH        "8x"
+
+REFERENCE           MENU_16X
+LANG_SPANISH        "16x"
+
+REFERENCE           MENU_DISPLAY_MODE
+LANG_SPANISH        "Modo de visualización"
+
+REFERENCE           MENU_DISPLAY_MODE_FULL
+LANG_SPANISH        "Pantalla completa"
+
+REFERENCE           MENU_DISPLAY_MODE_WIN
+LANG_SPANISH        "Ventana"
+
+REFERENCE           MENU_DISPLAY_MODE_WIN_NO_BORD
+LANG_SPANISH        "Ventana (Sin bordes)"
 
 ENDMARKER

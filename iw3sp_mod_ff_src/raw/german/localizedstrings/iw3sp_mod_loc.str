@@ -199,9 +199,6 @@ LANG_GERMAN        	"(Eigene empfindlichkeit): 8"
 REFERENCE           MENU_GAMEPAD_SENSITIVITY_CUSTOM_9
 LANG_GERMAN        	"(Eigene empfindlichkeit): 9"
 
-REFERENCE           MENU_ALLOW_CHEATS_CMD
-LANG_GERMAN         "Erlauben Sie Cheats Befehle"
-
 REFERENCE           MENU_CHANGELOG
 LANG_GERMAN         "Changelog"
 
@@ -210,5 +207,38 @@ LANG_GERMAN         "CHANGELOG"
 
 REFERENCE           MENU_CHANGELOG_CANT_GET
 LANG_GERMAN         ""
+
+REFERENCE           MENU_ALLOW_CHEATS_CMD
+LANG_GERMAN         "Erlauben Sie Cheats Befehle"
+
+REFERENCE           MENU_VIDEO
+LANG_GERMAN         "Video"
+
+REFERENCE           MENU_VIDEO_SETTINGS
+LANG_GERMAN         "Videoeinstellungen"
+
+REFERENCE           MENU_GRAPHICS_SETTINGS
+LANG_GERMAN         "Grafikeinstellungen"
+
+REFERENCE           MENU_BRIGHTNESS_WARNING
+LANG_GERMAN         "Helligkeitseinstellung hat keine Auswirkung im Fenstermodus."
+
+REFERENCE           MENU_8X
+LANG_GERMAN         "8x"
+
+REFERENCE           MENU_16X
+LANG_GERMAN         "16x"
+
+REFERENCE           MENU_DISPLAY_MODE
+LANG_GERMAN         "Anzeigemodus"
+
+REFERENCE           MENU_DISPLAY_MODE_FULL
+LANG_GERMAN         "Vollbild"
+
+REFERENCE           MENU_DISPLAY_MODE_WIN
+LANG_GERMAN         "Im Fenster"
+
+REFERENCE           MENU_DISPLAY_MODE_WIN_NO_BORD
+LANG_GERMAN         "Im Fenster (Ohne Rahmen)"
 
 ENDMARKER
