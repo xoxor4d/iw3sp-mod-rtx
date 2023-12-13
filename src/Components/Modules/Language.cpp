@@ -100,6 +100,18 @@ namespace Components
 	{
 		Language::LanguageSetupInit();
 		Language::VideoSubtitlesStub();
+
+		if (Language::GetCurrentLanguage() == "russian")
+		{
+			Utils::Hook::Set<const char*>(0x40D653, "%.1fì");
+			Utils::Hook::Set<const char*>(0x40D668, "%iì");
+		}
+		else
+		{
+			Utils::Hook::Set<const char*>(0x40D653, "%.1fm");
+			Utils::Hook::Set<const char*>(0x40D668, "%im");
+		}
+
 		Utils::Hook::Call<std::uint8_t()>(0x614640)();
 	}
 
