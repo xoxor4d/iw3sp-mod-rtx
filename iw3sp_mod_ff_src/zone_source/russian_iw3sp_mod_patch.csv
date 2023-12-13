@@ -5,6 +5,7 @@ localize,iw3sp_mod_loc_discord
 localize,achievement
 localize,vidsubtitles
 stringtable,video/ru/vidsubtitles.csv
+image,minimap_tickertape_ru
 material,button_xbox_01
 material,button_xbox_02
 material,button_xbox_03
