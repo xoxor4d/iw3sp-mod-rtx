@@ -223,6 +223,21 @@ namespace Components
 
 	Maps::Maps()
 	{
+		Events::OnMapLoad([]
+		{
+			// thanks to Vlad for localization the ticker tape
+			// this event it was created only to replace the material image to the custom
+			// bad solution, but it's works
+			// P.S: this event must replaced on the assethandler module, but module still doesn't works correctly
+			const char* languageName = Game::SEH_GetLanguageName(Dvars::Functions::Dvar_FindVar("loc_language")->current.unsignedInt);
+			if (!strcmp(languageName, "russian"))
+			{
+				Game::Material* material = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MATERIAL, "minimap_tickertape").material;
+				Game::GfxImage* image = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_IMAGE, "minimap_tickertape_ru").image;
+				material->textureTable->u.image = image;
+			}
+		});
+
 		Utils::Hook(0x5C7089, Maps::sp_map_load_additional_fastfiles, HOOK_CALL).install()->quick();
 		Utils::Hook(0x452043, map_replacement_mapents_stub, HOOK_JUMP).install()->quick();
 
