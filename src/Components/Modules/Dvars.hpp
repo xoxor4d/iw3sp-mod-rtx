@@ -16,6 +16,7 @@ namespace Dvars
 	extern Game::dvar_s* ui_language;
 	extern Game::dvar_s* language_first_setting;
 	extern Game::dvar_s* r_noborder;
+	extern Game::dvar_s* r_videomode;
 	extern Game::dvar_s* ui_nativeCursor;
 	extern Game::dvar_s* safeArea_horizontal;
 	extern Game::dvar_s* safeArea_vertical;

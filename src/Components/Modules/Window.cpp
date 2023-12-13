@@ -138,7 +138,7 @@ namespace Components
 	HWND WINAPI Window::CreateMainWindow(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpWindowName, DWORD dwStyle, int X, int Y, int nWidth, int nHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam)
 	{
 		Window::MainWindow = CreateWindowExA(dwExStyle, lpClassName, lpWindowName, dwStyle, X, Y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam);
-			
+
 		CreateSignals();
 
 		GUI::Reset();
@@ -192,7 +192,7 @@ namespace Components
 		}
 
 		return Utils::Hook::Call<BOOL(__stdcall)(HWND, UINT, WPARAM, LPARAM)>(0x596810)(hWnd, Msg, wParam, lParam);
-		}
+	}
 
 	void Window::EnableDpiAwareness()
 	{
@@ -378,6 +378,34 @@ namespace Components
 			Dvars::safeArea_vertical = Dvars::Register::Dvar_RegisterFloat("safeArea_vertical", "Vertical safe area as a fraction of the screen height", 1.0f, 0.85f, 1.0f, Game::saved);
 
 			Game::dvar_s* ui_safearea = Dvars::Register::Dvar_RegisterBool("ui_safearea", "Shows the safe area", 0, Game::none);
+
+			static std::vector <const char*> r_videomode_values =
+			{
+				"fullscreen",
+				"windowed",
+				"windowed_without_borders",
+			};
+
+			Dvars::r_videomode = Dvars::Register::Dvar_RegisterEnum("r_videomode", "Video mode", 0, r_videomode_values.size(), r_videomode_values.data(), Game::saved);
+		});
+
+		UIScript::Add("applyVideoMode", []([[maybe_unused]] const UIScript::Token& token, [[maybe_unused]] const Game::uiInfo_s* info)
+		{
+			if (Dvars::r_videomode->current.integer == 0)
+			{
+				Command::Execute("set r_noborder 0");
+				Command::Execute("set r_fullscreen 1");
+			}
+			else if (Dvars::r_videomode->current.integer == 1)
+			{
+				Command::Execute("set r_noborder 0");
+				Command::Execute("set r_fullscreen 0");
+			}
+			else
+			{
+				Command::Execute("set r_fullscreen 0");
+				Command::Execute("set r_noborder 1");
+			}
 		});
 
 		Command::Add("resetViewport", [](Command::Params*)
