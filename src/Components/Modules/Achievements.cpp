@@ -253,6 +253,46 @@ namespace Components
 		return dest;
 	}
 
+	void Achievements::ChangeItemDefText(const char* menuName, const char* itemDefName, const char* value)
+	{
+		for (auto m = 0; m < Game::uiInfo->uiDC.openMenuCount; m++)
+		{
+			if (Game::uiInfo->uiDC.menuStack[m] && !_stricmp(Game::uiInfo->uiDC.menuStack[m]->window.name, menuName))
+			{
+				for (auto i = 0; i < Game::uiInfo->uiDC.menuStack[m]->itemCount; i++)
+				{
+					if (Game::uiInfo->uiDC.menuStack[m]->items[i] && Game::uiInfo->uiDC.menuStack[m]->items[i]->window.name)
+					{
+						if (!_stricmp(Game::uiInfo->uiDC.menuStack[m]->items[i]->window.name, itemDefName))
+						{
+							Game::uiInfo->uiDC.menuStack[m]->items[i]->text = value;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	void Achievements::ChangeItemDefWidth(const char* menuName, const char* itemDefName, int value)
+	{
+		for (auto m = 0; m < Game::uiInfo->uiDC.openMenuCount; m++)
+		{
+			if (Game::uiInfo->uiDC.menuStack[m] && !_stricmp(Game::uiInfo->uiDC.menuStack[m]->window.name, menuName))
+			{
+				for (auto i = 0; i < Game::uiInfo->uiDC.menuStack[m]->itemCount; i++)
+				{
+					if (Game::uiInfo->uiDC.menuStack[m]->items[i] && Game::uiInfo->uiDC.menuStack[m]->items[i]->window.name)
+					{
+						if (!_stricmp(Game::uiInfo->uiDC.menuStack[m]->items[i]->window.name, itemDefName))
+						{
+							Game::uiInfo->uiDC.menuStack[m]->items[i]->window.rectClient.w = value;
+						}
+					}
+				}
+			}
+		}
+	}
+
 	Achievements::Achievements()
 	{
 		Events::OnDvarInit([]
@@ -270,10 +310,6 @@ namespace Components
 
 			if (!Game::CL_IsCgameInitialized())
 			{
-				Game::menuDef_t* achievement_menu_1_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements").menu;
-				Game::menuDef_t* achievement_menu_2_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1").menu;
-				Game::menuDef_t* achievement_menu_3_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2").menu;
-
 				int achievement_index_select = Dvars::Functions::Dvar_FindVar("ui_achievement_select_idx")->current.integer;
 				if (HasAchievement(&file, Dvars::Functions::Dvar_FindVar("ui_achievement_select_idx")->current.integer))
 				{
@@ -294,63 +330,29 @@ namespace Components
 				{
 					// Check the achievement status. Update the itemDefs if the achievement has been received
 					if (Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer == 1)
-					{
-						for (int i = 25; i <= 165; i += 10)
-						{
-							achievement_menu_1_page->items[i]->text = Utils::String::VA("%s", timeString.c_str());
-						}
-					}
+						ChangeItemDefText("achievements", "date_achievement_received", Utils::String::VA("%s", timeString.c_str()));
 					else
-					{
-						for (int i = 25; i <= 165; i += 10)
-						{
-							achievement_menu_1_page->items[i]->text = "--:--";
-						}
-					}
+						ChangeItemDefText("achievements", "date_achievement_received", "--:--");
 				}
 				else if (Dvars::Functions::Dvar_FindVar("ui_achievement_page")->current.integer == 1)
 				{
 					// Check the achievement status. Update the itemDefs if the achievement has been received
 					if (Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer == 1)
-					{
-						for (int i = 25; i <= 165; i += 10)
-						{
-							achievement_menu_2_page->items[i]->text = Utils::String::VA("%s", timeString.c_str());
-						}
-					}
+						ChangeItemDefText("achievements_page_1", "date_achievement_received", Utils::String::VA("%s", timeString.c_str()));
 					else
-					{
-						for (int i = 25; i <= 165; i += 10)
-						{
-							achievement_menu_2_page->items[i]->text = "--:--";
-						}
-					}
+						ChangeItemDefText("achievements_page_1", "date_achievement_received", "--:--");
 				}
 				else
 				{
 					// Check the achievement status. Update the itemDefs if the achievement has been received
 					if (Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer == 1)
-					{
-						for (int i = 25; i <= 95; i += 10)
-						{
-							achievement_menu_3_page->items[i]->text = Utils::String::VA("%s", timeString.c_str());
-						}
-					}
+						ChangeItemDefText("achievements_page_2", "date_achievement_received", Utils::String::VA("%s", timeString.c_str()));
 					else
-					{
-						for (int i = 25; i <= 95; i += 10)
-						{
-							achievement_menu_3_page->items[i]->text = "--:--";
-						}
-					}
+						ChangeItemDefText("achievements_page_2", "date_achievement_received", "--:--");
 				}
 			}
 			else
 			{
-				Game::menuDef_t* achievement_menu_1_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_ingame").menu;
-				Game::menuDef_t* achievement_menu_2_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1_ingame").menu;
-				Game::menuDef_t* achievement_menu_3_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2_ingame").menu;
-
 				int achievement_index_select = Dvars::Functions::Dvar_FindVar("ui_achievement_select_idx")->current.integer;
 				if (HasAchievement(&file, Dvars::Functions::Dvar_FindVar("ui_achievement_select_idx")->current.integer))
 				{
@@ -370,55 +372,25 @@ namespace Components
 				{
 					// Check the achievement status. Update the itemDefs if the achievement has been received
 					if (Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer == 1)
-					{
-						for (int i = 19; i <= 159; i += 10)
-						{
-							achievement_menu_1_page->items[i]->text = Utils::String::VA("%s", timeString.c_str());
-						}
-					}
+						ChangeItemDefText("achievements_ingame", "date_achievement_received", Utils::String::VA("%s", timeString.c_str()));
 					else
-					{
-						for (int i = 19; i <= 159; i += 10)
-						{
-							achievement_menu_1_page->items[i]->text = "--:--";
-						}
-					}
+						ChangeItemDefText("achievements_ingame", "date_achievement_received", "--:--");
 				}
 				else if (Dvars::Functions::Dvar_FindVar("ui_achievement_page")->current.integer == 1)
 				{
 					// Check the achievement status. Update the itemDefs if the achievement has been received
 					if (Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer == 1)
-					{
-						for (int i = 19; i <= 159; i += 10)
-						{
-							achievement_menu_2_page->items[i]->text = Utils::String::VA("%s", timeString.c_str());
-						}
-					}
+						ChangeItemDefText("achievements_page_1_ingame", "date_achievement_received", Utils::String::VA("%s", timeString.c_str()));
 					else
-					{
-						for (int i = 19; i <= 159; i += 10)
-						{
-							achievement_menu_2_page->items[i]->text = "--:--";
-						}
-					}
+						ChangeItemDefText("achievements_page_1_ingame", "date_achievement_received", "--:--");
 				}
 				else
 				{
 					// Check the achievement status. Update the itemDefs if the achievement has been received
 					if (Dvars::Functions::Dvar_FindVar("ui_achievement_status")->current.integer == 1)
-					{
-						for (int i = 19; i <= 89; i += 10)
-						{
-							achievement_menu_3_page->items[i]->text = Utils::String::VA("%s", timeString.c_str());
-						}
-					}
+						ChangeItemDefText("achievements_page_2_ingame", "date_achievement_received", Utils::String::VA("%s", timeString.c_str()));
 					else
-					{
-						for (int i = 19; i <= 89; i += 10)
-						{
-							achievement_menu_3_page->items[i]->text = "--:--";
-						}
-					}
+						ChangeItemDefText("achievements_page_2_ingame", "date_achievement_received", "--:--");
 				}
 			}
 		});
@@ -436,17 +408,13 @@ namespace Components
 
 				if (!Game::CL_IsCgameInitialized())
 				{
-					Game::menuDef_t* achievement_menu_1_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements").menu;
-					Game::menuDef_t* achievement_menu_2_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1").menu;
-					Game::menuDef_t* achievement_menu_3_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2").menu;
+					ChangeItemDefWidth("achievements", "achievement_progress_bar", startWidth);
+					ChangeItemDefWidth("achievements_page_1", "achievement_progress_bar", startWidth);
+					ChangeItemDefWidth("achievements_page_2", "achievement_progress_bar", startWidth);
 
-					achievement_menu_1_page->items[170]->window.rectClient.w = startWidth;
-					achievement_menu_2_page->items[170]->window.rectClient.w = startWidth;
-					achievement_menu_3_page->items[100]->window.rectClient.w = startWidth;
-
-					achievement_menu_1_page->items[171]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
-					achievement_menu_2_page->items[171]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
-					achievement_menu_3_page->items[101]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+					ChangeItemDefText("achievements", "achievement_total_count_info", VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT));
+					ChangeItemDefText("achievements_page_1", "achievement_total_count_info", VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT));
+					ChangeItemDefText("achievements_page_2", "achievement_total_count_info", VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT));
 
 					int startTime = Game::Sys_MilliSeconds();
 
@@ -455,24 +423,20 @@ namespace Components
 						double progress = static_cast<double>(Game::Sys_MilliSeconds() - startTime) / slideTime;
 						int progressBarWidth = static_cast<int>(progress * CalculateProgressBarWidth(totalWidth, Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT));
 
-						achievement_menu_1_page->items[170]->window.rectClient.w = progressBarWidth;
-						achievement_menu_2_page->items[170]->window.rectClient.w = progressBarWidth;
-						achievement_menu_3_page->items[100]->window.rectClient.w = progressBarWidth;
+						ChangeItemDefWidth("achievements", "achievement_progress_bar", progressBarWidth);
+						ChangeItemDefWidth("achievements_page_1", "achievement_progress_bar", progressBarWidth);
+						ChangeItemDefWidth("achievements_page_2", "achievement_progress_bar", progressBarWidth);
 					}
 				}
 				else
 				{
-					Game::menuDef_t* achievement_menu_1_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_ingame").menu;
-					Game::menuDef_t* achievement_menu_2_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_1_ingame").menu;
-					Game::menuDef_t* achievement_menu_3_page = Game::DB_FindXAssetHeader(Game::ASSET_TYPE_MENU, "achievements_page_2_ingame").menu;
+					ChangeItemDefWidth("achievements_ingame", "achievement_progress_bar", startWidth);
+					ChangeItemDefWidth("achievements_page_1_ingame", "achievement_progress_bar", startWidth);
+					ChangeItemDefWidth("achievements_page_2_ingame", "achievement_progress_bar", startWidth);
 
-					achievement_menu_1_page->items[164]->window.rectClient.w = startWidth;
-					achievement_menu_2_page->items[164]->window.rectClient.w = startWidth;
-					achievement_menu_3_page->items[94]->window.rectClient.w = startWidth;
-
-					achievement_menu_1_page->items[165]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
-					achievement_menu_2_page->items[165]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
-					achievement_menu_3_page->items[95]->text = VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT);
+					ChangeItemDefText("achievements_ingame", "achievement_total_count_info", VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT));
+					ChangeItemDefText("achievements_page_1_ingame", "achievement_total_count_info", VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT));
+					ChangeItemDefText("achievements_page_2_ingame", "achievement_total_count_info", VA_fake("%d/%d", Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT));
 
 					int startTime = Game::Sys_MilliSeconds();
 
@@ -481,9 +445,9 @@ namespace Components
 						double progress = static_cast<double>(Game::Sys_MilliSeconds() - startTime) / slideTime;
 						int progressBarWidth = static_cast<int>(progress * CalculateProgressBarWidth(totalWidth, Achievements::GetEarnedAchievementCount(&file), ACHIEVEMENT_TOTAL_COUNT));
 
-						achievement_menu_1_page->items[164]->window.rectClient.w = progressBarWidth;
-						achievement_menu_2_page->items[164]->window.rectClient.w = progressBarWidth;
-						achievement_menu_3_page->items[94]->window.rectClient.w = progressBarWidth;
+						ChangeItemDefWidth("achievements_ingame", "achievement_progress_bar", progressBarWidth);
+						ChangeItemDefWidth("achievements_page_1_ingame", "achievement_progress_bar", progressBarWidth);
+						ChangeItemDefWidth("achievements_page_2_ingame", "achievement_progress_bar", progressBarWidth);
 					}
 				}
 			}, Scheduler::Pipeline::ASYNC);
