@@ -7,11 +7,6 @@ on:
       - "*"
   paths:
       - 'src/**'
-  pull_request:
-    branches:
-      - "*"
-    types: [opened, synchronize, reopened]
-
 jobs:
   build:
     name: Build binary
@@ -19,7 +14,6 @@ jobs:
     strategy:
       matrix:
         configuration:
-          - Debug
           - Release
     steps:
       - name: Check out files
