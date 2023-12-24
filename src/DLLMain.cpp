@@ -38,7 +38,9 @@ BOOL APIENTRY DllMain(HMODULE /*hModule*/, DWORD  ul_reason_for_call, LPVOID /*l
 
     if (ul_reason_for_call == DLL_PROCESS_ATTACH)
     {
-        if (Components::Loader::BinaryCheck())
+        // < rtx begin
+        //if (Components::Loader::BinaryCheck())
+        // rtx end >
         {
             //DWORD oldProtect;
             //VirtualProtect(_module + 0x1000, 0x0FB7000, PAGE_EXECUTE_READWRITE, &oldProtect);
@@ -50,8 +52,10 @@ BOOL APIENTRY DllMain(HMODULE /*hModule*/, DWORD  ul_reason_for_call, LPVOID /*l
             Utils::SetEnvironment();
             Utils::Hook(0x643AFB, Main::StartEntryPoint, HOOK_JUMP).install()->quick();
         }
-        else
-            return FALSE;
+        // < rtx begin
+        //else
+        //    return FALSE;
+        // rtx end >
     }
     else if (ul_reason_for_call == DLL_PROCESS_DETACH)
     {

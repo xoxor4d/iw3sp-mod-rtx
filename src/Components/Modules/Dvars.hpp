@@ -128,6 +128,12 @@ namespace Dvars
 	{
 		void DvarBoolOverride(const char* dvarName, const bool value, Game::dvar_flags flags);
 		void DvarBoolOverride(const char* dvarName, Game::dvar_flags flags);
+
+		// < rtx begin
+		void DvarIntOverride(const char* dvarName, const int value, Game::dvar_flags flags);
+		void DvarFloatOverride(const char* dvarName, const float value, Game::dvar_flags flags);
+		// rtx end >
+
 		void DvarVec4Override(const char* dvarName, const float* dvar_value);
 		void DvarVec4OverrideDefaultValue(const char* dvarName, const float* dvar_value);
 	}

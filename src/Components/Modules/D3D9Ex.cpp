@@ -754,7 +754,11 @@ namespace Components
 
 	D3D9Ex::D3D9Ex()
 	{
-		Dvars::r_d3d9ex = Dvars::Register::Dvar_RegisterBool("r_d3d9ex","extended d3d9 interface",true,Game::dvar_flags::saved);
+		//Dvars::r_d3d9ex = Dvars::Register::Dvar_RegisterBool("r_d3d9ex","extended d3d9 interface",true,Game::dvar_flags::saved);
+
+		// rtx
+		Dvars::r_d3d9ex = Dvars::Register::Dvar_RegisterBool("r_d3d9ex", "extended d3d9 interface", false, Game::dvar_flags::saved);
+
 		Utils::Hook::Set(0x65D368, D3D9Ex::Direct3DCreate9Stub);
 	}
 }

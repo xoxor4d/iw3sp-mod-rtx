@@ -1,18 +1,38 @@
 ![license](https://img.shields.io/github/license/JerryALT/iw3sp_mod.svg)
-[![Build](https://github.com/JerryALT/iw3sp_mod/workflows/Build/badge.svg)](https://github.com/JerryALT/iw3sp_mod/actions)
+[![Build](https://github.com/xoxor4d/iw3sp-mod-rtx/workflows/Build/badge.svg)](https://github.com/xoxor4d/iw3sp-mod-rtx/actions)
 [![Discord](https://img.shields.io/discord/1091304681822752778?color=%237289DA&label=members&logo=discord&logoColor=%23FFFFFF)](https://discord.gg/YzNZSEMAnf)
 
-# IW3SP-MOD - Modification for Call of Duty 4: Modern Warfare
+# IW3SP-MOD-RTX - nvidia rtx-remix compatibility mod
 
-Singleplayer client modification for Call of Duty 4: Modern Warfare (IW3). This client based on the [IW4x Client](https://github.com/iw4x/iw4x-client).
+Singleplayer client modification for Call of Duty 4: Modern Warfare (IW3) to make it compatible with nvidia's rtx-remix. This client is a fork of [IW3SP_Mod](https://github.com/JerryALT/iw3sp_mod) and originally based on the [IW4x Client](https://github.com/iw4x/iw4x-client).
 
 <p align="center">
   <img src="assets/github/banner.png?raw=true"/>
 </p>
 
+## nvidia-remix-fork
+Open [Github Actions](https://github.com/xoxor4d/iw3sp-mod-rtx/actions), select the latest successful build, grab the `Release-binaries-rtx` artifact and extract it`s contents into your cod4 root folder. 
+
+<br>
+
+### Commandline Arguments:
+  - `-disable_culling` - disable all culling   
+  ~~- `-fixed_function`- fixed-function rendering (static models, fps ++)~~ (not yet implemented)
+  
+> eg: &ensp;`"c:\path\iw3xo.exe" -disable_culling` 
+
+### Additional settings
+- Use console commands starting with `rtx_sky_` to spawn a skysphere (not yet working)
+
+### General tips
+
+- You might need to assign the sky category manually (if your map is black).   
+Open remix -> Go to the game setup tab -> Step 1 -> Open Sky Texture -> Use your mouse to select the sky (in the world) and assign the sky category
+
 ___
 
 # Credits
+- [Jerry4LT - IW3SP_Mod](https://github.com/JerryALT/iw3sp_mod)
 - [Bogdan Konstantinou](https://www.youtube.com/@BogdanKonstantinou)
 - [xoxor4d - IW3xo](https://github.com/xoxor4d/iw3xo-dev)
 - [X Labs Team](https://github.com/XLabsProject)
@@ -55,13 +75,13 @@ This software has been created purely for the purposes of academic research. Pro
 
 # How to install modification? (For regular users)
 **NOTE**: You must legally own [Steam version](https://store.steampowered.com/app/7940/Call_of_Duty_4_Modern_Warfare_2007/) of Call of Duty® 4: Modern Warfare® (2007) to run this mod. Cracked/Pirated/CDs versions of the game are **NOT** supported.
-1. Download the latest [release](https://github.com/JerryALT/iw3sp_mod/releases/latest)
+1. Download the latest [release](https://github.com/xoxor4d/iw3sp-mod-rtx/releases/latest)
 2. Place the .zip contents into your cod4 root folder
 3. Start the **iw3sp_mod.exe**
 
 # How to compile from source? (For advanced users)
 1. Clone the this repository. I recommend use the [git-scm](https://git-scm.com/downloads).
 </br>P.S: (**Downloading the zip does not include deps!**)</br>
-2. Find any directory which you want the placed the content of repository, then open context menu and find "Git Bash Here" and write next line in the cmd: `git clone https://github.com/JerryALT/iw3sp_mod.git`
+2. Find any directory which you want the placed the content of repository, then open context menu and find "Git Bash Here" and write next line in the cmd: `git clone https://github.com/xoxor4d/iw3sp-mod-rtx.git`
 3. After cloning click the generate.bat and wait when all files will be ready.
 4. Open build folder and find the iw3sp_dev.sln file and compile.

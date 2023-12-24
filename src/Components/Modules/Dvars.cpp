@@ -117,6 +117,32 @@ namespace Dvars
 			dvar->modified = false;
 		}
 
+		// < rtx begin
+
+		void DvarIntOverride(const char* dvarName, const int value, Game::dvar_flags flags)
+		{
+			if (const auto& dvar = Functions::Dvar_FindVar(dvarName); dvar)
+			{
+				dvar->current.integer = value;
+				dvar->latched.integer = value;
+				dvar->flags = flags;
+				dvar->modified = false;
+			}
+		}
+
+		void DvarFloatOverride(const char* dvarName, const float value, Game::dvar_flags flags)
+		{
+			if (const auto& dvar = Functions::Dvar_FindVar(dvarName); dvar)
+			{
+				dvar->current.value = value;
+				dvar->latched.value = value;
+				dvar->flags = flags;
+				dvar->modified = false;
+			}
+		}
+
+		// rtx end >
+
 		void DvarVec4Override(const char* dvarName, const float* dvar_value)
 		{
 			auto dvar = Dvars::Functions::Dvar_FindVar(dvarName);

@@ -2,6 +2,28 @@
 
 namespace Game
 {
+	// < rtx begin
+	GfxCmdBufSourceState* gfxCmdBufSourceState = reinterpret_cast<GfxCmdBufSourceState*>(0x1D43820);
+
+	Game::GfxBackEndData* get_backenddata()
+	{
+		const auto out = reinterpret_cast<Game::GfxBackEndData*>(*Game::backEndDataOut_ptr);
+		return out;
+	}
+
+	std::int16_t G_ModelIndex(const char* model_name /*edi*/)
+	{
+		const static uint32_t G_ModelIndex_func = 0x4ECEA0;
+		__asm
+		{
+			mov		edi, model_name;
+			call	G_ModelIndex_func;
+		}
+	}
+
+	// rtx end >
+
+
 	//d3d9
 	IDirect3D9** d3d9 = reinterpret_cast<IDirect3D9**>(0x1623F84);
 	IDirect3DDevice9** dx9_device_ptr = reinterpret_cast<IDirect3DDevice9**>(0x1623F88);

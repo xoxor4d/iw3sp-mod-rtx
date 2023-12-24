@@ -64,6 +64,7 @@ namespace Components
 		Loader::Register(new GUI());
 		Loader::Register(new Markdown());
 		Loader::Register(new Changelog());
+		Loader::Register(new Rtx());
 
 		Loader::Pregame = false;
 		// Make sure preDestroy is called when the game shuts down

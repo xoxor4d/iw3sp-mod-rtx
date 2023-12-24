@@ -39,9 +39,10 @@ jobs:
         run: msbuild /m /v:minimal /p:Configuration=${{matrix.configuration}} /p:Platform=Win32 build/iw3sp_dev.sln
 
       - name: Upload ${{matrix.configuration}} binaries
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{matrix.configuration}} binaries
           path: |
             build/bin/${{matrix.configuration}}/game.dll
             build/bin/${{matrix.configuration}}/game.pdb
+            ./assets-remix/*

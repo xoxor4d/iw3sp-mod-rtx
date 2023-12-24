@@ -879,10 +879,10 @@ namespace Game
 
 	struct MaterialTechnique
 	{
-		int pad;
-		short pad2;
-		short numPasses;
-		MaterialPass passes[1];
+		const char* name;
+		unsigned __int16 flags;
+		unsigned __int16 passCount;
+		MaterialPass passArray[1];	// count = passCount
 	};
 
 	struct GfxDrawSurfFields
@@ -1892,7 +1892,8 @@ namespace Game
 		unsigned __int16 number;
 		unsigned __int16 otherEntityNum;
 		unsigned __int16 groundEntityNum;
-		char index[2];
+		//char index[2];
+		std::int16_t index;
 		int time2;
 		int solid;
 		int eventSequence;
@@ -2817,6 +2818,18 @@ namespace Game
 		float materialTime;
 	};
 
+	struct GfxLodRamp
+	{
+		float scale;
+		float bias;
+	};
+
+	struct __declspec(align(4)) GfxLodParms
+	{
+		float origin[3];
+		GfxLodRamp ramp[2];
+	};
+
 	struct FxMarkMeshData
 	{
 		unsigned int triCount;
@@ -2960,6 +2973,7 @@ namespace Game
 		DebugGlobals debugGlobals;
 		unsigned int drawType;
 	};
+#pragma warning( pop )
 
 	struct GfxDynamicIndices
 	{
@@ -6222,5 +6236,400 @@ namespace Game
 		shellshock_parms_t holdBreathParams;
 		float compassWidth;
 		float compassHeight;
+	};
+
+
+	// rtx
+
+	struct GfxCodeMatrices
+	{
+		GfxMatrix matrix[32];
+	};
+
+#pragma warning( push )
+#pragma warning( disable : 4324 )
+	struct __declspec(align(8)) GfxCmdBufInput
+	{
+		float consts[58][4];
+		GfxImage* codeImages[27];
+		char codeImageSamplerStates[27];
+		GfxBackEndData* data;
+	};
+#pragma warning( pop )
+
+	enum GfxViewMode
+	{
+		VIEW_MODE_NONE = 0x0,
+		VIEW_MODE_3D = 0x1,
+		VIEW_MODE_2D = 0x2,
+		VIEW_MODE_IDENTITY = 0x3,
+	};
+
+	struct GfxSceneDef
+	{
+		int time;
+		float floatTime;
+		float viewOffset[3];
+	};
+
+	enum GfxViewportBehavior
+	{
+		GFX_USE_VIEWPORT_FOR_VIEW = 0x0,
+		GFX_USE_VIEWPORT_FULL = 0x1,
+	};
+
+#pragma warning( push )
+#pragma warning( disable : 4324 )
+	struct __declspec(align(16)) GfxCmdBufSourceState
+	{
+		GfxCodeMatrices matrices;
+		GfxCmdBufInput input;
+		GfxViewParms viewParms;
+		GfxMatrix shadowLookupMatrix;
+		unsigned __int16 constVersions[90];
+		unsigned __int16 matrixVersions[8];
+		float eyeOffset[4];
+		unsigned int shadowableLightForShadowLookupMatrix;
+		GfxScaledPlacement* objectPlacement;
+		GfxViewParms* viewParms3D;
+		unsigned int depthHackFlags;
+		GfxScaledPlacement skinnedPlacement;
+		int cameraView;
+		GfxViewMode viewMode;
+		GfxSceneDef sceneDef;
+		GfxViewport sceneViewport;
+		float materialTime;
+		GfxViewportBehavior viewportBehavior;
+		int renderTargetWidth;
+		int renderTargetHeight;
+		bool viewportIsDirty;
+		unsigned int shadowableLightIndex;
+	};
+
+	enum ShadowType
+	{
+		SHADOW_NONE = 0x0,
+		SHADOW_COOKIE = 0x1,
+		SHADOW_MAP = 0x2,
+	};
+
+	struct GfxViewInfo
+	{
+		GfxViewParms viewParms;
+		GfxSceneDef sceneDef;
+		GfxViewport sceneViewport;
+		GfxViewport displayViewport;
+		GfxViewport scissorViewport;
+		ShadowType dynamicShadowType;
+		/*__declspec(align(16)) ShadowCookieList shadowCookieList;
+		int localClientNum;
+		int isRenderingFullScreen;
+		bool needsFloatZ;
+		GfxLight shadowableLights[255];
+		unsigned int shadowableLightCount;
+		PointLightPartition pointLightPartitions[4];
+		GfxMeshData pointLightMeshData[4];
+		int pointLightCount;
+		unsigned int emissiveSpotLightIndex;
+		GfxLight emissiveSpotLight;
+		int emissiveSpotDrawSurfCount;
+		GfxDrawSurf* emissiveSpotDrawSurfs;
+		unsigned int emissiveSpotLightCount;
+		float blurRadius;
+		float frustumPlanes[4][4];
+		GfxDepthOfField dof;
+		GfxFilm film;
+		GfxGlow glow;
+		const void* cmds;
+		GfxSunShadow sunShadow;
+		unsigned int spotShadowCount;
+		__declspec() GfxSpotShadow spotShadows[4];
+		GfxQuadMeshData* fullSceneViewMesh;
+		__declspec(align(1)) GfxDrawSurfListInfo litInfo;
+		__declspec(align(1)) GfxDrawSurfListInfo decalInfo;
+		__declspec(align(1)) GfxDrawSurfListInfo emissiveInfo;
+		GfxCmdBufInput input;*/
+	};
+#pragma warning( pop )
+
+	enum MaterialVertexDeclType
+	{
+		VERTDECL_GENERIC = 0x0,
+		VERTDECL_PACKED = 0x1,
+		VERTDECL_WORLD = 0x2,
+		VERTDECL_WORLD_T1N0 = 0x3,
+		VERTDECL_WORLD_T1N1 = 0x4,
+		VERTDECL_WORLD_T2N0 = 0x5,
+		VERTDECL_WORLD_T2N1 = 0x6,
+		VERTDECL_WORLD_T2N2 = 0x7,
+		VERTDECL_WORLD_T3N0 = 0x8,
+		VERTDECL_WORLD_T3N1 = 0x9,
+		VERTDECL_WORLD_T3N2 = 0xA,
+		VERTDECL_WORLD_T4N0 = 0xB,
+		VERTDECL_WORLD_T4N1 = 0xC,
+		VERTDECL_WORLD_T4N2 = 0xD,
+		VERTDECL_POS_TEX = 0xE,
+		VERTDECL_STATICMODELCACHE = 0xF,
+		VERTDECL_COUNT = 0x10,
+	};
+
+	struct gfxVertexSteamsUnk
+	{
+		unsigned int stride;
+		IDirect3DVertexBuffer9* vb; // IDirect3DVertexBuffer9
+		unsigned int offset;
+	};
+
+	struct GfxCmdBufPrimState
+	{
+		IDirect3DDevice9* device; // IDirect3DDevice9
+		IDirect3DIndexBuffer9* indexBuffer; // IDirect3DIndexBuffer9
+		MaterialVertexDeclType vertDeclType;
+		gfxVertexSteamsUnk streams[2];
+		int* vertexDecl; // IDirect3DVertexDeclaration9
+	};
+
+	enum GfxDepthRangeType
+	{
+		GFX_DEPTH_RANGE_SCENE = 0x0,
+		GFX_DEPTH_RANGE_VIEWMODEL = 0x2,
+		GFX_DEPTH_RANGE_FULL = 0xFFFFFFFF,
+	};
+
+	struct GfxPixelShaderLoadDef
+	{
+		unsigned int* program;
+		unsigned __int16 programSize;
+		unsigned __int16 loadForRenderer;
+	};
+
+	struct MaterialPixelShaderProgram
+	{
+		void* ps;
+		GfxPixelShaderLoadDef loadDef;
+	};
+
+	struct MaterialPixelShader
+	{
+		const char* name;
+		MaterialPixelShaderProgram prog;
+	};
+
+	struct GfxVertexShaderLoadDef
+	{
+		unsigned int* program;
+		unsigned __int16 programSize;
+		unsigned __int16 loadForRenderer;
+	};
+
+	struct MaterialVertexShaderProgram
+	{
+		void* vs;
+		GfxVertexShaderLoadDef loadDef;
+	};
+
+	struct MaterialVertexShader
+	{
+		const char* name;
+		MaterialVertexShaderProgram prog;
+	};
+
+	enum GfxRenderTargetId
+	{
+		R_RENDERTARGET_SAVED_SCREEN = 0x0,
+		R_RENDERTARGET_FRAME_BUFFER = 0x1,
+		R_RENDERTARGET_SCENE = 0x2,
+		R_RENDERTARGET_RESOLVED_POST_SUN = 0x3,
+		R_RENDERTARGET_RESOLVED_SCENE = 0x4,
+		R_RENDERTARGET_FLOAT_Z = 0x5,
+		R_RENDERTARGET_DYNAMICSHADOWS = 0x6,
+		R_RENDERTARGET_PINGPONG_0 = 0x7,
+		R_RENDERTARGET_PINGPONG_1 = 0x8,
+		R_RENDERTARGET_SHADOWCOOKIE = 0x9,
+		R_RENDERTARGET_SHADOWCOOKIE_BLUR = 0xA,
+		R_RENDERTARGET_POST_EFFECT_0 = 0xB,
+		R_RENDERTARGET_POST_EFFECT_1 = 0xC,
+		R_RENDERTARGET_SHADOWMAP_SUN = 0xD,
+		R_RENDERTARGET_SHADOWMAP_SPOT = 0xE,
+		R_RENDERTARGET_COUNT = 0xF,
+		R_RENDERTARGET_NONE = 0x10,
+	};
+
+	struct GfxCmdBufState
+	{
+		char refSamplerState[16];
+		unsigned int samplerState[16];
+		GfxTexture* samplerTexture[16];
+		GfxCmdBufPrimState prim;
+		Material* material;
+		MaterialTechniqueType techType;
+		MaterialTechnique* technique;
+		MaterialPass* pass;
+		unsigned int passIndex;
+		GfxDepthRangeType depthRangeType;
+		float depthRangeNear;
+		float depthRangeFar;
+		unsigned __int64 vertexShaderConstState[32];
+		unsigned __int64 pixelShaderConstState[256];
+		char alphaRef;
+		unsigned int refStateBits[2];
+		unsigned int activeStateBits[2];
+		MaterialPixelShader* pixelShader;
+		MaterialVertexShader* vertexShader;
+		GfxViewport viewport;
+		GfxRenderTargetId renderTargetId;
+		Material* origMaterial;
+		MaterialTechniqueType origTechType;
+	};
+
+	struct Image_MemUsage
+	{
+		int total;
+		int lightmap;
+		int minspec;
+	};
+
+	struct trStatistics_t
+	{
+		int c_indexes;
+		int c_fxIndexes;
+		int c_viewIndexes;
+		int c_shadowIndexes;
+		int c_vertexes;
+		int c_batches;
+		float dc;
+		Image_MemUsage c_imageUsage;
+	};
+
+#pragma warning( push )
+#pragma warning( disable : 4324 )
+	struct __declspec(align(8)) r_globals_t
+	{
+		GfxViewParms identityViewParms;
+		bool inFrame;
+		bool registered;
+		bool forbidDelayLoadImages;
+		bool ignorePrecacheErrors;
+		float viewOrg[3];
+		float viewDir[3];
+		unsigned int frontEndFrameCount;
+		int totalImageMemory;
+		Material* materialHashTable[2048];
+		GfxFog fogSettings[5];
+		int fogIndex;
+		GfxColor color_axis;
+		GfxColor color_allies;
+		int team;
+		trStatistics_t* stats;
+		GfxLodParms lodParms;
+		GfxLodParms correctedLodParms;
+		bool hasAnyImageOverrides;
+		bool useSunLightOverride;
+		bool useSunDirOverride;
+		bool useSunDirLerp;
+		float sunLightOverride[3];
+		float sunDirOverride[3];
+		float sunDirOverrideTarget[3];
+		int sunDirLerpBeginTime;
+		int sunDirLerpEndTime;
+		GfxScaledPlacement identityPlacement;
+		GfxViewParms* debugViewParms;
+		int endTime;
+		bool distortion;
+		bool drawSModels;
+		bool drawXModels;
+		bool drawBModels;
+		const char* codeImageNames[27];
+		unsigned int viewInfoCount;
+		int sunShadowFull;
+		float sunShadowmapScale;
+		float sunShadowmapScaleNum;
+		unsigned int sunShadowSize;
+		float sunShadowPartitionRatio;
+		int drawSunShadow;
+		int skinnedCacheReachedThreshold;
+		float waterFloatTime;
+	};
+#pragma warning( pop )
+
+#pragma warning( push )
+#pragma warning( disable : 4324 )
+	struct __declspec(align(128)) r_global_permanent_t
+	{
+		Material* sortedMaterials[2048];
+		int needSortMaterials;
+		int materialCount;
+		GfxImage* whiteImage;
+		GfxImage* blackImage;
+		GfxImage* blackImage3D;
+		GfxImage* blackImageCube;
+		GfxImage* grayImage;
+		GfxImage* identityNormalMapImage;
+		GfxImage* specularityImage;
+		GfxImage* outdoorImage;
+		GfxImage* pixelCostColorCodeImage;
+		GfxLightDef* dlightDef;
+		Material* defaultMaterial;
+		Material* whiteMaterial;
+		Material* additiveMaterial;
+		Material* pointMaterial;
+		Material* lineMaterial;
+		Material* lineMaterialNoDepth;
+		Material* clearAlphaStencilMaterial;
+		Material* shadowClearMaterial;
+		Material* shadowCookieOverlayMaterial;
+		Material* shadowCookieBlurMaterial;
+		Material* shadowCasterMaterial;
+		Material* shadowOverlayMaterial;
+		Material* depthPrepassMaterial;
+		Material* glareBlindMaterial;
+		Material* pixelCostAddDepthAlwaysMaterial;
+		Material* pixelCostAddDepthDisableMaterial;
+		Material* pixelCostAddDepthEqualMaterial;
+		Material* pixelCostAddDepthLessMaterial;
+		Material* pixelCostAddDepthWriteMaterial;
+		Material* pixelCostAddNoDepthWriteMaterial;
+		Material* pixelCostColorCodeMaterial;
+		Material* stencilShadowMaterial;
+		Material* stencilDisplayMaterial;
+		Material* floatZDisplayMaterial;
+		Material* colorChannelMixerMaterial;
+		Material* frameColorDebugMaterial;
+		Material* frameAlphaDebugMaterial;
+		GfxImage* rawImage;
+		void* world; // GfxWorld
+		Material* feedbackReplaceMaterial;
+		Material* feedbackBlendMaterial;
+		Material* feedbackFilmBlendMaterial;
+		Material* cinematicMaterial;
+		Material* dofDownsampleMaterial;
+		Material* dofNearCocMaterial;
+		Material* smallBlurMaterial;
+		Material* postFxDofMaterial;
+		Material* postFxDofColorMaterial;
+		Material* postFxColorMaterial;
+		Material* postFxMaterial;
+		Material* symmetricFilterMaterial[8];
+		Material* shellShockBlurredMaterial;
+		Material* shellShockFlashedMaterial;
+		Material* glowConsistentSetupMaterial;
+		Material* glowApplyBloomMaterial;
+		int savedScreenTimes[4];
+	};
+#pragma warning( pop )
+
+	struct switch_material_t
+	{
+		bool switch_material;
+		bool switch_technique;
+		bool switch_technique_type;
+
+		Game::Material* current_material;
+		Game::MaterialTechnique* current_technique;
+
+		Game::Material* material;
+		Game::MaterialTechnique* technique;
+
+		Game::MaterialTechniqueType technique_type;
 	};
 }

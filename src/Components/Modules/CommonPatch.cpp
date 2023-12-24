@@ -93,6 +93,18 @@ namespace Components
 		XZoneInfoStack[i].freeFlags = Game::XZONE_FLAGS::XZONE_COMMON_FREE;
 		++i;
 
+		// < rtx begin
+
+		if (FastFiles::Exists("xcommon_rtx"))
+		{
+			XZoneInfoStack[i].name = "xcommon_rtx";
+			XZoneInfoStack[i].allocFlags = Game::XZONE_FLAGS::XZONE_COMMON;
+			XZoneInfoStack[i].freeFlags = Game::XZONE_FLAGS::XZONE_ZERO;
+			++i;
+		}
+
+		// rtx end >
+
 		Game::DB_LoadXAssets(XZoneInfoStack, i, true);
 
 		Game::R_BeginRemoteScreenUpdate();
@@ -180,6 +192,10 @@ namespace Components
 		Dvars::Override::DvarVec4Override("con_outputBarColor", Dvars::Functions::Dvar_FindVar("con_outputBarColor")->current.vector);
 		Dvars::Override::DvarVec4OverrideDefaultValue("con_outputSliderColor", newDefault_con_outputSliderColor);
 		Dvars::Override::DvarVec4Override("con_outputSliderColor", Dvars::Functions::Dvar_FindVar("con_outputSliderColor")->current.vector);
+
+		// < rtx begin
+		Rtx::force_dvars_on_init();
+		// rtx end >
 
 		// Override existing localize entries.
 		LocalizedStrings::OverrideLocalizeStrings();

@@ -3,6 +3,19 @@
 
 namespace Game
 {
+	// < rtx begin
+	extern GfxCmdBufSourceState* gfxCmdBufSourceState;
+
+	static DWORD* backEndDataOut_ptr = (DWORD*)(0x18CB534);  // backendEndDataOut pointer
+	extern Game::GfxBackEndData* get_backenddata();
+
+	std::int16_t G_ModelIndex(const char* model_name /*eax*/); // ASM
+	static Utils::function<Game::gentity_s* ()> G_Spawn = 0x4EFCF0;
+	static Utils::function<bool(Game::gentity_s*)> G_CallSpawnEntity = 0x4E98F0;
+
+	// rtx end >
+
+
 	const static HWND__* hWnd = reinterpret_cast<HWND__*>(0x13E39A8); // Splash screen (cod.bmp)
 	const static HWND* hWndParent = reinterpret_cast<HWND*>(0x13E39B0); // External console
 	const static HWND* hWndBuffer = reinterpret_cast<HWND*>(0x13E39B4); // External console buffer
@@ -90,6 +103,14 @@ namespace Game
 	static Utils::function<void()> Scr_Error_Internal = 0x5520E0;
 
 	extern Game::Font_s* R_RegisterFont(char const* fontName, int imageTrack);
+
+	// < rtx begin
+
+	// get handle using DB_FindXAssetHeader
+	static Utils::function<Material* (const char* fontName, int fontSize)>
+		Material_RegisterHandle = 0x5D5DF0;
+
+	// rtx end >
 
 	extern unsigned int Scr_GetConstString(unsigned int index /*eax*/);
 	extern const char* Scr_GetString(unsigned int index);
