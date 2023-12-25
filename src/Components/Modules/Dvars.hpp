@@ -37,6 +37,10 @@ namespace Dvars
 
 	extern Game::dvar_s* external_console;
 
+	// < rtx begin
+	extern Game::dvar_s* rtx_extend_smodel_drawing;
+	// rtx end >
+
 	extern Game::dvar_s* M_RawInput;
 
 	// Gamepad

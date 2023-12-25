@@ -21,6 +21,16 @@ namespace Game
 		}
 	}
 
+	void G_DObjUpdate(entityState_s* ent /*eax*/)
+	{
+		const static uint32_t G_DObjUpdate_func = 0x4ED860;
+		__asm
+		{
+			mov		eax, ent;
+			call	G_DObjUpdate_func;
+		}
+	}
+
 	// rtx end >
 
 

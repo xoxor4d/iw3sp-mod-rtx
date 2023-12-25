@@ -10,8 +10,14 @@ Singleplayer client modification for Call of Duty 4: Modern Warfare (IW3) to mak
   <img src="assets/github/banner.png?raw=true"/>
 </p>
 
-## nvidia-remix-fork
-Open [Github Actions](https://github.com/xoxor4d/iw3sp-mod-rtx/actions), select the latest successful build, grab the `Release-binaries-rtx` artifact and extract it`s contents into your cod4 root folder. 
+## rtx-remix fork
+- Download the latest [release](https://github.com/xoxor4d/iw3sp-mod-rtx/tags) and extract contents into your cod4 root directory.  
+- Find the latest successful build under [Github Actions](https://github.com/xoxor4d/iw3sp-mod-rtx/actions) and grab the `Release-binaries-rtx` artifact.   
+- Extract it`s contents into your cod4 root folder and replace all files when prompted. 
+- Execute `iw3sp_mod.exe`
+> `iw3sp_mod.exe` (modified to load `game.dll` instead of `d3d9.dll`)  
+> | -> `game.dll` (proxy d3d9.dll) will then load the remix runtime d3d9 proxy dll :]  
+> | -> if you want to use the original `iw3sp.exe` then you have to find other ways of chain-loading the dll's 
 
 <br>
 
@@ -19,10 +25,11 @@ Open [Github Actions](https://github.com/xoxor4d/iw3sp-mod-rtx/actions), select 
   - `-disable_culling` - disable all culling   
   ~~- `-fixed_function`- fixed-function rendering (static models, fps ++)~~ (not yet implemented)
   
-> eg: &ensp;`"c:\path\iw3xo.exe" -disable_culling` 
+> eg: &ensp;`"c:\path\iw3sp_mod.exe" -disable_culling` 
 
 ### Additional settings
-- Use console commands starting with `rtx_sky_` to spawn a skysphere (not yet working)
+- use console commands `rtx_sky_` `<skyname>` to spawn a skysphere
+- dvar `rtx_extend_smodel_drawing` to disable the static model draw limit (max amount of static models drawn at once)
 
 ### General tips
 

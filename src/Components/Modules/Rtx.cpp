@@ -157,6 +157,9 @@ namespace Components
 
 		skysphere_model->model = model_index;
 		skysphere_model->s.index = model_index;
+		skysphere_model->classname = Game::scr_const->script_model;
+
+		Game::G_DObjUpdate(&skysphere_model->s);
 
 		skysphere_variant = variant;
 	}
@@ -177,6 +180,7 @@ namespace Components
 		const std::int16_t model_index = Game::G_ModelIndex(skysphere_get_name_for_variant(variant));
 
 		skysphere_model = Game::G_Spawn();
+		skysphere_model->classname = Game::scr_const->script_model;
 		skysphere_model->model = model_index;
 		skysphere_model->s.index = model_index;
 		skysphere_model->r.svFlags = 0x04;
@@ -435,6 +439,45 @@ namespace Components
 		}
 	}
 
+
+	// *
+	// general stubs
+
+	/*
+	00611161	call    R_AllocStaticModelLighting
+	00611166	add     esp, 8
+	00611169	test    al, al
+	0061116B	jnz     short loc_611184
+	*/
+
+	__declspec(naked) void alloc_smodel_lighting_stub()
+	{
+		const static uint32_t retn_addr = 0x61116B;
+		const static uint32_t draw_model_addr = 0x611184;
+		__asm
+		{
+			pushad;
+			push	eax;
+			mov		eax, Dvars::rtx_extend_smodel_drawing;
+			cmp		byte ptr [eax + 12], 1;
+			pop		eax;
+
+			jne		OG_LOGIC;
+			popad;
+
+			add     esp, 8 // og instruction overwritten by hook
+			jmp		draw_model_addr;
+
+		OG_LOGIC:
+			popad;
+
+			// og instructions
+			add     esp, 8;
+			test    al, al;
+			jmp		retn_addr;
+		}
+	}
+
 	// ----------------------------------------------
 
 	// *
@@ -568,6 +611,11 @@ namespace Components
 		// force fullbright (switching to fullbright in-game will result in wrong surface normals)
 		Utils::Hook::Nop(0x614649, 2);
 
+		// Ignore hardware changes // xor al,al - pop ecx - ret
+		Utils::Hook::Set<DWORD>(0x594E71, 0xC359C032);
+		// Remove improper quit popup
+		Utils::Hook::Set<BYTE>(0x595B26, 0xEB);
+
 		// hook beginning of 'RB_Draw3DInternal' to setup general stuff required for rtx-remix
 		Utils::Hook(0x62A9E1, rb_standard_drawcommands_stub, HOOK_JUMP).install()->quick();
 
@@ -605,8 +653,7 @@ namespace Components
 
 		// *
 		// Precaching beyond level load (skysphere spawning)
-		//Utils::Hook::Nop(0x4E2216, 2); // model 1
-		Utils::Hook::Set<BYTE>(0x4ECEE6, 0xEB); // model 2
+		Utils::Hook::Set<BYTE>(0x4ECEE6, 0xEB);
 
 
 		// *
@@ -634,5 +681,13 @@ namespace Components
 		Command::Add("rtx_sky_desert", []() { Rtx::skysphere_spawn(1); });
 		Command::Add("rtx_sky_city", []() { Rtx::skysphere_spawn(2); });
 		Command::Add("rtx_sky_night", []() { Rtx::skysphere_spawn(3); });
+
+		// msg "too many static models ..." (disabled culling: the engine cant handle modellighting for so many static models, thus not drawing them)
+		Utils::Hook::Nop(0x611161, 5); Utils::Hook(0x611161, alloc_smodel_lighting_stub, HOOK_JUMP).install()->quick();
+
+		Events::OnDvarInit([]
+		{
+			Dvars::rtx_extend_smodel_drawing = Dvars::Register::Dvar_RegisterBool("rtx_extend_smodel_drawing", "Disable static model drawing limit", false, Game::saved);
+		});
 	}
 }
