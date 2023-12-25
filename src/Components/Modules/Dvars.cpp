@@ -145,6 +145,19 @@ namespace Dvars
 			}
 		}
 
+		void DvarFloatOverride(const char* dvarName, const float value, Game::dvar_flags flags, float mins, float maxs)
+		{
+			if (const auto& dvar = Functions::Dvar_FindVar(dvarName); dvar)
+			{
+				dvar->current.value = value;
+				dvar->latched.value = value;
+				dvar->domain.value.min = mins;
+				dvar->domain.value.max = maxs;
+				dvar->flags = flags;
+				dvar->modified = false;
+			}
+		}
+
 		// rtx end >
 
 		void DvarVec4Override(const char* dvarName, const float* dvar_value)

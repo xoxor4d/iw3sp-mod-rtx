@@ -1,6 +1,5 @@
 ![license](https://img.shields.io/github/license/JerryALT/iw3sp_mod.svg)
 [![Build](https://github.com/xoxor4d/iw3sp-mod-rtx/workflows/Build/badge.svg)](https://github.com/xoxor4d/iw3sp-mod-rtx/actions)
-[![Discord](https://img.shields.io/discord/1091304681822752778?color=%237289DA&label=members&logo=discord&logoColor=%23FFFFFF)](https://discord.gg/YzNZSEMAnf)
 
 # IW3SP-MOD-RTX - nvidia rtx-remix compatibility mod
 
@@ -11,6 +10,10 @@ Singleplayer client modification for Call of Duty 4: Modern Warfare (IW3) to mak
 </p>
 
 ## rtx-remix fork
+
+EXPECT THINGS TO BE BROKEN. Some maps might outright crash due to their complexity. This might be fixed in future updates when most of the rendering is backported to use the fixed-function pipeline.   
+The [iw3xo (rtx-branch)](https://github.com/xoxor4d/iw3xo-dev/tree/rtx) will feature the latest changes and things will be ported to this repo eventually.
+
 - Download the latest [release](https://github.com/xoxor4d/iw3sp-mod-rtx/tags) and extract contents into your cod4 root directory.  
 - Find the latest successful build under [Github Actions](https://github.com/xoxor4d/iw3sp-mod-rtx/actions) and grab the `Release-binaries-rtx` artifact.   
 - Extract it`s contents into your cod4 root folder and replace all files when prompted. 
@@ -22,21 +25,27 @@ Singleplayer client modification for Call of Duty 4: Modern Warfare (IW3) to mak
 <br>
 
 ### Commandline Arguments:
-  - `-disable_culling` - disable all culling   
-  ~~- `-fixed_function`- fixed-function rendering (static models, fps ++)~~ (not yet implemented)
+  - `-disable_culling` -> disable all culling   
+  - `-fixed_function` -> use fixed-functionpipeline to render static models (fps++)
   
-> eg: &ensp;`"c:\path\iw3sp_mod.exe" -disable_culling` 
+> eg: &ensp;`"c:\path\iw3sp_mod.exe" -disable_culling -fixed_function` 
 
 ### Additional settings
 - use console commands `rtx_sky_` `<skyname>` to spawn a skysphere
 - dvar `rtx_extend_smodel_drawing` to disable the static model draw limit (max amount of static models drawn at once)
+- disabling dvar `r_smc_enable` will draw static models as expected but can cause flickering or even crash the game if to many models are drawn at once (increase dvar `r_lodScaleRigid` (2) to decrease model drawing distance) 
 
 ### General tips
 
 - You might need to assign the sky category manually (if your map is black).   
 Open remix -> Go to the game setup tab -> Step 1 -> Open Sky Texture -> Use your mouse to select the sky (in the world) and assign the sky category
 
-___
+### Questions? 
+- join the [rtx-remix showcase](https://discord.gg/j6sh7JD3v9) discord and check out the cod4 thread within the `remix-projects` channel.
+- join the [IW3SP-Mod](https://discord.gg/YzNZSEMAnf) discord if you have questions related to iw3sp_mod
+- rtx-remix: https://github.com/NVIDIAGameWorks/rtx-remix  
+
+<br>
 
 # Credits
 - [Jerry4LT - IW3SP_Mod](https://github.com/JerryALT/iw3sp_mod)
@@ -59,8 +68,12 @@ ___
 - [LibTomCrypt](https://github.com/libtom/libtomcrypt)
 - [LibTomMath](https://github.com/libtom/libtommath)
 
+<br>
+
 # Disclaimer
 This software has been created purely for the purposes of academic research. Project maintainers are not responsible or liable for misuse of the software. Use responsibly.
+
+<br>
 
 # Features
 [Mod compatibility list](https://github.com/JerryALT/iw3sp_mod/wiki/Mod-compatibility-list)
@@ -80,11 +93,15 @@ This software has been created purely for the purposes of academic research. Pro
 - Added FOV logic from multiplayer to singleplayer;
 - Added [map entities editing](https://github.com/JerryALT/iw3sp_mod/wiki/Changing-the-map-entities) for the stock maps and more...
 
+<br>
+
 # How to install modification? (For regular users)
 **NOTE**: You must legally own [Steam version](https://store.steampowered.com/app/7940/Call_of_Duty_4_Modern_Warfare_2007/) of Call of Duty® 4: Modern Warfare® (2007) to run this mod. Cracked/Pirated/CDs versions of the game are **NOT** supported.
 1. Download the latest [release](https://github.com/xoxor4d/iw3sp-mod-rtx/releases/latest)
 2. Place the .zip contents into your cod4 root folder
 3. Start the **iw3sp_mod.exe**
+
+<br>
 
 # How to compile from source? (For advanced users)
 1. Clone the this repository. I recommend use the [git-scm](https://git-scm.com/downloads).

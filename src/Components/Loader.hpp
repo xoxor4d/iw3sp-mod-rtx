@@ -84,3 +84,4 @@ namespace Components
 #include "Modules/GUI/Markdown.hpp"
 #include "Modules/Changelog.hpp"
 #include "Modules/Rtx.hpp"
+#include "Modules/RtxFixedFunction.hpp"

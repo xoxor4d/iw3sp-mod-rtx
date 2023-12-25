@@ -8,6 +8,7 @@ namespace Components
 		Rtx();
 
 		static void r_set_3d();
+		static void force_dvars_on_frame();
 		static void force_dvars_on_init();
 
 		static bool skysphere_is_model_valid();

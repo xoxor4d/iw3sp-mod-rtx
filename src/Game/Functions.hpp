@@ -13,8 +13,8 @@ namespace Game
 	static Utils::function<Game::gentity_s* ()> G_Spawn = 0x4EFCF0;
 	static Utils::function<bool(Game::gentity_s*)> G_CallSpawnEntity = 0x4E98F0;
 
-	extern void G_DObjUpdate(entityState_s* ent /*eax*/); // ASM 4ED860
-
+	void G_DObjUpdate(entityState_s* ent /*eax*/); // ASM 4ED860
+	void Vec2UnpackTexCoords(unsigned int packed, float* texcoord_out /*ecx*/);
 	// rtx end >
 
 

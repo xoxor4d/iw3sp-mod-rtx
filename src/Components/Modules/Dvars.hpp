@@ -136,6 +136,7 @@ namespace Dvars
 		// < rtx begin
 		void DvarIntOverride(const char* dvarName, const int value, Game::dvar_flags flags);
 		void DvarFloatOverride(const char* dvarName, const float value, Game::dvar_flags flags);
+		void DvarFloatOverride(const char* dvarName, const float value, Game::dvar_flags flags, float mins, float maxs);
 		// rtx end >
 
 		void DvarVec4Override(const char* dvarName, const float* dvar_value);

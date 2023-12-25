@@ -19,8 +19,7 @@ namespace Components
 		dev->SetTransform(D3DTS_PROJECTION, reinterpret_cast<D3DMATRIX*>(&Game::gfxCmdBufSourceState->viewParms.projectionMatrix.m));
 
 		//rtx_lights::spawn_light();
-
-		Rtx::force_dvars_on_init();
+		Rtx::force_dvars_on_frame();
 	}
 
 	// stub at the beginning of 'RB_Draw3DInternal' (frame begin)
@@ -90,7 +89,7 @@ namespace Components
 		}
 	}
 
-	void Rtx::force_dvars_on_init()
+	void Rtx::force_dvars_on_frame()
 	{
 		Dvars::Override::DvarIntOverride("r_aaSamples", 1, Game::dvar_flags::saved);
 		Dvars::Override::DvarIntOverride("r_dlightLimit", 0, Game::dvar_flags::saved);
@@ -104,19 +103,26 @@ namespace Components
 		Dvars::Override::DvarBoolOverride("r_dof_enable", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_glow_allowed", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_specular", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_vsync", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_zFeather", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("sm_enable", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_altModelLightingUpdate", false, Game::dvar_flags::saved);
-
+		Dvars::Override::DvarBoolOverride("r_vsync", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_multiGpu", true, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_smp_worker", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_smp_backend", true, Game::dvar_flags::saved); // disable to increase fps but skinned models are wobbly
-		Dvars::Override::DvarBoolOverride("r_smc_enable", true, Game::dvar_flags::saved); // enable until static models are rendererd via fixed-function - causes smear
+		//Dvars::Override::DvarBoolOverride("r_smc_enable", true, Game::dvar_flags::saved); // enable until static models are rendererd via fixed-function - causes smear
+
+		//Dvars::Override::DvarBoolOverride("fx_enable", false, Game::dvar_flags::saved);
 
 		Dvars::Override::DvarFloatOverride("cg_tracerlength", 0.0f, Game::dvar_flags::saved);
 		Dvars::Override::DvarFloatOverride("r_znear", 4.00195f, Game::dvar_flags::saved);
 		Dvars::Override::DvarFloatOverride("r_znear_depthhack", 4.0f, Game::dvar_flags::saved);
+	}
+
+	void Rtx::force_dvars_on_init()
+	{
+		Rtx::force_dvars_on_frame();
+		Dvars::Override::DvarFloatOverride("r_lodScaleRigid", 2.5f, Game::dvar_flags::saved, 0.0f, 100.0f);
 	}
 
 	// ----------------------------------------------

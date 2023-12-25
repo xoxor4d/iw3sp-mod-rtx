@@ -31,6 +31,18 @@ namespace Game
 		}
 	}
 
+	void Vec2UnpackTexCoords(unsigned int packed, float* texcoord_out /*ecx*/)
+	{
+		const static uint32_t func_addr = 0x580F80;
+		__asm
+		{
+			mov		ecx, texcoord_out;
+			push	packed;
+			call	func_addr;
+			add		esp, 4;
+		}
+	}
+
 	// rtx end >
 
 
