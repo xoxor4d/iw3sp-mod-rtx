@@ -39,6 +39,8 @@ namespace Dvars
 
 	// < rtx begin
 	extern Game::dvar_s* rtx_extend_smodel_drawing;
+	extern Game::dvar_s* rtx_disable_world_culling;
+	extern Game::dvar_s* rtx_disable_entity_culling;
 	// rtx end >
 
 	extern Game::dvar_s* M_RawInput;

@@ -4,6 +4,9 @@ namespace Game
 {
 	// < rtx begin
 	GfxCmdBufSourceState* gfxCmdBufSourceState = reinterpret_cast<GfxCmdBufSourceState*>(0x1D43820);
+	r_global_permanent_t* rgp = reinterpret_cast<Game::r_global_permanent_t*>(0x1621E00);
+	Game::GfxBuffers* gfx_buf = reinterpret_cast<Game::GfxBuffers*>(0x1AF5EB8);
+	XZone* g_zones = reinterpret_cast<XZone*>(0xAC3000);
 
 	Game::GfxBackEndData* get_backenddata()
 	{

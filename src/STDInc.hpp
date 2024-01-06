@@ -57,6 +57,11 @@ using namespace std::literals;
 
 #define AssertIn(x, y) assert(static_cast<unsigned int>(x) < static_cast<unsigned int>(y))
 
+// <- rtx begin
+#define STATIC_ASSERT_SIZE(struct, size)				static_assert(sizeof(struct) == size, "Size check")
+#define STATIC_ASSERT_OFFSET(struct, member, offset)	static_assert(offsetof(struct, member) == offset, "Offset check")
+// rtx end ->
+
 #define __thread __declspec(thread)
 
 #include <Urlmon.h>
@@ -121,6 +126,7 @@ using namespace std::literals;
 #include "Utils\Thread.hpp"
 #include "Utils\Time.hpp"
 #include "Utils\Utils.hpp"
+#include "Utils\RtxUtils.hpp"
 
 #include "Game\Structs.hpp"
 #include "Game\Game.hpp"

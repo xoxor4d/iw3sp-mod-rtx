@@ -5,6 +5,9 @@ namespace Game
 {
 	// < rtx begin
 	extern GfxCmdBufSourceState* gfxCmdBufSourceState;
+	extern r_global_permanent_t* rgp;
+	extern GfxBuffers* gfx_buf;
+	extern XZone* g_zones;
 
 	static DWORD* backEndDataOut_ptr = (DWORD*)(0x18CB534);  // backendEndDataOut pointer
 	extern Game::GfxBackEndData* get_backenddata();

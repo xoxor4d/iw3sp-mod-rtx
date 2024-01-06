@@ -64,22 +64,31 @@ namespace Game
 
 	struct XZoneMemory
 	{
-		XBlock blocks[MAX_XFILE_COUNT];
+		// <- rtx begin
+
+		//XBlock blocks[MAX_XFILE_COUNT];
+		XBlock blocks[9];
+
+		// rtx end ->
+
 		char* lockedVertexData;
 		char* lockedIndexData;
-		void* vertexBuffer;
-		void* indexBuffer;
+		IDirect3DVertexBuffer9* vertexBuffer;
+		IDirect3DIndexBuffer9* indexBuffer;
 	};
 
-	struct XZone
+	struct __declspec(align(4)) XZone
 	{
 		char name[64];
 		int flags;
 		int allocType;
 		XZoneMemory mem;
-		int fileSize;
-		char modZone;
-	};
+		// <- rtx begin
+		//int fileSize;
+		//bool modZone;
+		// rtx end ->
+	}; // size 0xA0
+
 
 	struct XFile
 	{
@@ -869,12 +878,38 @@ namespace Game
 		int flags;
 	};
 
+	struct MaterialArgumentCodeConst
+	{
+		unsigned __int16 index;
+		char firstRow;
+		char rowCount;
+	};
+
+	union MaterialArgumentDef
+	{
+		const float* literalConst;
+		MaterialArgumentCodeConst codeConst;
+		unsigned int codeSampler;
+		unsigned int nameHash;
+	};
+
+	struct MaterialShaderArgument
+	{
+		unsigned __int16 type;
+		unsigned __int16 dest;
+		MaterialArgumentDef u;
+	};
+
 	struct MaterialPass
 	{
 		VertexDecl* vertexDecl;
 		VertexShader* vertexShader;
 		PixelShader* pixelShader;
-		char pad[8];
+		char perPrimArgCount;
+		char perObjArgCount;
+		char stableArgCount;
+		char customSamplerFlags;
+		MaterialShaderArgument* args;
 	};
 
 	struct MaterialTechnique
@@ -1462,9 +1497,12 @@ namespace Game
 		statement_s forecolorAExp;
 	};
 
+	struct XModel;
+
 	union XAssetHeader
 	{
 		void* data;
+		XModel* model;
 		LocalizeEntry* localize;
 		Font_s* font;
 		snd_alias_list_t* sound;
@@ -2674,6 +2712,17 @@ namespace Game
 		CachedAssets_t assets;
 	};
 
+	struct GfxBspPreTessDrawSurf
+	{
+		unsigned __int16 baseSurfIndex;
+		unsigned __int16 totalTriCount;
+	};
+
+	struct GfxReadCmdBuf
+	{
+		const unsigned int* primDrawSurfPos;
+	};
+
 	//From Bogdan
 	union GfxColor
 	{
@@ -2727,6 +2776,124 @@ namespace Game
 		float scale;
 	};
 
+	struct DObjAnimMat
+	{
+		float quat[4];
+		float trans[3];
+		float transWeight;
+	};
+
+	struct XSurfaceVertexInfo
+	{
+		short vertCount[4];
+		unsigned short* vertsBlend;
+	};
+
+	struct GfxPointVertex
+	{
+		float xyz[3];
+		char color[4];
+	};
+
+	union PackedTexCoords
+	{
+		unsigned int packed;
+	};
+
+	struct GfxPackedVertex
+	{
+		float xyz[3];
+		float binormalSign;
+		GfxColor color;
+		PackedTexCoords texCoord;
+		PackedUnitVec normal;
+		PackedUnitVec tangent;
+	};
+
+	struct __declspec(align(4)) GfxModelSurfaceInfo
+	{
+		DObjAnimMat* baseMat;
+		char boneIndex;
+		char boneCount;
+		unsigned __int16 gfxEntIndex;
+		unsigned __int16 lightingHandle;
+	};
+
+	union $178D1D161B34F636C03EBC0CA3007D75
+	{
+		GfxPackedVertex* skinnedVert;
+		int oldSkinnedCachedOffset;
+	};
+
+	struct XSurfaceCollisionAabb
+	{
+		unsigned short mins[3];
+		unsigned short maxs[3];
+	};
+
+	struct XSurfaceCollisionNode
+	{
+		XSurfaceCollisionAabb aabb;
+		unsigned short childBeginIndex;
+		unsigned short childCount;
+	};
+
+	struct XSurfaceCollisionLeaf
+	{
+		unsigned short triangleBeginIndex;
+	};
+
+	struct XSurfaceCollisionTree
+	{
+		float trans[3];
+		float scale[3];
+		unsigned int nodeCount;
+		XSurfaceCollisionNode* nodes;
+		unsigned int leafCount;
+		XSurfaceCollisionLeaf* leafs;
+	};
+
+	struct XRigidVertList
+	{
+		unsigned short boneOffset;
+		unsigned short vertCount;
+		unsigned short triOffset;
+		unsigned short triCount;
+		XSurfaceCollisionTree* collisionTree;
+	};
+
+	struct XSurface
+	{
+		char tileMode;
+		bool deformed;
+		unsigned __int16 vertCount;
+		unsigned __int16 triCount;
+		char zoneHandle;
+		unsigned __int16 baseTriIndex;
+		unsigned __int16 baseVertIndex;
+		unsigned __int16* triIndices;
+		XSurfaceVertexInfo vertInfo;
+		GfxPackedVertex* verts0;
+		unsigned int vertListCount;
+		XRigidVertList* vertList;
+		int partBits[3]; // was 4
+		IDirect3DVertexBuffer9* custom_vertexbuffer;
+	}; STATIC_ASSERT_SIZE(XSurface, 0x38);
+
+	struct GfxModelSkinnedSurface
+	{
+		int skinnedCachedOffset;
+		XSurface* xsurf;
+		GfxModelSurfaceInfo info;
+		$178D1D161B34F636C03EBC0CA3007D75 u;
+	};
+
+	struct GfxModelRigidSurface
+	{
+		GfxModelSkinnedSurface surf;
+		GfxScaledPlacement placement;
+	};
+
 	struct GfxParticleCloud
 	{
 		GfxScaledPlacement placement;
@@ -2774,11 +2941,6 @@ namespace Game
 		unsigned __int16* indices;
 		GfxVertexBufferState vb;
 		unsigned int vertSize;
-	};
-
-	union PackedTexCoords
-	{
-		unsigned int packed;
 	};
 
 	union PackedLightingCoords
@@ -3027,110 +3189,12 @@ namespace Game
 		int skel[4];
 	};
 
-	struct DObjAnimMat
-	{
-		float quat[4];
-		float trans[3];
-		float transWeight;
-	};
-
 	struct DSkel
 	{
 		DSkelPartBits partBits;
 		int timeStamp;
 		DObjAnimMat* mat;
 	};
-
-	struct GfxPackedVertex
-	{
-		float xyz[3];
-		float binormalSign;
-		GfxColor color;
-		PackedTexCoords texCoord;
-		PackedUnitVec normal;
-		PackedUnitVec tangent;
-	};
-
-	struct XSurfaceCollisionAabb
-	{
-		unsigned __int16 mins[3];
-		unsigned __int16 maxs[3];
-	};
-
-	struct XSurfaceCollisionNode
-	{
-		XSurfaceCollisionAabb aabb;
-		unsigned __int16 childBeginIndex;
-		unsigned __int16 childCount;
-	};
-
-	struct XSurfaceCollisionLeaf
-	{
-		unsigned __int16 triangleBeginIndex;
-	};
-
-	struct XSurfaceCollisionTree
-	{
-		float trans[3];
-		float scale[3];
-		unsigned int nodeCount;
-		XSurfaceCollisionNode* nodes;
-		unsigned int leafCount;
-		XSurfaceCollisionLeaf* leafs;
-	};
-
-	struct XRigidVertList
-	{
-		unsigned __int16 boneOffset;
-		unsigned __int16 vertCount;
-		unsigned __int16 triOffset;
-		unsigned __int16 triCount;
-		XSurfaceCollisionTree* collisionTree;
-	};
-
-	struct XSurfaceVertexInfo
-	{
-		__int16 vertCount[4];
-		unsigned __int16* vertsBlend;
-	};
-
-	// < rtx begin
-	/*struct XSurface
-	{
-		char tileMode;
-		bool deformed;
-		unsigned __int16 vertCount;
-		unsigned __int16 triCount;
-		char zoneHandle;
-		unsigned __int16 baseTriIndex;
-		unsigned __int16 baseVertIndex;
-		unsigned __int16* triIndices;
-		XSurfaceVertexInfo vertInfo;
-		GfxPackedVertex* verts0;
-		unsigned int vertListCount;
-		XRigidVertList* vertList;
-		int partBits[6];
-	};*/
-
-	struct XSurface
-	{
-		char tileMode;
-		bool deformed;
-		unsigned __int16 vertCount;
-		unsigned __int16 triCount;
-		char zoneHandle;
-		unsigned __int16 baseTriIndex;
-		unsigned __int16 baseVertIndex;
-		unsigned __int16* triIndices;
-		XSurfaceVertexInfo vertInfo;
-		GfxPackedVertex* verts0;
-		unsigned int vertListCount;
-		XRigidVertList* vertList;
-		int partBits[2]; // was 4
-		IDirect3DVertexBuffer9* custom_vertexbuffer;
-		IDirect3DIndexBuffer9* custom_indexbuffer;
-	};
-	// rtx end >
 
 	struct XModelSurfs
 	{
@@ -4410,7 +4474,7 @@ namespace Game
 	struct snapshot_s
 	{
 		int snapFlags;
-		int ping;
+		//int ping;
 		int serverTime;
 		playerState_s ps;
 		int numEntities;
