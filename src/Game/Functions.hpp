@@ -4,6 +4,7 @@
 namespace Game
 {
 	// < rtx begin
+	extern DxGlobals* dx;
 	extern GfxCmdBufSourceState* gfxCmdBufSourceState;
 	extern r_global_permanent_t* rgp;
 	extern GfxBuffers* gfx_buf;

@@ -64,8 +64,12 @@ namespace Components
 		Loader::Register(new GUI());
 		Loader::Register(new Markdown());
 		Loader::Register(new Changelog());
+
+		// <- rtx begin
 		Loader::Register(new Rtx());
 		Loader::Register(new RtxFixedFunction());
+		Loader::Register(new RtxMapSettings());
+		// rtx end ->
 
 		Loader::Pregame = false;
 		// Make sure preDestroy is called when the game shuts down

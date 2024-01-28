@@ -18,11 +18,20 @@ namespace Components
 		dev->SetTransform(D3DTS_VIEW, reinterpret_cast<D3DMATRIX*>(&Game::gfxCmdBufSourceState->viewParms.viewMatrix.m));
 		dev->SetTransform(D3DTS_PROJECTION, reinterpret_cast<D3DMATRIX*>(&Game::gfxCmdBufSourceState->viewParms.projectionMatrix.m));
 
-		//rtx_lights::spawn_light();
 		Rtx::force_dvars_on_frame();
 
 		// needed for skysphere (unlit rendering)
 		dev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+		if (!Flags::HasFlag("no_fog"))
+		{
+			const float fog_start = 1.0f;
+			dev->SetRenderState(D3DRS_FOGENABLE, TRUE);
+			dev->SetRenderState(D3DRS_FOGCOLOR, RtxMapSettings::m_color.packed);
+			dev->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_LINEAR);
+			dev->SetRenderState(D3DRS_FOGSTART, *(DWORD*)(&fog_start));
+			dev->SetRenderState(D3DRS_FOGEND, *(DWORD*)(&RtxMapSettings::m_max_distance));
+		}
 	}
 
 	// stub at the beginning of 'RB_Draw3DInternal' (frame begin)
@@ -33,6 +42,32 @@ namespace Components
 		{
 			pushad;
 			call	Rtx::setup_rtx;
+			popad;
+
+			// og instructions
+			mov     ebp, esp;
+			and		esp, 0xFFFFFFF8;
+			jmp		retn_addr;
+		}
+	}
+
+	void post_scene_rendering_stub()
+	{
+		const auto dev = *Game::dx9_device_ptr;
+
+		// disable fog before rendering UI (who wants foggy UI elements right?)
+		// ^ can happen if no skysphere is rendered, which is rendered last and thus disables fog for everything afterwards
+		dev->SetRenderState(D3DRS_FOGENABLE, FALSE);
+	}
+
+	// stub at the beginning of 'RB_CallExecuteRenderCommands' (before UI)
+	__declspec(naked) void rb_call_execute_render_commands_stub()
+	{
+		const static uint32_t retn_addr = 0x5FF656;
+		__asm
+		{
+			pushad;
+			call	post_scene_rendering_stub;
 			popad;
 
 			// og instructions
@@ -110,12 +145,8 @@ namespace Components
 
 		Dvars::Override::DvarIntOverride("r_aaSamples", 1, Game::dvar_flags::saved);
 		Dvars::Override::DvarIntOverride("r_dlightLimit", 0, Game::dvar_flags::saved);
-
 		Dvars::Override::DvarBoolOverride("r_depthPrepass", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_distortion", false, Game::dvar_flags::saved);
-		//Dvars::Override::DvarBoolOverride("r_drawDecals", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_drawSun", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_drawWater", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_dof_enable", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_glow_allowed", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_specular", false, Game::dvar_flags::saved);
@@ -123,22 +154,36 @@ namespace Components
 		Dvars::Override::DvarBoolOverride("sm_enable", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_altModelLightingUpdate", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_vsync", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_multiGpu", true, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_smp_worker", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_smp_backend", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_smc_enable", false, Game::dvar_flags::saved);
-
-		//Dvars::Override::DvarBoolOverride("fx_enable", false, Game::dvar_flags::saved);
-
-		Dvars::Override::DvarFloatOverride("cg_tracerlength", 0.0f, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_skinCache", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarFloatOverride("r_znear", 4.00195f, Game::dvar_flags::saved);
 		Dvars::Override::DvarFloatOverride("r_znear_depthhack", 4.0f, Game::dvar_flags::saved);
+
+		Dvars::Override::DvarBoolOverride("r_drawSun", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_drawWater", false, Game::dvar_flags::saved);
 	}
 
+	// one renderer init
 	void Rtx::force_dvars_on_init()
 	{
 		Rtx::force_dvars_on_frame();
-		Dvars::Override::DvarFloatOverride("r_lodScaleRigid", 2.5f, Game::dvar_flags::saved, 0.0f, 100.0f);
+
+		Dvars::Override::DvarBoolOverride("r_multiGpu", true, Game::dvar_flags::saved);
+	}
+
+	// on each mapload
+	void Rtx::set_dvars_defaults_on_mapload()
+	{
+		Dvars::Override::DvarFloatOverride("r_lodScaleRigid", 2.0f, Game::dvar_flags::saved, 0.0f, 100.0f);
+
+		if (!Flags::HasFlag("no_forced_lod"))
+		{
+			Dvars::Override::DvarIntOverride("r_forceLod", 0, Game::dvar_flags::saved);
+		}
+		
+		Dvars::Override::DvarBoolOverride("fx_drawClouds", false, Game::dvar_flags::saved);
 	}
 
 	// ----------------------------------------------
@@ -209,6 +254,20 @@ namespace Components
 		skysphere_model->s.index = model_index;
 		skysphere_model->r.svFlags = 0x04;
 		skysphere_model->r.linked = 0x1;
+
+		/*skysphere_model->r.absmin[0] = -10000000.0f;
+		skysphere_model->r.absmin[1] = -10000000.0f;
+		skysphere_model->r.absmin[1] = -10000000.0f;
+		skysphere_model->r.absmax[0] =  10000000.0f;
+		skysphere_model->r.absmax[1] =  10000000.0f;
+		skysphere_model->r.absmax[1] =  10000000.0f;
+
+		skysphere_model->r.mins[0] = -10000000.0f;
+		skysphere_model->r.mins[1] = -10000000.0f;
+		skysphere_model->r.mins[1] = -10000000.0f;
+		skysphere_model->r.maxs[0] =  10000000.0f;
+		skysphere_model->r.maxs[1] =  10000000.0f;
+		skysphere_model->r.maxs[1] =  10000000.0f;*/
 
 		//Game::G_SetOrigin(skysphere_model, skysphere_model_origin);
 		skysphere_model->s.lerp.pos.trBase[0] = 0.0f;
@@ -313,10 +372,8 @@ namespace Components
 	// return new material if valid, stock material otherwise
 	void switch_material(Game::switch_material_t* swm, const char* material_name)
 	{
-
-
 		if (const auto	material = Game::Material_RegisterHandle(material_name, 3);
-			material)
+						material)
 		{
 			swm->material = material;
 			swm->technique = nullptr;
@@ -337,7 +394,7 @@ namespace Components
 	// replace skies with temp material that can be tagged as 'sky' in remix
 	bool fix_sky_for_rtx(Game::switch_material_t* swm, const Game::GfxCmdBufState* state)
 	{
-		if (Utils::String::StartsWith(swm->current_material->info.name, "wc/sky_"))
+		if (RtxUtils::starts_with(swm->current_material->info.name, "wc/sky_"))
 		{
 			swm->technique_type = Game::TECHNIQUE_UNLIT;
 			switch_material(swm, "rtx_sky");
@@ -345,13 +402,13 @@ namespace Components
 		}
 
 		// fix remix normals for viewmodels - needs the material string check because the weapon is in both depth-ranges for some reason
-		if (state->depthRangeType == Game::GFX_DEPTH_RANGE_VIEWMODEL || Utils::String::StartsWith(swm->current_material->info.name, "mc/mtl_weapon_"))
+		/*if (state->depthRangeType == Game::GFX_DEPTH_RANGE_VIEWMODEL || RtxUtils::starts_with(swm->current_material->info.name, "mc/mtl_weapon_"))
 		{
 			swm->technique_type = Game::TECHNIQUE_LIT;
 			swm->switch_technique_type = true;
 
 			return false;
-		}
+		}*/
 
 		return true;
 	}
@@ -769,6 +826,107 @@ namespace Components
 		}
 	}
 
+
+	// *
+	// fix resolution issues by removing duplicates returned by EnumAdapterModes
+	// ^ this was fixed on the dxvk branch - TODO: remove when latest dxvk changes were merged into dxvk-remix
+
+	namespace resolution
+	{
+		auto hash = [](const _D3DDISPLAYMODE& d) { return d.Width + 10 * d.Height + d.RefreshRate; };
+		auto equal = [](const _D3DDISPLAYMODE& d1, const _D3DDISPLAYMODE& d2) { return d1.Width == d2.Width && d1.Height == d2.Height && d1.RefreshRate == d2.RefreshRate; };
+		std::unordered_set<_D3DDISPLAYMODE, decltype(hash), decltype(equal)> modes(256, hash, equal);
+
+		int enum_adapter_modes_intercept(std::uint32_t adapter_index, std::uint32_t mode_index)
+		{
+			_D3DDISPLAYMODE current = {};
+			const auto hr = Game::dx->d3d9->EnumAdapterModes(adapter_index, D3DFMT_X8R8G8B8, mode_index, &current) < 0;
+			modes.emplace(current);
+			return hr;
+		}
+
+		__declspec(naked) void R_EnumDisplayModes_stub()
+		{
+			const static uint32_t retn_addr = 0x5D8EA2;
+			__asm
+			{
+				push	esi; // mode index
+				push	ebx; // adapter index
+				call	enum_adapter_modes_intercept;
+				add		esp, 8;
+				jmp		retn_addr;
+			}
+		}
+
+		void enum_adapter_modes_write_array()
+		{
+			std::uint32_t idx = 0;
+			for (auto& m : modes)
+			{
+				if (idx >= 256)
+				{
+					Game::Com_Printf(0, "EnumAdapterModes : Failed to grab all possible resolutions. Array to small!\n");
+					break;
+				}
+
+				memcpy(&Game::dx->displayModes[idx], &m, sizeof(_D3DDISPLAYMODE));
+				idx++;
+			}
+		}
+
+		__declspec(naked) void R_EnumDisplayModes_stub2()
+		{
+			const static uint32_t R_CompareDisplayModes_addr = 0x5D8E20;
+			const static uint32_t retn_addr = 0x5D8EDE;
+			__asm
+			{
+				pushad;
+				call	enum_adapter_modes_write_array;
+				popad;
+
+				push	R_CompareDisplayModes_addr;
+				jmp		retn_addr;
+			}
+		}
+	}
+
+	void fix_aspect_ratio(int* window_parms)
+	{
+		*reinterpret_cast<float*>(0x1621DC4) = static_cast<float>(window_parms[7]) / static_cast<float>(window_parms[8]);
+	}
+
+	void __declspec(naked) fix_aspect_ratio_stub()
+	{
+		const static uint32_t retn_addr = 0x5D8395;
+		__asm
+		{
+			pop		eax;
+			pushad;
+			push	eax;
+			call	fix_aspect_ratio;
+			add		esp, 4;
+			popad;
+			push	eax;
+
+			jmp		retn_addr;
+		}
+	}
+
+	// *
+	// Event stubs
+
+	// > RtxFixedFunction::init_fixed_function_buffers_stub
+	void Rtx::on_map_load()
+	{
+		RtxMapSettings::get()->set_settings_for_loaded_map();
+		Rtx::set_dvars_defaults_on_mapload();
+	}
+
+	// > RtxFixedFunction::free_fixed_function_buffers_stub
+	void Rtx::on_map_shutdown()
+	{
+	}
+
 	Rtx::Rtx()
 	{
 		// *
@@ -784,6 +942,9 @@ namespace Components
 
 		// hook beginning of 'RB_Draw3DInternal' to setup general stuff required for rtx-remix
 		Utils::Hook(0x62A9E1, rb_standard_drawcommands_stub, HOOK_JUMP).install()->quick();
+
+		// hook beginning of 'RB_CallExecuteRenderCommands' (before UI)
+		Utils::Hook(0x5FF651, rb_call_execute_render_commands_stub, HOOK_JUMP).install()->quick();
 
 		// render third person model in first person
 		//Utils::Hook::Nop(0x42E187, 6); // CG_DrawFriendlyNames: do not disable name drawing
@@ -853,6 +1014,14 @@ namespace Components
 			// 0x64D17A -> nop // 2 bytes //utils::hook::nop(0x64D17A, 2);
 			Utils::Hook::Nop(0x62EF42, 8); Utils::Hook(0x62EF42, cull::entities_stub, HOOK_JUMP).install()->quick();
 
+			// 0x0062F026 to jmp (0xEB) keeps dynamic tree shadows
+			Utils::Hook::Set<BYTE>(0x62F026, 0xEB);
+
+			// TODO: armada - stops skysphere culling but disables other entities
+			// ^ gun and helicopters flicker because we are hitting the surfbuffer limit - MAX_SCENE_SURFS_SIZE
+			// ^ enabling culling keeps the skysphere
+			//Utils::Hook::Nop(0x62EF5A, 2);
+
 			// R_AddCellSceneEntSurfacesInFrustumCmd :: disable brushmodel culling
 			Utils::Hook::Nop(0x62F12B, 2);
 
@@ -884,6 +1053,40 @@ namespace Components
 		// ^ but inlined ..... for all other static models (R_AddAllStaticModelSurfacesCamera)
 		Utils::Hook::Nop(0x611125, 6);  Utils::Hook(0x611125, xmodel_get_lod_for_dist_inlined, HOOK_JUMP).install()->quick();
 
+
+		// #
+		// renderer
+
+		// dxvk's 'EnumAdapterModes' returns a lot of duplicates and the games array only has a capacity of 256 which is not enough depending on max res. and refreshrate
+		// fix resolution issues by removing duplicates returned by EnumAdapterModes - then write the array ourselfs
+		Utils::Hook(0x5D8E92, resolution::R_EnumDisplayModes_stub, HOOK_JUMP).install()->quick();
+		Utils::Hook(0x5D8ED9, resolution::R_EnumDisplayModes_stub2, HOOK_JUMP).install()->quick();
+		Utils::Hook::Set<BYTE>(0x5D8E80 + 2, 0x04); // set max array size check to 1024 (check within loop)
+
+		// :*
+		Utils::Hook(0x5D8303, fix_aspect_ratio_stub, HOOK_JUMP).install()->quick();
+
+		Command::Add("borderless", [this]()
+		{
+			const auto hwnd = Game::dx->windows->hwnd ? Game::dx->windows->hwnd : FindWindow(nullptr, L"IW3SP_MOD");
+
+			// calculate titlebar height
+			RECT w, c; GetWindowRect(hwnd, &w); GetClientRect(hwnd, &c);
+			Rtx::noborder_titlebar_height = (w.bottom - w.top) - (c.bottom - c.top);
+
+			SetWindowLongPtr(hwnd, GWL_STYLE, WS_VISIBLE | WS_POPUP);
+			SetWindowPos(hwnd, nullptr, 0, 0, Game::dx->windows->width, Game::dx->windows->height, SWP_SHOWWINDOW | SWP_NOACTIVATE);
+		});
+
+		Command::Add("windowed", [this]()
+		{
+			if (Rtx::noborder_titlebar_height)
+			{
+				const auto hwnd = Game::dx->windows->hwnd ? Game::dx->windows->hwnd : FindWindow(nullptr, L"IW3SP_MOD");
+				SetWindowLongPtr(hwnd, GWL_STYLE, WS_VISIBLE | WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
+				SetWindowPos(hwnd, nullptr, 0, 0, Game::dx->windows->width, Game::dx->windows->height + Rtx::noborder_titlebar_height, SWP_SHOWWINDOW | SWP_NOACTIVATE);
+			}
+		});
 
 		// #
 		// dvars

@@ -36,6 +36,10 @@
 #include <cstdio>
 #include <utility>
 
+// <- rtx begin
+#include <unordered_set>
+// rtx end ->
+
 #include <setjmp.h>
 #include <DbgHelp.h>
 

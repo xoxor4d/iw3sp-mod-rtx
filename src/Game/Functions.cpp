@@ -3,6 +3,7 @@
 namespace Game
 {
 	// < rtx begin
+	DxGlobals* dx = reinterpret_cast<DxGlobals*>(0x1623F84);
 	GfxCmdBufSourceState* gfxCmdBufSourceState = reinterpret_cast<GfxCmdBufSourceState*>(0x1D43820);
 	r_global_permanent_t* rgp = reinterpret_cast<Game::r_global_permanent_t*>(0x1621E00);
 	Game::GfxBuffers* gfx_buf = reinterpret_cast<Game::GfxBuffers*>(0x1AF5EB8);
