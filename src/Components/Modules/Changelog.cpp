@@ -231,7 +231,7 @@ namespace Components
 	Changelog::Changelog()
 	{
 		//check every 5 seconds changeLogData
-		Scheduler::Loop([]
+		/*Scheduler::Loop([]
 		{
 			if (strlen(Dvars::Functions::Dvar_FindVar("fs_game")->current.string) == 0 && !Game::CL_IsCgameInitialized())
 			{
@@ -247,7 +247,7 @@ namespace Components
 					changeLogData.changeLogText = changeLog.value().data();
 				}
 			}
-		}, Scheduler::Pipeline::ASYNC, 5000ms);
+		}, Scheduler::Pipeline::ASYNC, 5000ms);*/
 	}
 
 	Changelog::~Changelog()
