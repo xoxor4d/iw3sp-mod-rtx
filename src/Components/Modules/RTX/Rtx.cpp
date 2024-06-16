@@ -912,6 +912,45 @@ namespace Components
 		}
 	}
 
+	int skip_image_load(Game::GfxImage* img)
+	{
+		// 0x2 = color, 0x5 = normal, 0x8 = spec
+		if (img->semantic == 0x5 || img->semantic == 0x8)
+		{
+			return 1;
+		}
+
+		return 0;
+	}
+
+	__declspec(naked) void load_image_stub()
+	{
+		const static uint32_t skip_img_addr = 0x6206A3;
+		const static uint32_t og_logic_addr = 0x62069B;
+		__asm
+		{
+			pushad;
+			push	ebx;					// img
+			call	skip_image_load;
+			pop		ebx;
+			cmp		eax, 1;
+			jne		OG_LOGIC;
+
+			popad;
+			//xor		eax, eax;
+			//mov     eax, 1;
+			jmp		skip_img_addr;
+
+			// og code
+		OG_LOGIC:
+			popad;
+			push    ebx;
+			mov     edx, edi;
+			lea     eax, [esp + 0x10];
+			jmp		og_logic_addr;
+		}
+	}
+
 	// *
 	// Event stubs
 
@@ -971,19 +1010,35 @@ namespace Components
 		Utils::Hook::Set<BYTE>(0x61FE39 + 3, 0x00);
 		Utils::Hook::Set<BYTE>(0x61FE39 + 4, 0x01);
 
-
-		// *
 		// hook R_SetMaterial
 		Utils::Hook(0x6278E6, R_SetMaterial_stub, HOOK_JUMP).install()->quick();
 		Utils::Hook(0x627A17, R_SetMaterial_Emissive_stub, HOOK_JUMP).install()->quick();
 
-
-		// *
 		// Precaching beyond level load (skysphere spawning)
 		Utils::Hook::Set<BYTE>(0x4ECEE6, 0xEB);
 
+		// msg "too many static models ..." (disabled culling: the engine cant handle modellighting for so many static models, thus not drawing them)
+		Utils::Hook::Nop(0x611161, 5); Utils::Hook(0x611161, alloc_smodel_lighting_stub, HOOK_JUMP).install()->quick();
+
+		// disable loading of specular and normalmaps (de-clutter remix ui)
+		if (!Flags::HasFlag("load_normal_spec"))
+		{
+			Utils::Hook::Nop(0x600F75, 5);
+			Utils::Hook::Nop(0x601052, 5);
+			Utils::Hook::Nop(0x620694, 7); Utils::Hook(0x620694, load_image_stub, HOOK_JUMP).install()->quick();
+		}
+
+		// dxvk's 'EnumAdapterModes' returns a lot of duplicates and the games array only has a capacity of 256 which is not enough depending on max res. and refreshrate
+		// fix resolution issues by removing duplicates returned by EnumAdapterModes - then write the array ourselfs
+		Utils::Hook(0x5D8E92, resolution::R_EnumDisplayModes_stub, HOOK_JUMP).install()->quick();
+		Utils::Hook(0x5D8ED9, resolution::R_EnumDisplayModes_stub2, HOOK_JUMP).install()->quick();
+		Utils::Hook::Set<BYTE>(0x5D8E80 + 2, 0x04); // set max array size check to 1024 (check within loop)
+
 		// modellight alloc
 		Utils::Hook::Set(0x615BB0, (PBYTE)"\xB8\x01\x00\x00\x00\xC3", 6); // always "alloc" and return 1 as lightingHandle
+
+		// :*
+		Utils::Hook(0x5D8303, fix_aspect_ratio_stub, HOOK_JUMP).install()->quick();
 
 		// *
 		// culling
@@ -1039,9 +1094,6 @@ namespace Components
 		Command::Add("rtx_sky_overcast", []() { Rtx::skysphere_spawn(4); });
 		Command::Add("rtx_sky_sunset", []() { Rtx::skysphere_spawn(5); });
 
-		// msg "too many static models ..." (disabled culling: the engine cant handle modellighting for so many static models, thus not drawing them)
-		Utils::Hook::Nop(0x611161, 5); Utils::Hook(0x611161, alloc_smodel_lighting_stub, HOOK_JUMP).install()->quick();
-
 
 		// #
 		// LOD
@@ -1055,18 +1107,6 @@ namespace Components
 		// ^ but inlined ..... for all other static models (R_AddAllStaticModelSurfacesCamera)
 		Utils::Hook::Nop(0x611125, 6);  Utils::Hook(0x611125, xmodel_get_lod_for_dist_inlined, HOOK_JUMP).install()->quick();
 
-
-		// #
-		// renderer
-
-		// dxvk's 'EnumAdapterModes' returns a lot of duplicates and the games array only has a capacity of 256 which is not enough depending on max res. and refreshrate
-		// fix resolution issues by removing duplicates returned by EnumAdapterModes - then write the array ourselfs
-		Utils::Hook(0x5D8E92, resolution::R_EnumDisplayModes_stub, HOOK_JUMP).install()->quick();
-		Utils::Hook(0x5D8ED9, resolution::R_EnumDisplayModes_stub2, HOOK_JUMP).install()->quick();
-		Utils::Hook::Set<BYTE>(0x5D8E80 + 2, 0x04); // set max array size check to 1024 (check within loop)
-
-		// :*
-		Utils::Hook(0x5D8303, fix_aspect_ratio_stub, HOOK_JUMP).install()->quick();
 
 		Command::Add("borderless", [this]()
 		{
