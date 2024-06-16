@@ -263,7 +263,7 @@ namespace Components
 		dev->SetPixelShader(nullptr);
 
 		// #
-		// draw prim
+		// draw prim 
 
 		for (auto index = 0u; index < smodel_count; index++)
 		{
@@ -272,8 +272,7 @@ namespace Components
 			// transform model into the scene by updating the worldmatrix
 			float mtx[4][4] = {};
 			RtxFixedFunction::build_worldmatrix_for_object(&mtx[0], &inst->placement.axis[0], inst->placement.origin, inst->placement.scale);
-
-			dev->SetTransform(D3DTS_WORLD, reinterpret_cast<D3DMATRIX*>(&src->matrices.matrix[0].m));
+			dev->SetTransform(D3DTS_WORLD, reinterpret_cast<D3DMATRIX*>(&mtx));
 
 			// get indexbuffer offset
 			const auto offset = ((char*)drawstream->localSurf->triIndices - mem->blocks[8].data) >> 1;
