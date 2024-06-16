@@ -110,6 +110,17 @@ namespace Utils
 			return Set<T>(reinterpret_cast<void*>(place), value);
 		}
 
+		static void Set(std::uintptr_t address, void* buffer, size_t size)
+		{
+			DWORD oldProtect = 0;
+
+			auto* place = reinterpret_cast<void*>(address);
+			VirtualProtect(place, size, PAGE_EXECUTE_READWRITE, &oldProtect);
+			memcpy(place, buffer, size);
+			VirtualProtect(place, size, oldProtect, &oldProtect);
+			FlushInstructionCache(GetCurrentProcess(), place, size);
+		}
+
 		template <typename T> static void Xor(void* place, T value)
 		{
 			DWORD oldProtect;

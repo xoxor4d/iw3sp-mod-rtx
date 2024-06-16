@@ -982,6 +982,8 @@ namespace Components
 		// Precaching beyond level load (skysphere spawning)
 		Utils::Hook::Set<BYTE>(0x4ECEE6, 0xEB);
 
+		// modellight alloc
+		Utils::Hook::Set(0x615BB0, (PBYTE)"\xB8\x01\x00\x00\x00\xC3", 6); // always "alloc" and return 1 as lightingHandle
 
 		// *
 		// culling
