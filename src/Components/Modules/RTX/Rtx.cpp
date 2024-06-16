@@ -4,7 +4,7 @@ namespace Components
 {
 	void Rtx::setup_rtx()
 	{
-		const auto dev = *Game::dx9_device_ptr;
+		const auto dev = Game::get_device();
 		const auto data = Game::get_backenddata();
 
 		// populate viewParms3D because R_Set3D needs it
@@ -23,14 +23,46 @@ namespace Components
 		// needed for skysphere (unlit rendering)
 		dev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
+		// make sky follow the player - G_SetOrigin
+		skysphere_model->s.lerp.pos.trBase[0] = Game::cgs->snap->ps.origin[0];
+		skysphere_model->s.lerp.pos.trBase[1] = Game::cgs->snap->ps.origin[1];
+		skysphere_model->s.lerp.pos.trBase[2] = Game::cgs->snap->ps.origin[2];
+		skysphere_model->s.lerp.pos.trType = Game::TR_STATIONARY;
+		skysphere_model->s.lerp.pos.trTime = 0;
+		skysphere_model->s.lerp.pos.trDuration = 0;
+		skysphere_model->s.lerp.pos.trDelta[0] = 0.0f;
+		skysphere_model->s.lerp.pos.trDelta[1] = 0.0f;
+		skysphere_model->s.lerp.pos.trDelta[2] = 0.0f;
+		skysphere_model->r.currentOrigin[0] = Game::cgs->snap->ps.origin[0];
+		skysphere_model->r.currentOrigin[1] = Game::cgs->snap->ps.origin[1];
+		skysphere_model->r.currentOrigin[2] = Game::cgs->snap->ps.origin[2];
+
 		if (!Flags::HasFlag("no_fog"))
 		{
+			const auto s = RtxMapSettings::settings();
 			const float fog_start = 1.0f;
 			dev->SetRenderState(D3DRS_FOGENABLE, TRUE);
-			dev->SetRenderState(D3DRS_FOGCOLOR, RtxMapSettings::m_color.packed);
+			dev->SetRenderState(D3DRS_FOGCOLOR, s->fog_color.packed);
 			dev->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_LINEAR);
 			dev->SetRenderState(D3DRS_FOGSTART, *(DWORD*)(&fog_start));
-			dev->SetRenderState(D3DRS_FOGEND, *(DWORD*)(&RtxMapSettings::m_max_distance));
+			dev->SetRenderState(D3DRS_FOGEND, *(DWORD*)&s->fog_distance);
+		}
+
+		// spawn sun
+		if (!Flags::HasFlag("no_sun"))
+		{
+			const auto s = RtxMapSettings::settings();
+
+			D3DLIGHT9 light = {};
+			light.Type = D3DLIGHT_DIRECTIONAL;
+			light.Diffuse.r = s->sun_color[0] * s->sun_intensity;
+			light.Diffuse.g = s->sun_color[1] * s->sun_intensity;
+			light.Diffuse.b = s->sun_color[2] * s->sun_intensity;
+
+			D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, (const D3DXVECTOR3*)&s->sun_direction);
+
+			dev->SetLight(0, &light);
+			dev->LightEnable(0, TRUE);
 		}
 	}
 
@@ -570,7 +602,7 @@ namespace Components
 
 	namespace cull
 	{
-		int _last_active_valid_cell = -1;
+		int _last_active_valid_cell = 0; //-1;
 		void R_AddWorldSurfacesPortalWalk_hk(int camera_cell_index, Game::DpvsView* dpvs)
 		{
 			//const auto dpvsGlob = reinterpret_cast<game::DpvsGlob*>(0x3957100);
@@ -630,20 +662,20 @@ namespace Components
 				// #
 				// force cells defined in map_settings.ini
 
-				/*if (!single_cell && rtx_map_settings::settings()->cell_overrides_exist && camera_cell_index < 1024)
+				if (!single_cell && RtxMapSettings::settings()->cell_overrides_exist && camera_cell_index < 1024)
 				{
-					const auto& c_ow = rtx_map_settings::settings()->cell_settings[camera_cell_index];
+					const auto& c_ow = RtxMapSettings::settings()->cell_settings[camera_cell_index];
 					if (c_ow.active)
 					{
 						for (const auto& i : c_ow.forced_cell_indices)
 						{
-							const auto forced_cell = &game::rgp->world->cells[i];
-							const auto c_index = forced_cell - game::rgp->world->cells;
-							game::R_AddCellSurfacesAndCullGroupsInFrustumDelayed(forced_cell, dpvs->frustumPlanes, dpvs->frustumPlaneCount, dpvs->frustumPlaneCount);
+							const auto forced_cell = &Game::rgp->world->cells[i];
+							const auto c_index = forced_cell - Game::rgp->world->cells;
+							Game::R_AddCellSurfacesAndCullGroupsInFrustumDelayed(forced_cell, dpvs->frustumPlanes, dpvs->frustumPlaneCount, dpvs->frustumPlaneCount);
 							dpvsGlob->cellVisibleBits[(c_index >> 5) + 3] |= (1 << (c_index & 0x1F));
 						}
 					}
-				}*/
+				}
 
 				if (!single_cell)
 				{

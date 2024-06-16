@@ -2,12 +2,21 @@
 
 namespace RtxUtils
 {
+#define	PITCH				0		// up / down
+#define	YAW					1		// left / right
+#define	ROLL				2		// fall over
+#define M_PI				3.14159265358979323846f
+
 	void unit_quat_to_axis(const float* quat, float(*axis)[3]);
+	void angle_vectors(const float* angles, float* forward, float* right, float* up);
+	void scale3(const float* v1, float scalar, float* out);
+	void copy(const float* in, float* out, int size);
 
 	int try_stoi(const std::string& str, const int& default_return_val);
 	float try_stof(const std::string& str, const float& default_return_val = 0.0f);
 	void replace_all(std::string& source, const std::string_view& from, const std::string_view& to);
 	bool starts_with(std::string_view haystack, std::string_view needle);
+	std::string split_string_between_delims(const std::string& str, const char delim_start, const char delim_end);
 
 	static std::vector<std::string> split(const std::string& raw_input, const std::vector<char>& delims)
 	{

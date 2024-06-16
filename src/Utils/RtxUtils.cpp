@@ -34,6 +34,61 @@ namespace RtxUtils
 		(*axis)[8] = 1.0f - (xx + yy);
 	}
 
+	void angle_vectors(const float* angles, float* forward, float* right, float* up)
+	{
+		float angle;
+		static float sr, sp, sy, cr, cp, cy;
+
+		angle = angles[YAW] * (M_PI * 2.0f / 360.0f);
+		sy = sin(angle);
+		cy = cos(angle);
+
+		angle = angles[PITCH] * (M_PI * 2.0f / 360.0f);
+		sp = sin(angle);
+		cp = cos(angle);
+
+		angle = angles[ROLL] * (M_PI * 2.0f / 360.0f);
+		sr = sin(angle);
+		cr = cos(angle);
+
+		if (forward)
+		{
+			forward[0] = cp * cy;
+			forward[1] = cp * sy;
+			forward[2] = -sp;
+		}
+
+		if (right)
+		{
+			right[0] = -1 * sr * sp * cy + -1 * cr * -sy;
+			right[1] = -1 * sr * sp * sy + -1 * cr * cy;
+			right[2] = -1 * sr * cp;
+		}
+
+		if (up)
+		{
+			up[0] = cr * sp * cy + -sr * -sy;
+			up[1] = cr * sp * sy + -sr * cy;
+			up[2] = cr * cp;
+		}
+	}
+
+	void scale3(const float* v1, float scalar, float* out)
+	{
+		out[0] = v1[0] * scalar;
+		out[1] = v1[1] * scalar;
+		out[2] = v1[2] * scalar;
+	}
+
+	// copy x-sized vector
+	void copy(const float* in, float* out, int size = 3)
+	{
+		for (auto i = 0; i < size; i++)
+		{
+			out[i] = in[i];
+		}
+	}
+
 	int try_stoi(const std::string& str, const int& default_return_val)
 	{
 		int ret = default_return_val;
@@ -89,6 +144,17 @@ namespace RtxUtils
 	{
 		return (haystack.size() >= needle.size() && !strncmp(needle.data(), haystack.data(), needle.size()));
 	}
+
+	std::string split_string_between_delims(const std::string& str, const char delim_start, const char delim_end)
+	{
+		const auto first = str.find_last_of(delim_start);
+		if (first == std::string::npos) return "";
+
+		const auto last = str.find_first_of(delim_end, first);
+		if (last == std::string::npos) return "";
+
+		return str.substr(first + 1, last - first - 1);
+	};
 
 	/**
 	* @brief			open handle to a file within the home-path (root)

@@ -4,12 +4,20 @@
 namespace Game
 {
 	// < rtx begin
+	static inline float COLOR_WHITE[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	static inline float COLOR_BLACK[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	static inline float COLOR_RED[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	static inline float COLOR_GREEN[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
+	static inline float COLOR_BLUE[4] = { 0.0f, 0.0f, 1.0f, 1.0f };
+	static inline float vec3_origin[3] = { 0.0f, 0.0f, 0.0f };
+	static inline float IDENTITY_AXIS[3][3] = { 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f };
+
 	extern DxGlobals* dx;
 	extern GfxCmdBufSourceState* gfxCmdBufSourceState;
 	extern r_global_permanent_t* rgp;
 	extern GfxBuffers* gfx_buf;
 	extern XZone* g_zones;
-
+	extern Game::GfxWorld* gfx_world;
 	extern Game::DpvsGlob* dpvsGlob;
 
 	static inline IDirect3DDevice9* get_device() { return Game::dx->device; }
@@ -28,6 +36,11 @@ namespace Game
 
 	void R_AddCellSurfacesAndCullGroupsInFrustumDelayed(GfxCell* cell /*eax*/, DpvsPlane* planes /*edi*/, int planeCount, int frustumPlaneCount); // ASM
 	void R_VisitPortals(int plane_count /*eax*/, GfxCell* cell, DpvsPlane* parent_plane, DpvsPlane* planes); // ASM
+
+	Game::FxEffect* FX_SpawnOrientedEffect(const float* axis /*edx*/, Game::FxEffectDef* def, int msec_begin, const float* origin);
+	void FX_KillEffect(Game::FxEffect* def);
+
+	typedef void(*Com_PrintMessage_t)(int, const char*, char);  extern Com_PrintMessage_t Com_PrintMessage;
 	// rtx end >
 
 

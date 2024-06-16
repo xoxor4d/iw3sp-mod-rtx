@@ -11,6 +11,8 @@ namespace Game
 	union GfxHullPointsPool;
 	struct GfxPortal;
 	struct GfxAabbTree;
+	struct FxEffectDef;
+
 #endif
 
 	typedef float vec_t;
@@ -1510,6 +1512,7 @@ namespace Game
 		Font_s* font;
 		snd_alias_list_t* sound;
 		WeaponDef_s* weapon;
+		FxEffectDef* fx;
 		RawFile* rawfile;
 		Material* material;
 		StringTable* stringTable;
@@ -2007,6 +2010,11 @@ namespace Game
 		char tag_body;
 		char tag_turret;
 		char tag_barrel;
+	};
+
+	struct FxEffect
+	{
+		void* def;
 	};
 
 	struct CEntFx
@@ -3634,8 +3642,6 @@ namespace Game
 		FxElemVisualState base;
 		FxElemVisualState amplitude;
 	};
-
-	struct FxEffectDef;
 
 	union FxEffectDefRef
 	{

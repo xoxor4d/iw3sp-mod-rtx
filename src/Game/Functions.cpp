@@ -8,7 +8,7 @@ namespace Game
 	r_global_permanent_t* rgp = reinterpret_cast<Game::r_global_permanent_t*>(0x1621E00);
 	Game::GfxBuffers* gfx_buf = reinterpret_cast<Game::GfxBuffers*>(0x1AF5EB8);
 	XZone* g_zones = reinterpret_cast<XZone*>(0xAC3000);
-
+	Game::GfxWorld* gfx_world = reinterpret_cast<Game::GfxWorld*>(0x189A048);
 	Game::DpvsGlob* dpvsGlob = reinterpret_cast<Game::DpvsGlob*>(0x189A328);
 
 	Game::GfxBackEndData* get_frontenddata()
@@ -111,6 +111,62 @@ namespace Game
 		}
 	}
 
+	// the original func deletes the handle after spawning ???
+	//Game::FxEffect* FX_SpawnOrientedEffect(const float* axis /*edx*/, Game::FxEffectDef* def, int msec_begin, const float* origin)
+	//{
+	//	const static uint32_t func_addr = 0x471E30;
+	//	__asm
+	//	{
+	//		push	origin;
+	//		push	msec_begin;
+	//		push	def;
+	//		mov     ecx, 2047; // markentnum
+	//		mov		edx, axis;
+	//		call	func_addr;
+	//		add		esp, 12;
+	//	}
+	//}
+
+	// lets directly call FX_SpawnEffect instead .. but still call it FX_SpawnOrientedEffect
+	Game::FxEffect* FX_SpawnOrientedEffect(const float* axis /*edx*/, Game::FxEffectDef* def, int msec_begin, const float* origin)
+	{
+		const static uint32_t func_addr = 0x471AD0;
+		__asm
+		{
+			push	1023;	// markentnum
+			push	0xFFFF; // ?
+			push	255;	// ?
+			push	1023;	// boneindex
+			push	4095;	// entnum
+			push	axis;
+			push	origin;
+			push	msec_begin;
+
+			mov     eax, [0xC21580]; // fx_systemPool
+			push	eax;
+
+			mov		eax, def; // def exptected in eax
+
+			call	func_addr;
+			add		esp, 36;
+		}
+	}
+
+	void FX_KillEffect(Game::FxEffect* def)
+	{
+		const static uint32_t func_addr = 0x472480;
+		__asm
+		{
+			pushad;
+			push	def;
+			mov     eax, [0xC21580]; // fx_systemPool
+			call	func_addr;
+			add		esp, 4;
+			popad;
+		}
+	}
+
+	Com_PrintMessage_t Com_PrintMessage = Com_PrintMessage_t(0x532CF0);
 	// rtx end >
 
 

@@ -64,6 +64,7 @@ using namespace std::literals;
 // <- rtx begin
 #define STATIC_ASSERT_SIZE(struct, size)				static_assert(sizeof(struct) == size, "Size check")
 #define STATIC_ASSERT_OFFSET(struct, member, offset)	static_assert(offsetof(struct, member) == offset, "Offset check")
+#define DEBUG_PRINT(_MSG) if constexpr (DEBUG) { OutputDebugStringA(_MSG); }
 // rtx end ->
 
 #define __thread __declspec(thread)
