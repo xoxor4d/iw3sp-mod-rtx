@@ -1236,11 +1236,19 @@ namespace Components
 		// disable maxs culling
 		Utils::Hook(0x6226F4, cull::disable_maxs_culling_stub, HOOK_JUMP).install()->quick();
 
-		// disable (most) frustum culling - 0x643D44 to jmp
+		// disable (most) frustum culling
 		Utils::Hook::Nop(0x6228FE, 6); Utils::Hook(0x6228FE, cull::disable_frustum_culling_stub, HOOK_JUMP).install()->quick();
 
-		// ^ for smodels - 0x643C79 to jmp
+		// ^ for smodels
 		Utils::Hook::Nop(0x622833, 6); Utils::Hook(0x622833, cull::disable_smodel_culling_stub, HOOK_JUMP).install()->quick();
+
+		// never cull brushmodels via dpvs
+		Utils::Hook::Nop(0x62F12B, 2);
+		Utils::Hook::Set<BYTE>(0x62F138, 0xEB); // ^
+
+		// ^ scene ents (spawned map markers (script models))
+		Utils::Hook::Nop(0x62EF4A, 2);
+		Utils::Hook::Set<BYTE>(0x62EF79, 0xEB); // ^
 
 #if 0	// OLD
 		{
