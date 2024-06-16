@@ -7,6 +7,10 @@
 #define _USE_MATH_DEFINES
 #define NOMINMAX
 
+#ifndef DEBUG
+#define DEBUG 0
+#endif
+
 #define CLIENT_CONFIG "iw3sp_mod_config.cfg"
 #define MOD_CONFIG "mods_config.cfg"
 
