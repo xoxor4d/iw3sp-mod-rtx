@@ -9,6 +9,12 @@ namespace Game
 	Game::GfxBuffers* gfx_buf = reinterpret_cast<Game::GfxBuffers*>(0x1AF5EB8);
 	XZone* g_zones = reinterpret_cast<XZone*>(0xAC3000);
 
+	Game::GfxBackEndData* get_frontenddata()
+	{
+		const auto out = reinterpret_cast<Game::GfxBackEndData*>(*Game::frontEndDataOut_ptr);
+		return out;
+	}
+
 	Game::GfxBackEndData* get_backenddata()
 	{
 		const auto out = reinterpret_cast<Game::GfxBackEndData*>(*Game::backEndDataOut_ptr);
@@ -46,6 +52,31 @@ namespace Game
 			add		esp, 4;
 		}
 	}
+
+#pragma warning( push )
+#pragma warning( disable : 4244 )
+#pragma warning( disable : 4309 )
+	char Byte1PackClamp(const float from)
+	{
+		char val;
+
+		if ((255.0 * from + 9.313225746154785e-10) < 255)
+		{
+			val = 255 * from + 9.313225746154785e-10;
+		}
+		else
+		{
+			val = 255;
+		}
+
+		if (val > 0)
+		{
+			return val;
+		}
+
+		return 0;
+	}
+#pragma warning( pop ) 
 
 	// rtx end >
 

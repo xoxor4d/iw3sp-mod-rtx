@@ -3135,6 +3135,8 @@ namespace Game
 		DebugGlobals debugGlobals;
 		unsigned int drawType;
 	};
+	STATIC_ASSERT_OFFSET(GfxBackEndData, codeMesh, 0xB0000);
+	STATIC_ASSERT_OFFSET(GfxBackEndData, markMesh, 0x11E670);
 #pragma warning( pop )
 
 	struct GfxDynamicIndices

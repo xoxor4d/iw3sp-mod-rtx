@@ -10,6 +10,9 @@ namespace Game
 	extern GfxBuffers* gfx_buf;
 	extern XZone* g_zones;
 
+	static inline IDirect3DDevice9* get_device() { return Game::dx->device; }
+	static DWORD* frontEndDataOut_ptr = (DWORD*)(0x1621DEC);
+	extern Game::GfxBackEndData* get_frontenddata();
 	static DWORD* backEndDataOut_ptr = (DWORD*)(0x18CB534);  // backendEndDataOut pointer
 	extern Game::GfxBackEndData* get_backenddata();
 
@@ -19,6 +22,7 @@ namespace Game
 
 	void G_DObjUpdate(entityState_s* ent /*eax*/); // ASM 4ED860
 	void Vec2UnpackTexCoords(unsigned int packed, float* texcoord_out /*ecx*/);
+	char Byte1PackClamp(const float from);
 	// rtx end >
 
 
