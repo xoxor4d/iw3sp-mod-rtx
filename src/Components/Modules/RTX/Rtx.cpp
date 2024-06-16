@@ -129,19 +129,24 @@ namespace Components
 
 	void Rtx::force_dvars_on_frame()
 	{
-		// update world culling
-		if (Dvars::rtx_disable_world_culling)
-		{
-			loc_disable_world_culling = Dvars::rtx_disable_world_culling->current.integer;
-			loc_disable_world_culling = loc_disable_world_culling < 0 ? 0 :
-				loc_disable_world_culling > 3 ? 3 : loc_disable_world_culling;
-		}
+		if (Dvars::rtx_culling_tweak_mins) loc_culling_tweak_mins = Dvars::rtx_culling_tweak_mins->current.enabled;
+		if (Dvars::rtx_culling_tweak_maxs) loc_culling_tweak_maxs = Dvars::rtx_culling_tweak_maxs->current.enabled;
+		if (Dvars::rtx_culling_tweak_frustum) loc_culling_tweak_frustum = Dvars::rtx_culling_tweak_frustum->current.enabled;
+		if (Dvars::rtx_culling_tweak_smodel) loc_culling_tweak_smodel = Dvars::rtx_culling_tweak_smodel->current.enabled;
 
-		// update entity culling
-		if (Dvars::rtx_disable_entity_culling)
-		{
-			loc_disable_entity_culling = Dvars::rtx_disable_entity_culling->current.enabled ? 1 : 0;
-		}
+		//// update world culling
+		//if (Dvars::rtx_disable_world_culling)
+		//{
+		//	loc_disable_world_culling = Dvars::rtx_disable_world_culling->current.integer;
+		//	loc_disable_world_culling = loc_disable_world_culling < 0 ? 0 :
+		//		loc_disable_world_culling > 3 ? 3 : loc_disable_world_culling;
+		//}
+
+		//// update entity culling
+		//if (Dvars::rtx_disable_entity_culling)
+		//{
+		//	loc_disable_entity_culling = Dvars::rtx_disable_entity_culling->current.enabled ? 1 : 0;
+		//}
 
 		Dvars::Override::DvarIntOverride("r_aaSamples", 1, Game::dvar_flags::saved);
 		Dvars::Override::DvarIntOverride("r_dlightLimit", 0, Game::dvar_flags::saved);
@@ -565,6 +570,190 @@ namespace Components
 
 	namespace cull
 	{
+		int _last_active_valid_cell = -1;
+		void R_AddWorldSurfacesPortalWalk_hk(int camera_cell_index, Game::DpvsView* dpvs)
+		{
+			//const auto dpvsGlob = reinterpret_cast<game::DpvsGlob*>(0x3957100);
+
+			const auto dpvsGlob = Game::dpvsGlob;
+
+			// never show the complete map, only the last valid cell
+			if (camera_cell_index < 0)
+			{
+				const auto cell = &Game::rgp->world->cells[_last_active_valid_cell];
+				const auto cell_index = cell - Game::rgp->world->cells;
+				Game::R_AddCellSurfacesAndCullGroupsInFrustumDelayed(cell, dpvs->frustumPlanes, dpvs->frustumPlaneCount, dpvs->frustumPlaneCount);
+				dpvsGlob->cellVisibleBits[(cell_index >> 5) + 3] |= (1 << (cell_index & 0x1F)); // is the +3 correct here?
+			}
+			else
+			{
+				_last_active_valid_cell = camera_cell_index;
+
+				const float plane_dist = Dvars::rtx_culling_plane_dist ? Dvars::rtx_culling_plane_dist->current.value : 1200.0f;
+
+				// hack - disable most frustum culling
+				dpvsGlob->views[0][0].frustumPlanes[0].coeffs[3] += plane_dist; //rtx::m_frustum_plane_offsets[0]; //5000.0f;
+				dpvsGlob->views[0][0].frustumPlanes[1].coeffs[3] += plane_dist; //rtx::m_frustum_plane_offsets[1];
+				dpvsGlob->views[0][0].frustumPlanes[2].coeffs[3] += plane_dist; //rtx::m_frustum_plane_offsets[2];
+				dpvsGlob->views[0][0].frustumPlanes[3].coeffs[3] += plane_dist; //rtx::m_frustum_plane_offsets[3];
+				dpvsGlob->views[0][0].frustumPlanes[4].coeffs[3] += plane_dist; //rtx::m_frustum_plane_offsets[4];
+				dpvsGlob->views[0][0].frustumPlanes[5].coeffs[3] += plane_dist; //rtx::m_frustum_plane_offsets[5];
+				dpvsGlob->viewPlane.coeffs[3] += plane_dist; //rtx::m_frustum_plane_offsets[6]; //5000.0f;
+				// ^ needs to be viewPlane here?
+
+				const auto& var = Dvars::Functions::Dvar_FindVar("r_singleCell");
+				const bool single_cell = (var && var->current.enabled) ? true : false;
+
+				// #
+				// always add full cell the player is in (same as r_singlecell)
+				const auto cell = &Game::rgp->world->cells[camera_cell_index];
+				const auto cell_index = cell - Game::rgp->world->cells;
+
+				if (single_cell)
+				{
+					dpvsGlob->farPlane = nullptr;
+				}
+
+				Game::R_AddCellSurfacesAndCullGroupsInFrustumDelayed(cell, dpvs->frustumPlanes, dpvs->frustumPlaneCount, dpvs->frustumPlaneCount); // dpvs->frustumPlaneCount
+				dpvsGlob->cellVisibleBits[(cell_index >> 5) + 3] |= (1 << (cell_index & 0x1F));
+
+
+				// #
+				// draw cell index at the center of the current cell
+				if (Dvars::r_showCellIndex && Dvars::r_showCellIndex->current.enabled)
+				{
+					const Game::vec4_t col = { 1.0f, 1.0f, 1.0f, 1.0f };
+					void* fontHandle = Game::R_RegisterFont("fonts/boldFont", 4);
+					Game::R_AddCmdDrawTextASM(Utils::String::VA("Current Cell: %d", camera_cell_index), 0x7FFFFFFF, fontHandle, 50.0f, 500.0f, 1.5f, 1.5f, 0.0f, col, 0);
+				}
+
+				// #
+				// force cells defined in map_settings.ini
+
+				/*if (!single_cell && rtx_map_settings::settings()->cell_overrides_exist && camera_cell_index < 1024)
+				{
+					const auto& c_ow = rtx_map_settings::settings()->cell_settings[camera_cell_index];
+					if (c_ow.active)
+					{
+						for (const auto& i : c_ow.forced_cell_indices)
+						{
+							const auto forced_cell = &game::rgp->world->cells[i];
+							const auto c_index = forced_cell - game::rgp->world->cells;
+							game::R_AddCellSurfacesAndCullGroupsInFrustumDelayed(forced_cell, dpvs->frustumPlanes, dpvs->frustumPlaneCount, dpvs->frustumPlaneCount);
+							dpvsGlob->cellVisibleBits[(c_index >> 5) + 3] |= (1 << (c_index & 0x1F));
+						}
+					}
+				}*/
+
+				if (!single_cell)
+				{
+					// R_VisitPortals
+					Game::R_VisitPortals(dpvs->frustumPlaneCount, cell, &dpvsGlob->viewPlane, dpvs->frustumPlanes); // viewplane here .. or is that the nearplane?
+				}
+			}
+		}
+
+		__declspec(naked) void cell_stub()
+		{
+			const static uint32_t retn_addr = 0x5ECBDF;
+			__asm
+			{
+				// ebx = world
+				// esi = cameraCellIndex
+				// eax = DpvsView
+
+				push	eax;
+				push	esi;
+				call	R_AddWorldSurfacesPortalWalk_hk;
+				add		esp, 8;
+				jmp		retn_addr;
+			}
+		}
+
+		// #
+		// # tweakable culling dvars
+
+		__declspec(naked) void disable_mins_culling_stub()
+		{
+			const static uint32_t stock_addr = 0x6226C8;
+			const static uint32_t disable_culling_addr = 0x6226CE;
+			__asm
+			{
+				// jump if culling is less or disabled
+				cmp		Rtx::loc_culling_tweak_mins, 1;
+				je		SKIP;
+
+				fnstsw  ax;
+				test    ah, 0x41;
+				jmp		stock_addr;
+
+			SKIP:
+				jmp		disable_culling_addr;
+			}
+		}
+
+		__declspec(naked) void disable_maxs_culling_stub()
+		{
+			const static uint32_t stock_addr = 0x6226F9;
+			const static uint32_t disable_culling_addr = 0x622708;
+			__asm
+			{
+				// jump if culling is less or disabled
+				cmp		Rtx::loc_culling_tweak_maxs, 1;
+				je		SKIP;
+
+				fnstsw  ax;
+				test    ah, 1;
+				jmp		stock_addr;
+
+			SKIP:
+				jmp		disable_culling_addr;
+	}
+		}
+
+		__declspec(naked) void disable_frustum_culling_stub()
+		{
+			const static uint32_t stock_addr = 0x622904;
+			const static uint32_t disable_culling_addr = 0x622940;
+			__asm
+			{
+				// og
+				xor		ecx, ecx;
+
+				// jump if culling is less or disabled
+				cmp		Rtx::loc_culling_tweak_frustum, 1;
+				je		SKIP;
+
+				cmp		[esp + 0x54], ecx;
+				jmp		stock_addr;
+
+			SKIP:
+				jmp		disable_culling_addr;
+			}
+		}
+
+		__declspec(naked) void disable_smodel_culling_stub()
+		{
+			const static uint32_t stock_addr = 0x622839;
+			const static uint32_t disable_culling_addr = 0x622875;
+			__asm
+			{
+				// og
+				xor		ecx, ecx;
+
+				// jump if culling is less or disabled
+				cmp		Rtx::loc_culling_tweak_smodel, 1;
+				je		SKIP;
+
+				cmp		[esp + 0x54], ecx;
+				jmp		stock_addr;
+
+			SKIP:
+				jmp		disable_culling_addr;
+			}
+		}
+
+#if 0	// OLD
 		// R_AddWorldSurfacesPortalWalk
 		__declspec(naked) void world_stub_01()
 		{
@@ -705,6 +894,7 @@ namespace Components
 				jmp		retn_skip;
 			}
 		}
+#endif
 	}
 
 	// -------------------
@@ -976,6 +1166,7 @@ namespace Components
 
 		// Ignore hardware changes // xor al,al - pop ecx - ret
 		Utils::Hook::Set<DWORD>(0x594E71, 0xC359C032);
+
 		// Remove improper quit popup
 		Utils::Hook::Set<BYTE>(0x595B26, 0xEB);
 
@@ -985,40 +1176,29 @@ namespace Components
 		// hook beginning of 'RB_CallExecuteRenderCommands' (before UI)
 		Utils::Hook(0x5FF651, rb_call_execute_render_commands_stub, HOOK_JUMP).install()->quick();
 
-		// render third person model in first person
-		//Utils::Hook::Nop(0x42E187, 6); // CG_DrawFriendlyNames: do not disable name drawing
-		//Utils::Hook::Nop(0x42E2BA, 6); // CG_DrawCrosshairNames: ^
-		//Utils::Hook::Nop(0x4311AE, 6); // CG_DrawCrosshair: do not disable crosshair
-		//Utils::Hook::Nop(0x443007, 2); // CG_UpdateCursorHints: do not disable cursor hints
-		//Utils::Hook::Nop(0x45083C, 2); // CG_CalcTurretViewValues: calculate first person viewangles
-		//Utils::Hook::Nop(0x4508C1, 6); // CG_ApplyViewAnimation: first person anims
-		//Utils::Hook::Nop(0x451C70, 2); // CG_CalcViewValues: always call CG_OffsetFirstPersonView
-		//Utils::Hook::Set<BYTE>(0x451C9E, 0xEB); // CG_CalcViewValues: do not call CG_OffsetThirdPersonView
-		//Utils::Hook::Set<BYTE>(0x456D36, 0xEB); // CG_AddPlayerWeapon: do not disable bolt effects
-		//Utils::Hook::Nop(0x457054, 6); // CG_AddViewWeapon: do not disable viewmodel
-		//Utils::Hook::Nop(0x451D8E, 2); // CG_UpdateThirdPerson: always enable "thirdperson"
+		// Precaching beyond level load (skysphere spawning)
+		Utils::Hook::Set<BYTE>(0x4ECEE6, 0xEB);
 
 
-		// *
 		// allow 4k images (skysphere)
-
-		// set img alloc size from 0x600000 to 0x1000000
+		// set img alloc size from 0x600000 to 0x4000000
 		Utils::Hook::Set<BYTE>(0x61FE77 + 3, 0x00);
-		Utils::Hook::Set<BYTE>(0x61FE77 + 4, 0x01);
+		Utils::Hook::Set<BYTE>(0x61FE77 + 4, 0x04);
 
-		//// ^ cmp -> error if image larger
+		// ^ cmp -> error if image larger
 		Utils::Hook::Set<BYTE>(0x61FE39 + 3, 0x00);
-		Utils::Hook::Set<BYTE>(0x61FE39 + 4, 0x01);
+		Utils::Hook::Set<BYTE>(0x61FE39 + 4, 0x04);
+
 
 		// hook R_SetMaterial
 		Utils::Hook(0x6278E6, R_SetMaterial_stub, HOOK_JUMP).install()->quick();
 		Utils::Hook(0x627A17, R_SetMaterial_Emissive_stub, HOOK_JUMP).install()->quick();
 
-		// Precaching beyond level load (skysphere spawning)
-		Utils::Hook::Set<BYTE>(0x4ECEE6, 0xEB);
-
 		// msg "too many static models ..." (disabled culling: the engine cant handle modellighting for so many static models, thus not drawing them)
 		Utils::Hook::Nop(0x611161, 5); Utils::Hook(0x611161, alloc_smodel_lighting_stub, HOOK_JUMP).install()->quick();
+
+		// modellight alloc
+		Utils::Hook::Set(0x615BB0, (PBYTE)"\xB8\x01\x00\x00\x00\xC3", 6); // always "alloc" and return 1 as lightingHandle
 
 		// disable loading of specular and normalmaps (de-clutter remix ui)
 		if (!Flags::HasFlag("load_normal_spec"))
@@ -1034,16 +1214,35 @@ namespace Components
 		Utils::Hook(0x5D8ED9, resolution::R_EnumDisplayModes_stub2, HOOK_JUMP).install()->quick();
 		Utils::Hook::Set<BYTE>(0x5D8E80 + 2, 0x04); // set max array size check to 1024 (check within loop)
 
-		// modellight alloc
-		Utils::Hook::Set(0x615BB0, (PBYTE)"\xB8\x01\x00\x00\x00\xC3", 6); // always "alloc" and return 1 as lightingHandle
-
 		// :*
 		Utils::Hook(0x5D8303, fix_aspect_ratio_stub, HOOK_JUMP).install()->quick();
 
 		// *
 		// culling
 
-		//if (Flags::HasFlag("disable_culling"))
+		// rewrite some logic in 'R_AddWorldSurfacesPortalWalk'
+		Utils::Hook::Nop(0x5ECB8F, 9); Utils::Hook(0x5ECB8F, cull::cell_stub, HOOK_JUMP).install()->quick();
+
+		// ^ - never show all cells at once when the camera cell index is < 0, we handle that in the func above
+		Utils::Hook::Nop(0x5ECB7E, 2);
+
+
+		// #
+		// tweakable culling via dvars
+
+		// disable mins culling
+		Utils::Hook(0x6226C3, cull::disable_mins_culling_stub, HOOK_JUMP).install()->quick();
+
+		// disable maxs culling
+		Utils::Hook(0x6226F4, cull::disable_maxs_culling_stub, HOOK_JUMP).install()->quick();
+
+		// disable (most) frustum culling - 0x643D44 to jmp
+		Utils::Hook::Nop(0x6228FE, 6); Utils::Hook(0x6228FE, cull::disable_frustum_culling_stub, HOOK_JUMP).install()->quick();
+
+		// ^ for smodels - 0x643C79 to jmp
+		Utils::Hook::Nop(0x622833, 6); Utils::Hook(0x622833, cull::disable_smodel_culling_stub, HOOK_JUMP).install()->quick();
+
+#if 0	// OLD
 		{
 			// R_AddWorldSurfacesPortalWalk :: less culling
 			// 0x60B02E -> jl to jmp // 0x7C -> 0xEB //utils::hook::set<BYTE>(0x60B02E, 0xEB);
@@ -1086,6 +1285,7 @@ namespace Components
 			Utils::Hook::Nop(0x62F06D, 2); Utils::Hook::Set<BYTE>(0x62ED65, 0xEB); // the two below are not needed I think
 			Utils::Hook::Nop(0x62EDC7, 2); Utils::Hook::Set<BYTE>(0x62EDDD, 0xEB);
 		}
+#endif
 
 		Command::Add("rtx_sky_clear", []() { Rtx::skysphere_spawn(0); });
 		Command::Add("rtx_sky_desert", []() { Rtx::skysphere_spawn(1); });
@@ -1137,22 +1337,60 @@ namespace Components
 		{
 			Dvars::rtx_extend_smodel_drawing = Dvars::Register::Dvar_RegisterBool("rtx_extend_smodel_drawing", "Disable static model drawing limit", false, Game::saved);
 
-			Dvars::rtx_disable_world_culling = Dvars::Register::Dvar_RegisterEnum(
-				/* name		*/ "rtx_disable_world_culling",
-				/* desc		*/ "Disable world culling. 'all' is needed for stable geometry hashes!\n"
-				"- less: reduces culling to portals only (unstable world geo hashes!)\n"
-				"- all: disable culling of all surfaces including models\n"
-				"- all-but-models: disable culling of all surfaces excluding models",
-				/* default	*/ 1,
-				/* enumSize	*/ Rtx::rtx_disable_world_culling_enum.size(),
-				/* enumData */ Rtx::rtx_disable_world_culling_enum.data(),
-				/* flags	*/ Game::saved);
+			//Dvars::rtx_disable_world_culling = Dvars::Register::Dvar_RegisterEnum(
+			//	/* name		*/ "rtx_disable_world_culling",
+			//	/* desc		*/ "Disable world culling. 'all' is needed for stable geometry hashes!\n"
+			//	"- less: reduces culling to portals only (unstable world geo hashes!)\n"
+			//	"- all: disable culling of all surfaces including models\n"
+			//	"- all-but-models: disable culling of all surfaces excluding models",
+			//	/* default	*/ 1,
+			//	/* enumSize	*/ Rtx::rtx_disable_world_culling_enum.size(),
+			//	/* enumData */ Rtx::rtx_disable_world_culling_enum.data(),
+			//	/* flags	*/ Game::saved);
 
-			Dvars::rtx_disable_entity_culling = Dvars::Register::Dvar_RegisterBool(
-				/* name		*/ "rtx_disable_entity_culling",
-				/* desc		*/ "Disable culling of game entities (script objects/destructible cars ...)",
+			//Dvars::rtx_disable_entity_culling = Dvars::Register::Dvar_RegisterBool(
+			//	/* name		*/ "rtx_disable_entity_culling",
+			//	/* desc		*/ "Disable culling of game entities (script objects/destructible cars ...)",
+			//	/* default	*/ true,
+			//	/* flags	*/ Game::saved);
+
+			Dvars::rtx_culling_tweak_mins = Dvars::Register::Dvar_RegisterBool(
+				/* name		*/ "rtx_culling_tweak_mins",
+				/* desc		*/ "Disable dpvs mins check (reduces culling)",
+				/* default	*/ false,
+				/* flags	*/ Game::dvar_flags::saved);
+
+			Dvars::rtx_culling_tweak_maxs = Dvars::Register::Dvar_RegisterBool(
+				/* name		*/ "rtx_culling_tweak_maxs",
+				/* desc		*/ "Disable dpvs maxs check (reduces culling)",
+				/* default	*/ false,
+				/* flags	*/ Game::dvar_flags::saved);
+
+			Dvars::rtx_culling_tweak_frustum = Dvars::Register::Dvar_RegisterBool(
+				/* name		*/ "rtx_culling_tweak_frustum",
+				/* desc		*/ "Disable (most) frustum culling (reduces culling)",
 				/* default	*/ true,
-				/* flags	*/ Game::saved);
+				/* flags	*/ Game::dvar_flags::saved);
+
+			Dvars::rtx_culling_tweak_smodel = Dvars::Register::Dvar_RegisterBool(
+				/* name		*/ "rtx_culling_tweak_smodel",
+				/* desc		*/ "Disable static model frustum culling (reduces culling)",
+				/* default	*/ true,
+				/* flags	*/ Game::dvar_flags::saved);
+
+			Dvars::rtx_culling_plane_dist = Dvars::Register::Dvar_RegisterFloat(
+				/* name		*/ "rtx_culling_plane_dist",
+				/* desc		*/ "Distance of dpvs culling-planes",
+				/* default	*/ 1250.0f,
+				/* minVal	*/ -50000.0f,
+				/* maxVal	*/ 50000.0f,
+				/* flags	*/ Game::dvar_flags::saved);
+
+			Dvars::r_showCellIndex = Dvars::Register::Dvar_RegisterBool(
+				/* name		*/ "r_showCellIndex",
+				/* desc		*/ "draw cell index at the center of current cell (useful for map_settings)",
+				/* default	*/ false,
+				/* flags	*/ Game::dvar_flags::none);
 		});
 	}
 }

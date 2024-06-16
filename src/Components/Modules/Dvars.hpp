@@ -39,8 +39,14 @@ namespace Dvars
 
 	// < rtx begin
 	extern Game::dvar_s* rtx_extend_smodel_drawing;
-	extern Game::dvar_s* rtx_disable_world_culling;
-	extern Game::dvar_s* rtx_disable_entity_culling;
+	//extern Game::dvar_s* rtx_disable_world_culling;
+	//extern Game::dvar_s* rtx_disable_entity_culling;
+	extern Game::dvar_s* rtx_culling_tweak_mins;
+	extern Game::dvar_s* rtx_culling_tweak_maxs;
+	extern Game::dvar_s* rtx_culling_tweak_frustum;
+	extern Game::dvar_s* rtx_culling_tweak_smodel;
+	extern Game::dvar_s* rtx_culling_plane_dist;
+	extern Game::dvar_s* r_showCellIndex;
 	// rtx end >
 
 	extern Game::dvar_s* M_RawInput;

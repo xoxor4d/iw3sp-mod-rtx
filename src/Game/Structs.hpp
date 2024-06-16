@@ -8,6 +8,9 @@
 #ifndef IDA
 namespace Game
 {
+	union GfxHullPointsPool;
+	struct GfxPortal;
+	struct GfxAabbTree;
 #endif
 
 	typedef float vec_t;
@@ -6731,6 +6734,103 @@ namespace Game
 		float angles[3];
 	};
 
+	struct DpvsPlane
+	{
+		float coeffs[4];
+		char side[3];
+		char pad;
+	};
+
+	struct DpvsView
+	{
+		unsigned int renderFxFlagsCull;
+		DpvsPlane frustumPlanes[14];
+		int frustumPlaneCount;
+	};
+
+	struct PortalHeapNode
+	{
+		GfxPortal* portal;
+		float dist;
+	};
+
+	struct DpvsGlob
+	{
+		DpvsPlane viewPlane;
+		DpvsPlane fogPlane;
+		DpvsPlane* nearPlane;
+		DpvsPlane* farPlane;
+		GfxMatrix* viewProjMtx;
+		GfxMatrix* invViewProjMtx;
+		float viewOrg[4];
+		int viewOrgIsDir;
+		int queuedCount;
+		PortalHeapNode* portalQueue;
+		GfxHullPointsPool* nextFreeHullPoints;
+		float cullDist;
+		DpvsPlane childPlanes[2048];
+		DpvsView views[4][3];
+		unsigned int cameraCellIndex;
+		DpvsPlane* sideFrustumPlanes;
+		unsigned int* entVisBits[4];
+		unsigned int* cellBits;
+		unsigned int cellVisibleBits[32];
+	};
+
+	union GfxHullPointsPool
+	{
+		GfxHullPointsPool* nextFree;
+		float points[64][2];
+	};
+
+	struct GfxPortalWritable
+	{
+		bool isQueued;
+		bool isAncestor;
+		char recursionDepth;
+		char hullPointCount;
+		float(*hullPoints)[2];
+		GfxPortal* queuedParent;
+	};
+
+	struct GfxCell
+	{
+		float mins[3];
+		float maxs[3];
+		int aabbTreeCount;
+		GfxAabbTree* aabbTree;
+		int portalCount;
+		GfxPortal* portals;
+		int cullGroupCount;
+		int* cullGroups;
+		char reflectionProbeCount;
+		char* reflectionProbes;
+	};
+
+	struct GfxPortal
+	{
+		GfxPortalWritable writable;
+		DpvsPlane plane;
+		GfxCell* cell;
+		float(*vertices)[3];
+		char vertexCount;
+		float hullAxis[2][3];
+	};
+
+	struct GfxAabbTree
+	{
+		float mins[3];
+		float maxs[3];
+		unsigned __int16 childCount;
+		unsigned __int16 surfaceCount;
+		unsigned __int16 startSurfIndex;
+		unsigned __int16 surfaceCountNoDecal;
+		unsigned __int16 startSurfIndexNoDecal;
+		unsigned __int16 smodelIndexCount;
+		unsigned __int16* smodelIndexes;
+		int childrenOffset;
+	};
+
 	struct GfxWorldDpvsPlanes
 	{
 		int cellCount;
@@ -6892,7 +6992,7 @@ namespace Game
 		GfxTexture* reflectionProbeTextures;
 		GfxWorldDpvsPlanes dpvsPlanes;
 		int cellBitsCount;
-		void* cells; // GfxCell
+		GfxCell* cells; // GfxCell
 		int lightmapCount;
 		void* lightmaps; // GfxLightmapArray
 		GfxLightGrid lightGrid;

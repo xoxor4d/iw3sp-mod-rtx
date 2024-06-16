@@ -10,6 +10,8 @@ namespace Game
 	extern GfxBuffers* gfx_buf;
 	extern XZone* g_zones;
 
+	extern Game::DpvsGlob* dpvsGlob;
+
 	static inline IDirect3DDevice9* get_device() { return Game::dx->device; }
 	static DWORD* frontEndDataOut_ptr = (DWORD*)(0x1621DEC);
 	extern Game::GfxBackEndData* get_frontenddata();
@@ -23,6 +25,9 @@ namespace Game
 	void G_DObjUpdate(entityState_s* ent /*eax*/); // ASM 4ED860
 	void Vec2UnpackTexCoords(unsigned int packed, float* texcoord_out /*ecx*/);
 	char Byte1PackClamp(const float from);
+
+	void R_AddCellSurfacesAndCullGroupsInFrustumDelayed(GfxCell* cell /*eax*/, DpvsPlane* planes /*edi*/, int planeCount, int frustumPlaneCount); // ASM
+	void R_VisitPortals(int plane_count /*eax*/, GfxCell* cell, DpvsPlane* parent_plane, DpvsPlane* planes); // ASM
 	// rtx end >
 
 

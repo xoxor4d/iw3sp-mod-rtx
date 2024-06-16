@@ -7,9 +7,14 @@ namespace Components
 	public:
 		Rtx();
 
-		static inline auto loc_disable_world_culling = 0u;
-		static inline auto loc_disable_entity_culling = 0u;
-		static inline std::vector rtx_disable_world_culling_enum = { "default", "less", "all", "all-but-models" };
+		//static inline auto loc_disable_world_culling = 0u;
+		//static inline auto loc_disable_entity_culling = 0u;
+		//static inline std::vector rtx_disable_world_culling_enum = { "default", "less", "all", "all-but-models" };
+
+		static inline auto loc_culling_tweak_mins = 0u;
+		static inline auto loc_culling_tweak_maxs = 0u;
+		static inline auto loc_culling_tweak_frustum = 0u;
+		static inline auto loc_culling_tweak_smodel = 0u;
 
 		static void setup_rtx();
 		static void r_set_3d();

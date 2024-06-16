@@ -9,6 +9,8 @@ namespace Game
 	Game::GfxBuffers* gfx_buf = reinterpret_cast<Game::GfxBuffers*>(0x1AF5EB8);
 	XZone* g_zones = reinterpret_cast<XZone*>(0xAC3000);
 
+	Game::DpvsGlob* dpvsGlob = reinterpret_cast<Game::DpvsGlob*>(0x189A328);
+
 	Game::GfxBackEndData* get_frontenddata()
 	{
 		const auto out = reinterpret_cast<Game::GfxBackEndData*>(*Game::frontEndDataOut_ptr);
@@ -76,7 +78,38 @@ namespace Game
 
 		return 0;
 	}
-#pragma warning( pop ) 
+#pragma warning( pop )
+
+	// #
+	// portal related
+
+	void R_AddCellSurfacesAndCullGroupsInFrustumDelayed(GfxCell* cell /*eax*/, DpvsPlane* planes /*edi*/, int planeCount, int frustumPlaneCount)
+	{
+		const static uint32_t func_addr = 0x5EB3E0;
+		__asm
+		{
+			push	frustumPlaneCount;
+			push	planeCount;
+			mov		edi, planes;
+			mov		eax, cell;
+			call	func_addr;
+			add		esp, 8;
+		}
+	}
+
+	void R_VisitPortals(int plane_count /*eax*/, GfxCell* cell, DpvsPlane* parent_plane, DpvsPlane* planes)
+	{
+		const static uint32_t func_addr = 0x5EBE40;
+		__asm
+		{
+			push	planes;
+			push	parent_plane;
+			push	cell;
+			mov		eax, plane_count;
+			call	func_addr;
+			add		esp, 12;
+		}
+	}
 
 	// rtx end >
 
