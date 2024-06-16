@@ -66,9 +66,12 @@ namespace Components
 		Loader::Register(new Changelog());
 
 		// <- rtx begin
-		Loader::Register(new Rtx());
-		Loader::Register(new RtxFixedFunction());
-		Loader::Register(new RtxMapSettings());
+		if (Flags::HasFlag("rtx"))
+		{
+			Loader::Register(new Rtx());
+			Loader::Register(new RtxFixedFunction());
+			Loader::Register(new RtxMapSettings());
+		}
 		// rtx end ->
 
 		Loader::Pregame = false;
