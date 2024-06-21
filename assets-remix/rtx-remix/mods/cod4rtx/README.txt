@@ -5,12 +5,14 @@ https://www.moddb.com/mods/cod4-mp-rtx-remix-iw3xo
 3) Open the 'mod.usda' and add the following to the top of the subLayer array:
 
     @./sp_killhouse.usda@,
+    @./sp_cargoship.usda@,
 
 
     # like so:
 
     subLayers = [
         @./sp_killhouse.usda@,
+        @./sp_cargoship.usda@,
         @./foliage.usda@,
         @./foliage_birch_test.usda@,
         .....
