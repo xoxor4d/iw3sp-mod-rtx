@@ -1206,6 +1206,128 @@ namespace Components
 		}
 	}
 
+	// R_AllocDynamicIndexBuffer
+	int alloc_dynamic_index_buffer(IDirect3DIndexBuffer9** ib, int size_in_bytes, const char* buffer_name)
+	{
+		if (HRESULT hr = Game::get_device()->CreateIndexBuffer(size_in_bytes, (D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY), D3DFMT_INDEX16, D3DPOOL_DEFAULT, ib, nullptr);
+			hr < 0)
+		{
+			const char* msg = Utils::function<const char* __stdcall(HRESULT)>(0x65350E)(hr); // R_ErrorDescription
+			msg = Utils::String::VA("DirectX didn't create a 0x%.8x dynamic index buffer: %s\n", size_in_bytes, msg);
+
+			Utils::function<void(const char*)>(0x5951C0)(msg); // Sys_Error
+		}
+
+		Game::Com_PrintMessage(0, Utils::String::VA("D3D9: Created Indexbuffer (%s) of size: 0x%.8x\n", buffer_name, size_in_bytes), 0);
+		return 0;
+	}
+
+	// R_InitDynamicIndexBufferState
+	void init_dynamic_index_buffer_state(Game::GfxIndexBufferState* ib, std::uint32_t index_count, const char* buffer_name)
+	{
+		ib->used = 0;
+		ib->total = index_count;
+
+		alloc_dynamic_index_buffer(&ib->buffer, 2 * index_count, buffer_name);
+	}
+
+	// R_AllocDynamicVertexBuffer
+	char* alloc_dynamic_vertex_buffer(IDirect3DVertexBuffer9** vb, std::uint32_t size_in_bytes, const char* buffer_name)
+	{
+		if (HRESULT hr = Game::get_device()->CreateVertexBuffer(size_in_bytes, (D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY), 0, D3DPOOL_DEFAULT, vb, nullptr);
+			hr < 0)
+		{
+			const char* msg = Utils::function<const char* __stdcall(HRESULT)>(0x65350E)(hr); // R_ErrorDescription
+			msg = Utils::String::VA("DirectX didn't create a 0x%.8x dynamic vertex buffer: %s\n", size_in_bytes, msg);
+
+			Utils::function<void(const char*)>(0x5951C0)(msg); // Sys_Error
+		}
+
+		Game::Com_PrintMessage(0, Utils::String::VA("D3D9: Created Vertexbuffer (%s) of size: 0x%.8x\n", buffer_name, size_in_bytes), 0);
+		return nullptr;
+	}
+
+	// R_InitDynamicVertexBufferState
+	void init_dynamic_vertex_buffer_state(Game::GfxVertexBufferState* vb, std::uint32_t bytes, const char* buffer_name)
+	{
+		vb->used = 0;
+		vb->total = static_cast<int>(bytes);
+		vb->verts = nullptr;
+
+		alloc_dynamic_vertex_buffer(&vb->buffer, bytes, buffer_name);
+	}
+
+	// R_InitTempSkinBuf :: Temp skin buffer within backenddata
+	void init_temp_skin_buf(std::uint32_t bytes)
+	{
+		auto* back_end_data = reinterpret_cast<Game::GfxBackEndData*>(0x1629100);
+		for (auto i = 0; i < 2; ++i)
+		{
+			back_end_data[i].tempSkinBuf = (char*)VirtualAlloc(nullptr, bytes, MEM_RESERVE, PAGE_READWRITE);
+			Game::Com_PrintMessage(0, Utils::String::VA("Allocated tempSkinBuffer of size: 0x%.8x\n", bytes), 0);
+		}
+	}
+
+	constexpr std::uint32_t dynamic_vb_size = 2 * 1048576;
+	constexpr std::uint32_t skinned_cache_size = 8 * 1048576;
+	constexpr std::uint32_t temp_skin_size = 12 * 1048576;
+	constexpr std::uint32_t dynamic_ib_size = 4 * 1048576;
+	constexpr std::uint32_t pretess_ib_size = 4 * 1048576;
+
+	// R_CreateDynamicBuffers
+	void create_dynamic_buffers()
+	{
+		init_dynamic_vertex_buffer_state(&Game::gfx_buf->dynamicVertexBufferPool[0], dynamic_vb_size, "dynamicVertexBufferPool");
+		Game::gfx_buf->dynamicVertexBuffer = Game::gfx_buf->dynamicVertexBufferPool;
+
+		init_dynamic_vertex_buffer_state(&Game::gfx_buf->skinnedCacheVbPool[0], skinned_cache_size, "skinnedCacheVbPool");
+		init_dynamic_vertex_buffer_state(&Game::gfx_buf->skinnedCacheVbPool[1], skinned_cache_size, "skinnedCacheVbPool");
+		init_temp_skin_buf(temp_skin_size);
+
+		init_dynamic_index_buffer_state(&Game::gfx_buf->dynamicIndexBufferPool[0], dynamic_ib_size, "dynamicIndexBufferPool");
+		Game::gfx_buf->dynamicIndexBuffer = Game::gfx_buf->dynamicIndexBufferPool;
+
+		init_dynamic_index_buffer_state(&Game::gfx_buf->preTessIndexBufferPool[0], pretess_ib_size, "preTessIndexBufferPool");
+		init_dynamic_index_buffer_state(&Game::gfx_buf->preTessIndexBufferPool[1], pretess_ib_size, "preTessIndexBufferPool");
+		Game::gfx_buf->preTessBufferFrame = 0;
+		Game::gfx_buf->preTessIndexBuffer = Game::gfx_buf->preTessIndexBufferPool;
+	}
+
+	/* ---------------------------------------------------------- */
+	/* ------ change warning limits to fit new buffer size ------ */
+
+	__declspec(naked) void r_warn_temp_skin_size_limit_stub()
+	{
+		const static uint32_t retn_addr = 0x61E388;
+		__asm
+		{
+			// replace 'cmp edx, 480000h'
+
+			push	eax;
+			mov		eax, temp_skin_size;
+			cmp		edx, eax;					// warning limit compare
+			pop		eax;
+
+			jmp		retn_addr;
+		}
+	}
+
+	__declspec(naked) void r_warn_max_skinned_cache_vertices_limit_stub()
+	{
+		const static uint32_t retn_addr = 0x61E262;
+		__asm
+		{
+			// replace 'cmp edx, 480000h'
+
+			push	eax;
+			mov		eax, skinned_cache_size;
+			cmp		edx, eax;					// warning limit compare
+			pop		eax;
+
+			jmp		retn_addr;
+		}
+	}
+
 	// *
 	// Event stubs
 
@@ -1235,6 +1357,24 @@ namespace Components
 
 	Rtx::Rtx()
 	{
+		/*
+		* Increase the amount of skinned vertices (bone controlled meshes) per frame.
+		*      (R_MAX_SKINNED_CACHE_VERTICES | TEMP_SKIN_BUF_SIZE) Warnings
+		*           'r_fastSkin' or 'r_skinCache' needs to be disabled or
+		*			  the client will crash if you hit an unkown limit
+		*/
+
+		// Create dynamic rendering buffers
+		Utils::Hook(0x5D8BD2, create_dynamic_buffers, HOOK_CALL).install()->quick();
+
+		// Change 'R_WARN_TEMP_SKIN_BUF_SIZE' warning limit to new buffer size
+		Utils::Hook::Nop(0x61E382, 6); // clear
+		Utils::Hook(0x61E382, r_warn_temp_skin_size_limit_stub, HOOK_JUMP).install()->quick();
+
+		// Change 'R_WARN_MAX_SKINNED_CACHE_VERTICES' warning limit to new buffer size
+		Utils::Hook::Nop(0x61E25C, 6); // clear
+		Utils::Hook(0x61E25C, r_warn_max_skinned_cache_vertices_limit_stub, HOOK_JUMP).install()->quick();
+
 		// *
 		// general
 
