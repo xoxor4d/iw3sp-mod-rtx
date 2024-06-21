@@ -11,8 +11,817 @@ over "RootNode"
         {
             over "Shader"
             {
-                float inputs:subsurface_measurement_distance = 0
-                float inputs:subsurface_volumetric_anisotropy = 0
+                float inputs:subsurface_measurement_distance = 0 (
+                    doc = """The distance between front and back surface of subsurface materials in millimeter, or the thickness of the surface. (Used if no texture is specified).
+This parameter is unused.
+"""
+                    hidden = false
+                )
+                float inputs:subsurface_volumetric_anisotropy = 0 (
+                    doc = """The anisotropy of the scattering phase function. 0.99 = light mostly passes straight through (forward), 0 = light spreads a lot (diffuse), -0.99 = light mostly reflects (backward).
+This parameter is unused.
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_4AFF84917FEE442D"
+        {
+            over "Shader"
+            {
+                asset inputs:diffuse_texture = @./assets/_textures/concrete/cr019/concrete_019_basecolor.a.rtex.dds@ (
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Albedo/Opacity Map"
+                    doc = """The texture specifying the albedo value and the optional opacity value to use in the alpha channel
+
+"""
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                asset inputs:normalmap_texture = @./assets/_textures/concrete/cr019/concrete_019_normal_OTH_Normal.n.rtex.dds@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Normal Map"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                asset inputs:reflectionroughness_texture = @./assets/_textures/concrete/cr019/concrete_019_roughness.r.rtex.dds@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Map"
+                    doc = """A single channel texture defining roughness per texel.  Higher roughness values lead to more blurry reflections.
+
+"""
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+            }
+        }
+
+        over "mat_6980905E356BF18D"
+        {
+            over "Shader"
+            {
+                float inputs:metallic_constant = 0.705 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Metallic Amount"
+                    doc = """How metallic is this material, 0 for not at all, 1 for fully metallic. (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.22 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_D95A5DA8E73DEECD"
+        {
+            over "Shader"
+            {
+                float inputs:reflection_roughness_constant = 0.895 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_2D878AA1DFA3A9AA"
+        {
+            over "Shader"
+            {
+                float inputs:reflection_roughness_constant = 0.935 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_E3FC3BF496D291D0"
+        {
+            over "Shader"
+            {
+                float inputs:reflection_roughness_constant = 0.885 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_7AB06B835435BE0B"
+        {
+            over "Shader"
+            {
+                float inputs:metallic_constant = 0.21499999 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Metallic Amount"
+                    doc = """How metallic is this material, 0 for not at all, 1 for fully metallic. (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.56 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_D98982B610E5BBB1"
+        {
+            over "Shader"
+            {
+                float inputs:metallic_constant = 0.92499995 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Metallic Amount"
+                    doc = """How metallic is this material, 0 for not at all, 1 for fully metallic. (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.525 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_80F13191E048C5E6"
+        {
+            over "Shader"
+            {
+                float inputs:metallic_constant = 0.645 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Metallic Amount"
+                    doc = """How metallic is this material, 0 for not at all, 1 for fully metallic. (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.585 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_E179B393BCE7B67F"
+        {
+            over "Shader"
+            {
+                float inputs:metallic_constant = 0.53999996 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Metallic Amount"
+                    doc = """How metallic is this material, 0 for not at all, 1 for fully metallic. (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.705 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_DC9F94C5BDFB2127"
+        {
+            over "Shader"
+            {
+                float inputs:metallic_constant = 0.72499996 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Metallic Amount"
+                    doc = """How metallic is this material, 0 for not at all, 1 for fully metallic. (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.39 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_587F73FE56F4D8ED"
+        {
+            over "Shader"
+            {
+                float inputs:reflection_roughness_constant = 0.9 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_97BA3C6B9EE3F885"
+        {
+            over "Shader"
+            {
+                float inputs:metallic_constant = 0.59 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Metallic Amount"
+                    doc = """How metallic is this material, 0 for not at all, 1 for fully metallic. (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.45499998 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_BB55E1E857531377"
+        {
+            over "Shader"
+            {
+                float inputs:reflection_roughness_constant = 0.865 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_E4FB0C86983BAB87"
+        {
+            over "Shader"
+            {
+                float inputs:reflection_roughness_constant = 1 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_0663B39CCFE4EDEA"
+        {
+            over "Shader"
+            {
+                float inputs:reflection_roughness_constant = 0.81 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_20A88419DC75826D"
+        {
+            over "Shader"
+            {
+                float inputs:reflection_roughness_constant = 0.65999997 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_5494C1CBC3D7E2C8"
+        {
+            over "Shader"
+            {
+                float inputs:metallic_constant = 0.73499995 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Metallic Amount"
+                    doc = """How metallic is this material, 0 for not at all, 1 for fully metallic. (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.325 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_D07317863747C48A"
+        {
+            over "Shader"
+            {
+                asset inputs:diffuse_texture = @./deps/mods/cod4rtx/assets/_textures/metal/container_side_subst/container_side_subst_blue2_basecolor.a.rtex.dds@ (
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Albedo/Opacity Map"
+                    doc = """The texture specifying the albedo value and the optional opacity value to use in the alpha channel
+
+"""
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                float inputs:displace_in = 0.035 (
+                    customData = {
+                        float default = 0.05
+                        dictionary range = {
+                            float max = 0.2
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Displacement"
+                    displayName = "Inwards Displacement"
+                    doc = """Ratio of UV width to depth.  If the texture is displayed as 1 meter wide, then a value of 1 means it can be at most 1 meter deep.  A value of 0.1 means that same 1 meter wide quad can be at most 0.1 meters deep.
+This parameter is unused.
+"""
+                    hidden = false
+                )
+                asset inputs:height_texture = @./deps/mods/cod4rtx/assets/_textures/metal/container_side_subst/container_side_subst_height.h.rtex.dds@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Displacement"
+                    displayName = "Height Map"
+                    doc = """A pixel value of 0 is the lowest point.  A pixel value of 1 will be the highest point.
+This parameter is unused.
+"""
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                asset inputs:metallic_texture = @./deps/mods/cod4rtx/assets/_textures/metal/container_side_subst/container_side_subst_metallic.m.rtex.dds@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Metallic Map"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                asset inputs:normalmap_texture = @./deps/mods/cod4rtx/assets/_textures/metal/container_side_subst/container_side_subst_normal_OTH_Normal.n.rtex.dds@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Normal Map"
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+                asset inputs:reflectionroughness_texture = @./deps/mods/cod4rtx/assets/_textures/metal/container_side_subst/container_side_subst_roughness.r.rtex.dds@ (
+                    colorSpace = "auto"
+                    customData = {
+                        asset default = @@
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Map"
+                    doc = """A single channel texture defining roughness per texel.  Higher roughness values lead to more blurry reflections.
+
+"""
+                    hidden = false
+                    renderType = "texture_2d"
+                )
+            }
+        }
+
+        over "mat_FB521A5777800CDC"
+        {
+            over "Shader"
+            {
+                float inputs:metallic_constant = 0.56 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Metallic Amount"
+                    doc = """How metallic is this material, 0 for not at all, 1 for fully metallic. (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.545 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_C091A35020500D5A"
+        {
+            over "Shader"
+            {
+                float inputs:reflection_roughness_constant = 0.69 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_8722227EFC099556"
+        {
+            over "Shader"
+            {
+                float inputs:reflection_roughness_constant = 0.78999996 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_48075738E1CFF34C"
+        {
+            over "Shader"
+            {
+                float inputs:alpha_test_reference_value = 0.1 (
+                    customData = {
+                        float default = 0
+                    }
+                    displayGroup = "Alpha Blending"
+                    displayName = "Alpha Test Reference Value"
+                    doc = """The value to use for alpha testing against.
+This parameter is unused.
+"""
+                    hidden = false
+                )
+                int inputs:alpha_test_type = 6 (
+                    customData = {
+                        int default = 0
+                    }
+                    displayGroup = "Alpha Blending"
+                    displayName = "Alpha Test Type"
+                    doc = """The alpha state alpha test type to use.
+This parameter is unused.
+"""
+                    hidden = false
+                    renderType = "AlphaTestType"
+                    sdrMetadata = {
+                        string __SDR__enum_value = "Always"
+                        string options = "Always:0|Never:1|Less:2|Equal:3|LessOrEqual:4|Greater:5|NotEqual:6|GreaterOrEqual:7"
+                    }
+                )
+                bool inputs:blend_enabled = 0 (
+                    customData = {
+                        bool default = 0
+                    }
+                    displayGroup = "Alpha Blending"
+                    displayName = "Blend Enabled"
+                    doc = """Indicates if alpha state blending should be enabled.
+
+"""
+                    hidden = false
+                )
+                int inputs:blend_type = 0 (
+                    customData = {
+                        int default = 0
+                    }
+                    displayGroup = "Alpha Blending"
+                    displayName = "Blend Type"
+                    doc = """The alpha state blend type to use.
+This parameter is unused.
+"""
+                    hidden = false
+                    renderType = "BlendType"
+                    sdrMetadata = {
+                        string __SDR__enum_value = "Alpha"
+                        string options = "Alpha:0|AlphaEmissive:1|ReverseAlphaEmissive:2|Color:3|ColorEmissive:4|ReverseColorEmissive:5|Emissive:6|Multiplicative:7|DoubleMultiplicative:8"
+                    }
+                )
+                float inputs:reflection_roughness_constant = 0.79499996 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+                bool inputs:use_legacy_alpha_state = 1 (
+                    customData = {
+                        bool default = 1
+                    }
+                    displayGroup = "Alpha Blending"
+                    displayName = "Use Legacy Alpha State"
+                    doc = """Indicates if the alpha state should be driven by the game itself, or overridden by this material.
+
+"""
+                    hidden = false
+                )
+            }
+        }
+
+        over "mat_8CCB259D4BB1510E"
+        {
+            over "Shader"
+            {
+                float inputs:metallic_constant = 0.98499995 (
+                    customData = {
+                        float default = 0
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Metallic Amount"
+                    doc = """How metallic is this material, 0 for not at all, 1 for fully metallic. (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
+                float inputs:reflection_roughness_constant = 0.21499999 (
+                    customData = {
+                        float default = 0.5
+                        dictionary range = {
+                            float max = 1
+                            float min = 0
+                        }
+                    }
+                    displayGroup = "Base Material"
+                    displayName = "Roughness Amount"
+                    doc = """Higher roughness values lead to more blurry reflections, use 0 for perfectly smooth.  (Used if no texture is specified).
+
+"""
+                    hidden = false
+                )
             }
         }
     }
@@ -813,6 +1622,737 @@ over "RootNode"
                 double3 xformOp:scale = (1, 1, 1)
                 double3 xformOp:translate = (-145.60729784826844, -465.84597738260345, 22.57147935784839)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+
+        over "mesh_0227D5AA946980BC"
+        {
+            def RectLight "RectLight" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -0), (500, 500, 0)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1
+                float inputs:height = 5
+                float inputs:intensity = 60
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                float inputs:width = 15
+                double3 xformOp:rotateXYZ = (77.45972212770175, -0.050638862811723584, 30.642225224076327)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (351.234240468272, -462.0912465175954, 245.68913833369686)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:intensity = 7
+                float inputs:radius = 5
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (349.3014181540951, -459.872614506963, 245.025073053323)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "RectLight_01" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -0), (500, 500, 0)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1
+                float inputs:height = 5
+                float inputs:intensity = 60
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                float inputs:width = 15
+                double3 xformOp:rotateXYZ = (349.9536378147877, -1.0691850493930986, 135.2292768817956)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (104.68470912825448, -997.4077580650184, 598.6438933173214)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_01" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:intensity = 7
+                float inputs:radius = 5
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (105.95374772361528, -996.3541332816995, 594.2454164195643)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_02" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1.5
+                float inputs:intensity = 40
+                float inputs:radius = 2
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-291.27479996174685, -893.7985491482779, 139.1044167439936)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_03" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1.5
+                float inputs:intensity = 40
+                float inputs:radius = 2
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-290.7394406057975, -634.9305036346587, 138.92735601056597)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_04" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1.5
+                float inputs:intensity = 40
+                float inputs:radius = 2
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-291.3054283450877, -125.02550526365877, 139.8782760892557)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_05" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1.5
+                float inputs:intensity = 40
+                float inputs:radius = 2
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (672.8486686782136, -635.0776053335286, 139.33121952205823)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_06" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1.5
+                float inputs:intensity = 40
+                float inputs:radius = 2
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (672.7207341618611, -379.92909098253915, 139.58294887958118)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_07" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1.5
+                float inputs:intensity = 40
+                float inputs:radius = 2
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (672.6338633613308, -125.19836919635333, 138.1891345548648)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_08" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1.5
+                float inputs:intensity = 40
+                float inputs:radius = 2
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (672.9727293960925, 387.9583121555849, 138.20981086444965)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_09" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1.5
+                float inputs:intensity = 40
+                float inputs:radius = 2
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-290.93720403914784, 388.000134746567, 138.81884740428865)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "RectLight_02" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -0), (500, 500, 0)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1
+                float inputs:height = 5
+                float inputs:intensity = 60
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                float inputs:width = 15
+                double3 xformOp:rotateXYZ = (71.70888877798907, -2.936497387994109, 224.22990721990948)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-172.34866800615373, -274.507092177141, 60.75973924241954)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_10" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:intensity = 7
+                float inputs:radius = 5
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 137.57532480173785)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-169.09051877882428, -277.64380190658807, 59.13239970170331)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_11" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:intensity = 7
+                float inputs:radius = 5
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 137.57532480173785)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (122.5169421478663, -410.85585673720516, 63.21480560302737)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "RectLight_03" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -0), (500, 500, 0)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1
+                float inputs:height = 5
+                float inputs:intensity = 60
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                float inputs:width = 15
+                double3 xformOp:rotateXYZ = (71.66329096408626, -2.6258193804475525, 225.16963092342093)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (118.63871398529223, -407.2627372637638, 63.64647490334981)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_12" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1
+                float inputs:intensity = 7
+                float inputs:radius = 2.5
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 137.57532480173785)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-92.70592481778012, -203.05261762299747, 69.22652502079103)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_13" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1
+                float inputs:intensity = 7
+                float inputs:radius = 2.5
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 137.57532480173785)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (132.65688899253732, -199.36082029629972, 71.91562386240254)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_14" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1
+                float inputs:intensity = 7
+                float inputs:radius = 2.5
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 137.57532480173785)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (320.65389741428953, -193.09716499299384, 70.51335127711572)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_15" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:intensity = 7
+                float inputs:radius = 5
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 137.57532480173785)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (511.0525682120059, -110.35715619649841, 61.762667289830915)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "RectLight_04" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -0), (500, 500, 0)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1
+                float inputs:height = 5
+                float inputs:intensity = 60
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                float inputs:width = 15
+                double3 xformOp:rotateXYZ = (67.41759443414924, 0.3219996384443107, 408.5958155365165)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (517.3577554499548, -114.01158064468333, 63.88846166249593)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_16" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:intensity = 7
+                float inputs:radius = 5
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 137.57532480173785)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (255.85543834407895, -278.34733435164935, 63.31015014852174)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "RectLight_05" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -0), (500, 500, 0)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1
+                float inputs:height = 5
+                float inputs:intensity = 60
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                float inputs:width = 15
+                double3 xformOp:rotateXYZ = (71.66329096408626, -2.6258193804475525, 225.16963092342093)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (252.1450822605765, -274.527898709398, 64.09690698071557)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_17" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1.5
+                float inputs:intensity = 40
+                float inputs:radius = 2
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (672.7303428828793, -893.9957307959876, 139.8860547042267)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "RectLight_06" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -0), (500, 500, 0)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1
+                float inputs:height = 5
+                float inputs:intensity = 60
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                float inputs:width = 15
+                double3 xformOp:rotateXYZ = (77.67873017980367, 0.8035516209490368, 47.513018093467)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (813.1111153481077, -109.92140114637436, 152.41667229577956)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_18" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:intensity = 7
+                float inputs:radius = 5
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 5.684341886080802e-14, 140.29913190248158)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (809.4194444052822, -106.24719400216398, 152.2863092751458)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_19" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1.5
+                float inputs:intensity = 40
+                float inputs:radius = 2
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-291.12899609519746, 131.97941016585204, 139.28376054281176)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "RectLight_07" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -0), (500, 500, 0)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1
+                float inputs:height = 5
+                float inputs:intensity = 60
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                float inputs:width = 15
+                double3 xformOp:rotateXYZ = (79.23683259711947, -0.3659017517925065, -0.5394326915049135)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-356.2188198125886, -1148.0600438567335, 152.17239756205612)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_20" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:intensity = 7
+                float inputs:radius = 3
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-356.75418782660773, -1143.8214475225482, 152.0509185791003)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def RectLight "RectLight_08" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -0), (500, 500, 0)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:exposure = 1
+                float inputs:height = 5
+                float inputs:intensity = 60
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                float inputs:width = 15
+                double3 xformOp:rotateXYZ = (77.8291928179816, 0.46345851372541347, 88.99354755580794)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (776.6943332000479, -745.3780640434138, 152.17667731286375)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+
+            def SphereLight "SphereLight_21" (
+                prepend apiSchemas = ["ShapingAPI"]
+            )
+            {
+                float3[] extent = [(-500, -500, -500), (500, 500, 500)]
+                float inputs:colorTemperature = 4500
+                bool inputs:enableColorTemperature = 1
+                float inputs:intensity = 7
+                float inputs:radius = 5
+                float inputs:shaping:cone:angle = 180
+                float inputs:shaping:cone:softness
+                float inputs:shaping:focus
+                color3f inputs:shaping:focusTint
+                asset inputs:shaping:ies:file
+                double3 xformOp:rotateXYZ = (90, 2.842170943040401e-14, 112.65151510959186)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (772.7281266569919, -746.7531274169432, 152.3658831068086)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+            }
+        }
+
+        over "mesh_F0AE0112139548AC" (
+            references = None
+        )
+        {
+            def Xform "ref_4960ab26f231447e83fc66bd26e1cfc3" (
+                prepend references = @./assets/misc_models/com_barrel/com_barrel.usd@
+            )
+            {
+                custom bool IsRemixRef = 1
+                double3 xformOp:rotateXYZ = (0, 0, 0)
+                double3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+                over "XForms"
+                {
+                    over "World"
+                    {
+                        over "Looks"
+                        {
+                            over "mtl_h1_mwr_barrel_corrosive_rust"
+                            {
+                                over "Shader"
+                                {
+                                    asset inputs:diffuse_texture = @./assets/misc_models/com_barrel/textures/h1_mwr_com_barrel_corrosive_rust_col.a.rtex.dds@ (
+                                        customData = {
+                                            asset default = @@
+                                        }
+                                        displayGroup = "Base Material"
+                                        displayName = "Albedo/Opacity Map"
+                                        doc = """The texture specifying the albedo value and the optional opacity value to use in the alpha channel
+
+"""
+                                        hidden = false
+                                        renderType = "texture_2d"
+                                    )
+                                    asset inputs:metallic_texture = @./assets/misc_models/com_barrel/textures/remix_~h1_mwr_com_barrel_corrosive_~66709c17_metal.m.rtex.dds@ (
+                                        colorSpace = "auto"
+                                        customData = {
+                                            asset default = @@
+                                        }
+                                        displayGroup = "Base Material"
+                                        displayName = "Metallic Map"
+                                        hidden = false
+                                        renderType = "texture_2d"
+                                    )
+                                    asset inputs:normalmap_texture = @./assets/misc_models/com_barrel/textures/remix_h1_mwr_com_barrel_corrosive_rust_nml_OTH_Normal.n.rtex.dds@ (
+                                        colorSpace = "auto"
+                                        customData = {
+                                            asset default = @@
+                                        }
+                                        displayGroup = "Base Material"
+                                        displayName = "Normal Map"
+                                        hidden = false
+                                        renderType = "texture_2d"
+                                    )
+                                    asset inputs:reflectionroughness_texture = @./assets/misc_models/com_barrel/textures/remix_~h1_mwr_com_barrel_corrosive_~66709c17_rough.r.rtex.dds@ (
+                                        colorSpace = "auto"
+                                        customData = {
+                                            asset default = @@
+                                        }
+                                        displayGroup = "Base Material"
+                                        displayName = "Roughness Map"
+                                        doc = """A single channel texture defining roughness per texel.  Higher roughness values lead to more blurry reflections.
+
+"""
+                                        hidden = false
+                                        renderType = "texture_2d"
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
