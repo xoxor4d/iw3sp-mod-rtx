@@ -66,7 +66,8 @@ remix runtime - https://github.com/NVIDIAGameWorks/dxvk-remix/actions
 My actual remix-mod with enhanced materials, meshes and lights can be found over at ModDB:   
 [https://www.moddb.com/mods/cod4-mp-rtx-remix-iw3xo](https://www.moddb.com/mods/cod4-mp-rtx-remix-iw3xo)
 
-(the `rtx-remix` directory currently contains small and simple sp-specific changes that are not part of the ModDB release)`
+(the `rtx-remix` directory contains small and simple sp-specific changes that are not part of the ModDB release)
+(read the included README)
 
 </div>
 
@@ -138,6 +139,7 @@ My actual remix-mod with enhanced materials, meshes and lights can be found over
 
 <div align="center" markdown="1">
 
+![img](assets/img/rtx03.jpg)
 ![img](assets/img/rtx00.jpg)
 ![img](assets/img/rtx02.jpg)
 </div>
