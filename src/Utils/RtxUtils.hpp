@@ -7,8 +7,13 @@ namespace RtxUtils
 #define	ROLL				2		// fall over
 #define M_PI				3.14159265358979323846f
 
+	#define m_vector_subtract(a,b,c)	((c)[0] = (a)[0] - (b)[0], (c)[1] = (a)[1] - (b)[1], (c)[2] = (a)[2] - (b)[2])
+
 	void unit_quat_to_axis(const float* quat, float(*axis)[3]);
 	void angle_vectors(const float* angles, float* forward, float* right, float* up);
+	float length_squared3(const float* v);
+	float length3(const float* v);
+	float distance3(const float* p1, const float* p2);
 	void scale3(const float* v1, float scalar, float* out);
 	void copy(const float* in, float* out, int size);
 

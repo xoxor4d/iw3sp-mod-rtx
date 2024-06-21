@@ -73,6 +73,24 @@ namespace RtxUtils
 		}
 	}
 
+	float length_squared3(const float* v)
+	{
+		return v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+	}
+
+	float length3(const float* v)
+	{
+		return sqrtf(length_squared3(v));
+	}
+
+	float distance3(const float* p1, const float* p2)
+	{
+		float v[3] = {};
+
+		m_vector_subtract(p2, p1, v);
+		return length3(v);
+	}
+
 	void scale3(const float* v1, float scalar, float* out)
 	{
 		out[0] = v1[0] * scalar;
