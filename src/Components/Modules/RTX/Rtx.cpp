@@ -311,18 +311,14 @@ namespace Components
 
 	// ----------------------------------------------
 
-	const char* Rtx::skysphere_get_name_for_variant(int variant)
+	const char* Rtx::skysphere_get_name_for_variant(std::uint32_t variant)
 	{
-		switch (variant)
+		if (variant >= SKY::COUNT)
 		{
-		default:
-		case 0: return "rtx_skysphere_oceanrock";
-		case 1: return "rtx_skysphere_desert";
-		case 2: return "rtx_skysphere_overcast_city";
-		case 3: return "rtx_skysphere_night";
-		case 4: return "rtx_skysphere_overcast";
-		case 5: return "rtx_skysphere_sunset_clouds";
+			return SKY_STRINGS[SKY::SUNSET];
 		}
+
+		return SKY_STRINGS[variant];
 	}
 
 	bool Rtx::skysphere_is_model_valid()
@@ -378,20 +374,6 @@ namespace Components
 		skysphere_model->r.svFlags = 0x04;
 		skysphere_model->r.linked = 0x1;
 
-		/*skysphere_model->r.absmin[0] = -10000000.0f;
-		skysphere_model->r.absmin[1] = -10000000.0f;
-		skysphere_model->r.absmin[1] = -10000000.0f;
-		skysphere_model->r.absmax[0] =  10000000.0f;
-		skysphere_model->r.absmax[1] =  10000000.0f;
-		skysphere_model->r.absmax[1] =  10000000.0f;
-
-		skysphere_model->r.mins[0] = -10000000.0f;
-		skysphere_model->r.mins[1] = -10000000.0f;
-		skysphere_model->r.mins[1] = -10000000.0f;
-		skysphere_model->r.maxs[0] =  10000000.0f;
-		skysphere_model->r.maxs[1] =  10000000.0f;
-		skysphere_model->r.maxs[1] =  10000000.0f;*/
-
 		//Game::G_SetOrigin(skysphere_model, skysphere_model_origin);
 		skysphere_model->s.lerp.pos.trBase[0] = 0.0f;
 		skysphere_model->s.lerp.pos.trBase[1] = 0.0f;
@@ -435,7 +417,6 @@ namespace Components
 		if (mat
 			&& mat->techniqueSet
 			&& mat->techniqueSet->remappedTechniqueSet
-			&& mat->techniqueSet->remappedTechniqueSet->techniques
 			&& mat->techniqueSet->remappedTechniqueSet->techniques[type])
 		{
 			return true;
@@ -524,15 +505,6 @@ namespace Components
 			return false;
 		}
 
-		// fix remix normals for viewmodels - needs the material string check because the weapon is in both depth-ranges for some reason
-		/*if (state->depthRangeType == Game::GFX_DEPTH_RANGE_VIEWMODEL || RtxUtils::starts_with(swm->current_material->info.name, "mc/mtl_weapon_"))
-		{
-			swm->technique_type = Game::TECHNIQUE_LIT;
-			swm->switch_technique_type = true;
-
-			return false;
-		}*/
-
 		return true;
 	}
 
@@ -571,6 +543,12 @@ namespace Components
 					state->techType = state->origTechType;
 				}
 			}
+
+			//if (state->material && std::string_view(state->material->info.name).contains("cinematic_3d"))
+			//{
+			//	mat.technique_type = Game::TECHNIQUE_UNLIT;
+			//	switch_material(&mat, "white");
+			//}
 		}
 
 		// save the original material
@@ -870,149 +848,6 @@ namespace Components
 				jmp		disable_culling_addr;
 			}
 		}
-
-#if 0	// OLD
-		// R_AddWorldSurfacesPortalWalk
-		__declspec(naked) void world_stub_01()
-		{
-			const static uint32_t retn_skip = 0x5ECBE5;
-			const static uint32_t retn_stock = 0x5ECB7E;
-			__asm
-			{
-				// jump if culling is less or disabled
-				cmp		Rtx::loc_disable_world_culling, 1;
-				jge		SKIP;
-
-				// og code
-				cmp     esi, ebp;
-				mov		[esp + 0x10], eax;
-				jmp		retn_stock;
-
-			SKIP:
-				mov		[esp + 0x10], eax;
-				jmp		retn_skip;
-			}
-		}
-
-		int _skipped_cull = 0; // helper var
-		__declspec(naked) void world_stub_02_reset_helper()
-		{
-			const static uint32_t retn_stock = 0x622B2A;
-			__asm
-			{
-				mov		_skipped_cull, 0;
-				mov		[ecx + 0x10], edi;
-				mov		[ecx + 8], edx;
-				jmp		retn_stock;
-			}
-		}
-
-		__declspec(naked) void world_stub_02_skip_static_model()
-		{
-			const static uint32_t retn_stock = 0x622730;
-			const static uint32_t retn_stock_jumped = 0x62274F;
-			__asm
-			{
-				// do we want to cull static models the way geo would be culled?
-				cmp		Rtx::loc_disable_world_culling, 3;
-				jl		STOCK;
-
-				// did we skip the culling check in 'r_cull_world_stub_02'?
-				cmp		_skipped_cull, 1;
-				je		SKIP;
-
-			STOCK:		// og code
-				jz		loc_62274F;
-				mov     esi, [edx + 0x24];
-				jmp		retn_stock;
-
-			loc_62274F: // og code
-				jmp		retn_stock_jumped;
-
-
-			SKIP:		// skip static model rendering
-				mov     esi, [edx + 0x24];
-				jmp		retn_stock_jumped;
-			}
-		}
-
-		// R_AddAabbTreeSurfacesInFrustum_r
-		__declspec(naked) void world_stub_02()
-		{
-			const static uint32_t retn_skip = 0x6226CE;
-			const static uint32_t retn_stock = 0x6226C8;
-			__asm
-			{
-				// jump if culling is disabled
-				cmp		Rtx::loc_disable_world_culling, 2;
-				jge		SKIP;
-
-
-				// stock op's
-				fnstsw  ax;
-				test    ah, 0x41;
-
-				// og code
-				fnstsw  ax;
-				test    ah, 0x41;
-				jmp		retn_stock;
-
-			SKIP: // jumped here because culling is disabled 
-				fnstsw  ax;
-				test    ah, 0x41;
-				jnp		HACKED_CULLING;
-				jmp		retn_skip;
-
-			HACKED_CULLING: // jumped here because the game would have culled this object
-				mov		_skipped_cull, 1;
-				jmp		retn_skip;
-			}
-		}
-
-		// R_AddAabbTreeSurfacesInFrustum_r
-		__declspec(naked) void world_stub_03()
-		{
-			const static uint32_t retn_skip = 0x622708;
-			const static uint32_t retn_stock = 0x6226F9;
-			__asm
-			{
-				// jump if culling is less or disabled
-				cmp		Rtx::loc_disable_world_culling, 1;
-				jge		SKIP;
-
-				// og code
-				fnstsw  ax;
-				test    ah, 1;
-				jmp		retn_stock;
-
-			SKIP:
-				fnstsw  ax;
-				jmp		retn_skip;
-			}
-		}
-
-		// R_AddCellSceneEntSurfacesInFrustumCmd
-		__declspec(naked) void entities_stub()
-		{
-			const static uint32_t retn_skip = 0x62EF4C;
-			const static uint32_t retn_stock = 0x62EF4A;
-			__asm
-			{
-				cmp		Rtx::loc_disable_entity_culling, 1;
-				je		SKIP;
-
-				// stock op's
-				and		[esp + 0x18], edx;
-				cmp     byte ptr [esi + eax], 0;
-				jmp		retn_stock;
-
-			SKIP:
-				//popad;
-				and		[esp + 0x18], edx;
-				jmp		retn_skip;
-			}
-		}
-#endif
 	}
 
 	// -------------------
@@ -1495,51 +1330,6 @@ namespace Components
 		Utils::Hook::Nop(0x62EF4A, 2);
 		Utils::Hook::Set<BYTE>(0x62EF79, 0xEB); // ^
 
-#if 0	// OLD
-		{
-			// R_AddWorldSurfacesPortalWalk :: less culling
-			// 0x60B02E -> jl to jmp // 0x7C -> 0xEB //utils::hook::set<BYTE>(0x60B02E, 0xEB);
-			Utils::Hook::Nop(0x5ECB78, 6); Utils::Hook(0x5ECB78, cull::world_stub_01, HOOK_JUMP).install()->quick(); // crashes on release
-
-			{
-				// note:
-				// using 'rtx_disable_world_culling' = 'less' results in unstable world geometry hashes (but stable static model hashes)
-				// -> using 'all-but-models' leaves culling logic for static models at 'less' but does not cull world geometry
-
-				// R_AddCellStaticSurfacesInFrustumCmd :: stub used to reset the skip model check from the stub below
-				Utils::Hook::Nop(0x622B24, 6); Utils::Hook(0x622B24, cull::world_stub_02_reset_helper, HOOK_JUMP).install()->quick();
-				// R_AddAabbTreeSurfacesInFrustum_r :: check if culling mode 'all-but-models' is active - check note above
-				Utils::Hook(0x62272B, cull::world_stub_02_skip_static_model, HOOK_JUMP).install()->quick();
-
-				// R_AddAabbTreeSurfacesInFrustum_r :: disable all surface culling (bad fps)
-				// 0x643B08 -> nop //utils::hook::nop(0x643B08, 6);
-				Utils::Hook(0x6226C3, cull::world_stub_02, HOOK_JUMP).install()->quick();
-			}
-
-			// 0x643B39 -> jmp ^ // 0x74 -> 0xEB //utils::hook::set<BYTE>(0x643B39, 0xEB);
-			Utils::Hook(0x6226F4, cull::world_stub_03, HOOK_JUMP).install()->quick();
-
-			// R_AddCellSceneEntSurfacesInFrustumCmd :: active ents like destructible cars / players (disable all culling)
-			// 0x64D17A -> nop // 2 bytes //utils::hook::nop(0x64D17A, 2);
-			Utils::Hook::Nop(0x62EF42, 8); Utils::Hook(0x62EF42, cull::entities_stub, HOOK_JUMP).install()->quick();
-
-			// 0x0062F026 to jmp (0xEB) keeps dynamic tree shadows
-			Utils::Hook::Set<BYTE>(0x62F026, 0xEB);
-
-			// TODO: armada - stops skysphere culling but disables other entities
-			// ^ gun and helicopters flicker because we are hitting the surfbuffer limit - MAX_SCENE_SURFS_SIZE
-			// ^ enabling culling keeps the skysphere
-			//Utils::Hook::Nop(0x62EF5A, 2);
-
-			// R_AddCellSceneEntSurfacesInFrustumCmd :: disable brushmodel culling
-			Utils::Hook::Nop(0x62F12B, 2);
-
-			// R_AddCellSceneEntSurfacesInFrustumCmd / R_AddEntitySurfacesInFrustumCmd :: do not cull characters
-			Utils::Hook::Nop(0x62F06D, 2); Utils::Hook::Set<BYTE>(0x62ED65, 0xEB); // the two below are not needed I think
-			Utils::Hook::Nop(0x62EDC7, 2); Utils::Hook::Set<BYTE>(0x62EDDD, 0xEB);
-		}
-#endif
-
 		Command::Add("rtx_sky_clear", []() { Rtx::skysphere_spawn(0); });
 		Command::Add("rtx_sky_desert", []() { Rtx::skysphere_spawn(1); });
 		Command::Add("rtx_sky_city", []() { Rtx::skysphere_spawn(2); });
@@ -1558,7 +1348,7 @@ namespace Components
 		Utils::Hook(0x5AC840, xmodel_get_lod_for_dist_detour, HOOK_JUMP).install()->quick();
 
 		// ^ but inlined ..... for all other static models (R_AddAllStaticModelSurfacesCamera)
-		Utils::Hook::Nop(0x611125, 6);  Utils::Hook(0x611125, xmodel_get_lod_for_dist_inlined, HOOK_JUMP).install()->quick();
+		Utils::Hook::Nop(0x611125, 6); Utils::Hook(0x611125, xmodel_get_lod_for_dist_inlined, HOOK_JUMP).install()->quick();
 
 		// ^ inlined .. dobj's (DObjGetSurfaceData)
 		Utils::Hook::Nop(0x59B663, 6); Utils::Hook(0x59B663, xmodel_get_lod_for_dist_inlined2, HOOK_JUMP).install()->quick();
@@ -1591,23 +1381,6 @@ namespace Components
 		Events::OnDvarInit([]
 		{
 			Dvars::rtx_extend_smodel_drawing = Dvars::Register::Dvar_RegisterBool("rtx_extend_smodel_drawing", "Disable static model drawing limit", false, Game::saved);
-
-			//Dvars::rtx_disable_world_culling = Dvars::Register::Dvar_RegisterEnum(
-			//	/* name		*/ "rtx_disable_world_culling",
-			//	/* desc		*/ "Disable world culling. 'all' is needed for stable geometry hashes!\n"
-			//	"- less: reduces culling to portals only (unstable world geo hashes!)\n"
-			//	"- all: disable culling of all surfaces including models\n"
-			//	"- all-but-models: disable culling of all surfaces excluding models",
-			//	/* default	*/ 1,
-			//	/* enumSize	*/ Rtx::rtx_disable_world_culling_enum.size(),
-			//	/* enumData */ Rtx::rtx_disable_world_culling_enum.data(),
-			//	/* flags	*/ Game::saved);
-
-			//Dvars::rtx_disable_entity_culling = Dvars::Register::Dvar_RegisterBool(
-			//	/* name		*/ "rtx_disable_entity_culling",
-			//	/* desc		*/ "Disable culling of game entities (script objects/destructible cars ...)",
-			//	/* default	*/ true,
-			//	/* flags	*/ Game::saved);
 
 			Dvars::rtx_culling_tweak_mins = Dvars::Register::Dvar_RegisterBool(
 				/* name		*/ "rtx_culling_tweak_mins",
