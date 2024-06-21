@@ -261,40 +261,9 @@ namespace Components
 		if (Dvars::rtx_culling_tweak_frustum) loc_culling_tweak_frustum = Dvars::rtx_culling_tweak_frustum->current.enabled;
 		if (Dvars::rtx_culling_tweak_smodel) loc_culling_tweak_smodel = Dvars::rtx_culling_tweak_smodel->current.enabled;
 
-		//// update world culling
-		//if (Dvars::rtx_disable_world_culling)
-		//{
-		//	loc_disable_world_culling = Dvars::rtx_disable_world_culling->current.integer;
-		//	loc_disable_world_culling = loc_disable_world_culling < 0 ? 0 :
-		//		loc_disable_world_culling > 3 ? 3 : loc_disable_world_culling;
-		//}
-
-		//// update entity culling
-		//if (Dvars::rtx_disable_entity_culling)
-		//{
-		//	loc_disable_entity_culling = Dvars::rtx_disable_entity_culling->current.enabled ? 1 : 0;
-		//}
-
-		Dvars::Override::DvarIntOverride("r_aaSamples", 1, Game::dvar_flags::saved);
-		Dvars::Override::DvarIntOverride("r_dlightLimit", 0, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_depthPrepass", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_distortion", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_dof_enable", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_glow_allowed", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_specular", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_zFeather", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("sm_enable", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_altModelLightingUpdate", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_vsync", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_smp_worker", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_smp_backend", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_smc_enable", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_skinCache", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarFloatOverride("r_znear", 4.00195f, Game::dvar_flags::saved);
-		Dvars::Override::DvarFloatOverride("r_znear_depthhack", 4.0f, Game::dvar_flags::saved);
-
-		Dvars::Override::DvarBoolOverride("r_drawSun", false, Game::dvar_flags::saved);
-		Dvars::Override::DvarBoolOverride("r_drawWater", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_smc_enable", false, Game::dvar_flags::saved);
 	}
 
 	// one renderer init
@@ -303,6 +272,20 @@ namespace Components
 		Rtx::force_dvars_on_frame();
 
 		Dvars::Override::DvarBoolOverride("r_multiGpu", true, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_floatz", true, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_autopriority", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_vsync", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_preloadShaders", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_altModelLightingUpdate", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_zFeather", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_aaAlpha", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarIntOverride("r_aaSamples", 1, Game::dvar_flags::saved);
+		Dvars::Override::DvarIntOverride("r_dlightLimit", 0, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("sm_enable", false, Game::dvar_flags::saved);
+
+		Dvars::Override::DvarBoolOverride("r_specular", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_drawSun", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_drawWater", false, Game::dvar_flags::saved);
 	}
 
 	// on each mapload
@@ -316,6 +299,14 @@ namespace Components
 		}
 		
 		Dvars::Override::DvarBoolOverride("fx_drawClouds", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_pretess", true, Game::dvar_flags::saved);
+		Dvars::Override::DvarFloatOverride("r_znear", 40.0f, Game::dvar_flags::saved); // decreases floating point imp. on larger maps
+		Dvars::Override::DvarFloatOverride("r_znear_depthhack", 4.0f, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_glow", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_glow_allowed", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_depthPrepass", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_dof_enable", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_distortion", false, Game::dvar_flags::saved);
 	}
 
 	// ----------------------------------------------
