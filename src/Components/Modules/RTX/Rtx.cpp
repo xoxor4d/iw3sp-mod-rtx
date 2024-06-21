@@ -1379,6 +1379,18 @@ namespace Components
 	{
 		RtxMapSettings::get()->set_settings_for_loaded_map();
 		Rtx::set_dvars_defaults_on_mapload();
+
+		// increase culling distances for certain objects
+		if (Game::gfx_world)
+		{
+			for (auto m = 0u; m < Game::gfx_world->dpvs.smodelCount; m++)
+			{
+				if (std::string_view(Game::gfx_world->dpvs.smodelDrawInsts[m].model->name)._Equal("cs_cargoship_wall_light_on"))
+				{
+					Game::gfx_world->dpvs.smodelDrawInsts[m].cullDist = 20000.0f;
+				}
+			}
+		}
 	}
 
 	// > RtxFixedFunction::free_fixed_function_buffers_stub
