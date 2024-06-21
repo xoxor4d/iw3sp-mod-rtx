@@ -218,18 +218,12 @@ namespace Components
 	/**
 	 * @brief completely rewritten R_DrawStaticModelDrawSurfNonOptimized to render static models using the fixed-function pipeline
 	 */
-	void R_DrawStaticModelDrawSurfNonOptimized(const Game::GfxStaticModelDrawStream* drawstream, Game::GfxCmdBufSourceState* src, Game::GfxCmdBufState* state)
+	void R_DrawStaticModelDrawSurfNonOptimized(const Game::GfxStaticModelDrawStream* drawstream, Game::GfxCmdBufSourceState* source, Game::GfxCmdBufState* state)
 	{
 		const auto smodel_count = drawstream->smodelCount;
 		const auto smodel_list = (const Game::GfxStaticModelDrawStream*) reinterpret_cast<const void*>(drawstream->smodelList);
 		const auto draw_inst = Game::rgp->world->dpvs.smodelDrawInsts;
 		const auto dev = Game::get_device();
-
-		/*if (!drawstream->localSurf->custom_vertexbuffer)
-		{
-			__debugbreak();
-			return;
-		}*/
 
 		// create buffers for all surfaces of the model (including LODs)
 		// ^ already done on map load (when 'rtx_warm_smodels' is enabled) but this also covers dynamically spawned models
@@ -274,6 +268,11 @@ namespace Components
 			RtxFixedFunction::build_worldmatrix_for_object(&mtx[0], &inst->placement.axis[0], inst->placement.origin, inst->placement.scale);
 			dev->SetTransform(D3DTS_WORLD, reinterpret_cast<D3DMATRIX*>(&mtx));
 
+			if (Dvars::r_showTess && Dvars::r_showTess->current.enabled && Dvars::r_showTess->current.integer <= 2)
+			{
+				Rtx::rb_show_tess(source, state, &mtx[3][0], "Static", Game::COLOR_WHITE);
+			}
+
 			// get indexbuffer offset
 			const auto offset = ((char*)drawstream->localSurf->triIndices - mem->blocks[8].data) >> 1;
 
@@ -296,8 +295,12 @@ namespace Components
 		const auto dev = Game::get_device();
 		const auto surf = model->surf.xsurf;
 
-		// fixed function rendering
-		bool rendering_ff = true;
+		/*if (state->material &&
+			std::string_view(state->material->info.name).contains("cinematic"))
+		{
+			int x = 1;
+			return;
+		}*/
 
 		if (surf->deformed)
 		{
@@ -345,7 +348,7 @@ namespace Components
 		}
 
 		// def. needed or the game will render the mesh using shaders
-		dev->SetVertexShader(nullptr);
+		dev->SetVertexShader(nullptr); 
 		dev->SetPixelShader(nullptr);
 
 		set_stream_source(state, surf->custom_vertexbuffer, 0, MODEL_VERTEX_STRIDE);
@@ -357,6 +360,11 @@ namespace Components
 		float mtx[4][4] = {};
 		RtxFixedFunction::build_worldmatrix_for_object(&mtx[0], model->placement.base.quat, obj_origin, model->placement.scale * custom_scalar);
 		dev->SetTransform(D3DTS_WORLD, reinterpret_cast<D3DMATRIX*>(&mtx));
+
+		if (Dvars::r_showTess && Dvars::r_showTess->current.enabled && Dvars::r_showTess->current.integer <= 2)
+		{
+			Rtx::rb_show_tess(source, state, &mtx[3][0], "XMRigid", Game::COLOR_WHITE);
+		}
 
 		// #
 		// draw prim
@@ -510,6 +518,21 @@ namespace Components
 
 		dev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, surf->vertCount, start_index, surf->triCount);
 		dev->SetFVF(NULL);
+
+		// skinned vertices have the world transform baked in and 'skinnedPlacement.base.origin' holds the player origin
+		// so use the first vertex position as the origin of the debug string
+		//if (is_skinned_vert)
+		{
+			mtx[3][0] += skinned_surf->u.skinnedVert[0].xyz[0];
+			mtx[3][1] += skinned_surf->u.skinnedVert[0].xyz[1];
+			mtx[3][2] += skinned_surf->u.skinnedVert[0].xyz[2];
+		}
+
+
+		if (Dvars::r_showTess && Dvars::r_showTess->current.enabled && Dvars::r_showTess->current.integer <= 2)
+		{
+			Rtx::rb_show_tess(source, state, &mtx[3][0], "XMSkin", Game::COLOR_WHITE);
+		}
 	}
 
 	__declspec(naked) void R_DrawXModelSkinnedUncached_stub()
@@ -607,6 +630,10 @@ namespace Components
 			RtxFixedFunction::build_worldmatrix_for_object(&mtx[0], inst->placement.axis, inst->placement.origin, inst->placement.scale);
 			dev->SetTransform(D3DTS_WORLD, reinterpret_cast<D3DMATRIX*>(&mtx));
 
+			if (Dvars::r_showTess && Dvars::r_showTess->current.enabled && Dvars::r_showTess->current.integer <= 2)
+			{
+				Rtx::rb_show_tess(source, state, &mtx[3][0], "StaticSkin", Game::COLOR_WHITE);
+			}
 
 			// draw the prim
 			dev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, surf->vertCount, start_index, surf->triCount);
@@ -646,20 +673,31 @@ namespace Components
 		return true;
 	}
 
-	void R_DrawPreTessTris(Game::GfxCmdBufSourceState* src, Game::GfxCmdBufPrimState* state, Game::srfTriangles_t* tris, unsigned int baseIndex, unsigned int triCount, [[maybe_unused]] const Game::GfxSurface* surf)
+	void R_DrawPreTessTris(Game::GfxCmdBufSourceState* source, Game::GfxCmdBufState* state, Game::srfTriangles_t* tris, unsigned int baseIndex, unsigned int triCount, [[maybe_unused]] const Game::GfxSurface* surf)
 	{
 		const auto dev = Game::get_device();
 
-		src->matrices.matrix[0].m[3][0] = 0.0f;
-		src->matrices.matrix[0].m[3][1] = 0.0f;
-		src->matrices.matrix[0].m[3][2] = 0.0f;
-		src->matrices.matrix[0].m[3][3] = 1.0f;
-		dev->SetTransform(D3DTS_WORLD, reinterpret_cast<D3DMATRIX*>(&src->matrices.matrix[0].m));
+		source->matrices.matrix[0].m[3][0] = 0.0f;
+		source->matrices.matrix[0].m[3][1] = 0.0f;
+		source->matrices.matrix[0].m[3][2] = 0.0f;
+		source->matrices.matrix[0].m[3][3] = 1.0f;
+		dev->SetTransform(D3DTS_WORLD, reinterpret_cast<D3DMATRIX*>(&source->matrices.matrix[0].m));
 
 		// texture alpha + vertex alpha (decal blending)
 		dev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
 		dev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
 		dev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+
+		if (Dvars::r_showTess && Dvars::r_showTess->current.enabled && Dvars::r_showTess->current.integer >= 3 && Dvars::r_showTess->current.integer < 5)
+		{
+			const Game::vec3_t center =
+			{
+				(surf->bounds[0][0] + surf->bounds[1][0]) * 0.5f,
+				(surf->bounds[0][1] + surf->bounds[1][1]) * 0.5f,
+				(surf->bounds[0][2] + surf->bounds[1][2]) * 0.5f
+			};
+			Rtx::rb_show_tess(source, state, center, "BSP", Game::COLOR_WHITE);
+		}
 
 		dev->SetStreamSource(0, gfx_world_vertexbuffer, WORLD_VERTEX_STRIDE * tris->firstVertex, WORLD_VERTEX_STRIDE);
 		dev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, tris->vertexCount, baseIndex, triCount);
@@ -714,7 +752,7 @@ namespace Components
 					// never triggers?
 					if (tri_count)
 					{
-						R_DrawPreTessTris(src, &state->prim, prev_tris, base_index, tri_count, bsp_surf);
+						R_DrawPreTessTris(src, state, prev_tris, base_index, tri_count, bsp_surf);
 						base_index += 3 * tri_count;
 						tri_count = 0;
 					}
@@ -726,7 +764,7 @@ namespace Components
 				tri_count += list[index].totalTriCount;
 			}
 
-			R_DrawPreTessTris(src, &state->prim, prev_tris, base_index, tri_count, bsp_surf);
+			R_DrawPreTessTris(src, state, prev_tris, base_index, tri_count, bsp_surf);
 		}
 
 		dev->SetFVF(NULL);
@@ -792,6 +830,11 @@ namespace Components
 			const auto base_vertex = WORLD_VERTEX_STRIDE * gfxsurf->tris.firstVertex;
 
 			set_stream_source(state, gfx_world_vertexbuffer, base_vertex, WORLD_VERTEX_STRIDE);
+
+			if (Dvars::r_showTess && Dvars::r_showTess->current.enabled && Dvars::r_showTess->current.integer >= 5)
+			{
+				Rtx::rb_show_tess(source, state, bsurf->placement->base.origin, "BModel", Game::COLOR_WHITE);
+			}
 
 			const auto base_index = R_SetIndexData(prim, &Game::rgp->world->indices[gfxsurf->tris.baseIndex], gfxsurf->tris.triCount);
 			dev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, gfxsurf->tris.vertexCount, base_index, gfxsurf->tris.triCount);

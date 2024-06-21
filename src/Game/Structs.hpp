@@ -4445,7 +4445,6 @@ namespace Game
 		char lod;
 	};
 
-
 #pragma pack(push, 4)
 	struct __declspec(align(4)) RefString
 	{
@@ -6383,6 +6382,44 @@ namespace Game
 		float viewOffset[3];
 	};
 
+	union GfxSceneEntityInfo
+	{
+		cpose_t* pose;
+		unsigned __int16* cachedLightingHandle;
+	};
+
+	struct GfxSkinnedXModelSurfs
+	{
+		void* firstSurf;
+	};
+
+	struct GfxSceneEntityCull
+	{
+		volatile unsigned int state;
+		float mins[3];
+		float maxs[3];
+		char lods[32];
+		GfxSkinnedXModelSurfs skinnedSurfs;
+	};
+
+	struct __declspec(align(4)) GfxSceneEntity
+	{
+		float lightingOrigin[3];
+		GfxScaledPlacement placement;
+		GfxSceneEntityCull cull;
+		unsigned __int16 gfxEntIndex;
+		unsigned __int16 entnum;
+		DObj_s* obj;
+		GfxSceneEntityInfo info;
+		char reflectionProbeIndex;
+	};
+
+	struct GfxVisibleLight
+	{
+		int drawSurfCount;
+		GfxDrawSurf drawSurfs[1024];
+	};
+
 	enum GfxViewportBehavior
 	{
 		GFX_USE_VIEWPORT_FOR_VIEW = 0x0,
@@ -7025,6 +7062,116 @@ namespace Game
 		GfxWorldDpvsStatic dpvs;
 		GfxWorldDpvsDynamic dpvsDyn;
 	};
+
+	struct GfxShadowCookie
+	{
+		DpvsPlane planes[5];
+		volatile int drawSurfCount;
+		GfxDrawSurf drawSurfs[256];
+	};
+
+	struct BModelDrawInfo
+	{
+		unsigned __int16 surfId;
+	};
+
+	struct GfxBrushModelWritable
+	{
+		float mins[3];
+		float maxs[3];
+	};
+
+	struct __declspec(align(4)) GfxBrushModel
+	{
+		GfxBrushModelWritable writable;
+		float bounds[2][3];
+		unsigned __int16 surfaceCount;
+		unsigned __int16 startSurfIndex;
+		unsigned __int16 surfaceCountNoDecal;
+	};
+
+	struct __declspec(align(4)) GfxSceneBrush
+	{
+		BModelDrawInfo info;
+		unsigned __int16 entnum;
+		GfxBrushModel* bmodel;
+		GfxPlacement placement;
+		char reflectionProbeIndex;
+	};
+
+	struct GfxSceneDpvs
+	{
+		unsigned int localClientNum;
+		char* entVisData[7];
+		unsigned __int16* sceneXModelIndex;
+		unsigned __int16* sceneDObjIndex;
+		void* entInfo[4]; // GfxEntCellRefInfo
+	};
+
+	/*struct __declspec(align(64)) GfxScene
+	{
+		GfxDrawSurf bspDrawSurfs[8192];
+		GfxDrawSurf smodelDrawSurfsLight[8192];
+		GfxDrawSurf entDrawSurfsLight[8192];
+		GfxDrawSurf bspDrawSurfsDecal[512];
+		GfxDrawSurf smodelDrawSurfsDecal[512];
+		GfxDrawSurf entDrawSurfsDecal[512];
+		GfxDrawSurf bspDrawSurfsEmissive[8192];
+		GfxDrawSurf smodelDrawSurfsEmissive[8192];
+		GfxDrawSurf entDrawSurfsEmissive[8192];
+		GfxDrawSurf fxDrawSurfsEmissive[8192];
+		GfxDrawSurf fxDrawSurfsEmissiveAuto[8192];
+		GfxDrawSurf fxDrawSurfsEmissiveDecal[8192];
+		GfxDrawSurf bspSunShadowDrawSurfs0[4096];
+		GfxDrawSurf smodelSunShadowDrawSurfs0[4096];
+		GfxDrawSurf entSunShadowDrawSurfs0[4096];
+		GfxDrawSurf bspSunShadowDrawSurfs1[8192];
+		GfxDrawSurf smodelSunShadowDrawSurfs1[8192];
+		GfxDrawSurf entSunShadowDrawSurfs1[8192];
+		GfxDrawSurf bspSpotShadowDrawSurfs0[256];
+		GfxDrawSurf smodelSpotShadowDrawSurfs0[256];
+		GfxDrawSurf entSpotShadowDrawSurfs0[512];
+		GfxDrawSurf bspSpotShadowDrawSurfs1[256];
+		GfxDrawSurf smodelSpotShadowDrawSurfs1[256];
+		GfxDrawSurf entSpotShadowDrawSurfs1[512];
+		GfxDrawSurf bspSpotShadowDrawSurfs2[256];
+		GfxDrawSurf smodelSpotShadowDrawSurfs2[256];
+		GfxDrawSurf entSpotShadowDrawSurfs2[512];
+		GfxDrawSurf bspSpotShadowDrawSurfs3[256];
+		GfxDrawSurf smodelSpotShadowDrawSurfs3[256];
+		GfxDrawSurf entSpotShadowDrawSurfs3[512];
+		GfxDrawSurf shadowDrawSurfs[512];
+		unsigned int shadowableLightIsUsed[32];
+		int maxDrawSurfCount[34];
+		volatile int drawSurfCount[34];
+		GfxDrawSurf* drawSurfs[34];
+		GfxDrawSurf fxDrawSurfsLight[8192];
+		GfxDrawSurf fxDrawSurfsLightAuto[8192];
+		GfxDrawSurf fxDrawSurfsLightDecal[8192];
+		GfxSceneDef def;
+		int addedLightCount;
+		GfxLight addedLight[32];
+		bool isAddedLightCulled[32];
+		float dynamicSpotLightNearPlaneOffset;
+		GfxVisibleLight visLight[4];
+		GfxVisibleLight visLightShadow[1];
+		GfxShadowCookie cookie[24];
+		unsigned int* entOverflowedDrawBuf;
+		volatile int sceneDObjCount;
+		GfxSceneEntity sceneDObj[512];
+		char sceneDObjVisData[7][512];
+		volatile int sceneModelCount;
+		GfxSceneModel sceneModel[1024];
+		char sceneModelVisData[7][1024];
+		volatile int sceneBrushCount;
+		GfxSceneBrush sceneBrush[512];
+		char sceneBrushVisData[3][512];
+		unsigned int sceneDynModelCount;
+		unsigned int sceneDynBrushCount;
+		DpvsPlane shadowFarPlane[2];
+		DpvsPlane shadowNearPlane[2];
+		GfxSceneDpvs dpvs;
+	};*/
 
 	struct __declspec(align(128)) r_global_permanent_t
 	{

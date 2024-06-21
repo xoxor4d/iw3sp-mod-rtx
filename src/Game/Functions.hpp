@@ -47,6 +47,8 @@ namespace Game
 	void FX_KillEffect(Game::FxEffect* def);
 
 	typedef void(*Com_PrintMessage_t)(int, const char*, char);  extern Com_PrintMessage_t Com_PrintMessage;
+
+	static Utils::function<void(Game::DebugGlobals* debugGlobalsEntry, const float* origin, const float* color, float scale, const char* string)> R_AddDebugString = 0x5EE880;
 	// rtx end >
 
 

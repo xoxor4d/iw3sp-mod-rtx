@@ -47,6 +47,8 @@ namespace Dvars
 	Game::dvar_s* rtx_culling_tweak_smodel = nullptr;
 	Game::dvar_s* rtx_culling_plane_dist = nullptr;
 	Game::dvar_s* r_showCellIndex = nullptr;
+	Game::dvar_s* r_showTess = nullptr;
+	Game::dvar_s* r_showModelNames = nullptr;
 	// rtx end >
 
 	Game::dvar_s* M_RawInput = nullptr;

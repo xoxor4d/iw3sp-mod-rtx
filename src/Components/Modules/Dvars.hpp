@@ -47,6 +47,8 @@ namespace Dvars
 	extern Game::dvar_s* rtx_culling_tweak_smodel;
 	extern Game::dvar_s* rtx_culling_plane_dist;
 	extern Game::dvar_s* r_showCellIndex;
+	extern Game::dvar_s* r_showTess;
+	extern Game::dvar_s* r_showModelNames;
 	// rtx end >
 
 	extern Game::dvar_s* M_RawInput;
