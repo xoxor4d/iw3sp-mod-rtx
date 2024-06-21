@@ -66,7 +66,7 @@ namespace Components
 		Loader::Register(new Changelog());
 
 		// <- rtx begin
-		if (Flags::HasFlag("rtx"))
+		if (!Flags::HasFlag("no_rtx"))
 		{
 			Loader::Register(new Rtx());
 			Loader::Register(new RtxFixedFunction());

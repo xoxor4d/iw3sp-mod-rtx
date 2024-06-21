@@ -95,12 +95,15 @@ namespace Components
 
 		// < rtx begin
 
-		if (FastFiles::Exists("xcommon_rtx"))
+		if (!Flags::HasFlag("no_rtx"))
 		{
-			XZoneInfoStack[i].name = "xcommon_rtx";
-			XZoneInfoStack[i].allocFlags = Game::XZONE_FLAGS::XZONE_COMMON;
-			XZoneInfoStack[i].freeFlags = Game::XZONE_FLAGS::XZONE_ZERO;
-			++i;
+			if (FastFiles::Exists("xcommon_rtx"))
+			{
+				XZoneInfoStack[i].name = "xcommon_rtx";
+				XZoneInfoStack[i].allocFlags = Game::XZONE_FLAGS::XZONE_COMMON;
+				XZoneInfoStack[i].freeFlags = Game::XZONE_FLAGS::XZONE_ZERO;
+				++i;
+			}
 		}
 
 		// rtx end >
