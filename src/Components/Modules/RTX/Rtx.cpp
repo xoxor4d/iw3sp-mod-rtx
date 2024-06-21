@@ -1048,6 +1048,39 @@ namespace Components
 		}
 	}
 
+	// 
+	int xmodel_get_lod_for_dist_global_3 = 0;
+	__declspec(naked) void xmodel_get_lod_for_dist_inlined2()
+	{
+		const static uint32_t break_addr = 0x59B692;
+		const static uint32_t og_logic_addr = 0x59B669;
+		__asm
+		{
+			pushad;
+			push	edx;					// save edx
+			call	forcelod_is_enabled;
+			cmp		eax, 1;
+			pop		edx;					// restore edx
+			jne		OG_LOGIC;				// if r_forceLod != 1
+
+			push	edx;					// holds model->numLods
+			call	forcelod_get_lod;
+			add		esp, 4;
+			mov		xmodel_get_lod_for_dist_global_3, eax;
+			popad;
+
+			mov		ecx, xmodel_get_lod_for_dist_global_3; // move returned lodindex into the register the game expects it to be
+			jmp		break_addr;
+
+
+		OG_LOGIC:
+			popad;
+			fld     dword ptr[edi];
+			fcomp   st(1);
+			fnstsw  ax;
+			jmp		og_logic_addr;
+		}
+	}
 
 	// *
 	// fix resolution issues by removing duplicates returned by EnumAdapterModes
@@ -1347,6 +1380,8 @@ namespace Components
 		// ^ but inlined ..... for all other static models (R_AddAllStaticModelSurfacesCamera)
 		Utils::Hook::Nop(0x611125, 6);  Utils::Hook(0x611125, xmodel_get_lod_for_dist_inlined, HOOK_JUMP).install()->quick();
 
+		// ^ inlined .. dobj's (DObjGetSurfaceData)
+		Utils::Hook::Nop(0x59B663, 6); Utils::Hook(0x59B663, xmodel_get_lod_for_dist_inlined2, HOOK_JUMP).install()->quick();
 
 		Command::Add("borderless", [this]()
 		{
