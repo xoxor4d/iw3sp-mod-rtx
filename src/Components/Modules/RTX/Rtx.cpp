@@ -1330,13 +1330,12 @@ namespace Components
 		Utils::Hook::Nop(0x62EF4A, 2);
 		Utils::Hook::Set<BYTE>(0x62EF79, 0xEB); // ^
 
-		Command::Add("rtx_sky_clear", []() { Rtx::skysphere_spawn(0); });
+		/*Command::Add("rtx_sky_clear", []() { Rtx::skysphere_spawn(0); });
 		Command::Add("rtx_sky_desert", []() { Rtx::skysphere_spawn(1); });
 		Command::Add("rtx_sky_city", []() { Rtx::skysphere_spawn(2); });
 		Command::Add("rtx_sky_night", []() { Rtx::skysphere_spawn(3); });
 		Command::Add("rtx_sky_overcast", []() { Rtx::skysphere_spawn(4); });
-		Command::Add("rtx_sky_sunset", []() { Rtx::skysphere_spawn(5); });
-
+		Command::Add("rtx_sky_sunset", []() { Rtx::skysphere_spawn(5); });*/
 
 		// #
 		// LOD
