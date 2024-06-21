@@ -11,6 +11,12 @@ namespace Game
 	Game::GfxWorld* gfx_world = reinterpret_cast<Game::GfxWorld*>(0x189A048);
 	Game::DpvsGlob* dpvsGlob = reinterpret_cast<Game::DpvsGlob*>(0x189A328);
 
+	Game::GfxSceneModel* gfx_scene_model = reinterpret_cast<Game::GfxSceneModel*>(0x16081CC);
+	std::uint32_t* gfx_scene_model_count = reinterpret_cast<std::uint32_t*>(0x16081C8);
+
+	Game::GfxSceneEntity* gfx_scene_dobjs = reinterpret_cast<Game::GfxSceneEntity*>(0x15F7BC8);
+	std::uint32_t* gfx_scene_dobj_count = reinterpret_cast<std::uint32_t*>(0x15F7BC4);
+
 	Game::GfxBackEndData* get_frontenddata()
 	{
 		const auto out = reinterpret_cast<Game::GfxBackEndData*>(*Game::frontEndDataOut_ptr);

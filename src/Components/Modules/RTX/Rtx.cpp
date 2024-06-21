@@ -1206,6 +1206,85 @@ namespace Components
 		}
 	}
 
+	// pre RB_DrawDebug :: additional debug functions here
+	void additional_debug(Game::GfxViewParms* view_parms)
+	{
+		if (Dvars::r_showModelNames && Dvars::r_showModelNames->current.enabled)
+		{
+			const auto data = Game::get_backenddata();
+
+			for (auto s = 0u; s < Game::gfx_world->dpvs.smodelCount; s++)
+			{
+				const auto smodel = &Game::gfx_world->dpvs.smodelDrawInsts[s];
+				if (RtxUtils::distance3(view_parms->origin, smodel->placement.origin) <= 1000.0f)
+				{
+					const Game::vec3_t pos = { smodel->placement.origin[0], smodel->placement.origin[1], smodel->placement.origin[2] + 4.0f };
+
+					Game::R_AddDebugString(
+						&data->debugGlobals,
+						pos,
+						Game::COLOR_WHITE,
+						0.25f,
+						smodel->model->name);
+				}
+			}
+
+			for (auto m = 0u; m < *Game::gfx_scene_model_count; m++)
+			{
+				const auto scene_model = &Game::gfx_scene_model[m];
+				if (RtxUtils::distance3(view_parms->origin, scene_model->placement.base.origin) <= 1000.0f)
+				{
+					const Game::vec3_t pos = { scene_model->placement.base.origin[0], scene_model->placement.base.origin[1], scene_model->placement.base.origin[2] + 4.0f };
+
+					Game::R_AddDebugString(
+						&data->debugGlobals,
+						pos,
+						Game::COLOR_RED,
+						0.25f,
+						scene_model->model->name);
+				}
+			}
+
+			for (auto o = 0u; o < *Game::gfx_scene_dobj_count; o++)
+			{
+				const auto dobj = &Game::gfx_scene_dobjs[o];
+				if (RtxUtils::distance3(view_parms->origin, dobj->placement.base.origin) <= 1000.0f)
+				{
+					Game::vec3_t pos = { dobj->placement.base.origin[0], dobj->placement.base.origin[1], dobj->placement.base.origin[2] + 4.0f };
+
+					for (auto sub = 0u; sub < static_cast<std::uint8_t>(dobj->obj->numModels); sub++)
+					{
+						Game::R_AddDebugString(
+							&data->debugGlobals,
+							pos,
+							Game::COLOR_GREEN,
+							0.25f,
+							dobj->obj->models[sub]->name);
+
+						pos[2] -= 5.0f;
+					}
+				}
+			}
+		}
+	}
+
+	// additional_debug :: hook RB_DrawDebug call to implement additional debug functions
+	__declspec(naked) void RB_EndSceneRendering_stub()
+	{
+		const static uint32_t RB_DrawDebug_func = 0x636D30;
+		__asm
+		{
+			pushad;
+			push	[0x1D44450];
+			call	additional_debug;
+			add		esp, 4h;
+			popad;
+
+			call	RB_DrawDebug_func;
+			retn;
+		}
+	}
+
 	// *
 	// Event stubs
 
@@ -1264,6 +1343,9 @@ namespace Components
 
 		// modellight alloc
 		Utils::Hook::Set(0x615BB0, (PBYTE)"\xB8\x01\x00\x00\x00\xC3", 6); // always "alloc" and return 1 as lightingHandle
+
+		// disable the need for developer 1 to display collisions / debug lines / strings w/e (nop check if dvar is set in RB_EndSceneRendering)
+		Utils::Hook::Nop(0x628948, 2);
 
 		// disable loading of specular and normalmaps (de-clutter remix ui)
 		if (!Flags::HasFlag("load_normal_spec"))
@@ -1464,6 +1546,14 @@ namespace Components
 			Dvars::r_showCellIndex = Dvars::Register::Dvar_RegisterBool(
 				/* name		*/ "r_showCellIndex",
 				/* desc		*/ "draw cell index at the center of current cell (useful for map_settings)",
+				/* default	*/ false,
+				/* flags	*/ Game::dvar_flags::none);
+			// hook RB_DrawDebug call in RB_EndSceneRendering to implement additional debug functions
+			Utils::Hook(0x628959, RB_EndSceneRendering_stub, HOOK_CALL).install()->quick();
+
+			Dvars::r_showModelNames = Dvars::Register::Dvar_RegisterBool(
+				/* name		*/ "r_showModelNames",
+				/* desc		*/ "Show names of static models as 3D Text",
 				/* default	*/ false,
 				/* flags	*/ Game::dvar_flags::none);
 		});

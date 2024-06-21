@@ -20,6 +20,12 @@ namespace Game
 	extern Game::GfxWorld* gfx_world;
 	extern Game::DpvsGlob* dpvsGlob;
 
+	extern Game::GfxSceneModel* gfx_scene_model;
+	extern std::uint32_t* gfx_scene_model_count;
+
+	extern Game::GfxSceneEntity* gfx_scene_dobjs;
+	extern std::uint32_t* gfx_scene_dobj_count;
+
 	static inline IDirect3DDevice9* get_device() { return Game::dx->device; }
 	static DWORD* frontEndDataOut_ptr = (DWORD*)(0x1621DEC);
 	extern Game::GfxBackEndData* get_frontenddata();
