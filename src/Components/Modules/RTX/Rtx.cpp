@@ -262,6 +262,7 @@ namespace Components
 		if (Dvars::rtx_culling_tweak_smodel) loc_culling_tweak_smodel = Dvars::rtx_culling_tweak_smodel->current.enabled;
 
 		Dvars::Override::DvarBoolOverride("r_smp_backend", false, Game::dvar_flags::saved);
+		Dvars::Override::DvarBoolOverride("r_smp_worker", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_skinCache", false, Game::dvar_flags::saved);
 		Dvars::Override::DvarBoolOverride("r_smc_enable", false, Game::dvar_flags::saved);
 	}
